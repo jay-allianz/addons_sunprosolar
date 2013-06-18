@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+    	<!-- CRM lead2opportunity Form View  -->
+        <record id="view_crm_lead2opportunity__form" model="ir.ui.view">
+			<field name="name">crm.lead2opportunity.partner.form</field>
+			<field name="model">crm.lead2opportunity.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner"/>
+			<field name="arch" type="xml">
+						<xpath expr="//field[@name='name']" position="after">
+								<group col="2" colspan="2">
+									<field name="sales_leader" />
+								</group>
+						</xpath>
+			</field>
+		</record>
+    
+    
+		<!-- CRM Lead Form View  -->
+        <record id="view_sun_crm_lead_form" model="ir.ui.view">
+			<field name="name">crm.lead.form</field>
+			<field name="model">crm.lead</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+			<field name="arch" type="xml">
+						<xpath expr="//notebook/page[@string='Notes']" position="after">
+							<page string="Electricity Information">
+								<group>
+									<field name="acc_no" />
+									<field name="meter_no" />
+								</group>					
+							</page>	
+						</xpath>
+			</field>
+			</record>
+			
+			<!-- Opportunities Form View -->
+			<record id="view_sun_crm_opp_form" model="ir.ui.view">
+			<field name="name">crm.opp.form</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+			<field name="arch" type="xml">
+						<xpath expr="//notebook/page[@string='Lead']" position="after">
+							<page string="Home Information">
+									<group col="4" colspan="4">
+                                		<field name="home" />
+                                    	<field name="quote"/>
+                                    	<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
+												<field name="quote_info"/>
+										</group>
+										<field name="heat_home" />
+										<field name="home_sq_foot" /><newline/>
+                                    </group>
+									<group col="4" colspan="4">
+	                                     <field name="roof_type"/>
+	                                     <field name="estimate_shade"/>
+	                                     <field name="tilt"/>
+	                                     <field name="azimuth"/>
+                                 	
+	                                    <group col="10" colspan="10">
+	                                        <field name="age_house_year"/>
+	                                        <span class="oe_grey"> Year </span><newline/>
+	                                        <span class="oe_grey">  </span>
+	                                        <field name="age_house_month" nolabel="1"/>
+	                                        <span class="oe_grey"> Month </span>
+	                                        <span class="oe_grey">  </span>
+	                                        <span class="oe_grey">  </span>
+	                                        <span class="oe_grey">  </span>
+	                                        <span class="oe_grey">  </span>
+	                                        <span class="oe_grey">  </span>
+	                                        <span class="oe_grey">  </span>
+										</group>
+									</group>
+							</page>	
+						</xpath>
+			</field>
+			</record>
+			
+		<!-- Company Qutation Search View  -->
+        <record model="ir.ui.view" id="company_qutation_search">
+        <field name="name">company_qutation_Search</field>
+        <field name="model">company.qutation</field>
+        <field name="arch" type="xml">
+            <search string="Company Qutation Search">
+                <field name="company_name"/>
+				<field name="product_ids"/>
+				<field name="quote_amount"/>
+            </search>
+        </field>
+        </record>
+
+		<!-- Company Qutation Form View  -->
+        <record model="ir.ui.view" id="company_qutation_form">
+        <field name="name">company_qutation_Form</field>
+        <field name="model">company.qutation</field>
+        <field name="arch" type="xml">
+            <form string="Company Qutation Form" version="7.0">
+                    <sheet>
+		                <group col="4" colspan="4">
+			                <field name="company_name" required="1"/><newline/>
+			                <separator string="Equipments"/>
+							<field name="product_ids" nolabel="1" colspan="4" />
+							<field name="quote_amount" required="1"/>
+						</group>
+					</sheet>
+            </form>
+        </field>
+        </record>
+        
+        
+		<!-- Company Qutation Tree View  -->
+        <record model="ir.ui.view" id="company_qutation_tree">
+        <field name="name">company_qutation_Tree</field>
+        <field name="model">company.qutation</field>
+        <field name="arch" type="xml">
+            <tree string="Company Qutation Tree">
+                <field name="company_name"/>
+				<field name="product_ids"/>
+				<field name="quote_amount"/>
+            </tree>
+        </field>
+        </record>
+
+		<!-- Company Qutation -->
+	    <record id="action_company_qutation" model="ir.actions.act_window">
+	        <field name="name">Company Qutation Information</field>
+	        <field name="res_model">company.qutation</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+		<menuitem action="action_company_qutation" id="menu_company_qutation" parent="base.menu_crm_config_lead" 
+					string="Company Quotation"  sequence="11"/> 
+
+		<!-- Heat home technique Search View  -->
+        <record model="ir.ui.view" id="heat_home_search">
+        <field name="name">heat_home_Search</field>
+        <field name="model">heat.home</field>
+        <field name="arch" type="xml">
+            <search string="Heat Home Technique Search">
+                <field name="name"/>
+				<field name="description"/>
+            </search>
+        </field>
+        </record>
+
+		<!-- Heat home technique Form View  -->
+        <record model="ir.ui.view" id="heat_home_form">
+        <field name="name">heat_home_Form</field>
+        <field name="model">heat.home</field>
+        <field name="arch" type="xml">
+            <form string="Heat Home Technique Form" version="7.0">
+                    <sheet>
+		                <group col="4" colspan="4">
+			                <field name="name" required="1"/><newline/>
+							<field name="description"/>
+						</group>
+					</sheet>
+            </form>
+        </field>
+        </record>
+        
+        
+		<!-- Heat home technique Tree View  -->
+        <record model="ir.ui.view" id="heat_home_tree">
+        <field name="name">heat_home_Tree</field>
+        <field name="model">heat.home</field>
+        <field name="arch" type="xml">
+            <tree string="Heat Home Technique Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+        </record>
+
+		<!-- Heat home technique -->
+	    <record id="action_heat_home" model="ir.actions.act_window">
+	        <field name="name">Heat Home Technique Information</field>
+	        <field name="res_model">heat.home</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+		<menuitem action="action_heat_home" id="menu_heat_home" parent="base.menu_crm_config_lead" 
+					string="Heat Home Technique" sequence="12"/> 
+
+		<!-- Roof Type Search View  -->
+        <record model="ir.ui.view" id="roof_type_search">
+        <field name="name">roof_type_Search</field>
+        <field name="model">roof.type</field>
+        <field name="arch" type="xml">
+            <search string="Roof Type Search">
+                <field name="name"/>
+				<field name="description"/>
+            </search>
+        </field>
+        </record>
+
+		<!-- Roof Type Form View  -->
+        <record model="ir.ui.view" id="roof_type_form">
+        <field name="name">roof_type_Form</field>
+        <field name="model">roof.type</field>
+        <field name="arch" type="xml">
+            <form string="Roof Type Form" version="7.0">\
+            		<sheet>
+		                <group col="4" colspan="4">
+			                <field name="name" required="1"/><newline/>
+							<field name="description"/>
+						</group>
+					</sheet>
+            </form>
+        </field>
+        </record>
+        
+        
+		<!-- Roof Type Tree View  -->
+        <record model="ir.ui.view" id="roof_type_tree">
+        <field name="name">roof_type_Tree</field>
+        <field name="model">roof.type</field>
+        <field name="arch" type="xml">
+            <tree string="Roof Type Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+        </record>
+
+		<!-- Roof Type-->
+	    <record id="action_roof_type" model="ir.actions.act_window">
+	        <field name="name">Roof Type Information</field>
+	        <field name="res_model">roof.type</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+		<menuitem action="action_roof_type" id="menu_roof_type" parent="base.menu_crm_config_lead" 
+					string="Roof Type" sequence="13"/> 
+
+
+    </data>
+</openerp>
