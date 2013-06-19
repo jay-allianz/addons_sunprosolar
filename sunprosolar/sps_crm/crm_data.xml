@@ -1,22 +1,20 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <openerp>
-	<data noupdate="1">
-	
-		<!-- Scheduler for Mail-->
-		<!--
-		<record forcecreate="True" id="ir_cron_scheduler_mail"
-			model="ir.cron">
-			<field name="name">Sale Person Mail</field>
-			<field eval="True" name="active" />
-			<field name="user_id" ref="base.user_root" />
-			<field name="interval_number">1</field>
-			<field name="interval_type">minutes</field>
-			<field name="numbercall">-1</field>
-			<field eval="False" name="doall" />
-			<field eval="'crm.lead'" name="model" />
-			<field eval="'action_apply'" name="function" />
-			<field eval="'(False,)'" name="args" />
-		</record>
-		-->
-	</data>
+    <data noupdate="1">
+
+	<!-- Mail template is done in a NOUPDATE block
+         so users can freely customize/delete them -->
+
+        <!--Definition of an email template with an empty body that will be used in opportunity mailing. Used to give a
+            basis for email recipients, name and to ease the definition of a further elaborated template. -->
+        <record id="email_template_sales_person_mail" model="email.template">
+            <field name="name">Sales Person - mail</field>
+            <field name="email_from">${object.user_id.email or ''}</field>
+            <field name="subject">Notification : New Lead to process</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="auto_delete" eval="True"/>
+<!--            <field name="email_recipients">${object.user_id.id}</field>        -->
+            <field name="body_html"></field> 
+        </record>
+    </data>
 </openerp>

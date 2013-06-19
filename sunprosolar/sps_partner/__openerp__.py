@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    This module uses OpenERP, Open Source Management Solution Framework.
-#    Copyright (C) 2012-Today Serpent Consulting Services (<http://www.serpentcs.com>)
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 {
     "name" : "SPS - Partner",
     "version" : "1.0",
-    "author" : "Serpent Consulting Services",
+    "author" : "Allianz Technology",
     "category" : "Tools",
-    "website" : "http://www.serpentcs.com",
+    "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to genrate Leads of customer. 
         For more details/customization/feedback contact us on contact@serpentcs.com. 
     """,

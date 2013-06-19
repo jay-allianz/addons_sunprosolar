@@ -11,9 +11,14 @@
 			<field name="arch" type="xml">
 						<xpath expr="//field[@name='name']" position="after">
 								<group col="2" colspan="2">
-									<field name="sales_leader" />
+									<field name="user_id" />
 								</group>
 						</xpath>
+						<!--
+						<xpath expr="//form/footer/button[1][@string='Create Opportunity']" position="before">
+								<button name="new_mail_send" string="Send Mail" type="object" class="oe_highlight"/>
+						</xpath>
+						-->
 			</field>
 		</record>
     
@@ -25,11 +30,17 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
 			<field name="arch" type="xml">
+						<xpath expr="//form/header/button[1][@string='Convert to Opportunity']" position="before">
+								<button name="new_mail_send1" string="Send Mail" type="object" states="draft,open,pending" class="oe_highlight"/>
+						</xpath>
 						<xpath expr="//notebook/page[@string='Notes']" position="after">
 							<page string="Electricity Information">
-								<group>
+								<group col="4" colspan="4">
 									<field name="acc_no" />
-									<field name="meter_no" />
+									<field name="meter_no" placeholder="e.g. S06DS123456..."/>
+									<field name="bill_average" />
+									<field name="bill_total" />
+									<field name="rate_plan" />
 								</group>					
 							</page>	
 						</xpath>
@@ -42,6 +53,10 @@
 			<field name="model">crm.lead</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
 			<field name="arch" type="xml">
+						<xpath expr="///form/header/button[3][@string]" position="before">
+							<button name="type_change" string="Convert to Lead" type="object"
+                            states="draft,open,pending" help="Convert to Lead" class="oe_highlight"/>
+						</xpath>
 						<xpath expr="//notebook/page[@string='Lead']" position="after">
 							<page string="Home Information">
 									<group col="4" colspan="4">
