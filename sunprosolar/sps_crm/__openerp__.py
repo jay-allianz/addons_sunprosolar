@@ -25,9 +25,8 @@
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to genrate Leads of customer. 
-        For more details/customization/feedback contact us on contact@serpentcs.com. 
     """,
-    'depends': ['base','product','crm','sale'],
+    'depends': ['base','product','crm','sps_hr'],
     'data': [
         'lead_view.xml','crm_data.xml',
     ],

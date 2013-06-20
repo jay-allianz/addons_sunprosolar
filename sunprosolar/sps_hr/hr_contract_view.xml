@@ -10,19 +10,19 @@
 					<xpath expr="//field[@name='employee_id']" position="before">
 						<field name="contract_id"/>
 						<field name="customer"/>
-						<field name="type_of_finance"/>
-					</xpath>
-					<xpath expr="//field[@name='employee_id']" position="attributes">
-						<attribute name="invisible">1</attribute>
 					</xpath>
 					<xpath expr="//field[@name='job_id']" position="attributes">
 						<attribute name="invisible">1</attribute>
 					</xpath>
 					<xpath expr="//field[@name='type_id']" position="before">
 						<field name="contract_date"/>
+						<field name="type_of_finance"/>
 					</xpath>
 					<xpath expr="//group[@name='salary_and_advantages']" position="attributes">
 						<attribute name="string">Contract Amount and Advantages</attribute>
+					</xpath>
+					<xpath expr="//field[@name='wage']" position="after">
+						<field name="deposit"/>
 					</xpath>
 					<xpath expr="//group[@name='duration_group']" position="attributes">
 						<attribute name="invisible">1</attribute>

@@ -34,6 +34,7 @@ class hr_contract(osv.osv):
             'contract_date': fields.date('Contract Date'),
             'customer': fields.many2one('res.partner','Customer'),
             'type_of_finance': fields.many2one('account.account.type','Type of Financing '),
+            'deposit' :fields. float('Deposit Collected'),
         }
     
     _defaults = {

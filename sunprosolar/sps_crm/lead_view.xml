@@ -3,7 +3,8 @@
     <data>
         
     	<!-- CRM lead2opportunity Form View  -->
-        <record id="view_crm_lead2opportunity__form" model="ir.ui.view">
+        <!--
+								<record id="view_crm_lead2opportunity__form" model="ir.ui.view">
 			<field name="name">crm.lead2opportunity.partner.form</field>
 			<field name="model">crm.lead2opportunity.partner</field>
 			<field name="type">form</field>
@@ -14,15 +15,12 @@
 									<field name="user_id" />
 								</group>
 						</xpath>
-						<!--
 						<xpath expr="//form/footer/button[1][@string='Create Opportunity']" position="before">
 								<button name="new_mail_send" string="Send Mail" type="object" class="oe_highlight"/>
 						</xpath>
-						-->
 			</field>
 		</record>
-    
-    
+								-->
 		<!-- CRM Lead Form View  -->
         <record id="view_sun_crm_lead_form" model="ir.ui.view">
 			<field name="name">crm.lead.form</field>
@@ -47,15 +45,36 @@
 			</field>
 			</record>
 			
+			<record id="action_hr_contract1" model="ir.actions.act_window">
+	            <field name="name">Contracts</field>
+	            <field name="res_model">hr.contract</field>
+	            <field name="view_type">form</field>
+	            <field name="view_mode">tree,form</field>
+	            <field name="domain">[]</field>
+	            <field name="context">{'search_default_current':1}</field>
+	            <field name="search_view_id" ref="hr_contract.hr_contract_view_search"/>
+	        </record>
+			
 			<!-- Opportunities Form View -->
 			<record id="view_sun_crm_opp_form" model="ir.ui.view">
 			<field name="name">crm.opp.form</field>
 			<field name="model">crm.lead</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
 			<field name="arch" type="xml">
-						<xpath expr="///form/header/button[3][@string]" position="before">
+						<xpath expr="//form/header/button[3][@string='Send Mail']" position="attributes">
+							<attribute name="invisible">1</attribute>
+						</xpath>
+						<xpath expr="//form/header/button[2][@string='Mark Lost']" position="after">
 							<button name="type_change" string="Convert to Lead" type="object"
-                            states="draft,open,pending" help="Convert to Lead" class="oe_highlight"/>
+                            states="draft,open,pending" help="Convert to Lead" />
+						</xpath>
+						<xpath expr="//form/sheet/group/group[4]/field[@name='categ_ids']" position="after">
+								<label for="contract_id"/>
+                                <div>
+                                    <field name="contract_id"/>
+                                    <button name="%(action_hr_contract1)d" string="Contract Sign" type="action" 
+                                    	help=" Click if Customer want to sign the contract." />
+                                </div>
 						</xpath>
 						<xpath expr="//notebook/page[@string='Lead']" position="after">
 							<page string="Home Information">
@@ -88,15 +107,28 @@
 	                                        <span class="oe_grey">  </span>
 										</group>
 									</group>
+							</page>
+							<page string="Utility Bills">
+									 <field name="bill_ids" nolabel="1" colspan="4">
+                                <form string="Utility Bills">
+                                    <group col="2" >
+                                        <field name="description" placeholder="Description About Bill"/>
+                                        <field name="bill"/>
+                                    </group>
+                                </form>
+                                <tree string="Certifaicate">
+                                    <field name="description"/>
+                                </tree>
+                            </field>
 							</page>	
 						</xpath>
 			</field>
 			</record>
 			
-		<!-- Company Qutation Search View  -->
-        <record model="ir.ui.view" id="company_qutation_search">
-        <field name="name">company_qutation_Search</field>
-        <field name="model">company.qutation</field>
+		<!-- Company Quotation Search View  -->
+        <record model="ir.ui.view" id="company_quotation_search">
+        <field name="name">company_quotation_Search</field>
+        <field name="model">company.quotation</field>
         <field name="arch" type="xml">
             <search string="Company Qutation Search">
                 <field name="company_name"/>
@@ -106,12 +138,12 @@
         </field>
         </record>
 
-		<!-- Company Qutation Form View  -->
-        <record model="ir.ui.view" id="company_qutation_form">
-        <field name="name">company_qutation_Form</field>
-        <field name="model">company.qutation</field>
+		<!-- Company Quotation Form View  -->
+        <record model="ir.ui.view" id="company_quotation_form">
+        <field name="name">company_quotation_Form</field>
+        <field name="model">company.quotation</field>
         <field name="arch" type="xml">
-            <form string="Company Qutation Form" version="7.0">
+            <form string="Company Quotation Form" version="7.0">
                     <sheet>
 		                <group col="4" colspan="4">
 			                <field name="company_name" required="1"/><newline/>
@@ -125,12 +157,12 @@
         </record>
         
         
-		<!-- Company Qutation Tree View  -->
-        <record model="ir.ui.view" id="company_qutation_tree">
-        <field name="name">company_qutation_Tree</field>
-        <field name="model">company.qutation</field>
+		<!-- Company Quotation Tree View  -->
+        <record model="ir.ui.view" id="company_quotation_tree">
+        <field name="name">company_quotation_Tree</field>
+        <field name="model">company.quotation</field>
         <field name="arch" type="xml">
-            <tree string="Company Qutation Tree">
+            <tree string="Company Quotation Tree">
                 <field name="company_name"/>
 				<field name="product_ids"/>
 				<field name="quote_amount"/>
@@ -139,14 +171,14 @@
         </record>
 
 		<!-- Company Qutation -->
-	    <record id="action_company_qutation" model="ir.actions.act_window">
-	        <field name="name">Company Qutation Information</field>
-	        <field name="res_model">company.qutation</field>
+	    <record id="action_company_quotation" model="ir.actions.act_window">
+	        <field name="name">Company Quotation Information</field>
+	        <field name="res_model">company.quotation</field>
 	        <field name="view_type">form</field>
 	        <field name="view_mode">tree,form</field>
 	    </record>
 
-		<menuitem action="action_company_qutation" id="menu_company_qutation" parent="base.menu_crm_config_lead" 
+		<menuitem action="action_company_quotation" id="menu_company_qutation" parent="base.menu_crm_config_lead" 
 					string="Company Quotation"  sequence="11"/> 
 
 		<!-- Heat home technique Search View  -->
