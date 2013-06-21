@@ -19,16 +19,16 @@
 #
 ##############################################################################
 {
-    "name" : "SPS - Partner",
+    "name" : "SPS - Sales Management",
     "version" : "1.0",
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to generate and manage partner information. 
+    "description": """This module provides the functionality to generate Leads of customer. 
     """,
-    'depends': ['base','sps_crm'],
+    'depends': ['base','sale'],
     'data': [
-        'partner_view.xml',
+       
     ],
     'installable': True,
     'application': True,

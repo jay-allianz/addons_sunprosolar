@@ -24,10 +24,9 @@
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to genrate Leads of customer. 
-        For more details/customization/feedback contact us on contact@serpentcs.com. 
+    "description": """This module provides the functionality to generate and manage HR management. 
     """,
-    'depends': ['base','account','hr_contract'],
+    'depends': ['base','document','account','hr_contract'],
     'data': [
         'hr_contract_view.xml',
     ],

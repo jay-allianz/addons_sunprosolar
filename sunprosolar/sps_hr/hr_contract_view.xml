@@ -33,10 +33,24 @@
 					<xpath expr="//page[@string='Work Permit']" position="attributes">
 						<attribute name="invisible">1</attribute>
 					</xpath>
+					<xpath expr="//notebook/page[1][@string='Information']" position="after">
+							<page string="Equipments">
+									 <field name="equipment_ids" nolabel="1" colspan="4">
+                                <form string="Equipments">
+                                    <group col="2" >
+                                        <field name="product_id"/>
+                                    </group>
+                                </form>
+                                <tree string="Equipments" editable="bottom">
+                                    <field name="product_id"/>
+                                </tree>
+                            </field>
+							</page>	
+						</xpath>
 				</field>
 			</record>
 
-	<!-- Customer Information Tree View -->
+	<!-- contract Tree View -->
 		<record model="ir.ui.view" id="view_customer_tree">
 			<field name="name">hr.contract.form</field>
 			<field name="model">hr.contract</field>

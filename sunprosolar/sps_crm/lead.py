@@ -59,7 +59,8 @@ class crm_lead(osv.osv):
          'tilt': fields.char('Tilt'),
          'azimuth': fields.float('Azimuth'),
          'estimate_shade': fields.float('Estimated Shading'),
-         'bill_ids' : fields.one2many('utility.bill','lead_id','Certificate'),
+         'utility_bill' : fields.boolean('utility_bill',help="Checked if Utility bill of 12 months are collected from the customer."),
+#         'bill_ids' : fields.one2many('utility.bill','lead_id','Certificate'),
         
         }
     
@@ -140,22 +141,24 @@ class crm_lead(osv.osv):
         
 crm_lead()
 
-class utility_bill(osv.osv):
-    
-    _name = "utility.bill"
-    
-    _columns = {
-        'lead_id' : fields.many2one('crm.lead', 'Student'),
-        'description' : fields.char('Description',size=50),
-        'bill' : fields.binary('Bill',required =True)
-                }
-utility_bill()
+#class utility_bill(osv.osv):
+#    
+#    _name = "utility.bill"
+#    
+#    _columns = {
+#        'lead_id' : fields.many2one('crm.lead', 'Student'),
+#        'description' : fields.char('Description',size=50),
+#        'bill' : fields.binary('Bill',required =True)
+#                }
+#utility_bill()
+
 
 class hr_contract(osv.osv):
     """ Model for contract. """
     _inherit = "hr.contract"
     
     _columns = {
+
         }
 
 class company_quotation(osv.osv):
@@ -193,6 +196,3 @@ class roof_type(osv.osv):
         }
 roof_type()
 
-
-
-     

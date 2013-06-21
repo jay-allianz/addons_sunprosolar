@@ -19,16 +19,16 @@
 #
 ##############################################################################
 {
-    "name" : "SPS - Partner",
+    "name" : "SPS - Base",
     "version" : "1.0",
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to generate and manage partner information. 
+    "description": """This module provides the functionality to generate base module. 
     """,
-    'depends': ['base','sps_crm'],
+    'depends': ['base'],
     'data': [
-        'partner_view.xml',
+        
     ],
     'installable': True,
     'application': True,

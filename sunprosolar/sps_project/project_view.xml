@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+    	<!-- project Form View -->
+			<record model="ir.ui.view" id="project_form">
+				<field name="name">project.project.form</field>
+				<field name="model">project.project</field>
+				<field name="inherit_id" ref="project.edit_project"/>
+				<field name="arch" type="xml">
+					<xpath expr="//form/sheet/div[2]/button[2][@string='Documents']" position="after">
+						 <div class="oe_right oe_button_box">
+                           
+                            <button string="Meeting"
+                                name="action_makeMeeting"
+                                type="object"
+                                context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"
+                               />
+                        </div>
+					</xpath>
+				</field>
+			</record>
+			
+			<record model="ir.ui.view" id="project_form">
+				<field name="name">project.task.form</field>
+				<field name="model">project.task</field>
+				<field name="inherit_id" ref="project.view_task_form2"/>
+				<field name="arch" type="xml">
+								
+					<xpath expr="//form/sheet/group/group[2]/field[2][@name='categ_ids']" position="after">
+						 	<field name="contract_change"/>
+						 	<label for="contract_id">
+							<div attrs="{'invisible':[('contract_change','=',False)]}">
+						 		<field name="contract_id"/>
+						 		
+						 	<div>
+					</xpath>
+				</field>
+			</record>
+    </data>
+</openerp>

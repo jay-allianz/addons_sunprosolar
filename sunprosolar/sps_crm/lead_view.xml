@@ -45,6 +45,7 @@
 			</field>
 			</record>
 			
+			<!--
 			<record id="action_hr_contract1" model="ir.actions.act_window">
 	            <field name="name">Contracts</field>
 	            <field name="res_model">hr.contract</field>
@@ -54,6 +55,7 @@
 	            <field name="context">{'search_default_current':1}</field>
 	            <field name="search_view_id" ref="hr_contract.hr_contract_view_search"/>
 	        </record>
+			-->
 			
 			<!-- Opportunities Form View -->
 			<record id="view_sun_crm_opp_form" model="ir.ui.view">
@@ -69,18 +71,24 @@
                             states="draft,open,pending" help="Convert to Lead" />
 						</xpath>
 						<xpath expr="//form/sheet/group/group[4]/field[@name='categ_ids']" position="after">
-								<label for="contract_id"/>
-                                <div>
-                                    <field name="contract_id"/>
-                                    <button name="%(action_hr_contract1)d" string="Contract Sign" type="action" 
-                                    	help=" Click if Customer want to sign the contract." />
-                                </div>
+								<label for="utility_bill"/>
+	                            <div>
+	                                <field name="utility_bill"/>
+	                            </div>
+                                <group  col="2" colspan="2" attrs="{'invisible':[('utility_bill','=',False)]}">
+	                                <label for="contract_id"/>
+	                                <div>
+	                                    <field name="contract_id" attrs="{'invisible':[('utility_bill','=',False)]}"/><newline/>
+	                                    <button name="new_mail_send" string="Contract Sign" type="object" icon="gtk-yes"
+	                                    	 attrs="{'invisible':[('contract_id','=',False)]}" help=" Click if Customer want to sign the contract." />
+	                                </div>
+	                            </group>
 						</xpath>
 						<xpath expr="//notebook/page[@string='Lead']" position="after">
 							<page string="Home Information">
 									<group col="4" colspan="4">
                                 		<field name="home" />
-                                    	<field name="quote"/>
+                                    	<field name="quote" />
                                     	<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
 												<field name="quote_info"/>
 										</group>
@@ -108,6 +116,7 @@
 										</group>
 									</group>
 							</page>
+							<!--
 							<page string="Utility Bills">
 									 <field name="bill_ids" nolabel="1" colspan="4">
                                 <form string="Utility Bills">
@@ -121,6 +130,7 @@
                                 </tree>
                             </field>
 							</page>	
+							-->
 						</xpath>
 			</field>
 			</record>

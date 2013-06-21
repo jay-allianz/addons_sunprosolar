@@ -35,6 +35,7 @@ class hr_contract(osv.osv):
             'customer': fields.many2one('res.partner','Customer'),
             'type_of_finance': fields.many2one('account.account.type','Type of Financing '),
             'deposit' :fields. float('Deposit Collected'),
+            'equipment_ids': fields.one2many('equipment.line','equipment_id','Equipments'),
         }
     
     _defaults = {
@@ -42,3 +43,13 @@ class hr_contract(osv.osv):
     }
     
 hr_contract()
+
+class equipment_line(osv.osv):
+    
+    _name = "equipment.line"
+    
+    _columns = {
+       'equipment_id': fields.many2one('hr.contract', 'Contract Reference', required=True, ondelete='cascade', select=True, readonly=True, states={'draft':[('readonly',False)]}),
+       'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], change_default=True),
+    }
+equipment_line()
