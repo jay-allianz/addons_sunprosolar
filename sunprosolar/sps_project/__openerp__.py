@@ -28,7 +28,7 @@
     """,
     'depends': ['base','project','base_calendar'],
     'data': [
-       'project_view.xml','project_data.xml','project_meeting_view.xml',
+       'project_view.xml','project_data.xml','project_meeting_view.xml'
     ],
     'installable': True,
     'application': True,

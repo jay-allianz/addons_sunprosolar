@@ -36,6 +36,7 @@ class hr_contract(osv.osv):
             'type_of_finance': fields.many2one('account.account.type','Type of Financing '),
             'deposit' :fields. float('Deposit Collected'),
             'equipment_ids': fields.one2many('equipment.line','equipment_id','Equipments'),
+            'project_id' : fields.many2one('project.project','Project', help="Select or Create a project related this contract.")
         }
     
     _defaults = {
@@ -53,3 +54,10 @@ class equipment_line(osv.osv):
        'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], change_default=True),
     }
 equipment_line()
+
+class project(osv.osv):
+    
+    _inherit = "project.project"
+    
+    _columns = {
+                }

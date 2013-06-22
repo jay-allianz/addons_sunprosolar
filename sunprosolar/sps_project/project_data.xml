@@ -1,6 +1,14 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
+        
+	 <!-- Resource: project.project -->
+        <record id="all_projects_account" model="account.analytic.account">
+            <field name="name">Projects</field>
+            <field name="code">3</field>
+        </record>
+        <function id="parent_project_default_set" model="ir.values" name="set" eval="('default',False,'parent_id', [('project.project', False)], all_projects_account, True, False, False, False, True)"/>
+
 
 	<!-- Task Stages -->
 
@@ -48,7 +56,7 @@
             <field name="case_default" eval="False"/>
             <field name="fold" eval="True"/>
         </record>
-        <record id="project_tt_pto" model="project.task.type">
+        <record id="project_tt_correction" model="project.task.type">
             <field name="sequence">7</field>
             <field name="name">PROJECT CORRECTIONS</field>
             <field name="state">open</field>

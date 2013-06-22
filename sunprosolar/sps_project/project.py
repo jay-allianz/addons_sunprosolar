@@ -38,7 +38,6 @@ class project(osv.osv):
     _inherit = "project.project"
     
     _columns = {
-                
                 }
     
     def action_makeMeeting(self, cr, uid, ids, context=None):
@@ -51,7 +50,7 @@ class project(osv.osv):
         res['context'] = {
             'default_project_id': project.id,
             'default_partner_id': project.partner_id and project.partner_id.id or False,
-            'default_partner_ids' : project.partner_id and [project.partner_id.id] or False,
+            'default_partner_ids' : project.partner_id and [project.members.id] or False,
             'default_user_id': uid,
             'default_name': project.name,
         }

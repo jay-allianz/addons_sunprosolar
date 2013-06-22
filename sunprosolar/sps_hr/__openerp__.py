@@ -26,7 +26,7 @@
     "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to generate and manage HR management. 
     """,
-    'depends': ['base','document','account','hr_contract'],
+    'depends': ['base','document','account','hr_contract','sps_project'],
     'data': [
         'hr_contract_view.xml',
     ],

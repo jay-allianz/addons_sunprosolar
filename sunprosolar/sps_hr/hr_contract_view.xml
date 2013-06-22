@@ -17,6 +17,7 @@
 					<xpath expr="//field[@name='type_id']" position="before">
 						<field name="contract_date"/>
 						<field name="type_of_finance"/>
+						<field name="project_id"/>
 					</xpath>
 					<xpath expr="//group[@name='salary_and_advantages']" position="attributes">
 						<attribute name="string">Contract Amount and Advantages</attribute>

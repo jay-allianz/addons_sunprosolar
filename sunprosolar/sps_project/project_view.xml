@@ -10,14 +10,10 @@
 				<field name="arch" type="xml">
 					<xpath expr="//form/sheet/div[2]/button[2][@string='Documents']" position="after">
 						 <div class="oe_right oe_button_box">
-                           
-                            <button string="Meeting"
-                                name="action_makeMeeting"
-                                type="object"
-                                context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"
-                               />
+                            <button string="Meeting" name="action_makeMeeting" type="object" context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"/>
                         </div>
 					</xpath>
+					
 				</field>
 			</record>
 			
@@ -29,11 +25,10 @@
 								
 					<xpath expr="//form/sheet/group/group[2]/field[2][@name='categ_ids']" position="after">
 						 	<field name="contract_change"/>
-						 	<label for="contract_id">
+						 	<label for="contract_id" attrs="{'invisible':[('contract_change','=',False)]}"/>
 							<div attrs="{'invisible':[('contract_change','=',False)]}">
 						 		<field name="contract_id"/>
-						 		
-						 	<div>
+						 	</div>
 					</xpath>
 				</field>
 			</record>

@@ -24,7 +24,7 @@ import time
 from openerp.osv import fields, osv
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from openerp.tools.translate import _
-#from base_calendar import get_real_ids, base_calendar_id2real_id
+#from openerp.addons.base_calendar import get_real_ids, base_calendar_id2real_id
 from openerp.addons.base_status.base_state import base_state
 #
 # project.meeting is defined here so that it may be used by modules other than project,
