@@ -43,7 +43,7 @@
             <field name="type">opportunity</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead4">
-            <field name="name">APPOINTMENT SET</field>
+            <field name="name"> APPOINTMENT SET</field>
             <field eval="1" name="case_default"/>
             <field name="state">open</field>
             <field eval="'40'" name="probability"/>

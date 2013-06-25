@@ -39,7 +39,6 @@ class project_phonecall2phonecall(osv.osv_memory):
         'note':fields.text('Note')
     }
 
-
     def action_cancel(self, cr, uid, ids, context=None):
         """
         Closes Phonecall to Phonecall form
@@ -56,6 +55,7 @@ class project_phonecall2phonecall(osv.osv_memory):
             phocall_ids = phonecall.schedule_another_phonecall(cr, uid, phonecall_ids, this.date, this.name, \
                     this.user_id and this.user_id.id or False, \
                     this.section_id and this.section_id.id or False, \
+                    this.categ_id and this.categ_id.id or False, \
                     action=this.action, context=context)
 
         return phonecall.redirect_phonecall_view(cr, uid, phocall_ids[phonecall_ids[0]], context=context)
@@ -71,17 +71,12 @@ class project_phonecall2phonecall(osv.osv_memory):
         if record_id:
             phonecall = self.pool.get('project.phonecall').browse(cr, uid, record_id, context=context)
 
-            data_obj = self.pool.get('ir.model.data')
-            res_id = data_obj._get_id(cr, uid, 'sps_project', 'categ_phone2')
-
             if 'name' in fields:
                 res.update({'name': phonecall.name})
             if 'user_id' in fields:
                 res.update({'user_id': phonecall.user_id and phonecall.user_id.id or False})
             if 'date' in fields:
                 res.update({'date': False})
-            if 'section_id' in fields:
-                res.update({'section_id': phonecall.section_id and phonecall.section_id.id or False})
             if 'partner_id' in fields:
                 res.update({'partner_id': phonecall.partner_id and phonecall.partner_id.id or False})
         return res

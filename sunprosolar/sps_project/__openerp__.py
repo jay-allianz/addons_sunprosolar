@@ -26,9 +26,15 @@
     "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to generate and manage Project. 
     """,
-    'depends': ['base','project','base_calendar'],
+    'depends': ['base','project','base_calendar','hr_contract','sale'],
     'data': [
-       'project_view.xml','project_data.xml','project_meeting_view.xml'
+       'wizard/project_to_phonecall_view.xml',
+       'wizard/project_phonecall_to_phonecall_view.xml',
+       'project_meeting_view.xml',
+       'project_phonecall_view.xml',
+       'project_phonecall_menu.xml',
+       'project_view.xml',
+       'project_data.xml',
     ],
     'installable': True,
     'application': True,

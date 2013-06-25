@@ -63,7 +63,7 @@
 			<field name="model">crm.lead</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
 			<field name="arch" type="xml">
-						<xpath expr="//form/header/button[3][@string='Send Mail']" position="attributes">
+						<xpath expr="//button[@string='Send Mail']" position="attributes">
 							<attribute name="invisible">1</attribute>
 						</xpath>
 						<xpath expr="//form/header/button[2][@string='Mark Lost']" position="after">

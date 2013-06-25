@@ -27,7 +27,7 @@
         <record id="project.project_tt_design" model="project.task.type">
             <field name="sequence">2</field>
             <field name="name">SITE INSPECTION COMPLETE</field>
-            <field name="state">open</field>
+            <field name="state">pending</field>
             <field name="case_default" eval="True"/>
         </record>
         <record id="project.project_tt_development" model="project.task.type">

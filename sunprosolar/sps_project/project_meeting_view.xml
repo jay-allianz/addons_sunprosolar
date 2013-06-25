@@ -2,7 +2,6 @@
 <openerp>
     <data>
 
-
     <!-- Project Meetings Types Form View -->
 
     <record id="view_project_meeting_type_tree" model="ir.ui.view">

@@ -5,8 +5,8 @@
         <!-- Opportunity to Phonecall view -->
 
         <record model="ir.ui.view" id="project2phonecall_view">
-            <field name="name">project2phonecall.form</field>
-            <field name="model">project2phonecall</field>
+            <field name="name">project.project2phonecall.form</field>
+            <field name="model">project.project2phonecall</field>
             <field name="arch" type="xml">
                 <form string="Schedule/Log a Call" version="7.0">
                     <group>
@@ -19,7 +19,6 @@
                             <field name="partner_id" readonly="True"/>
                             <field name="phone"/>
                             <field name="user_id" attrs="{'invisible': [('action','=','log')]}"/>
-                            <field name="section_id" widget="selection" attrs="{'invisible': [('action','=','log')]}"/>
                         </group>
                     </group>
                     <field name="note" placeholder="Call Description" />
@@ -33,14 +32,14 @@
             </field>
         </record>
 
-        <!-- Project to Phonecall action -->
+        <!-- project to Phonecall action -->
 
          <record model="ir.actions.act_window" id="project2phonecall_act">
             <field name="name">Schedule/Log Call</field>
-            <field name="res_model">project2phonecall</field>
+            <field name="res_model">project.project2phonecall</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="opportunity2phonecall_view"/>
+            <field name="view_id" ref="project2phonecall_view"/>
             <field name="target">new</field>
         </record>
 

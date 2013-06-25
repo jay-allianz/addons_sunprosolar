@@ -160,7 +160,7 @@ class hr_contract(osv.osv):
     _columns = {
 
         }
-
+    
 class company_quotation(osv.osv):
     """ Model for Product. """
     _name = "company.quotation"

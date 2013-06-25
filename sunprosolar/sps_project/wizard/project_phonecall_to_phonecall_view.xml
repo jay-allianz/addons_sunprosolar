@@ -4,7 +4,7 @@
     
     <!-- Phonecall to Phonecall view -->
     
-        <record model="ir.ui.view" id="phonecall_to_phonecall_view">
+        <record model="ir.ui.view" id="project_phonecall_to_phonecall_view">
             <field name="name">project.phonecall2phonecall.form</field>
             <field name="model">project.phonecall2phonecall</field>
             <field name="arch" type="xml">
@@ -28,12 +28,12 @@
 
 <!-- Phonecall to Phonecall action -->
 
-        <record model="ir.actions.act_window" id="phonecall_to_phonecall_act">
+        <record model="ir.actions.act_window" id="project_phonecall_to_phonecall_act">
             <field name="name">Schedule Other Call</field>
             <field name="res_model">project.phonecall2phonecall</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="phonecall_to_phonecall_view"/>
+            <field name="view_id" ref="project_phonecall_to_phonecall_view"/>
             <field name="target">new</field>
         </record>
 

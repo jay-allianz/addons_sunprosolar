@@ -24,7 +24,7 @@ import time
 from openerp.osv import fields, osv
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from openerp.tools.translate import _
-#from openerp.addons.base_calendar import get_real_ids, base_calendar_id2real_id
+from base_calendar.base_calendar import get_real_ids, base_calendar_id2real_id
 from openerp.addons.base_status.base_state import base_state
 #
 # project.meeting is defined here so that it may be used by modules other than project,
@@ -57,9 +57,9 @@ class project_meeting(base_state, osv.Model):
                     string='Status', size=16, readonly=True, track_visibility='onchange'),
         # Meeting fields
         'name': fields.char('Meeting Subject', size=128, required=True, states={'done': [('readonly', True)]}),
-        'categ_ids': fields.many2many('project.meeting.type', 'meeting_category_rel',
+        'categ_ids': fields.many2many('project.meeting.type', 'projectmeeting_category_rel',
             'event_id', 'type_id', 'Tags'),
-        'attendee_ids': fields.many2many('calendar.attendee', 'meeting_attendee_rel',\
+        'attendee_ids': fields.many2many('calendar.attendee', 'projectmeeting_attendee_rel',\
                             'event_id', 'attendee_id', 'Attendees', states={'done': [('readonly', True)]}),
     }
     _defaults = {
@@ -107,66 +107,66 @@ class project_meeting(base_state, osv.Model):
                     'message': warning_msg,
                     }
                 }
-    # ----------------------------------------
-    # OpenChatter
-    # ----------------------------------------
-
-    # shows events of the day for this user
-    def _needaction_domain_get(self, cr, uid, context=None):
-        return [('date', '<=', time.strftime(DEFAULT_SERVER_DATE_FORMAT + ' 23:59:59')), ('date_deadline', '>=', time.strftime(DEFAULT_SERVER_DATE_FORMAT + ' 23:59:59')), ('user_id', '=', uid)]
-
-    def message_post(self, cr, uid, thread_id, body='', subject=None, type='notification',
-                        subtype=None, parent_id=False, attachments=None, context=None, **kwargs):
-        if isinstance(thread_id, str):
-            thread_id = get_real_ids(thread_id)
-        return super(project_meeting, self).message_post(cr, uid, thread_id, body=body, subject=subject, type=type, subtype=subtype, parent_id=parent_id, attachments=attachments, context=context, **kwargs)
-
-class mail_message(osv.osv):
-    _inherit = "mail.message"
-
-    def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
-        '''
-        convert the search on real ids in the case it was asked on virtual ids, then call super()
-        '''
-        for index in range(len(args)):
-            if args[index][0] == "res_id" and isinstance(args[index][2], str):
-                args[index][2] = get_real_ids(args[index][2])
-        return super(mail_message, self).search(cr, uid, args, offset=offset, limit=limit, order=order, context=context, count=count)
-
-    def _find_allowed_model_wise(self, cr, uid, doc_model, doc_dict, context=None):
-        if doc_model == 'project.meeting':
-            for virtual_id in self.pool.get(doc_model).get_recurrent_ids(cr, uid, doc_dict.keys(), [], context=context):
-                doc_dict.setdefault(virtual_id, doc_dict[get_real_ids(virtual_id)])
-        return super(mail_message, self)._find_allowed_model_wise(cr, uid, doc_model, doc_dict, context=context)
-
-class ir_attachment(osv.osv):
-    _inherit = "ir.attachment"
-
-    def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
-        '''
-        convert the search on real ids in the case it was asked on virtual ids, then call super()
-        '''
-        for index in range(len(args)):
-            if args[index][0] == "res_id" and isinstance(args[index][2], str):
-                args[index][2] = get_real_ids(args[index][2])
-        return super(ir_attachment, self).search(cr, uid, args, offset=offset, limit=limit, order=order, context=context, count=count)
-
-    def write(self, cr, uid, ids, vals, context=None):
-        '''
-        when posting an attachment (new or not), convert the virtual ids in real ids.
-        '''
-        if isinstance(vals.get('res_id'), str):
-            vals['res_id'] = get_real_ids(vals.get('res_id'))
-        return super(ir_attachment, self).write(cr, uid, ids, vals, context=context)
-
-class invite_wizard(osv.osv_memory):
-    _inherit = 'mail.wizard.invite'
-
-    def default_get(self, cr, uid, fields, context=None):
-        '''
-        in case someone clicked on 'invite others' wizard in the followers widget, transform virtual ids in real ids
-        '''
-        result = super(invite_wizard, self).default_get(cr, uid, fields, context=context)
-        if 'res_id' in result:
-            result['res_id'] = get_real_ids(result['res_id'])
-        return result
+#    # ----------------------------------------
+#    # OpenChatter
+#    # ----------------------------------------
+#
+#    # shows events of the day for this user
+#    def _needaction_domain_get(self, cr, uid, context=None):
+#        return [('date', '<=', time.strftime(DEFAULT_SERVER_DATE_FORMAT + ' 23:59:59')), ('date_deadline', '>=', time.strftime(DEFAULT_SERVER_DATE_FORMAT + ' 23:59:59')), ('user_id', '=', uid)]
+#
+#    def message_post(self, cr, uid, thread_id, body='', subject=None, type='notification',
+#                        subtype=None, parent_id=False, attachments=None, context=None, **kwargs):
+#        if isinstance(thread_id, str):
+#            thread_id = get_real_ids(thread_id)
+#        return super(project_meeting, self).message_post(cr, uid, thread_id, body=body, subject=subject, type=type, subtype=subtype, parent_id=parent_id, attachments=attachments, context=context, **kwargs)
+#
+#class mail_message(osv.osv):
+#    _inherit = "mail.message"
+#
+#    def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
+#        '''
+#        convert the search on real ids in the case it was asked on virtual ids, then call super()
+#        '''
+#        for index in range(len(args)):
+#            if args[index][0] == "res_id" and isinstance(args[index][2], str):
+#                args[index][2] = get_real_ids(args[index][2])
+#        return super(mail_message, self).search(cr, uid, args, offset=offset, limit=limit, order=order, context=context, count=count)
+#
+#    def _find_allowed_model_wise(self, cr, uid, doc_model, doc_dict, context=None):
+#        if doc_model == 'project.meeting':
+#            for virtual_id in self.pool.get(doc_model).get_recurrent_ids(cr, uid, doc_dict.keys(), [], context=context):
+#                doc_dict.setdefault(virtual_id, doc_dict[get_real_ids(virtual_id)])
+#        return super(mail_message, self)._find_allowed_model_wise(cr, uid, doc_model, doc_dict, context=context)
+#
+#class ir_attachment(osv.osv):
+#    _inherit = "ir.attachment"
+#
+#    def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
+#        '''
+#        convert the search on real ids in the case it was asked on virtual ids, then call super()
+#        '''
+#        for index in range(len(args)):
+#            if args[index][0] == "res_id" and isinstance(args[index][2], str):
+#                args[index][2] = get_real_ids(args[index][2])
+#        return super(ir_attachment, self).search(cr, uid, args, offset=offset, limit=limit, order=order, context=context, count=count)
+#
+#    def write(self, cr, uid, ids, vals, context=None):
+#        '''
+#        when posting an attachment (new or not), convert the virtual ids in real ids.
+#        '''
+#        if isinstance(vals.get('res_id'), str):
+#            vals['res_id'] = get_real_ids(vals.get('res_id'))
+#        return super(ir_attachment, self).write(cr, uid, ids, vals, context=context)
+#
+#class invite_wizard(osv.osv_memory):
+#    _inherit = 'mail.wizard.invite'
+#
+#    def default_get(self, cr, uid, fields, context=None):
+#        '''
+#        in case someone clicked on 'invite others' wizard in the followers widget, transform virtual ids in real ids
+#        '''
+#        result = super(invite_wizard, self).default_get(cr, uid, fields, context=context)
+#        if 'res_id' in result:
+#            result['res_id'] = get_real_ids(result['res_id'])
+#        return result

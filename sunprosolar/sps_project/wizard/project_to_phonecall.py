@@ -27,32 +27,28 @@ import time
 class project2phonecall(osv.osv_memory):
     """Converts Project to Phonecall"""
     _inherit = 'project.phonecall2phonecall'
-    _name = 'project2phonecall'
-    _description = 'Opportunity to Phonecall'
+    _name = 'project.project2phonecall'
+    _description = 'Project to Phonecall'
 
     def default_get(self, cr, uid, fields, context=None):
         pro_obj = self.pool.get('project.project')
-        data_obj = self.pool.get('ir.model.data')
-        res_id = data_obj._get_id(cr, uid, 'sps_project', 'categ_phone2')
 
         record_ids = context and context.get('active_ids', []) or []
         res = {}
         res.update({'action': 'log', 'date': time.strftime('%Y-%m-%d %H:%M:%S')})
-        for project in pro_obj.browse(cr, uid, record_ids, context=context):
+        for pro in pro_obj.browse(cr, uid, record_ids, context=context):
             if 'name' in fields:
-                res.update({'name': project.name})
+                res.update({'name': pro.name})
             if 'user_id' in fields:
-                res.update({'user_id': pro_obj.user_id and pro_obj.user_id.id or False})
-            if 'section_id' in fields:
-                res.update({'section_id': pro_obj.section_id and pro_obj.section_id.id or False})
+                res.update({'user_id': pro.user_id and pro.user_id.id or False})
             if 'partner_id' in fields:
-                res.update({'partner_id': pro_obj.partner_id and pro_obj.partner_id.id or False})
+                res.update({'partner_id': pro.partner_id and pro.partner_id.id or False})
             if 'note' in fields:
-                res.update({'note': pro_obj.description})
+                res.update({'note': pro.description})
             if 'contact_name' in fields:
-                res.update({'contact_name': pro_obj.partner_id and pro_obj.partner_id.name or False})
+                res.update({'contact_name': pro.partner_id and pro.partner_id.name or False})
             if 'phone' in fields:
-                res.update({'phone': pro_obj.phone or (pro_obj.partner_id and pro_obj.partner_id.phone or False)})
+                res.update({'phone': pro.partner_id.phone or (pro.partner_id and pro.partner_id.phone or False)})
         return res
 
     def action_schedule(self, cr, uid, ids, context=None):
@@ -60,12 +56,11 @@ class project2phonecall(osv.osv_memory):
         if context is None:
             context = {}
         phonecall = self.pool.get('project.phonecall')
-        opportunity_ids = context and context.get('active_ids') or []
-        opportunity = self.pool.get('project.lead')
+        project_ids = context and context.get('active_ids') or []
+        project = self.pool.get('project.project')
         data = self.browse(cr, uid, ids, context=context)[0]
-        call_ids = opportunity.schedule_phonecall(cr, uid, opportunity_ids, data.date, data.name, \
+        call_ids = project.schedule_phonecall(cr, uid, project_ids, data.date, data.name, \
                 data.note, data.phone, data.contact_name, data.user_id and data.user_id.id or False, \
-                data.section_id and data.section_id.id or False, \
                 action=data.action, context=context)
         return {'type': 'ir.actions.act_window_close'}
 
