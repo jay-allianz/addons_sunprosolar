@@ -24,7 +24,7 @@
             <field name="state">draft</field>
             <field eval="'10'" name="probability"/>
             <field eval="'10'" name="sequence"/>
-            <field name="type">both</field>
+            <field name="type">lead</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead2">
             <field name="name">SALES NOTIFIED</field>
@@ -32,7 +32,7 @@
             <field name="state">open</field>
             <field eval="'20'" name="probability"/>
             <field eval="'11'" name="sequence"/>
-            <field name="type">lead</field>
+            <field name="type">both</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead3">
             <field name="name">INITIAL CONTACT</field>
@@ -40,7 +40,7 @@
             <field name="state">open</field>
             <field eval="'20'" name="probability"/>
             <field eval="'12'" name="sequence"/>
-            <field name="type">opportunity</field>
+            <field name="type">both</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead4">
             <field name="name"> APPOINTMENT SET</field>
@@ -48,7 +48,7 @@
             <field name="state">open</field>
             <field eval="'40'" name="probability"/>
             <field eval="'13'" name="sequence"/>
-            <field name="type">opportunity</field>
+            <field name="type">both</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead5">
             <field name="name">CONTRACT SIGNED</field>
@@ -56,16 +56,15 @@
             <field name="state">open</field>
             <field eval="'60'" name="probability"/>
             <field eval="'14'" name="sequence"/>
-            <field name="type">opportunity</field>
+            <field name="type">both</field>
         </record>
-        <record model="crm.case.stage" id="crm.stage_lead6">
-            <field name="name">Won</field>
+        <record model="crm.case.stage" id="stage_lead10">
+            <field name="name">PROJ_MGT_NOTIFIED</field>
             <field eval="1" name="case_default"/>
-            <field name="state">done</field>
-            <field eval="'100'" name="probability"/>
+            <field name="state">open</field>
+            <field eval="'60'" name="probability"/>
             <field eval="'15'" name="sequence"/>
-            <field eval="1" name="on_change"/>
-            <field name="type">opportunity</field>
+            <field name="type">both</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead7">
             <field name="name">Dead</field>
@@ -76,16 +75,25 @@
             <field eval="'16'" name="sequence"/>
             <field name="type">lead</field>
         </record>
+        <record model="crm.case.stage" id="crm.stage_lead6">
+            <field name="name">Won</field>
+            <field eval="1" name="case_default"/>
+            <field name="state">done</field>
+            <field eval="100" name="probability"/>
+            <field eval="130" name="sequence"/>
+            <field eval="1" name="on_change"/>
+            <field name="type">opportunity</field>
+        </record>
         <record model="crm.case.stage" id="crm.stage_lead8">
             <field name="name">Lost</field>
             <field eval="1" name="case_default"/>
             <field eval="True" name="fold"/>
+            <field eval="1" name="on_change"/>
             <field name="state">cancel</field>
-            <field eval="'0'" name="probability"/>
-            <field eval="'17'" name="sequence"/>
+            <field eval="0" name="probability"/>
+            <field eval="140" name="sequence"/>
             <field name="type">opportunity</field>
         </record>
-        
 		
     </data>
 </openerp>

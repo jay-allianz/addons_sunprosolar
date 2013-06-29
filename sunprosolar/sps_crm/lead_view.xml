@@ -1,26 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        
-    	<!-- CRM lead2opportunity Form View  -->
-        <!--
-								<record id="view_crm_lead2opportunity__form" model="ir.ui.view">
-			<field name="name">crm.lead2opportunity.partner.form</field>
-			<field name="model">crm.lead2opportunity.partner</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner"/>
-			<field name="arch" type="xml">
-						<xpath expr="//field[@name='name']" position="after">
-								<group col="2" colspan="2">
-									<field name="user_id" />
-								</group>
-						</xpath>
-						<xpath expr="//form/footer/button[1][@string='Create Opportunity']" position="before">
-								<button name="new_mail_send" string="Send Mail" type="object" class="oe_highlight"/>
-						</xpath>
-			</field>
-		</record>
-								-->
 		<!-- CRM Lead Form View  -->
         <record id="view_sun_crm_lead_form" model="ir.ui.view">
 			<field name="name">crm.lead.form</field>
@@ -28,112 +8,186 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
 			<field name="arch" type="xml">
-						<xpath expr="//form/header/button[1][@string='Convert to Opportunity']" position="before">
-								<button name="new_mail_send1" string="Send Mail" type="object" states="draft,open,pending" class="oe_highlight"/>
-						</xpath>
-						<xpath expr="//notebook/page[@string='Notes']" position="after">
-							<page string="Electricity Information">
-								<group col="4" colspan="4">
-									<field name="acc_no" />
-									<field name="meter_no" placeholder="e.g. S06DS123456..."/>
-									<field name="bill_average" />
-									<field name="bill_total" />
-									<field name="rate_plan" />
-								</group>					
-							</page>	
-						</xpath>
+<!--				<xpath expr="//form/header/button[1][@string='Convert to Opportunity']" position="before">-->
+<!--					<button name="new_mail_send1" string="Send Mail" type="object" states="draft,open,pending" class="oe_highlight"/>-->
+<!--				</xpath>-->
+                <xpath expr="//form/sheet/div/button[@string='Schedule/Log Call']" position='after'>
+                    <button string="Meeting" name="action_makeMeeting" type="object" context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"/>
+<!--                    <button string="Contract Sign" name="customer_contract_sign" type="object" />-->
+                </xpath>
+				<field name="contact_name" position="after">
+				    <field name="last_name" placeholder="Last Name"/>
+				</field>
+				<field name="user_id" position="before">
+    				<field name="ahj" selection="1"/>
+    				<field name="utility_bill" colspan="2"/>
+    				<field name="contract_id" attrs="{'invisible':[('utility_bill','=',False)]}" colspan="2"/>
+                    <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':['|',('utility_bill','=',False),('contract_id','=',False)]}" help=" Click if Customer want to sign the contract." />
+				</field>
+				<field name="section_id" position="after">
+				    <button name="salesteam_send_email" type="object" string="Send Mail" attrs="{'invisible': ['|', ('section_id','=',False), ('user_id', '=', False)]}" />
+				</field>
+				<xpath expr="//form/sheet/notebook/page[@string='Internal Notes']" position="after">
+				    <page string="Home Information">
+		                <group col="4" colspan="4">
+		                    <field name="home" />
+		                    <field name="quote" />
+		                    <group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
+		                        <field name="quote_info"/>
+		                    </group>
+		                    <field name="heat_home" />
+		                    <field name="home_sq_foot" /><newline/>
+		                   </group>
+		                <group col="4" colspan="4">
+		                       <field name="roof_type"/>
+		                       <field name="estimate_shade"/>
+		                       <field name="tilt"/>
+		                       <field name="azimuth"/>
+		                          <group col="10" colspan="10">
+		                              <field name="age_house_year"/>
+		                              <span class="oe_grey"> Year </span><newline/>
+		                              <span class="oe_grey">  </span>
+		                              <field name="age_house_month" nolabel="1"/>
+		                              <span class="oe_grey"> Month </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                    </group>
+		                </group>
+		            </page>
+					<page string="Electricity Information">
+						<group col="4" colspan="4">
+							<field name="acc_no" />
+							<field name="meter_no" placeholder="e.g. S06DS123456..."/>
+							<field name="bill_average" />
+							<field name="bill_total" />
+							<field name="rate_plan" />
+						</group>					
+					</page>	
+					<page string="Marketing Data">
+                        <group col="4" colspan="4">
+                            <field name="lead_source" />
+                            <field name="level_of_lead" />
+                            <field name="schedule_appointment" />
+                            <field name="outcome_appointment" />
+                            <field name="marketing_note" colspan="4"/>
+                            <field name="qualified" />
+                            <field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}"/>
+                            <field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}"/>
+                            <field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}"/>
+                            <field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}"/>
+                        </group>
+                    </page>
+                    <page string="Accounting Data">
+                        <group col="4" colspan="4">
+                            <field name="type_of_sale" />
+                            <field name="deadline" />
+                            <field name="deposite" />
+                            <field name="federal_tax" />
+                        </group>
+                    </page>
+                    <page string="Attachments">
+                        <field name="attachment_ids" nolabel="1" colspan="4"/>
+                    </page>
+				</xpath>
+
 			</field>
-			</record>
+		</record>
 			
-			<!--
-			<record id="action_hr_contract1" model="ir.actions.act_window">
-	            <field name="name">Contracts</field>
-	            <field name="res_model">hr.contract</field>
-	            <field name="view_type">form</field>
-	            <field name="view_mode">tree,form</field>
-	            <field name="domain">[]</field>
-	            <field name="context">{'search_default_current':1}</field>
-	            <field name="search_view_id" ref="hr_contract.hr_contract_view_search"/>
-	        </record>
-			-->
-			
-			<!-- Opportunities Form View -->
-			<record id="view_sun_crm_opp_form" model="ir.ui.view">
-			<field name="name">crm.opp.form</field>
-			<field name="model">crm.lead</field>
-			<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
-			<field name="arch" type="xml">
-						<xpath expr="//button[@string='Send Mail']" position="attributes">
-							<attribute name="invisible">1</attribute>
-						</xpath>
-						<xpath expr="//form/header/button[2][@string='Mark Lost']" position="after">
-							<button name="type_change" string="Convert to Lead" type="object"
-                            states="draft,open,pending" help="Convert to Lead" />
-						</xpath>
-						<xpath expr="//form/sheet/group/group[4]/field[@name='categ_ids']" position="after">
-								<label for="utility_bill"/>
-	                            <div>
-	                                <field name="utility_bill"/>
-	                            </div>
-                                <group  col="2" colspan="2" attrs="{'invisible':[('utility_bill','=',False)]}">
-	                                <label for="contract_id"/>
-	                                <div>
-	                                    <field name="contract_id" attrs="{'invisible':[('utility_bill','=',False)]}"/><newline/>
-	                                    <button name="new_mail_send" string="Contract Sign" type="object" icon="gtk-yes"
-	                                    	 attrs="{'invisible':[('contract_id','=',False)]}" help=" Click if Customer want to sign the contract." />
-	                                </div>
-	                            </group>
-						</xpath>
-						<xpath expr="//notebook/page[@string='Lead']" position="after">
-							<page string="Home Information">
-									<group col="4" colspan="4">
-                                		<field name="home" />
-                                    	<field name="quote" />
-                                    	<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
-												<field name="quote_info"/>
-										</group>
-										<field name="heat_home" />
-										<field name="home_sq_foot" /><newline/>
-                                    </group>
-									<group col="4" colspan="4">
-	                                     <field name="roof_type"/>
-	                                     <field name="estimate_shade"/>
-	                                     <field name="tilt"/>
-	                                     <field name="azimuth"/>
-                                 	
-	                                    <group col="10" colspan="10">
-	                                        <field name="age_house_year"/>
-	                                        <span class="oe_grey"> Year </span><newline/>
-	                                        <span class="oe_grey">  </span>
-	                                        <field name="age_house_month" nolabel="1"/>
-	                                        <span class="oe_grey"> Month </span>
-	                                        <span class="oe_grey">  </span>
-	                                        <span class="oe_grey">  </span>
-	                                        <span class="oe_grey">  </span>
-	                                        <span class="oe_grey">  </span>
-	                                        <span class="oe_grey">  </span>
-	                                        <span class="oe_grey">  </span>
-										</group>
-									</group>
-							</page>
-							<!--
-							<page string="Utility Bills">
-									 <field name="bill_ids" nolabel="1" colspan="4">
-                                <form string="Utility Bills">
-                                    <group col="2" >
-                                        <field name="description" placeholder="Description About Bill"/>
-                                        <field name="bill"/>
-                                    </group>
-                                </form>
-                                <tree string="Certifaicate">
-                                    <field name="description"/>
-                                </tree>
-                            </field>
-							</page>	
-							-->
-						</xpath>
-			</field>
-			</record>
+	<!-- Opportunities Form View -->
+		<record id="view_sun_crm_opp_form" model="ir.ui.view">
+		<field name="name">crm.opp.form</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+		<field name="arch" type="xml">
+
+<!--				<xpath expr="//button[@string='Send Mail']" position="attributes">-->
+<!--					<attribute name="invisible">1</attribute>-->
+<!--				</xpath>-->
+		<xpath expr="//form/header/button[2][@string='Mark Lost']" position="after">
+			<button name="type_change" string="Convert to Lead" type="object" states="draft,open,pending" help="Convert to Lead" />
+		</xpath>
+		<xpath expr="//form/sheet/group/group[4]/field[@name='categ_ids']" position="after">
+			<label for="utility_bill"/>
+			<div>
+			    <field name="utility_bill"/>
+			</div>
+			<group  col="2" colspan="2" attrs="{'invisible':[('utility_bill','=',False)]}">
+			    <label for="contract_id"/>
+			    <div>
+			        <field name="contract_id" attrs="{'invisible':[('utility_bill','=',False)]}"/><newline/>
+			        <button name="contract_sign" string="Contract Sign" type="object" icon="gtk-yes" attrs="{'invisible':[('contract_id','=',False)]}" help=" Click if Customer want to sign the contract." />
+			    </div>
+			</group>
+		</xpath>
+		<xpath expr="//notebook/page[@string='Lead']" position="after">
+			<page string="Home Information">
+				<group col="4" colspan="4">
+              		<field name="home" />
+                  	<field name="quote" />
+                  	<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
+					    <field name="quote_info"/>
+					</group>
+					<field name="heat_home" />
+					<field name="home_sq_foot" /><newline/>
+                   </group>
+				<group col="4" colspan="4">
+                       <field name="roof_type"/>
+                       <field name="estimate_shade"/>
+                       <field name="tilt"/>
+                       <field name="azimuth"/>
+                          <group col="10" colspan="10">
+                              <field name="age_house_year"/>
+                              <span class="oe_grey"> Year </span><newline/>
+                              <span class="oe_grey">  </span>
+                              <field name="age_house_month" nolabel="1"/>
+                              <span class="oe_grey"> Month </span>
+                              <span class="oe_grey">  </span>
+                              <span class="oe_grey">  </span>
+                              <span class="oe_grey">  </span>
+                              <span class="oe_grey">  </span>
+                              <span class="oe_grey">  </span>
+                              <span class="oe_grey">  </span>
+					</group>
+				</group>
+			</page>
+			<page string="Electricity Information">
+                <group col="4" colspan="4">
+                    <field name="acc_no" />
+                    <field name="meter_no" placeholder="e.g. S06DS123456..."/>
+                    <field name="bill_average" />
+                    <field name="bill_total" />
+                    <field name="rate_plan" />
+                </group>
+            </page>
+            <page string="Marketing Data">
+                <group col="4" colspan="4">
+                    <field name="lead_source" />
+                    <field name="level_of_lead" />
+                    <field name="schedule_appointment" />
+                    <field name="outcome_appointment" />
+                    <field name="marketing_note" colspan="4"/>
+                    <field name="qualified" />
+                    <field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}"/>
+                    <field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}"/>
+                    <field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}"/>
+                    <field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}"/>
+                </group>
+            </page>
+            <page string="Accounting Data">
+                <group col="4" colspan="4">
+                    <field name="type_of_sale" />
+                    <field name="deadline" />
+                    <field name="deposite" />
+                    <field name="federal_tax" />
+                </group>
+            </page>
+		</xpath>
+	</field>
+	</record>
 			
 		<!-- Company Quotation Search View  -->
         <record model="ir.ui.view" id="company_quotation_search">
@@ -154,14 +208,14 @@
         <field name="model">company.quotation</field>
         <field name="arch" type="xml">
             <form string="Company Quotation Form" version="7.0">
-                    <sheet>
-		                <group col="4" colspan="4">
-			                <field name="company_name" required="1"/><newline/>
-			                <separator string="Equipments"/>
-							<field name="product_ids" nolabel="1" colspan="4" />
-							<field name="quote_amount" required="1"/>
-						</group>
-					</sheet>
+               <sheet>
+               <group col="4" colspan="4">
+		            <field name="company_name" required="1"/><newline/>
+		            <separator string="Equipments"/>
+				    <field name="product_ids" nolabel="1" colspan="4" />
+					<field name="quote_amount" required="1"/>
+				</group>
+                </sheet>
             </form>
         </field>
         </record>
@@ -209,12 +263,12 @@
         <field name="model">heat.home</field>
         <field name="arch" type="xml">
             <form string="Heat Home Technique Form" version="7.0">
-                    <sheet>
-		                <group col="4" colspan="4">
-			                <field name="name" required="1"/><newline/>
-							<field name="description"/>
-						</group>
-					</sheet>
+	            <sheet>
+	                <group col="4" colspan="4">
+		                <field name="name" required="1"/><newline/>
+						<field name="description"/>
+		       		</group>
+				</sheet>
             </form>
         </field>
         </record>
@@ -260,12 +314,12 @@
         <field name="model">roof.type</field>
         <field name="arch" type="xml">
             <form string="Roof Type Form" version="7.0">\
-            		<sheet>
-		                <group col="4" colspan="4">
-			                <field name="name" required="1"/><newline/>
-							<field name="description"/>
-						</group>
-					</sheet>
+           		<sheet>
+	                <group col="4" colspan="4">
+		                <field name="name" required="1"/><newline/>
+						<field name="description"/>
+					</group>
+				</sheet>
             </form>
         </field>
         </record>
@@ -290,9 +344,38 @@
 	        <field name="view_mode">tree,form</field>
 	    </record>
 
+
 		<menuitem action="action_roof_type" id="menu_roof_type" parent="base.menu_crm_config_lead" 
 					string="Roof Type" sequence="13"/> 
 
+		<record model="ir.ui.view" id="account_analytic_form1">
+				<field name="name">account.analytic.form</field>
+				<field name="model">account.analytic.account</field>
+				<field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+				<field name="arch" type="xml">
+					<xpath expr="//form/sheet/notebook/page[@string='Contract Information']" position="after">
+<!--							<page string="Equipments">-->
+<!--								 <field name="product_ids" nolabel="1" colspan="4">-->
+<!--                            </field>-->
+<!--							</page>	-->
+                        <page string="User Contract Information">
+                            <group col="4" colspan="4">
+	                            <field name="contract_id" />
+	                            <field name="contract_date" />
+	                            <field name="type_of_finance" />
+	                            <field name="amount" />
+	                            <field name="deposit" />
+	                            <field name="planet" />
+	                            <field name="power" attrs="{'invisible':[('planet','!=','ppa')]}"/>
+	                        </group>
+                        </page>
+						<page string="Project Team Members">
+						     <field name="members" />
+						</page>
+					</xpath>
+					
+				</field>
+			</record>
 
     </data>
 </openerp>

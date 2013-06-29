@@ -27,7 +27,7 @@
     "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to generate Leads of customer. 
     """,
-    'depends': ['base','product','crm','sps_hr','sps_project'],
+    'depends': ['base','product','crm','document','account','analytic','project', 'sale'],
     'data': [
         'lead_view.xml','crm_data.xml',
     ],
