@@ -40,11 +40,12 @@ class crm_lead(osv.osv):
     
     _columns = {
          'last_name': fields.char('Last Name', size=32),
-         'acc_no':fields.integer('Account Number'),
+         'utility_company': fields.boolean('Utility Company'),
+         'acc_no':fields.char('Account Number', size=32),
          'meter_no': fields.char('Meter Number', size=32),
          'bill_average': fields.float(' Electric Bill Average'),
          'bill_total': fields.float('Electric Bills Total', help="Electric Bills Total 12-24-months depending on utility company"),
-         'rate_plan': fields.float('Rate Plan'),
+         'rate_plan': fields.char('Rate Plan', size=32),
          'home': fields.selection([ ('own','Own Home'),
                                     ('rent', 'Renting')],
                                     string='Home'),
@@ -54,11 +55,12 @@ class crm_lead(osv.osv):
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
          'age_house_month': fields.integer('Age of House month'),
-         'roof_type': fields.many2one('roof.type','Type of Roof '),
-         'tilt': fields.char('Tilt'),
-         'azimuth': fields.float('Azimuth'),
+#         'roof_type': fields.many2one('roof.type','Type of Roof '),
+         'roof_type': fields.char('Type Of Roof', size=32),
+         'tilt': fields.integer('Tilt'),
+         'azimuth': fields.integer('Azimuth'),
          'contract_id' : fields.many2one('account.analytic.account','Contract'),
-         'estimate_shade': fields.float('Estimated Shading'),
+         'estimate_shade': fields.integer('Estimated Shading'),
          'ahj': fields.selection([('structural', 'Structural'),('electrical','Electrical')], 'AHJ'),
          'utility_bill' : fields.boolean('Utility Bill',help="Checked Utility bill to sign customer contract."),
 #         'bill_ids' : fields.one2many('utility.bill','lead_id','Certificate'),
@@ -77,7 +79,14 @@ class crm_lead(osv.osv):
         'deposite': fields.float('Deposite'),
         'federal_tax': fields.selection([('yes','Yes'),('no','No')],'Federal Tax Advantage?'),
         'attachment_ids': fields.many2many('ir.attachment', 'email_template_attachment_sps_rel', 'mail_template_id','attach_id', 'Attachments'),
+        'type_of_module': fields.char('Type Of Modules', size=36),
+        'inverter': fields.char('Inverter', size=32),
+        'main_ele_serviece_panel': fields.char('Main Electrical Service Panel information', size=32),
         }
+    
+    _defaults = {
+            'name': '/'
+    }
     
     def redirect_lead_view(self, cr, uid, lead_id, context=None):
         models_data = self.pool.get('ir.model.data')
@@ -252,6 +261,13 @@ class crm_lead(osv.osv):
         self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
         return True
 
+    def action_makeMeeting(self, cr, uid, ids, context=None):
+        res = super(crm_lead, self).action_makeMeeting(cr, uid, ids, context=context)
+        crm_case_stage_obj = self.pool.get('crm.case.stage')
+        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','APPOINTMENT SET')])
+        self.write(cr, uid, ids, {'stage_id': stage_id[0]})
+        return res
+
 crm_lead()
 
 class company_quotation(osv.osv):
@@ -337,9 +353,12 @@ class crm_make_sale(osv.osv_memory):
         order_res = super(crm_make_sale, self).makeOrder(cr, uid, ids, context=context)
         data = context and context.get('active_ids', []) or []
         case_obj = self.pool.get('crm.lead')
+        crm_case_stage_obj = self.pool.get('crm.case.stage')
         if order_res['res_id']:
             for case in case_obj.browse(cr, uid, data, context=context):
                 self.pool.get('sale.order').write(cr, uid, [order_res['res_id']], {'project_id': case.contract_id.id})
+        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Proposition')])
+        case_obj.write(cr, uid, data, {'stage_id': stage_id[0]})
         return order_res
 
 crm_make_sale()
@@ -360,3 +379,17 @@ class project_project(osv.osv):
         return project_id
     
 project_project()
+
+class crm_meeting(osv.Model):
+    """ Model for CRM meetings """
+    _inherit = 'crm.meeting'
+    
+    _columns = {
+            'meeting_type': fields.selection([('appointment','Appointment'),('assistance','Assistance'),('general_meeting','General Meeting')], 'Meeting Type')
+    }
+    
+    _defaults = {
+            'name': '/',
+            'meeting_type': 'general_meeting',
+    }
+crm_meeting()

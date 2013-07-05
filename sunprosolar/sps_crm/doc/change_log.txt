@@ -1,0 +1,12 @@
+==================================================================================
+ Version ChangeLog (sps_crm)
+==================================================================================
+0.02 --> 05 July 2013 : Serpent Consulting Services
+        * Added field assign doc and add stage and improve workflow.
+        
+0.02 --> 03 July 2013 : Serpent Consulting Services
+        * Improved Code
+        
+0.01 --> 29 June 2013 : Serpent Consulting Services
+        * Added a module of CRM
+
