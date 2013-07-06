@@ -20,6 +20,7 @@
 				</field>
 				<field name="user_id" position="before">
     				<field name="ahj" selection="1"/>
+    				<field name="see_lead_all_note" invisible="1" />
 <!--    				<field name="utility_bill" colspan="2"/>-->
 <!--    				<field name="contract_id" attrs="{'invisible':[('utility_bill','=',False)]}" colspan="2"/>-->
 <!--                    <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':['|',('utility_bill','=',False),('contract_id','=',False)]}" help=" Click if Customer want to sign the contract." />-->
@@ -57,6 +58,13 @@
 		                              <span class="oe_grey">  </span>
 		                    </group>
 		                </group>
+		                <field name="see_lead_home_note" invisible="1" />
+		                <label for="home_note"/>
+		                <field name="home_note" colspan="4" />
+		                <button name="view_lead_home_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
+		                <group>
+		                <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
+		                </group>
 		            </page>
 					<page string="Electricity Information">
 						<group col="4" colspan="4">
@@ -66,7 +74,14 @@
 							<field name="bill_average" attrs="{'invisible':[('utility_company','=',False)]}"/>
 							<field name="bill_total" attrs="{'invisible':[('utility_company','=',False)]}"/>
 							<field name="rate_plan" attrs="{'invisible':[('utility_company','=',False)]}"/>
-						</group>					
+						</group>
+						<field name="see_lead_electricity_note" invisible="1" />
+                        <label for="electricity_note"/>
+                        <field name="electricity_note" colspan="4" />
+                        <button name="view_lead_electricity_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
+                        <group>
+                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
+                        </group>
 					</page>	
 					<page string="Marketing Data">
                         <group col="4" colspan="4">
@@ -74,12 +89,19 @@
                             <field name="level_of_lead" />
                             <field name="schedule_appointment" />
                             <field name="outcome_appointment" />
-                            <field name="marketing_note" colspan="4"/>
+<!--                            <field name="marketing_note" colspan="4"/>-->
                             <field name="qualified" />
                             <field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}"/>
                             <field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}"/>
                             <field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}"/>
                             <field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}"/>
+                        </group>
+                        <field name="see_lead_marketing_note" invisible="1" />
+                        <label for="marketing_note"/>
+                        <field name="marketing_note" colspan="4" />
+                        <button name="view_lead_marketing_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
+                        <group>
+                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
                         </group>
                     </page>
                     <page string="Accounting Data">
@@ -89,6 +111,14 @@
                             <field name="deposite" />
                             <field name="federal_tax" />
                         </group>
+                        <field name="see_lead_accounting_note" invisible="1" />
+                        <label for="accounting_note"/>
+                        <field name="accounting_note" colspan="4" />
+                        <button name="view_lead_accounting_notes" string="Viewing This Tab Notes" type="object" class="oe_link" />
+                        <newline/>
+                        <group>
+                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link" />
+                        </group>
                     </page>
                     <page string="System Data">
                         <group col="4" colspan="4">
@@ -96,9 +126,106 @@
 	                        <field name="inverter" />
 	                        <field name="main_ele_serviece_panel" />
                         </group>
+                        <field name="see_lead_system_note" invisible="1" />
+                        <label for="system_note"/>
+                        <field name="system_note" colspan="4" />
+                        <button name="view_lead_system_notes" string="Viewing This Tab Notes" type="object" class="oe_link" colspan="4"/>
+                        <group>
+                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link" colspan="4"/>
+                        </group>
                     </page>
                     <page string="Attachments">
                         <field name="attachment_ids" nolabel="1" colspan="4"/>
+                    </page>
+                    <page string="Viewing Home Notes" attrs="{'invisible':[('see_lead_home_note','=',False)]}">
+                        <field name="crm_lead_home_note_ids" readonly="1" >
+                            <tree>
+                                <field name="date" />
+                                <field name="notes" />
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="date" />
+                                    <field name="notes" />
+                                </group>
+                            </form>
+                        </field>
+                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+                    </page>
+                    <page string="Viewing Electricity Notes" attrs="{'invisible':[('see_lead_electricity_note','=',False)]}">
+                        <field name="crm_lead_electricity_note_ids" readonly="1" >
+                            <tree>
+                                <field name="date" />
+                                <field name="notes" />
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="date" />
+                                    <field name="notes" />
+                                </group>
+                            </form>
+                        </field>
+                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+                    </page>
+                    <page string="Viewing Marketing Notes" attrs="{'invisible':[('see_lead_marketing_note','=',False)]}">
+                        <field name="crm_lead_marketing_note_ids" readonly="1" >
+                            <tree>
+                                <field name="date" />
+                                <field name="notes" />
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="date" />
+                                    <field name="notes" />
+                                </group>
+                            </form>
+                        </field>
+                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+                    </page>
+                    <page string="Viewing Accounting Notes" attrs="{'invisible':[('see_lead_accounting_note','=',False)]}">
+                        <field name="crm_lead_accounting_note_ids" readonly="1" >
+                            <tree>
+                                <field name="date" />
+                                <field name="notes" />
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="date" />
+                                    <field name="notes" />
+                                </group>
+                            </form>
+                        </field>
+                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+                    </page>
+                    <page string="Viewing System Notes" attrs="{'invisible':[('see_lead_system_note','=',False)]}">
+                        <field name="crm_lead_system_note_ids" readonly="1" >
+                            <tree>
+                                <field name="date" />
+                                <field name="notes" />
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="date" />
+                                    <field name="notes" />
+                                </group>
+                            </form>
+                        </field>
+                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+                    </page>
+                    <page string="Viewing All Notes" attrs="{'invisible':[('see_lead_all_note','=',False)]}">
+                        <field name="crm_lead_all_tabs_note_ids" readonly="1" >
+                            <tree>
+                                <field name="date" />
+                                <field name="notes" />
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="date" />
+                                    <field name="notes" />
+                                </group>
+                            </form>
+                        </field>
+                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
                     </page>
 				</xpath>
 

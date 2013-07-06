@@ -46,6 +46,11 @@ class crm_lead(osv.osv):
          'bill_average': fields.float(' Electric Bill Average'),
          'bill_total': fields.float('Electric Bills Total', help="Electric Bills Total 12-24-months depending on utility company"),
          'rate_plan': fields.char('Rate Plan', size=32),
+         'home_note': fields.text('Note'),
+         'electricity_note': fields.text('Note'),
+         'marketing_note': fields.text('Note'),
+         'accounting_note': fields.text('Note'),
+         'system_note': fields.text('Note'),
          'home': fields.selection([ ('own','Own Home'),
                                     ('rent', 'Renting')],
                                     string='Home'),
@@ -68,7 +73,7 @@ class crm_lead(osv.osv):
         'level_of_lead': fields.many2one('crm.case.stage', 'Level Of Lead'),
         'schedule_appointment': fields.date('Schedule Appointment'),
         'outcome_appointment': fields.date('Outcome of The Appointment'),
-        'marketing_note': fields.text('Notes'),
+#        'marketing_note': fields.text('Notes'),
         'qualified': fields.boolean('Qualification Data?'),
         'annual_income': fields.float('Annual Income'),
         'tax_liability': fields.float('Tax Liability'),
@@ -82,6 +87,18 @@ class crm_lead(osv.osv):
         'type_of_module': fields.char('Type Of Modules', size=36),
         'inverter': fields.char('Inverter', size=32),
         'main_ele_serviece_panel': fields.char('Main Electrical Service Panel information', size=32),
+        'see_lead_home_note': fields.boolean('See Lead Home Note'),
+        'crm_lead_home_note_ids': fields.one2many('crm.lead.home.description', 'name', 'Notes'),
+        'see_lead_electricity_note': fields.boolean('See Lead Electricity Note'),
+        'crm_lead_electricity_note_ids': fields.one2many('crm.lead.electricity.description', 'name', 'Notes'),
+        'see_lead_marketing_note': fields.boolean('See Lead Marketing Note'),
+        'crm_lead_marketing_note_ids': fields.one2many('crm.lead.marketing.description', 'name', 'Notes'),
+        'see_lead_accounting_note': fields.boolean('See Lead Accounting Note'),
+        'crm_lead_accounting_note_ids': fields.one2many('crm.lead.accounting.description', 'name', 'Notes'),
+        'see_lead_system_note': fields.boolean('See Lead System Note'),
+        'crm_lead_system_note_ids': fields.one2many('crm.lead.system.description', 'name', 'Notes'),
+        'see_lead_all_note': fields.boolean('See Lead All Note'),
+        'crm_lead_all_tabs_note_ids': fields.one2many('crm.lead.all.tabs.description', 'name', 'Notes'),
         }
     
     _defaults = {
@@ -268,7 +285,229 @@ class crm_lead(osv.osv):
         self.write(cr, uid, ids, {'stage_id': stage_id[0]})
         return res
 
+    def create(self, cr, uid, vals, context=None):
+        res = super(crm_lead, self).create(cr, uid, vals, context=context)
+        if res and vals and vals['home_note']:
+            self.pool.get('crm.lead.home.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['home_note']
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['home_note']
+                                                            })
+        if res and vals and vals['electricity_note']:
+            self.pool.get('crm.lead.electricity.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['electricity_note']
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['electricity_note']
+                                                            })
+        if res and vals and vals['marketing_note']:
+            self.pool.get('crm.lead.marketing.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['marketing_note']
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['marketing_note']
+                                                            })
+        if res and vals and vals['accounting_note']:
+            self.pool.get('crm.lead.accounting.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['accounting_note']
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['accounting_note']
+                                                            })
+        if res and vals and vals['system_note']:
+            self.pool.get('crm.lead.system.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['system_note']
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': res,
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals['system_note']
+                                                            })
+        return res
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if vals and vals.get('home_note'):
+            self.pool.get('crm.lead.home.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('home_note')
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('home_note')
+                                                            })
+        if vals and vals.get('electricity_note'):
+            self.pool.get('crm.lead.electricity.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('electricity_note')
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('electricity_note')
+                                                            })
+        if vals and vals.get('marketing_note'):
+            self.pool.get('crm.lead.marketing.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('marketing_note')
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('marketing_note')
+                                                            })
+        if vals and vals.get('accounting_note'):
+            self.pool.get('crm.lead.accounting.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('accounting_note')
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('accounting_note')
+                                                            })
+        if vals and vals.get('system_note'):
+            self.pool.get('crm.lead.system.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('system_note')
+                                                            })
+            self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
+                                                                'name': ids[0],
+                                                                'date': datetime.datetime.today(),
+                                                                'notes': vals.get('system_note')
+                                                            })
+        return super(crm_lead, self).write(cr, uid, ids, vals, context=context)
+
+    def view_lead_home_notes(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'see_lead_home_note': True, 'see_lead_electricity_note': False, 'see_lead_marketing_note': False, 'see_lead_accounting_note': False, 'see_lead_system_note': False, 'see_lead_all_note': False})
+        return True
+
+    def view_lead_electricity_notes(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'see_lead_home_note': False, 'see_lead_electricity_note': True, 'see_lead_marketing_note': False, 'see_lead_accounting_note': False, 'see_lead_system_note': False, 'see_lead_all_note': False})
+        return True
+
+    def view_lead_marketing_notes(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'see_lead_home_note': False, 'see_lead_electricity_note': False, 'see_lead_marketing_note': True, 'see_lead_accounting_note': False, 'see_lead_system_note': False, 'see_lead_all_note': False})
+        return True
+    
+    def view_lead_accounting_notes(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'see_lead_home_note': False, 'see_lead_electricity_note': False, 'see_lead_marketing_note': False, 'see_lead_accounting_note': True, 'see_lead_system_note': False, 'see_lead_all_note': False})
+        return True
+    
+    def view_lead_system_notes(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'see_lead_home_note': False, 'see_lead_electricity_note': False, 'see_lead_marketing_note': False, 'see_lead_accounting_note': False, 'see_lead_system_note': True, 'see_lead_all_note': False})
+        return True
+
+    def view_lead_all_tab_notes(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'see_lead_home_note': False, 'see_lead_electricity_note': False, 'see_lead_marketing_note': False, 'see_lead_accounting_note': False, 'see_lead_system_note': False, 'see_lead_all_note': True})
+        return True
+
+    def exit_notes(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'see_lead_home_note': False, 'see_lead_electricity_note': False, 'see_lead_marketing_note': False, 'see_lead_accounting_note': False, 'see_lead_system_note': False, 'see_lead_all_note': False})
+        return True
 crm_lead()
+
+class crm_lead_home_description(osv.osv):
+
+    """ Model for CRM Lead Home Information Notes. """
+
+    _name = 'crm.lead.home.description'
+
+    _columns = {
+            'name': fields.many2one('crm.lead','Name'),
+            'date': fields.datetime('Date Time'),
+            'notes': fields.text('Note')
+    }
+crm_lead_home_description()
+
+class crm_lead_electricity_description(osv.osv):
+
+    """ Model for CRM Lead Electricity Information Notes. """
+
+    _name = 'crm.lead.electricity.description'
+
+    _columns = {
+            'name': fields.many2one('crm.lead','Name'),
+            'date': fields.datetime('Date Time'),
+            'notes': fields.text('Note')
+    }
+crm_lead_home_description()
+
+class crm_lead_marketing_description(osv.osv):
+
+    """ Model for CRM Lead Marketing Information Notes. """
+
+    _name = 'crm.lead.marketing.description'
+
+    _columns = {
+            'name': fields.many2one('crm.lead','Name'),
+            'date': fields.datetime('Date Time'),
+            'notes': fields.text('Note')
+    }
+crm_lead_marketing_description()
+
+class crm_lead_accounting_description(osv.osv):
+
+    """ Model for CRM Lead Accounting Information Notes. """
+
+    _name = 'crm.lead.accounting.description'
+
+    _columns = {
+            'name': fields.many2one('crm.lead','Name'),
+            'date': fields.datetime('Date Time'),
+            'notes': fields.text('Note')
+    }
+crm_lead_accounting_description()
+
+class crm_lead_system_description(osv.osv):
+
+    """ Model for CRM Lead System Information Notes. """
+
+    _name = 'crm.lead.system.description'
+
+    _columns = {
+            'name': fields.many2one('crm.lead','Name'),
+            'date': fields.datetime('Date Time'),
+            'notes': fields.text('Note')
+    }
+crm_lead_system_description()
+
+class crm_lead_all_tabs_description(osv.osv):
+
+    """ Model for CRM Lead All Tab Information Notes. """
+
+    _name = 'crm.lead.all.tabs.description'
+
+    _columns = {
+            'name': fields.many2one('crm.lead','Name'),
+            'date': fields.datetime('Date Time'),
+            'notes': fields.text('Note')
+    }
+crm_lead_all_tabs_description()
 
 class company_quotation(osv.osv):
     """ Model for Product. """
