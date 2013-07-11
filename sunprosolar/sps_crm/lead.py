@@ -44,6 +44,7 @@ class crm_lead(osv.osv):
          'acc_no':fields.char('Account Number', size=32),
          'meter_no': fields.char('Meter Number', size=32),
          'bill_average': fields.float(' Electric Bill Average'),
+         'bill_month': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months for Bill Average'),
          'bill_total': fields.float('Electric Bills Total', help="Electric Bills Total 12-24-months depending on utility company"),
          'rate_plan': fields.char('Rate Plan', size=32),
          'home_note': fields.text('Note'),
@@ -56,12 +57,13 @@ class crm_lead(osv.osv):
                                     string='Home'),
          'quote': fields.boolean('Had a Solar Quote?', help = 'Checked if customer have Solar Quotation of any other Company.'),
          'quote_info': fields.many2one('company.quotation','Quotation Information'),
-         'heat_home': fields.many2one('heat.home','Heat Home Technique'),
+         'heat_home': fields.selection([('natural_gas','Natural Gas'),('propane','Propane'),('all_electric','All Electric')], 'Heat Home Technique'),
+#         'heat_home': fields.many2one('heat.home','Heat Home Technique'),
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
          'age_house_month': fields.integer('Age of House month'),
-#         'roof_type': fields.many2one('roof.type','Type of Roof '),
-         'roof_type': fields.char('Type Of Roof', size=32),
+         'roof_type': fields.many2one('roof.type','Type of Roof '),
+#         'roof_type': fields.char('Type Of Roof', size=32),
          'tilt': fields.integer('Tilt'),
          'azimuth': fields.integer('Azimuth'),
          'contract_id' : fields.many2one('account.analytic.account','Contract'),
@@ -522,16 +524,16 @@ class company_quotation(osv.osv):
         }
 company_quotation()
 
-class heat_home(osv.osv):
-    """ Model for Heat home. """
-    _name = "heat.home"
-    _description= "Heat Home technique Information."
-    
-    _columns = {
-        'name': fields.char('Technique Name'),
-        'description': fields.text('Description'),
-        }
-heat_home()
+#class heat_home(osv.osv):
+#    """ Model for Heat home. """
+#    _name = "heat.home"
+#    _description= "Heat Home technique Information."
+#    
+#    _columns = {
+#        'name': fields.char('Technique Name'),
+#        'description': fields.text('Description'),
+#        }
+#heat_home()
 
 class roof_type(osv.osv):
     """ Model for Heat home. """

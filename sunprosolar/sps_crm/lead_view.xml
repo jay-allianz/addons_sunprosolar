@@ -29,27 +29,27 @@
 				    <button name="salesteam_send_email" type="object" string="Send Mail" attrs="{'invisible': ['|', ('section_id','=',False), ('user_id', '=', False)]}" />
 				</field>
 				<xpath expr="//form/sheet/notebook/page[@string='Internal Notes']" position="after">
-				    <page string="Home Information">
+				    <page string="Home Info">
 		                <group col="4" colspan="4">
 		                    <field name="home" />
 		                    <field name="quote" />
 		                    <group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
 		                        <field name="quote_info" />
 		                    </group>
-		                    <field name="heat_home" attrs="{'invisible':[('quote','=',False)]}"/>
-		                    <field name="home_sq_foot" attrs="{'invisible':[('quote','=',False)]}"/><newline/>
+		                    <field name="heat_home" />
+		                    <field name="home_sq_foot" /><newline/>
 		                   </group>
 		                   <group col="4" colspan="4">
-		                       <field name="roof_type" attrs="{'invisible':[('quote','=',False)]}"/>
-		                       <field name="estimate_shade" attrs="{'invisible':[('quote','=',False)]}"/>
-		                       <field name="tilt" attrs="{'invisible':[('quote','=',False)]}"/>
-		                       <field name="azimuth" attrs="{'invisible':[('quote','=',False)]}"/>
+		                       <field name="roof_type" />
+		                       <field name="estimate_shade" />
+		                       <field name="tilt" />
+		                       <field name="azimuth" />
 		                          <group col="10" colspan="10">
-		                              <field name="age_house_year" attrs="{'invisible':[('quote','=',False)]}"/>
-		                              <span class="oe_grey" attrs="{'invisible':[('quote','=',False)]}"> Year </span><newline/>
+		                              <field name="age_house_year" />
+		                              <span class="oe_grey"> Year </span><newline/>
 		                              <span class="oe_grey">  </span>
-		                              <field name="age_house_month" attrs="{'invisible':[('quote','=',False)]}" nolabel="1"/>
-		                              <span class="oe_grey" attrs="{'invisible':[('quote','=',False)]}"> Month </span>
+		                              <field name="age_house_month"  nolabel="1"/>
+		                              <span class="oe_grey"> Month </span>
 		                              <span class="oe_grey">  </span>
 		                              <span class="oe_grey">  </span>
 		                              <span class="oe_grey">  </span>
@@ -66,7 +66,7 @@
 		                <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
 		                </group>
 		            </page>
-					<page string="Electricity Information">
+					<page string="Electricity Info">
 						<group col="4" colspan="4">
 						    <field name="utility_company" />
 							<field name="acc_no" attrs="{'invisible':[('utility_company','=',False)]}"/>
@@ -266,7 +266,7 @@
 <!--			</group>-->
 <!--		</xpath>-->
 		<xpath expr="//notebook/page[@string='Lead']" position="after">
-			<page string="Home Information">
+			<page string="Home Info">
 				<group col="4" colspan="4">
               		<field name="home" />
                   	<field name="quote" />
@@ -296,14 +296,19 @@
 					</group>
 				</group>
 			</page>
-			<page string="Electricity Information">
+			<page string="Electricity Info">
                 <group col="4" colspan="4">
                     <field name="utility_company" />
                     <field name="acc_no" attrs="{'invisible':[('utility_company','=',False)]}"/>
                     <field name="meter_no" attrs="{'invisible':[('utility_company','=',False)]}"/>
-                    <field name="bill_average" attrs="{'invisible':[('utility_company','=',False)]}"/>
-                    <field name="bill_total" attrs="{'invisible':[('utility_company','=',False)]}"/>
                     <field name="rate_plan" attrs="{'invisible':[('utility_company','=',False)]}"/>
+                    <label for="bill_average" attrs="{'invisible':[('utility_company','=',False)]}"/>
+                    <div>
+	                    <field name="bill_average" attrs="{'invisible':[('utility_company','=',False)]}"/>
+	                    <span class="oe_grey" attrs="{'invisible':[('utility_company','=',False)]}"> of </span>
+	                    <field name="bill_month" attrs="{'invisible':[('utility_company','=',False)]} " nolabel="1"/>
+                    </div>
+                    <field name="bill_total" attrs="{'invisible':[('utility_company','=',False)]}"/>
                 </group>                    
             </page> 
             <page string="Marketing Data">
@@ -389,7 +394,7 @@
 
 		<!-- Company Qutation -->
 	    <record id="action_company_quotation" model="ir.actions.act_window">
-	        <field name="name">Company Quotation Information</field>
+	        <field name="name">Company Quotation Info</field>
 	        <field name="res_model">company.quotation</field>
 	        <field name="view_type">form</field>
 	        <field name="view_mode">tree,form</field>
@@ -399,7 +404,8 @@
 					string="Company Quotation"  sequence="11"/> 
 
 		<!-- Heat home technique Search View  -->
-        <record model="ir.ui.view" id="heat_home_search">
+     <!--
+					   <record model="ir.ui.view" id="heat_home_search">
         <field name="name">heat_home_Search</field>
         <field name="model">heat.home</field>
         <field name="arch" type="xml">
@@ -408,10 +414,12 @@
 				<field name="description"/>
             </search>
         </field>
-        </record>
+        </record>    
+					-->
 
 		<!-- Heat home technique Form View  -->
-        <record model="ir.ui.view" id="heat_home_form">
+     <!--
+					   <record model="ir.ui.view" id="heat_home_form">
         <field name="name">heat_home_Form</field>
         <field name="model">heat.home</field>
         <field name="arch" type="xml">
@@ -426,9 +434,11 @@
         </field>
         </record>
         
+					-->
         
 		<!-- Heat home technique Tree View  -->
-        <record model="ir.ui.view" id="heat_home_tree">
+     <!--
+					   <record model="ir.ui.view" id="heat_home_tree">
         <field name="name">heat_home_Tree</field>
         <field name="model">heat.home</field>
         <field name="arch" type="xml">
@@ -436,9 +446,11 @@
                 <field name="name"/>
             </tree>
         </field>
-        </record>
+        </record>   
+					-->
 
 		<!-- Heat home technique -->
+	<!--
 	    <record id="action_heat_home" model="ir.actions.act_window">
 	        <field name="name">Heat Home Technique Information</field>
 	        <field name="res_model">heat.home</field>
@@ -447,7 +459,8 @@
 	    </record>
 
 		<menuitem action="action_heat_home" id="menu_heat_home" parent="base.menu_crm_config_lead" 
-					string="Heat Home Technique" sequence="12"/> 
+					string="Heat Home Technique" sequence="12"/>    
+	-->
 
 		<!-- Roof Type Search View  -->
         <record model="ir.ui.view" id="roof_type_search">
@@ -511,7 +524,7 @@
 <!--								 <field name="product_ids" nolabel="1" colspan="4">-->
 <!--                            </field>-->
 <!--							</page>	-->
-                        <page string="User Contract Information">
+                        <page string="User Contract Info">
                             <group col="4" colspan="4">
 	                            <field name="contract_id" />
 	                            <field name="contract_date" />
@@ -526,7 +539,6 @@
 						     <field name="members" />
 						</page>
 					</xpath>
-					
 				</field>
 			</record>
 

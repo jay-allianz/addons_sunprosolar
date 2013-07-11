@@ -104,6 +104,32 @@
             <field eval="140" name="sequence"/>
             <field name="type">opportunity</field>
         </record>
-		
+        
+        <!-- Type of roof -->
+         <record model="roof.type" id="roof1">
+            <field name="name">Yes Composition</field>
+         </record>
+         <record model="roof.type" id="roof2">
+            <field name="name">Concrete Flat-Tile</field>
+         </record>
+         <record model="roof.type" id="roof3">
+            <field name="name">Concrete S-Tile</field>
+         </record>
+         <record model="roof.type" id="roof4">
+            <field name="name">Concrete M-Tile</field>
+         </record>
+         <record model="roof.type" id="roof5">
+            <field name="name">Spanish Clay</field>
+         </record>
+         <record model="roof.type" id="roof6">
+            <field name="name">Mudded Spanish Clay</field>
+         </record>
+         <record model="roof.type" id="roof7">
+            <field name="name">Wood Shake</field>
+         </record>
+         <record model="roof.type" id="roof8">
+            <field name="name">Unknown</field>
+         </record>
+        
     </data>
 </openerp>
