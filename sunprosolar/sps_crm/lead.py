@@ -66,7 +66,7 @@ class crm_lead(osv.osv):
 #         'roof_type': fields.char('Type Of Roof', size=32),
          'tilt': fields.integer('Tilt'),
          'azimuth': fields.integer('Azimuth'),
-         'contract_id' : fields.many2one('account.analytic.account','Contract'),
+#         'contract_id' : fields.many2one('account.analytic.account','Contract'),
          'estimate_shade': fields.integer('Estimated Shading'),
          'ahj': fields.selection([('structural', 'Structural'),('electrical','Electrical')], 'AHJ'),
          'utility_bill' : fields.boolean('Utility Bill',help="Checked Utility bill to sign customer contract."),
@@ -143,45 +143,6 @@ class crm_lead(osv.osv):
         self.write(cr,uid,opportunity_ids,{"type":"lead"})
         return opportunity.redirect_lead_view(cr, uid, opportunity_ids[0], context=context)
         
-    
-#    def new_mail_send1(self, cr, uid, ids, context=None):
-#        '''
-#        This function opens a window to compose an email, with the edi sale template message loaded by default
-#        '''
-#        assert len(ids) == 1, 'This option should only be used for a single id at a time.'
-#        ir_model_data = self.pool.get('ir.model.data')
-#        try:
-#            template_id = ir_model_data.get_object_reference(cr, uid, 'sps_crm', 'email_template_sales_person_mail')[1]
-#        except ValueError:
-#            template_id = False
-#        try:
-#            compose_form_id = ir_model_data.get_object_reference(cr, uid, 'mail', 'email_compose_message_wizard_form')[1]
-#        except ValueError:
-#            compose_form_id = False 
-#        if context is None:
-#            context = {}
-#        ctx = context.copy()
-#        ans = [x.user_id for x in self.browse(cr,uid, ids,context=context)]
-#        print ans
-#        ctx.update({
-#            'default_model': 'crm.lead',
-#            'default_res_id': ids[0],
-#            'default_use_template': bool(template_id),
-#            'default_template_id': template_id,
-#            'default_composition_mode': 'comment',
-#        })
-#        
-#        return {
-#            'type': 'ir.actions.act_window',
-#            'view_type': 'form',
-#            'view_mode': 'form',
-#            'res_model': 'mail.compose.message',
-#            'views': [(compose_form_id, 'form')],
-#            'view_id': compose_form_id,
-#            'target': 'new',
-#            'context': ctx,
-#        }
-    
     def send_email(self, cr, uid, message, mail_server_id, context):
         '''
            This method sends mail using information given in message 
@@ -215,7 +176,7 @@ class crm_lead(osv.osv):
                     else:
                         email_to.append(member.email)
             subject_line = 'New Customer ' + tools.ustr(data.partner_id.name) + ' ' + tools.ustr(data.last_name) + ' Comes.'
-            message_body = 'Hi,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.partner_id.name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : ' + tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', ' + tools.ustr(data.city) + ', ' + tools.ustr(data.state_id.name) + ', ' + tools.ustr(data.zip) + ', ' + tools.ustr(data.country_id.name) + '<br/><br/>Email : ' + tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
+            message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : ' + tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', ' + tools.ustr(data.city) + ', ' + tools.ustr(data.state_id.name) + ', ' + tools.ustr(data.zip) + ', ' + tools.ustr(data.country_id.name) + '<br/><br/>Email : ' + tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
         message_hrmanager  = obj_mail_server.build_email(
             email_from=email_from, 
             email_to=email_to, 
@@ -239,57 +200,63 @@ class crm_lead(osv.osv):
 #    def customer_contract_sign(self, cr, uid, ids, context=None):
 #        return self.pool.get('ir.actions.act_window').for_xml_id(cr, uid, 'account_analytic_analysis', 'template_of_contract_action', context)
 
-    def contract_sign(self, cr, uid, ids, context=None):
-        schedule_mail_object = self.pool.get('mail.message')
-        data_obj = self.pool.get('ir.model.data')
-        group_object = self.pool.get('res.groups')
-        obj_mail_server = self.pool.get('ir.mail_server')
-        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-        if not mail_server_ids:
-            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-        email_from = mail_server_record.smtp_user
-        if not email_from:
-            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-        member_email_list=[]
-        for data in self.browse(cr, uid, ids):
-            if not data.contract_id.members:
-                raise osv.except_osv(_('Warning'), _('There is no project team member define in contract !'))
-            else:
-                for member in data.contract_id.members:
-                    if not member.email:
-                        raise osv.except_osv(_('Warning'), _('%s team member have no email defined !' % member.name))
-                    else:
-                        member_email_list.append(member.email)
-            
-            message_body = 'Hi,<br/><br/>New site inspection needs to be done.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.contract_id.contract_id) + '<br/><br/>Contract Amount : ' + tools.ustr(data.contract_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.contract_id.deposit) + '<br/><br/> Thank You.'
-        message_hrmanager  = obj_mail_server.build_email(
-            email_from=email_from, 
-            email_to=member_email_list, 
-            subject='New site inspection needs to be done', 
-            body=message_body, 
-            body_alternative=message_body, 
-            email_cc=None, 
-            email_bcc=None, 
-            attachments=None, 
-            references = None, 
-            object_id=None, 
-            subtype='html', 
-            subtype_alternative=None, 
-            headers=None)
-        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
-        return True
+#    def contract_sign(self, cr, uid, ids, context=None):
+#        schedule_mail_object = self.pool.get('mail.message')
+#        data_obj = self.pool.get('ir.model.data')
+#        group_object = self.pool.get('res.groups')
+#        obj_mail_server = self.pool.get('ir.mail_server')
+#        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+#        if not mail_server_ids:
+#            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+#        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+#        email_from = mail_server_record.smtp_user
+#        if not email_from:
+#            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+#        member_email_list=[]
+#        for data in self.browse(cr, uid, ids):
+#            if not data.contract_id.members:
+#                raise osv.except_osv(_('Warning'), _('There is no project team member define in contract !'))
+#            else:
+#                for member in data.contract_id.members:
+#                    if not member.email:
+#                        raise osv.except_osv(_('Warning'), _('%s team member have no email defined !' % member.name))
+#                    else:
+#                        member_email_list.append(member.email)
+#            
+#            message_body = 'Hi,<br/><br/>New site inspection needs to be done.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.contract_id.contract_id) + '<br/><br/>Contract Amount : ' + tools.ustr(data.contract_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.contract_id.deposit) + '<br/><br/> Thank You.'
+#        message_hrmanager  = obj_mail_server.build_email(
+#            email_from=email_from, 
+#            email_to=member_email_list, 
+#            subject='New site inspection needs to be done', 
+#            body=message_body, 
+#            body_alternative=message_body, 
+#            email_cc=None, 
+#            email_bcc=None, 
+#            attachments=None, 
+#            references = None, 
+#            object_id=None, 
+#            subtype='html', 
+#            subtype_alternative=None, 
+#            headers=None)
+#        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+#        return True
 
-    def action_makeMeeting(self, cr, uid, ids, context=None):
-        res = super(crm_lead, self).action_makeMeeting(cr, uid, ids, context=context)
-        crm_case_stage_obj = self.pool.get('crm.case.stage')
-        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','APPOINTMENT SET')])
-        self.write(cr, uid, ids, {'stage_id': stage_id[0]})
-        return res
+#    def action_makeMeeting(self, cr, uid, ids, context=None):
+#        res = super(crm_lead, self).action_makeMeeting(cr, uid, ids, context=context)
+#        crm_case_stage_obj = self.pool.get('crm.case.stage')
+#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','APPOINTMENT SET')])
+#        self.write(cr, uid, ids, {'stage_id': stage_id[0]})
+#        return res
 
     def create(self, cr, uid, vals, context=None):
         res = super(crm_lead, self).create(cr, uid, vals, context=context)
-        if res and vals and vals['home_note']:
+#        p
+#        crm_case_stage_obj = self.pool.get('crm.case.stage')
+#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','INITIAL CONTACT')])
+#        print "stage_id::::::::::",stage_id
+#        self.write(cr, uid, vals, {'stage_id': stage_id[0]})
+        
+        if res and vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'name': res,
                                                                 'date': datetime.datetime.today(),
@@ -300,7 +267,7 @@ class crm_lead(osv.osv):
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['home_note']
                                                             })
-        if res and vals and vals['electricity_note']:
+        if res and vals and vals.get('electricity_note'):
             self.pool.get('crm.lead.electricity.description').create(cr, uid, {
                                                                 'name': res,
                                                                 'date': datetime.datetime.today(),
@@ -311,7 +278,7 @@ class crm_lead(osv.osv):
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['electricity_note']
                                                             })
-        if res and vals and vals['marketing_note']:
+        if res and vals and vals.get('marketing_note'):
             self.pool.get('crm.lead.marketing.description').create(cr, uid, {
                                                                 'name': res,
                                                                 'date': datetime.datetime.today(),
@@ -322,7 +289,7 @@ class crm_lead(osv.osv):
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['marketing_note']
                                                             })
-        if res and vals and vals['accounting_note']:
+        if res and vals and vals.get('accounting_note'):
             self.pool.get('crm.lead.accounting.description').create(cr, uid, {
                                                                 'name': res,
                                                                 'date': datetime.datetime.today(),
@@ -333,7 +300,7 @@ class crm_lead(osv.osv):
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['accounting_note']
                                                             })
-        if res and vals and vals['system_note']:
+        if res and vals and vals.get('system_note'):
             self.pool.get('crm.lead.system.description').create(cr, uid, {
                                                                 'name': res,
                                                                 'date': datetime.datetime.today(),
@@ -546,24 +513,24 @@ class roof_type(osv.osv):
         }
 roof_type()
 
-class account_analytic_account(osv.osv):
-    
-    _inherit="account.analytic.account"
-    
-    _columns = {
-            'contract_id':fields.char('Contract ID'),
-            'contract_date': fields.date('Contract Date'),
-            'type_of_finance': fields.many2one('account.account.type','Type of Financing '),
-            'amount': fields.float('Contract Amount'),
-            'deposit' :fields. float('Deposit Collected'),
-            'planet': fields.selection([('lease','Lease'),('ppa','PPA')], 'Plant'),
-            'power': fields.selection([('sun_power','Sun Power'),('cpf','CPF')], 'Plant'),
-            
-#            'equipment_ids': fields.one2many('equipment.line','equipment_id','Equipments'),
-#            'product_ids' : fields.many2many('product.product', 'product_account_rel', 'product_id','prod_id','Products'),
-            'members': fields.many2many('res.users', 'project_user_relation', 'project_id', 'uid', 'Project Members'),
-        }
-account_analytic_account()
+#class account_analytic_account(osv.osv):
+#    
+#    _inherit="account.analytic.account"
+#    
+#    _columns = {
+#            'contract_id':fields.char('Contract ID'),
+#            'contract_date': fields.date('Contract Date'),
+#            'type_of_finance': fields.many2one('account.account.type','Type of Financing '),
+#            'amount': fields.float('Contract Amount'),
+#            'deposit' :fields. float('Deposit Collected'),
+#            'planet': fields.selection([('lease','Lease'),('ppa','PPA')], 'Plant'),
+#            'power': fields.selection([('sun_power','Sun Power'),('cpf','CPF')], 'Plant'),
+#            
+##            'equipment_ids': fields.one2many('equipment.line','equipment_id','Equipments'),
+##            'product_ids' : fields.many2many('product.product', 'product_account_rel', 'product_id','prod_id','Products'),
+#            'members': fields.many2many('res.users', 'project_user_relation', 'project_id', 'uid', 'Project Members'),
+#        }
+#account_analytic_account()
 
 class crm_opportunity2phonecall(osv.osv_memory):
     """Converts Opportunity to Phonecall"""
@@ -598,8 +565,8 @@ class crm_make_sale(osv.osv_memory):
         if order_res['res_id']:
             for case in case_obj.browse(cr, uid, data, context=context):
                 self.pool.get('sale.order').write(cr, uid, [order_res['res_id']], {'project_id': case.contract_id.id})
-        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Proposition')])
-        case_obj.write(cr, uid, data, {'stage_id': stage_id[0]})
+#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Proposition')])
+#        case_obj.write(cr, uid, data, {'stage_id': stage_id[0]})
         return order_res
 
 crm_make_sale()
@@ -633,4 +600,14 @@ class crm_meeting(osv.Model):
             'name': '/',
             'meeting_type': 'general_meeting',
     }
+    
+    def create(self, cr, uid, ids, context=None):
+        res = super(crm_meeting, self).create(cr, uid, ids, context=context)
+        if context.get('default_opportunity_id'):
+            crm_case_stage_obj = self.pool.get('crm.case.stage')
+            opo_obj= self.pool.get('crm.lead')
+            stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','APPOINTMENT SET')])
+            opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
+        return res
 crm_meeting()
+

@@ -15,6 +15,15 @@
 <!--                    <button string="Meeting" name="action_makeMeeting" type="object" context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"/>-->
 <!--                    <button string="Contract Sign" name="customer_contract_sign" type="object" />-->
 <!--                </xpath>-->
+				
+			<!--
+				 <xpath expr="//form/header/field[@name='stage_id']" position="replace">
+				 		<field name="stage_id" widget="statusbar" statusbar_visible="crm.stage_lead3,crm.stage_lead4" clickable="True"/>
+	            </xpath>
+			-->
+
+			
+
 				<field name="contact_name" position="after">
 				    <field name="last_name" placeholder="Last Name"/>
 				</field>
@@ -245,13 +254,20 @@
 <!--        <xpath expr="//field[@name='name']" position="attributes">-->
 <!--            <attribute name="invisible">1</attribute>-->
 <!--        </xpath>-->
+		
 		<xpath expr="//form/header/button[2][@string='Mark Lost']" position="after">
 			<button name="type_change" string="Convert to Lead" type="object" states="draft,open,pending" help="Convert to Lead" />
 		</xpath>
+		<!--
 		<xpath expr="//field[@name='ref2']" position="after">
 		  <field name="contract_id" colspan="2"/>
 		  <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" />
 		</xpath>
+		-->
+		<xpath expr="/form/sheet/div[1]/button[1][@string='Schedule/Log Call']" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
+
 <!--		<xpath expr="//form/sheet/group/group[4]/field[@name='categ_ids']" position="after">-->
 <!--			<label for="utility_bill"/>-->
 <!--			<div>-->
@@ -514,17 +530,20 @@
 		<menuitem action="action_roof_type" id="menu_roof_type" parent="base.menu_crm_config_lead" 
 					string="Roof Type" sequence="13"/> 
 
+		<!--
 		<record model="ir.ui.view" id="account_analytic_form1">
 				<field name="name">account.analytic.form</field>
 				<field name="model">account.analytic.account</field>
 				<field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
 				<field name="arch" type="xml">
-					<xpath expr="//form/sheet/notebook/page[@string='Contract Information']" position="after">
+					<xpath expr="//form/sheet/notebook/page[@string='Contract Information']" position="after">  
+		-->
 <!--							<page string="Equipments">-->
 <!--								 <field name="product_ids" nolabel="1" colspan="4">-->
 <!--                            </field>-->
 <!--							</page>	-->
-                        <page string="User Contract Info">
+         <!--
+									               <page string="User Contract Info">
                             <group col="4" colspan="4">
 	                            <field name="contract_id" />
 	                            <field name="contract_date" />
@@ -540,7 +559,8 @@
 						</page>
 					</xpath>
 				</field>
-			</record>
+			</record>   
+									-->
 
         <record model="ir.ui.view" id="view_crm_meeting_form_inherited">
             <field name="name">crm.meeting.form.inherited</field>
@@ -557,5 +577,6 @@
             </xpath>
             </field>
         </record>
+        
     </data>
 </openerp>

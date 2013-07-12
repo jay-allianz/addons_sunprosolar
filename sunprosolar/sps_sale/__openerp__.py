@@ -20,16 +20,16 @@
 #
 ##############################################################################
 {
-    "name" : "SPS - CRM",
+    "name" : "SPS - Sale",
     "version" : "1.0",
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to generate Leads of customer. 
     """,
-    'depends': ['base','product','crm','document','account','analytic','project', 'sale'],
+    'depends': ['base','document','analytic','project','sale'],
     'data': [
-        'lead_view.xml','crm_data.xml','crm_lead_demo.xml',
+        'sale_view.xml',
     ],
     'installable': True,
     'application': True,
