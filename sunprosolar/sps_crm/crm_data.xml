@@ -51,7 +51,7 @@
             <field name="type">opportunity</field>
         </record>
         
-        <record model="crm.case.stage" id="crm.stage_lead7">
+        <record model="crm.case.stage" id="crm.stage_lead5">
             <field name="name">Dead</field>
             <field eval="1" name="case_default"/>
             <field eval="False" name="fold"/>
@@ -59,25 +59,6 @@
             <field eval="'0'" name="probability"/>
             <field eval="'17'" name="sequence"/>
             <field name="type">lead</field>
-        </record>
-        <record model="crm.case.stage" id="crm.stage_lead6">
-            <field name="name">Won</field>
-            <field eval="1" name="case_default"/>
-            <field name="state">done</field>
-            <field eval="100" name="probability"/>
-            <field eval="130" name="sequence"/>
-            <field eval="1" name="on_change"/>
-            <field name="type">opportunity</field>
-        </record>
-        <record model="crm.case.stage" id="crm.stage_lead8">
-            <field name="name">Lost</field>
-            <field eval="1" name="case_default"/>
-            <field eval="True" name="fold"/>
-            <field eval="1" name="on_change"/>
-            <field name="state">cancel</field>
-            <field eval="0" name="probability"/>
-            <field eval="140" name="sequence"/>
-            <field name="type">opportunity</field>
         </record>
         
         <!-- Type of roof -->

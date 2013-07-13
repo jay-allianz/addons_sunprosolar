@@ -28,8 +28,11 @@
     "description": """This module provides the functionality to generate Leads of customer. 
     """,
     'depends': ['base','product','crm','document','account','analytic','project', 'sale'],
+    'demo': [
+        'crm_lead_demo.xml',
+    ],
     'data': [
-        'lead_view.xml','crm_data.xml','crm_lead_demo.xml',
+        'lead_view.xml','crm_data.xml',
     ],
     'installable': True,
     'application': True,

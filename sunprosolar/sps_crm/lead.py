@@ -548,26 +548,26 @@ class crm_make_sale(osv.osv_memory):
 
     _inherit = 'crm.make.sale'
 
-    def makeOrder(self, cr, uid, ids, context=None):
-        """
-        This function  create Quotation on given case.
-        @param self: The object pointer
-        @param cr: the current row, from the database cursor,
-        @param uid: the current user’s ID for security checks,
-        @param ids: List of crm make sales' ids
-        @param context: A standard dictionary for contextual values
-        @return: Dictionary value of created sales order.
-        """
-        order_res = super(crm_make_sale, self).makeOrder(cr, uid, ids, context=context)
-        data = context and context.get('active_ids', []) or []
-        case_obj = self.pool.get('crm.lead')
-        crm_case_stage_obj = self.pool.get('crm.case.stage')
-        if order_res['res_id']:
-            for case in case_obj.browse(cr, uid, data, context=context):
-                self.pool.get('sale.order').write(cr, uid, [order_res['res_id']], {'project_id': case.contract_id.id})
-#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Proposition')])
-#        case_obj.write(cr, uid, data, {'stage_id': stage_id[0]})
-        return order_res
+#    def makeOrder(self, cr, uid, ids, context=None):
+#        """
+#        This function  create Quotation on given case.
+#        @param self: The object pointer
+#        @param cr: the current row, from the database cursor,
+#        @param uid: the current user’s ID for security checks,
+#        @param ids: List of crm make sales' ids
+#        @param context: A standard dictionary for contextual values
+#        @return: Dictionary value of created sales order.
+#        """
+#        order_res = super(crm_make_sale, self).makeOrder(cr, uid, ids, context=context)
+#        data = context and context.get('active_ids', []) or []
+#        case_obj = self.pool.get('crm.lead')
+#        crm_case_stage_obj = self.pool.get('crm.case.stage')
+#        if order_res['res_id']:
+#            for case in case_obj.browse(cr, uid, data, context=context):
+#                self.pool.get('sale.order').write(cr, uid, [order_res['res_id']], {'project_id': case.contract_id.id})
+##        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Proposition')])
+##        case_obj.write(cr, uid, data, {'stage_id': stage_id[0]})
+#        return order_res
 
 crm_make_sale()
 
@@ -609,5 +609,6 @@ class crm_meeting(osv.Model):
             stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','APPOINTMENT SET')])
             opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
         return res
+
 crm_meeting()
 

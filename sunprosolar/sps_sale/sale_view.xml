@@ -1,65 +1,57 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        
-		<record model="ir.ui.view" id="view_sale_order_form_inherited">
+        <record model="ir.ui.view" id="view_sale_order_form_inherited">
             <field name="name">sale.order.form.inherited</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-	            <xpath expr="//form/header/field[@name='state']" position="replace">
-	                <field name="state" widget="statusbar" statusbar_visible="draft,sent,invoiced,contract_generated,contract_signed,site_inspection,progress" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
-	            </xpath>
-	            
-				
-				<!--
-				<xpath expr="//form/sheet/group/group[2]/field[3][@name='client_order_ref']" position="after">
-						<label for="contract_id" attrs="{'invisible':[('state','!=','sent')]}"/>
-						<div attrs="{'invisible':[('state','!=','sent')]}">		  			
-							<field name="contract_id" colspan="2"/>
-		  					<button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" />
-		  				</div>
-				</xpath>
-				-->
-				<xpath expr="//page[@string='Other Information']" position="after">
-							<page string="Contract Details"  attrs="{'invisible':[('state','!=','sent'),('state','!=','contract_generated')]}">
-									<field name="contract_id" colspan="2"/>
-			  						<!--
-											<button name="contract_generate" string="Generate Contract" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','sent')]}" />
-			  						<button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_generated')]}"/>					
-						
-											-->	</page>
-				</xpath>
-				
-            </field>
-        </record>
+                <xpath expr="//form/header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,invoiced,contract_generated,contract_signed,site_inspection,progress" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                </xpath>
+                <!-- 
+                <xpath expr="//form/sheet/group/group[2]/field[3][@name='client_order_ref']" position="after">
+                    <label for="contract_id" attrs="{'invisible':[('state','!=','sent')]}"/>
+                    <div attrs="{'invisible':[('state','!=','sent')]}">
+                        <field name="contract_id" colspan="2"/>
+                        <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" />
+                    </div>
+                 </xpath>
+                 -->
+                 <xpath expr="//page[@string='Other Information']" position="after">
+                     <page string="Contract Details"  attrs="{'invisible':[('state','!=','sent'),('state','!=','contract_generated')]}">
+                         <group>
+                         <field name="contract_id" colspan="2"/>
+                         </group>
+                         <button name="contract_generate" string="Generate Contract" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','sent')]}" />
+                         <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_generated')]}"/>                  
+                     </page>
+                 </xpath>
+             </field>
+         </record>
         
 		<record model="ir.ui.view" id="account_analytic_form1">
-				<field name="name">account.analytic.form</field>
-				<field name="model">account.analytic.account</field>
-				<field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
-				<field name="arch" type="xml">
-					<xpath expr="//form/sheet/notebook/page[@string='Contract Information']" position="after">
-<!--							<page string="Equipments">-->
-<!--								 <field name="product_ids" nolabel="1" colspan="4">-->
-<!--                            </field>-->
-<!--							</page>	-->
-                        <page string="User Contract Info">
-                            <group col="4" colspan="4">
-	                            <field name="contract_id" />
-	                            <field name="contract_date" />
-	                            <field name="type_of_finance" />
-	                            <field name="amount" />
-	                            <field name="deposit" />
-	                            <field name="planet" />
-	                            <field name="power" attrs="{'invisible':[('planet','!=','ppa')]}"/>
-	                        </group>
-                        </page>
-						<page string="Project Team Members">
-						     <field name="members" />
-						</page>
-					</xpath>
-				</field>
-			</record>
+			<field name="name">account.analytic.form</field>
+			<field name="model">account.analytic.account</field>
+			<field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/notebook/page[@string='Contract Information']" position="after">
+                    <page string="User Contract Info">
+                        <group col="4" colspan="4">
+	                         <field name="contract_id" />
+	                         <field name="contract_date" />
+	                         <field name="type_of_finance" />
+	                         <field name="amount" />
+	                         <field name="deposit" />
+	                         <field name="planet" />
+	                         <field name="power" attrs="{'invisible':[('planet','!=','ppa')]}"/>
+                         </group>
+                    </page>
+					<page string="Project Team Members">
+					     <field name="members" />
+					</page>
+				</xpath>
+			</field>
+		</record>
     </data>
 </openerp>
