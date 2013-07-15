@@ -1,6 +1,9 @@
 ==================================================================================
  Version ChangeLog (sps_crm)
 ==================================================================================
+0.05 --> 15 July 2013 : Serpent Consulting Services
+        * Improved workflow as per the requirement.
+        
 0.04 --> 06 July 2013 : Serpent Consulting Services
         * Added Note field for lead form each tabs and view it.
         

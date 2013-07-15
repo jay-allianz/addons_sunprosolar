@@ -6,8 +6,14 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//form/header/button[8][@string='Confirm Sale']" position="replace">
+					<button name="action_button_confirm" states="sent,contract_generated,contract_signed,site_inspection,progress" string="Confirm Sale" class="oe_highlight" type="object" groups="base.group_user"/>
+				</xpath>
+				<xpath expr="//form/header/button[6][@string='Print']" position="replace">
+					<button name="print_quotation" string="Print" type="object" states="sent,contract_generated,contract_signed,site_inspection,progress" groups="base.group_user"/>
+				</xpath>
                 <xpath expr="//form/header/field[@name='state']" position="replace">
-                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,invoiced,contract_generated,contract_signed,site_inspection,progress" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,contract_generated,contract_signed,site_inspection,progress" statusbar_colors='{"waiting_date":"blue"}'/>
                 </xpath>
                 <!-- 
                 <xpath expr="//form/sheet/group/group[2]/field[3][@name='client_order_ref']" position="after">
@@ -19,16 +25,67 @@
                  </xpath>
                  -->
                  <xpath expr="//page[@string='Other Information']" position="after">
-                     <page string="Contract Details"  attrs="{'invisible':[('state','!=','sent'),('state','!=','contract_generated')]}">
-                         <group>
-                         <field name="contract_id" colspan="2"/>
-                         </group>
-                         <button name="contract_generate" string="Generate Contract" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','sent')]}" />
-                         <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_generated')]}"/>                  
+                     <page string="Contract Details"  attrs="{'invisible':[('state','!=','sent'),('state','!=','contract_generated'),('state','!=','contract_signed'),('state','!=','site_inspection')]}">
+							 <label for="contract_id"/>
+							<field name="contract_id" colspan="2"/>
+							 <group attrs="{'invisible': [('contract_id','=',False)]}">
+	                         	<button name="contract_generate" string="Generate Contract" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','sent')]}"  />
+	                         </group>
+	                         <group attrs="{'invisible': [('contract_id','=',False)]}">
+	                         <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_generated')]}"/>
+	                         </group>
+	                         <group attrs="{'invisible': [('contract_id','=',False)]}">
+	                         <button name="site_inspection_mail" string="Email Project Mgt Team - New Site Inspection" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_signed')]}"/>
+	                         </group>
                      </page>
                  </xpath>
              </field>
          </record>
+         
+		<record id="sale.action_quotations" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="context">{}</field>
+            <field name="domain">[('state','in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))]</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation, the first step of a new sale.
+              </p><p>
+                OpenERP will help you handle efficiently the complete sale flow:
+                from the quotation to the sales order, the
+                delivery, the invoicing and the payment collection.
+              </p><p>
+                The social feature helps you organize discussions on each sales
+                order, and allow your customers to keep track of the evolution
+                of the sales order.
+              </p>
+            </field>
+        </record>
+        
+		<record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="name">Sales Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+            <field name="context">{}</field>
+            <field name="domain">[('state','not in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation that can be converted into a sales
+                order.
+              </p><p>
+                OpenERP will help you efficiently handle the complete sales flow:
+                quotation, sales order, delivery, invoicing and payment.
+              </p>
+            </field>
+        </record>
         
 		<record model="ir.ui.view" id="account_analytic_form1">
 			<field name="name">account.analytic.form</field>

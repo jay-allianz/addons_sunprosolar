@@ -35,6 +35,7 @@ import netsvc
 WEB_LINK_URL = "db=%s&uid=%s&pwd=%s&id=%s&state=%s&action_id=%s"
 
 class sale_order(osv.osv):
+
     _inherit="sale.order"
     
     _columns = {
@@ -46,16 +47,11 @@ class sale_order(osv.osv):
                 ('contract_generated','Contract Generated'),
                 ('contract_signed','Contract Signed'),
                 ('site_inspection','Site Inspection'),
-                ('cancel', 'Cancelled'),
-                ('waiting_date', 'Waiting Schedule'),
                 ('progress', 'Sales Order'),
-                ('manual', 'Sale to Invoice'),
-                ('invoice_except', 'Invoice Exception'),
-                ('done', 'Done'),
                 ], 'Status', readonly=True, track_visibility='onchange',
                 help="Gives the status of the quotation or sales order. \nThe exception status is automatically set when a cancel operation occurs in the processing of a document linked to the sales order. \nThe 'Waiting Schedule' status is set when the invoice is confirmed but waiting for the scheduler to run on the order date.", select=True),
     }
-
+    
     def send_email(self, cr, uid, message, mail_server_id, context):
         '''
            This method sends mail using information given in message 
@@ -66,8 +62,12 @@ class sale_order(osv.osv):
     def contract_generate(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'contract_generated'})
         return True
-
+    
     def contract_sign(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'state': 'contract_signed'})
+        return True
+
+    def site_inspection_mail(self, cr, uid, ids, context=None):
         schedule_mail_object = self.pool.get('mail.message')
         data_obj = self.pool.get('ir.model.data')
         group_object = self.pool.get('res.groups')
@@ -106,8 +106,9 @@ class sale_order(osv.osv):
             subtype_alternative=None, 
             headers=None)
         self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
-        self.write(cr, uid, ids, {'state': 'contract_signed'})
+        self.write(cr, uid, ids, {'state': 'site_inspection'})
         return True
+
 
 sale_order()
 
@@ -117,7 +118,7 @@ class account_analytic_account(osv.osv):
     
     _columns = {
             'contract_id':fields.char('Contract ID'),
-            'sale_child': fields.many2one('sale.order','Sale Order'),
+            'sale_id': fields.many2one('sale.order','Sale Order'),
             'contract_date': fields.date('Contract Date'),
             'type_of_finance': fields.many2one('account.account.type','Type of Financing '),
             'amount': fields.float('Contract Amount'),
@@ -127,18 +128,7 @@ class account_analytic_account(osv.osv):
 #            'equipment_ids': fields.one2many('equipment.line','equipment_id','Equipments'),
 #            'product_ids' : fields.many2many('product.product', 'product_account_rel', 'product_id','prod_id','Products'),
             'members': fields.many2many('res.users', 'project_user_relation', 'project_id', 'uid', 'Project Members'),
-    }
-
-#    def create(self, cr, uid, ids, context=None):
-#        res = super(account_analytic_account, self).create(cr, uid, ids, context=context)
-#        if context is None:
-#            context = {}
-#        context.update({
-#                'active_ids': ids,
-#        })
-#        contact_ids = context.get('active_ids', [])
-#        self.write(cr,uid,contact_ids,{"state":"contract_generated"})
-#        return res
-        
+        }
+    
 account_analytic_account()
 

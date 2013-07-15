@@ -117,7 +117,7 @@
                         <group col="4" colspan="4">
                             <field name="type_of_sale" />
                             <field name="deadline" />
-                            <field name="deposite" />
+                            <field name="deposit" />
                             <field name="federal_tax" />
                         </group>
                         <field name="see_lead_accounting_note" invisible="1" />
@@ -345,7 +345,7 @@
                 <group col="4" colspan="4">
                     <field name="type_of_sale" />
                     <field name="deadline" />
-                    <field name="deposite" />
+                    <field name="deposit" />
                     <field name="federal_tax" />
                 </group>
             </page>

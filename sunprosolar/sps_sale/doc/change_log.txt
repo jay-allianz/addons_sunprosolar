@@ -1,0 +1,13 @@
+==================================================================================
+ Version ChangeLog (sps_crm)
+==================================================================================
+
+0.03 --> 15 July 2013 : Serpent Consulting Services
+        * Added the functionality of Contract generate, Contract signed, & Site Inspection and add stage and improved workflow.
+        
+0.02 --> 13 July 2013 : Serpent Consulting Services
+        * Improved Code
+        
+0.01 --> 12 June 2013 : Serpent Consulting Services
+        * Added a module of sale
+

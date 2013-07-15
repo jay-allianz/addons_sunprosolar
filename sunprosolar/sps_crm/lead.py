@@ -83,7 +83,7 @@ class crm_lead(osv.osv):
         'property_tax': fields.float('Property Tax'),
         'type_of_sale': fields.selection([('cash','Cash'),('sun_power_lease','Sun Power Lease'),('cpf','CPF'),('wells_fargo','Wells Fargo'),('admirals_bank','Admirals Bank'),('hero','Hero'),('others','Others')], 'Type Of Sale'),
         'deadline': fields.date('Deadline'),
-        'deposite': fields.float('Deposite'),
+        'deposit': fields.float('Deposit'),
         'federal_tax': fields.selection([('yes','Yes'),('no','No')],'Federal Tax Advantage?'),
         'attachment_ids': fields.many2many('ir.attachment', 'email_template_attachment_sps_rel', 'mail_template_id','attach_id', 'Attachments'),
         'type_of_module': fields.char('Type Of Modules', size=36),
@@ -193,69 +193,12 @@ class crm_lead(osv.osv):
             headers=None)
         self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
         #schedule_mail_object.schedule_with_attach(cr, uid, email_from, email_to, subject_line, message_body, subtype="html", context=context)
-        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','SALES NOTIFIED')])
+        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Sales Notified')])
         self.write(cr, uid, ids, {'stage_id': stage_id[0]})
         return True
     
-#    def customer_contract_sign(self, cr, uid, ids, context=None):
-#        return self.pool.get('ir.actions.act_window').for_xml_id(cr, uid, 'account_analytic_analysis', 'template_of_contract_action', context)
-
-#    def contract_sign(self, cr, uid, ids, context=None):
-#        schedule_mail_object = self.pool.get('mail.message')
-#        data_obj = self.pool.get('ir.model.data')
-#        group_object = self.pool.get('res.groups')
-#        obj_mail_server = self.pool.get('ir.mail_server')
-#        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-#        if not mail_server_ids:
-#            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-#        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-#        email_from = mail_server_record.smtp_user
-#        if not email_from:
-#            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-#        member_email_list=[]
-#        for data in self.browse(cr, uid, ids):
-#            if not data.contract_id.members:
-#                raise osv.except_osv(_('Warning'), _('There is no project team member define in contract !'))
-#            else:
-#                for member in data.contract_id.members:
-#                    if not member.email:
-#                        raise osv.except_osv(_('Warning'), _('%s team member have no email defined !' % member.name))
-#                    else:
-#                        member_email_list.append(member.email)
-#            
-#            message_body = 'Hi,<br/><br/>New site inspection needs to be done.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.contract_id.contract_id) + '<br/><br/>Contract Amount : ' + tools.ustr(data.contract_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.contract_id.deposit) + '<br/><br/> Thank You.'
-#        message_hrmanager  = obj_mail_server.build_email(
-#            email_from=email_from, 
-#            email_to=member_email_list, 
-#            subject='New site inspection needs to be done', 
-#            body=message_body, 
-#            body_alternative=message_body, 
-#            email_cc=None, 
-#            email_bcc=None, 
-#            attachments=None, 
-#            references = None, 
-#            object_id=None, 
-#            subtype='html', 
-#            subtype_alternative=None, 
-#            headers=None)
-#        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
-#        return True
-
-#    def action_makeMeeting(self, cr, uid, ids, context=None):
-#        res = super(crm_lead, self).action_makeMeeting(cr, uid, ids, context=context)
-#        crm_case_stage_obj = self.pool.get('crm.case.stage')
-#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','APPOINTMENT SET')])
-#        self.write(cr, uid, ids, {'stage_id': stage_id[0]})
-#        return res
-
     def create(self, cr, uid, vals, context=None):
         res = super(crm_lead, self).create(cr, uid, vals, context=context)
-#        p
-#        crm_case_stage_obj = self.pool.get('crm.case.stage')
-#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','INITIAL CONTACT')])
-#        print "stage_id::::::::::",stage_id
-#        self.write(cr, uid, vals, {'stage_id': stage_id[0]})
-        
         if res and vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'name': res,
@@ -311,6 +254,10 @@ class crm_lead(osv.osv):
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['system_note']
                                                             })
+#        crm_case_stage_obj = self.pool.get('crm.case.stage')
+#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Initial Contact')])
+#        vals.update({'stage_id': stage_id[0]})
+#        return super(crm_lead, self).create(cr, uid, vals, context=context)
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -538,7 +485,7 @@ class crm_opportunity2phonecall(osv.osv_memory):
 
     def action_schedule(self, cr, uid, ids, context=None):
         action_res = super(crm_opportunity2phonecall, self).action_schedule(cr, uid, ids, context=context)
-        stage_id = self.pool.get('crm.case.stage').search(cr, uid, [('name','=','INITIAL CONTACT')])
+        stage_id = self.pool.get('crm.case.stage').search(cr, uid, [('name','=','Initial Contact')])
         self.pool.get('crm.lead').write(cr, uid, context.get('active_ids'), {'stage_id': stage_id[0]})
         return action_res
 
@@ -606,7 +553,7 @@ class crm_meeting(osv.Model):
         if context.get('default_opportunity_id'):
             crm_case_stage_obj = self.pool.get('crm.case.stage')
             opo_obj= self.pool.get('crm.lead')
-            stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','APPOINTMENT SET')])
+            stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Appointment Set')])
             opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
         return res
 
