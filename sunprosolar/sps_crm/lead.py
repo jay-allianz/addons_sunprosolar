@@ -198,7 +198,17 @@ class crm_lead(osv.osv):
         return True
     
     def create(self, cr, uid, vals, context=None):
+        if not context:
+            context = {}
+        type_context= context.get('default_type')
+        if type_context == 'opportunity':
+            crm_case_stage_obj = self.pool.get('crm.case.stage')
+            stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Initial Contact')])
+            vals.update({'stage_id': stage_id[0]})
+            return super(crm_lead, self).create(cr, uid, vals, context=context)
+        
         res = super(crm_lead, self).create(cr, uid, vals, context=context)
+        
         if res and vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'name': res,
@@ -254,10 +264,7 @@ class crm_lead(osv.osv):
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['system_note']
                                                             })
-#        crm_case_stage_obj = self.pool.get('crm.case.stage')
-#        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Initial Contact')])
-#        vals.update({'stage_id': stage_id[0]})
-#        return super(crm_lead, self).create(cr, uid, vals, context=context)
+        
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
