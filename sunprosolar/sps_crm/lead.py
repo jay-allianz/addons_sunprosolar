@@ -38,6 +38,14 @@ class crm_lead(osv.osv):
     """ Model for CRM Lead. """
     _inherit = "crm.lead"
     
+    def _reponsible_user(self, cr, uid, ids, field_name, arg, context=None):
+        res={}
+        for u in self.browse(cr, uid, ids, context=context):
+            partner = self.pool.get('res.users').browse(cr, uid,uid,context=context)
+            user = partner.name
+            res[u.id] =  user
+        return res
+    
     _columns = {
          'last_name': fields.char('Last Name', size=32),
          'utility_company': fields.boolean('Utility Company'),
@@ -62,13 +70,19 @@ class crm_lead(osv.osv):
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
          'age_house_month': fields.integer('Age of House month'),
-         'roof_type': fields.many2one('roof.type','Type of Roof '),
+#         'roof_type': fields.many2one('roof.type','Type of Roof '),
+         'roof_type':fields.selection([('s_family', 'Single Family'),('Mobil','Mobil'),('manufactured','Manufactured')], 'Type Of Roof',),
 #         'roof_type': fields.char('Type Of Roof', size=32),
+         'time_own_year': fields.integer('Owned Home Time',help="How long have you owned your home?"),   
+         'time_own_month': fields.integer('Owned home Time month'),
+         'pool': fields.boolean('Is Pool?',help="Have a pool or not? Checked if Yes."),
+         'spent_money': fields.float('Money spent to Heat Home',help='How much spent to heat home?'),
+         'equity': fields.boolean('Equity',help="Do you have equity in your home? Checked if Yes."),
          'tilt': fields.integer('Tilt'),
          'azimuth': fields.integer('Azimuth'),
 #         'contract_id' : fields.many2one('account.analytic.account','Contract'),
          'estimate_shade': fields.integer('Estimated Shading'),
-         'ahj': fields.selection([('structural', 'Structural'),('electrical','Electrical')], 'AHJ'),
+         'ahj': fields.selection([('structural', 'Structural'),('electrical','Electrical')], 'AHJ',help="Authority Having Jurisdiction"),
          'utility_bill' : fields.boolean('Utility Bill',help="Checked Utility bill to sign customer contract."),
 #         'bill_ids' : fields.one2many('utility.bill','lead_id','Certificate'),
         'lead_source': fields.char('Lead Source', size=32),
@@ -101,6 +115,7 @@ class crm_lead(osv.osv):
         'crm_lead_system_note_ids': fields.one2many('crm.lead.system.description', 'name', 'Notes'),
         'see_lead_all_note': fields.boolean('See Lead All Note'),
         'crm_lead_all_tabs_note_ids': fields.one2many('crm.lead.all.tabs.description', 'name', 'Notes'),
+        'responsible_user': fields.function(_reponsible_user,type='char', method=True, string="Responsible User for Appointment", help="Responsible User for Appointment setup"),
         }
     
     _defaults = {
@@ -542,12 +557,28 @@ class project_project(osv.osv):
     
 project_project()
 
+class res_partner(osv.osv):
+    """ Model for Partner. """
+    _inherit = "res.partner"
+    
+    _columns = {
+        'spouse': fields.many2one('res.partner',string='Secondary Customer',  help="Secondary Customer (spouse) in case he/she exist."),
+        }
+    
+res_partner()
+
 class crm_meeting(osv.Model):
     """ Model for CRM meetings """
     _inherit = 'crm.meeting'
     
     _columns = {
-            'meeting_type': fields.selection([('appointment','Appointment'),('assistance','Assistance'),('general_meeting','General Meeting')], 'Meeting Type')
+            'meeting_type': fields.selection([('appointment','Appointment'),('assistance','Assistance'),('general_meeting','General Meeting')], 'Meeting Type'),
+            'appointment_outcome': fields.selection([('qualified_sit','Qualified Sit'),('1_leg_sit','1-leg sit'),('n_q','NQ'),('sale','Sale'),('r_s','Reset'),('n_s','No Show'),('cxl','Cancel')], 'Outcome from Appointment',help="Qualified Sit(All decision makers are present)"\
+                                                                                                                                                                        "\n1-leg sit(Not all decision makers are present)\n NQ(Not Qualified)"\
+                                                                                                                                                                        "\nSALE(We sold a system)\n Reset(appointment reset or wants to reset their appointment.)"\
+                                                                                                                                                                        "\n No show (Energy consultant went to the appointment and no one was home)"\
+                                                                                                                                                                        "\n Cancel (Appointment canceled and does not want to be reset at this time)]"),
+            'cancel_reason': fields.text('Reason for Cancellation'),
     }
     
     _defaults = {

@@ -53,7 +53,8 @@
         <delete model='crm.case.stage' id='crm.stage_lead5'/>
         
         <!-- Type of roof -->
-         <record model="roof.type" id="roof1">
+         <!--
+									<record model="roof.type" id="roof1">
             <field name="name">Yes Composition</field>
          </record>
          <record model="roof.type" id="roof2">
@@ -77,6 +78,7 @@
          <record model="roof.type" id="roof8">
             <field name="name">Unknown</field>
          </record>
+									-->
         
     </data>
 </openerp>

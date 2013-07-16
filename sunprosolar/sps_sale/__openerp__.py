@@ -25,7 +25,7 @@
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to generate Leads of customer. 
+    "description": """This module provides the functionality to generate Quotation and Sale Order. 
     """,
     'depends': ['base','document','analytic','project','sale'],
     'data': [

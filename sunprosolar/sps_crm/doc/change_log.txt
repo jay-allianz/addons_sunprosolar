@@ -1,6 +1,11 @@
 ==================================================================================
  Version ChangeLog (sps_crm)
 ==================================================================================
+0.05 --> 16 July 2013 : Serpent Consulting Services
+        * Added fields and make some existing fields mandatory as per requirement.
+        * Added functionality of identify which user have setup appointment and outcome of appointment.
+        * Added functionality of identify a primary customer and a secondary customer.
+        
 0.05 --> 15 July 2013 : Serpent Consulting Services
         * Improved workflow as per the requirement.
         
