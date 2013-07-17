@@ -50,6 +50,15 @@ class sale_order(osv.osv):
                 ('progress', 'Sales Order'),
                 ], 'Status', readonly=True, track_visibility='onchange',
                 help="Gives the status of the quotation or sales order. \nThe exception status is automatically set when a cancel operation occurs in the processing of a document linked to the sales order. \nThe 'Waiting Schedule' status is set when the invoice is confirmed but waiting for the scheduler to run on the order date.", select=True),
+         'engineering': fields.selection([('yes','Yes'),('no','No')],'Engineering May be structural or Electrical'),
+         'confirm_original': fields.selection([('no_changes','No changes'),('change','Changes Made')],'Confirmation of original Design'),
+
+
+    }
+    
+    _defaults = {
+            'engineering': 'yes',
+            
     }
     
     def send_email(self, cr, uid, message, mail_server_id, context):
@@ -66,7 +75,51 @@ class sale_order(osv.osv):
     def contract_sign(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'contract_signed'})
         return True
-
+    
+    def change_sent_customer(self, cr, uid, ids, context=None):
+        print "context=========",context
+        contract_obj=self.pool.get('account.analytic.account')
+        
+#            schedule_mail_object = self.pool.get('mail.message')
+#            data_obj = self.pool.get('ir.model.data')
+#            group_object = self.pool.get('res.groups')
+#            obj_mail_server = self.pool.get('ir.mail_server')
+#            mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+#            if not mail_server_ids:
+#                raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+#            mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+#            email_from = mail_server_record.smtp_user
+#            if not email_from:
+#                raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+#            member_email_list=[]
+#            for data in self.browse(cr, uid, ids):
+#                if not data.contract_id.members:
+#                    raise osv.except_osv(_('Warning'), _('There is no project team member define in contract !'))
+#                else:
+#                    for member in data.contract_id.members:
+#                        if not member.email:
+#                            raise osv.except_osv(_('Warning'), _('%s team member have no email defined !' % member.name))
+#                        else:
+#                            member_email_list.append(member.email)
+#                
+#                message_body = 'Hello,<br/><br/>New site inspection needs to be done.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.contract_id.contract_id) + '<br/><br/>Contract Amount : ' + tools.ustr(data.contract_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.contract_id.deposit) + '<br/><br/> Thank You.'
+#            message_hrmanager  = obj_mail_server.build_email(
+#                email_from=email_from, 
+#                email_to=member_email_list, 
+#                subject='New site inspection needs to be done', 
+#                body=message_body, 
+#                body_alternative=message_body, 
+#                email_cc=None, 
+#                email_bcc=None, 
+#                attachments=None, 
+#                references = None, 
+#                object_id=None, 
+#                subtype='html', 
+#                subtype_alternative=None, 
+#                headers=None)
+#            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        return True
+    
     def site_inspection_mail(self, cr, uid, ids, context=None):
         schedule_mail_object = self.pool.get('mail.message')
         data_obj = self.pool.get('ir.model.data')
@@ -108,8 +161,9 @@ class sale_order(osv.osv):
         self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
         self.write(cr, uid, ids, {'state': 'site_inspection'})
         return True
-
-
+    
+       
+    
 sale_order()
 
 class account_analytic_account(osv.osv):

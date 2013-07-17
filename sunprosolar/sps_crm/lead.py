@@ -48,13 +48,16 @@ class crm_lead(osv.osv):
     
     _columns = {
          'last_name': fields.char('Last Name', size=32),
-         'utility_company': fields.boolean('Utility Company'),
+#         'utility_company': fields.boolean('Utility Company'),
+          'utility_company': fields.many2one('res.partner','Utility Company'),
          'acc_no':fields.char('Account Number', size=32),
          'meter_no': fields.char('Meter Number', size=32),
-         'bill_average': fields.float(' Electric Bill Average'),
+         'bill_average': fields.float(' Electric Bill Amount Average'),
          'bill_month': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months for Bill Average'),
-         'bill_total': fields.float('Electric Bills Total', help="Electric Bills Total 12-24-months depending on utility company"),
+         'bill_total': fields.float('Electric Bills Total Amount', help="Electric Bills Total 12-24-months depending on utility company"),
          'rate_plan': fields.char('Rate Plan', size=32),
+         'bill_summer': fields.float('Summer Monthly Bill Amount',help="Monthly electrical bill cost in Summer"),
+         'bill_winter': fields.float('Winter Monthly Bill Amount',help="Monthly electrical bill cost in Winter"),
          'home_note': fields.text('Note'),
          'electricity_note': fields.text('Note'),
          'marketing_note': fields.text('Note'),
@@ -86,19 +89,25 @@ class crm_lead(osv.osv):
          'utility_bill' : fields.boolean('Utility Bill',help="Checked Utility bill to sign customer contract."),
 #         'bill_ids' : fields.one2many('utility.bill','lead_id','Certificate'),
         'lead_source': fields.char('Lead Source', size=32),
-        'level_of_lead': fields.many2one('crm.case.stage', 'Level Of Lead'),
-        'schedule_appointment': fields.date('Schedule Appointment'),
-        'outcome_appointment': fields.date('Outcome of The Appointment'),
+#        'level_of_lead': fields.many2one('crm.case.stage', 'Level Of Lead'),
+        'level_of_lead': fields.many2one('level.lead', 'Level Of Lead'),
+#        'schedule_appointment': fields.date('Schedule Appointment'),
+#        'outcome_appointment': fields.date('Outcome of The Appointment'),
 #        'marketing_note': fields.text('Notes'),
         'qualified': fields.boolean('Qualification Data?'),
         'annual_income': fields.float('Annual Income'),
         'tax_liability': fields.float('Tax Liability'),
         'credit_source': fields.float('Credit Source'),
         'property_tax': fields.float('Property Tax'),
+        'appointment_ids': fields.one2many('crm.meeting','crm_id','Appointments'),
         'type_of_sale': fields.selection([('cash','Cash'),('sun_power_lease','Sun Power Lease'),('cpf','CPF'),('wells_fargo','Wells Fargo'),('admirals_bank','Admirals Bank'),('hero','Hero'),('others','Others')], 'Type Of Sale'),
         'deadline': fields.date('Deadline'),
         'deposit': fields.float('Deposit'),
         'federal_tax': fields.selection([('yes','Yes'),('no','No')],'Federal Tax Advantage?'),
+        'property_tax': fields.selection([('yes','Yes'),('no','No')],'Property Tax Paid?',help="Have your property tax paid on time for the last 3 years?"),
+        'mortgage': fields.selection([('yes','Yes'),('no','No')],'Mortgage been paid?',help="Has your mortgage been paid on time for the last 12 months?"),
+        'bankruptcy': fields.selection([('yes','Yes'),('no','No')],'Filed for a bankruptcy?',help="Have you filed for a bankruptcy in the past 7 years?"),
+        'rate_credit': fields.selection([('good','Good'),('fair','Fair'),('poor','Poor')],'Rate Credit',help="How would you rate your credit?"),
         'attachment_ids': fields.many2many('ir.attachment', 'email_template_attachment_sps_rel', 'mail_template_id','attach_id', 'Attachments'),
         'type_of_module': fields.char('Type Of Modules', size=36),
         'inverter': fields.char('Inverter', size=32),
@@ -119,7 +128,11 @@ class crm_lead(osv.osv):
         }
     
     _defaults = {
-            'name': '/'
+            'name': '/',
+            'home':'own',
+            'bill_month':'12_month',
+            'bill_winter': 150.0,
+            
     }
     
     def redirect_lead_view(self, cr, uid, lead_id, context=None):
@@ -215,6 +228,10 @@ class crm_lead(osv.osv):
     def create(self, cr, uid, vals, context=None):
         if not context:
             context = {}
+        winter_bill= vals.get('bill_winter')
+        print winter_bill
+        if winter_bill < 150:
+            raise osv.except_osv(_('lead not Qualified'), _('The winter bill has to be at least 150 $ to qualify the lead!'))
         type_context= context.get('default_type')
         if type_context == 'opportunity':
             crm_case_stage_obj = self.pool.get('crm.case.stage')
@@ -283,6 +300,10 @@ class crm_lead(osv.osv):
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
+        winter_bill= vals.get('bill_winter')
+        print winter_bill
+        if winter_bill < 150:
+            raise osv.except_osv(_('lead not Qualified'), _('The winter bill has to be at least 150 $ to qualify the lead!'))
         if vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'name': ids[0],
@@ -471,6 +492,20 @@ company_quotation()
 #        }
 #heat_home()
 
+
+
+class level_lead(osv.osv):
+    """ Model for Lead Level. """
+    _name = "level.lead"
+    _description= "Level of lead Information."
+    
+    _columns = {
+        'name': fields.char('Technique Name'),
+        'description': fields.text('Description'),
+        }
+level_lead()
+
+
 class roof_type(osv.osv):
     """ Model for Heat home. """
     _name = "roof.type"
@@ -563,7 +598,13 @@ class res_partner(osv.osv):
     
     _columns = {
         'spouse': fields.many2one('res.partner',string='Secondary Customer',  help="Secondary Customer (spouse) in case he/she exist."),
+        'month_selction': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months'),
         }
+    
+    _defaults = {
+            'month_selction':'12_month',
+            
+    }
     
 res_partner()
 
@@ -573,12 +614,15 @@ class crm_meeting(osv.Model):
     
     _columns = {
             'meeting_type': fields.selection([('appointment','Appointment'),('assistance','Assistance'),('general_meeting','General Meeting')], 'Meeting Type'),
-            'appointment_outcome': fields.selection([('qualified_sit','Qualified Sit'),('1_leg_sit','1-leg sit'),('n_q','NQ'),('sale','Sale'),('r_s','Reset'),('n_s','No Show'),('cxl','Cancel')], 'Outcome from Appointment',help="Qualified Sit(All decision makers are present)"\
-                                                                                                                                                                        "\n1-leg sit(Not all decision makers are present)\n NQ(Not Qualified)"\
-                                                                                                                                                                        "\nSALE(We sold a system)\n Reset(appointment reset or wants to reset their appointment.)"\
-                                                                                                                                                                        "\n No show (Energy consultant went to the appointment and no one was home)"\
-                                                                                                                                                                        "\n Cancel (Appointment canceled and does not want to be reset at this time)]"),
-            'cancel_reason': fields.text('Reason for Cancellation'),
+            'schedule_appointment': fields.datetime('Schedule Date'),
+#            'appointment_outcome': fields.selection([('qualified_sit','Qualified Sit'),('1_leg_sit','1-leg sit'),('n_q','NQ'),('sale','Sale'),('r_s','Reset'),('n_s','No Show'),('cxl','Cancel')], 'Outcome from Appointment',help="Qualified Sit(All decision makers are present)"\
+#                                                                                                                                                                        "\n1-leg sit(Not all decision makers are present)\n NQ(Not Qualified)"\
+#                                                                                                                                                                        "\nSALE(We sold a system)\n Reset(appointment reset or wants to reset their appointment.)"\
+#                                                                                                                                                                        "\n No show (Energy consultant went to the appointment and no one was home)"\
+#                                                                                                                                                                        "\n Cancel (Appointment canceled and does not want to be reset at this time)]"),
+            'appointment_outcome': fields.text('Outcome of the Appointment'),
+            'crm_id':fields.many2one('crm.lead','CRM'),
+            'reason': fields.text('Reason'),
     }
     
     _defaults = {
@@ -588,11 +632,13 @@ class crm_meeting(osv.Model):
     
     def create(self, cr, uid, ids, context=None):
         res = super(crm_meeting, self).create(cr, uid, ids, context=context)
-        if context.get('default_opportunity_id'):
-            crm_case_stage_obj = self.pool.get('crm.case.stage')
-            opo_obj= self.pool.get('crm.lead')
-            stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Appointment Set')])
-            opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
+        type= context.get('default_type')
+        if type == 'opportunity':
+            if context.get('default_opportunity_id'):
+                crm_case_stage_obj = self.pool.get('crm.case.stage')
+                opo_obj= self.pool.get('crm.lead')
+                stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Appointment Set')])
+                opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
         return res
 
 crm_meeting()

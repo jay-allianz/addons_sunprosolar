@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name" : "SPS - Sale",
-    "version" : "1.0",
+    "version" : "4.0",
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",

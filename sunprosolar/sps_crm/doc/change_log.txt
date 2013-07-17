@@ -1,6 +1,11 @@
 ==================================================================================
  Version ChangeLog (sps_crm)
 ==================================================================================
+0.05 --> 17 July 2013 : Serpent Consulting Services
+        * Added one2many field so user can see this appointments on the my calendar view.
+        * Added level of lead functionality.
+        * Added new fields in accounting data and remove some existing fields as per requirement.
+        
 0.05 --> 16 July 2013 : Serpent Consulting Services
         * Added fields and make some existing fields mandatory as per requirement.
         * Added functionality of identify which user have setup appointment and outcome of appointment.

@@ -8,7 +8,21 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
 			<field name="arch" type="xml">
+						
+				<xpath expr="//button[@string='Schedule/Log Call']" position="replace">
+                        <button string="Schedule/Log Call" 
+                                name="%(crm.opportunity2phonecall_act)d"
+                        		states="open"
+                                type="action"/>
+				</xpath>
 
+				<xpath expr="///button[@string='Schedule/Log Call']" position="after">
+					<button string="Meeting"
+                                name="action_makeMeeting"
+                                type="object"
+                                context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"/>
+				</xpath>
+				
 				<xpath expr="//field[@name='contact_name']" position="attributes">
 					<attribute name="required">1</attribute>
 					<attribute name="Placeholder">First Name</attribute>
@@ -52,6 +66,10 @@
 				
 				<xpath expr="//field[@name='mobile']" position="attributes">
 					<attribute name="string">Cell</attribute>
+				</xpath>
+				
+				<xpath expr="//page[@string='Internal Notes']" position="attributes">
+					<attribute name="invisible">1</attribute>
 				</xpath>
 				
 				<field name="user_id" position="before">
@@ -116,11 +134,18 @@
 					<page string="Electricity Info">
 						<group col="4" colspan="4">
 						    <field name="utility_company" required="1"/>
-							<field name="acc_no" attrs="{'invisible':[('utility_company','=',False)]}"/>
-							<field name="meter_no" attrs="{'invisible':[('utility_company','=',False)]}"/>
-							<field name="bill_average" attrs="{'invisible':[('utility_company','=',False)]}"/>
-							<field name="bill_total" attrs="{'invisible':[('utility_company','=',False)]}"/>
-							<field name="rate_plan" attrs="{'invisible':[('utility_company','=',False)]}"/>
+		                    <field name="acc_no"/>
+		                    <field name="meter_no"/>
+		                    <field name="bill_summer"/>
+		                    <field name="rate_plan"/>
+		                    <field name="bill_winter"/>
+		                    <label for="bill_average"/>
+		                    <div>
+			                    <field name="bill_average"/>
+			                    <span class="oe_grey"> of </span>
+			                    <field name="bill_month" nolabel="1"/>
+		                    </div>
+		                    <field name="bill_total"/>
 						</group>
 						<field name="see_lead_electricity_note" invisible="1" />
                         <label for="electricity_note"/>
@@ -133,10 +158,12 @@
 					<page string="Marketing Data">
                         <group col="4" colspan="4">
                             <field name="lead_source" />
-                            <field name="level_of_lead" />
-                            <field name="schedule_appointment" />
+                            <field name="level_of_lead" widget="selection"/>
+                    <!--
+							 <field name="schedule_appointment" />
                             <field name="outcome_appointment" />
-<!--                            <field name="marketing_note" colspan="4"/>-->
+																			-->
+                    <!--    <field name="marketing_note" colspan="4"/>-->
                             <field name="qualified" />
                             <field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}"/>
                             <field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}"/>
@@ -144,6 +171,8 @@
                             <field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}"/>
                         </group>
                         <field name="see_lead_marketing_note" invisible="1" />
+                        <separator string="Appointments" colspan="4"/>
+                        <field name="appointment_ids" mode="tree" nolabel="1" colspan="4"/>
                         <label for="marketing_note"/>
                         <field name="marketing_note" colspan="4" />
                         <button name="view_lead_marketing_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
@@ -157,6 +186,10 @@
                             <field name="deadline" />
                             <field name="deposit" />
                             <field name="federal_tax" />
+                            <field name="property_tax" />
+                            <field name="mortgage" />
+                            <field name="bankruptcy" />
+                            <field name="rate_credit" />
                         </group>
                         <field name="see_lead_accounting_note" invisible="1" />
                         <label for="accounting_note"/>
@@ -199,6 +232,9 @@
                         </field>
                         <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
                     </page>
+                    <page string="Internal Notes">
+                            <field name="description"/>
+                        </page>
                     <page string="Viewing Electricity Notes" attrs="{'invisible':[('see_lead_electricity_note','=',False)]}">
                         <field name="crm_lead_electricity_note_ids" readonly="1" >
                             <tree>
@@ -294,14 +330,34 @@
                 <attribute name="invisible">1</attribute>
         </xpath>
         
+        <xpath expr="//form/sheet/div[2]/h2" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
 		<xpath expr="//field[@name='categ_ids']" position="after">
 				<field name="responsible_user" attrs="{'invisible':[('stage_id','=','Appointment Set')]}"/>
         </xpath>
 
+        <xpath expr="//field[@name='mobile']" position="attributes">
+				<attribute name="string">Cell</attribute>
+		</xpath>
+
 		<xpath expr="//notebook/page[@string='Lead']" position="after">
 			<page string="Home Info">
 				<group col="4" colspan="4">
-              		<field name="home" />
+              		<field name="home" required="1"/>
+              		<group col="10" colspan="10" attrs="{'invisible':[('home','!=','own')]}">
+		                              <field name="time_own_year" />
+		                              <span class="oe_grey"> Year </span><newline/>
+		                              <span class="oe_grey">  </span>
+		                              <field name="time_own_month"  nolabel="1"/>
+		                              <span class="oe_grey"> Month </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                              <span class="oe_grey">  </span>
+		                    	</group>
                   	<field name="quote" />
                   	<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
 					    <field name="quote_info"/>
@@ -331,31 +387,37 @@
 			</page>
 			<page string="Electricity Info">
                 <group col="4" colspan="4">
-                    <field name="utility_company" />
-                    <field name="acc_no" attrs="{'invisible':[('utility_company','=',False)]}"/>
-                    <field name="meter_no" attrs="{'invisible':[('utility_company','=',False)]}"/>
-                    <field name="rate_plan" attrs="{'invisible':[('utility_company','=',False)]}"/>
-                    <label for="bill_average" attrs="{'invisible':[('utility_company','=',False)]}"/>
+                    <field name="utility_company" required="1"/>
+                    <field name="acc_no"/>
+                    <field name="meter_no"/>
+                    <field name="bill_summer"/>
+                    <field name="rate_plan"/>
+		            <field name="bill_winter"/>
+                    <label for="bill_average"/>
                     <div>
-	                    <field name="bill_average" attrs="{'invisible':[('utility_company','=',False)]}"/>
-	                    <span class="oe_grey" attrs="{'invisible':[('utility_company','=',False)]}"> of </span>
-	                    <field name="bill_month" attrs="{'invisible':[('utility_company','=',False)]} " nolabel="1"/>
+	                    <field name="bill_average"/>
+	                    <span class="oe_grey"> of </span>
+	                    <field name="bill_month" nolabel="1"/>
                     </div>
-                    <field name="bill_total" attrs="{'invisible':[('utility_company','=',False)]}"/>
+                    <field name="bill_total"/>
                 </group>                    
             </page> 
             <page string="Marketing Data">
                 <group col="4" colspan="4">
                     <field name="lead_source" />
-                    <field name="level_of_lead" />
-                    <field name="schedule_appointment" />
+                    <field name="level_of_lead" widget="selection"/>
+                    <!--
+					<field name="schedule_appointment" />
                     <field name="outcome_appointment" />
-                    <field name="marketing_note" colspan="4"/>
+																				-->
                     <field name="qualified" />
                     <field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}"/>
                     <field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}"/>
                     <field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}"/>
                     <field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}"/>
+                    <separator string="Appointments" colspan="4"/>
+                    <field name="appointment_ids" nolabel="1" colspan="4"/>
+	               <field name="marketing_note" colspan="4"/>
                 </group>
             </page>
             <page string="Accounting Data">
@@ -364,6 +426,10 @@
                     <field name="deadline" />
                     <field name="deposit" />
                     <field name="federal_tax" />
+                    <field name="property_tax" />
+                    <field name="mortgage" />
+                    <field name="bankruptcy" />
+                    <field name="rate_credit" />
                 </group>
             </page>
             <page string="System Data">
@@ -379,7 +445,8 @@
 		</xpath>
 	</field>
 	</record>
-			
+	
+    
 		<!-- Company Quotation Search View  -->
         <record model="ir.ui.view" id="company_quotation_search">
         <field name="name">company_quotation_Search</field>
@@ -495,8 +562,61 @@
 					string="Heat Home Technique" sequence="12"/>    
 	-->
 
+		<!-- Level Lead Search View  -->
+        <record model="ir.ui.view" id="level_lead_search">
+        <field name="name">level_lead_Search</field>
+        <field name="model">level.lead</field>
+        <field name="arch" type="xml">
+            <search string="Level Lead Search">
+                <field name="name"/>
+				<field name="description"/>
+            </search>
+        </field>
+        </record>
+
+		<!-- Level Lead Form View  -->
+        <record model="ir.ui.view" id="level_lead_form">
+        <field name="name">level_lead_Form</field>
+        <field name="model">level.lead</field>
+        <field name="arch" type="xml">
+            <form string="Level Lead Form" version="7.0">\
+           		<sheet>
+	                <group col="4" colspan="4">
+		                <field name="name" required="1"/><newline/>
+						<field name="description"/>
+					</group>
+				</sheet>
+            </form>
+        </field>
+        </record>
+        
+        
+		<!-- Level Lead Tree View  -->
+        <record model="ir.ui.view" id="level_lead_tree">
+        <field name="name">level_lead_Tree</field>
+        <field name="model">level.lead</field>
+        <field name="arch" type="xml">
+            <tree string="Level Lead Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+        </record>
+
+		<!-- Level Lead-->
+	    <record id="action_level_lead" model="ir.actions.act_window">
+	        <field name="name">Level of Lead</field>
+	        <field name="res_model">level.lead</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+
+		<menuitem action="action_level_lead" id="menu_level_lead" parent="base.menu_crm_config_lead" 
+					string="Level of Lead" sequence="12"/> 
+
 		<!-- Roof Type Search View  -->
-        <record model="ir.ui.view" id="roof_type_search">
+       <!--
+							 <record model="ir.ui.view" id="roof_type_search">
         <field name="name">roof_type_Search</field>
         <field name="model">roof.type</field>
         <field name="arch" type="xml">
@@ -506,9 +626,11 @@
             </search>
         </field>
         </record>
+							-->
 
 		<!-- Roof Type Form View  -->
-        <record model="ir.ui.view" id="roof_type_form">
+       <!--
+							 <record model="ir.ui.view" id="roof_type_form">
         <field name="name">roof_type_Form</field>
         <field name="model">roof.type</field>
         <field name="arch" type="xml">
@@ -522,10 +644,12 @@
             </form>
         </field>
         </record>
+							-->
         
         
 		<!-- Roof Type Tree View  -->
-        <record model="ir.ui.view" id="roof_type_tree">
+       <!--
+							 <record model="ir.ui.view" id="roof_type_tree">
         <field name="name">roof_type_Tree</field>
         <field name="model">roof.type</field>
         <field name="arch" type="xml">
@@ -534,9 +658,11 @@
             </tree>
         </field>
         </record>
+							-->
 
 		<!-- Roof Type-->
-	    <record id="action_roof_type" model="ir.actions.act_window">
+	   <!--
+				 <record id="action_roof_type" model="ir.actions.act_window">
 	        <field name="name">Roof Type Information</field>
 	        <field name="res_model">roof.type</field>
 	        <field name="view_type">form</field>
@@ -546,6 +672,7 @@
 
 		<menuitem action="action_roof_type" id="menu_roof_type" parent="base.menu_crm_config_lead" 
 					string="Roof Type" sequence="13"/> 
+				-->
 
 		<!--
 		<record model="ir.ui.view" id="account_analytic_form1">
@@ -587,6 +714,7 @@
             <field name="arch" type="xml">
                      <xpath expr="//label[@string='Address']" position="before">
                            <field name="spouse"/>
+                           <field name="month_selction"/>
 					</xpath>
 					<xpath expr="//field[@name='mobile']" position="attributes">
 						<attribute name="string">Cell</attribute>
@@ -604,14 +732,50 @@
                     <field name="meeting_type" />
                 </h4>
             </field>
-            <xpath expr="//field[@name='date_deadline']" position="after">
-                <field name="appointment_outcome"/>
-                <field name="cancel_reason" attrs="{'invisible':[('appointment_outcome','!=','cxl')]}"/>
+            
+			 <xpath expr="//field[@name='date']" position="before">
+                <field name="schedule_appointment"/>
+            </xpath>
+            
+			<xpath expr="//field[@name='date']" position="attributes">
+                <attribute name="string">Actural Appointment Date</attribute>
+            </xpath>
+            
+            <xpath expr="//form/sheet/notebook/page[1]/group/group[2]" position="after">
+                <field name="appointment_outcome" colspan="4"/>
+                <field name="reason" colspan="4"/>
             </xpath>
             <xpath expr="//field[@name='name']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             </field>
+        </record>
+        
+		<record model="ir.ui.view" id="view_crm_meeting_tree_inherited">
+            <field name="name">crm.meeting.tree.inherited</field>
+            <field name="model">crm.meeting</field>
+            <field name="inherit_id" ref="base_calendar.view_crm_meeting_tree"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//field[@name='name']" position="attributes">
+                		<attribute name="invisible">1</attribute>
+            	  </xpath>
+            	  <xpath expr="//field[@name='user_id']" position="attributes">
+                		<attribute name="invisible">1</attribute>
+            	  </xpath>
+            	  <xpath expr="//field[@name='duration']" position="attributes">
+                		<attribute name="invisible">1</attribute>
+            	  </xpath>
+            	  <xpath expr="//field[@name='date']" position="attributes">
+                		<attribute name="invisible">1</attribute>
+            	  </xpath>
+            	  <xpath expr="//field[@name='name']" position="after">
+                		<field name="schedule_appointment"/>
+                		<field name="date" string="Actual Appointment Date"/>
+                		<field name="appointment_outcome"/>
+	            		<field name="reason"/>
+            	  </xpath>
+            	  
+		   </field>
         </record>
         
     </data>

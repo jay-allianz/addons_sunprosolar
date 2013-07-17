@@ -38,6 +38,13 @@
 	                         <button name="site_inspection_mail" string="Email Project Mgt Team - New Site Inspection" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_signed')]}"/>
 	                         </group>
                      </page>
+                     <page string="Permit Design Data"  attrs="{'invisible':[('state','!=','site_inspection')]}">
+                             <group col="4" colspan="4">
+							 	<field name="engineering"/>
+							 	<field name="confirm_original"/>
+							 	<button name="change_sent_customer" string="Changes sent to the Customer" colspan="2" type="object" icon="gtk-execute" attrs="{'invisible':[('confirm_original','!=','change')]}"  />
+							 </group>
+                     </page>
                  </xpath>
              </field>
          </record>
