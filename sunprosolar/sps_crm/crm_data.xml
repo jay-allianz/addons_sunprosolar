@@ -34,6 +34,15 @@
             <field eval="'11'" name="sequence"/>
             <field name="type">lead</field>
         </record>
+        <record model="crm.case.stage" id="crm.stage_lead7">
+            <field name="name">Disqualified</field>
+            <field eval="1" name="case_default"/>
+            <field eval="False" name="fold"/>
+            <field name="state">cancel</field>
+            <field eval="0" name="probability"/>
+            <field eval="30" name="sequence"/>
+            <field name="type">lead</field>
+        </record>
         <record model="crm.case.stage" id="crm.stage_lead3">
             <field name="name">Initial Contact</field>
             <field eval="1" name="case_default"/>

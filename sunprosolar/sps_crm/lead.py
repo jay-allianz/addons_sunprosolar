@@ -49,11 +49,12 @@ class crm_lead(osv.osv):
     _columns = {
          'last_name': fields.char('Last Name', size=32),
 #         'utility_company': fields.boolean('Utility Company'),
-          'utility_company': fields.many2one('res.partner','Utility Company'),
+         'utility_company_id': fields.many2one('res.partner','Utility Company'),
+         'required_document': fields.boolean('Required Document Collected?',help="Checked if Yes."),
          'acc_no':fields.char('Account Number', size=32),
          'meter_no': fields.char('Meter Number', size=32),
          'bill_average': fields.float(' Electric Bill Amount Average'),
-         'bill_month': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months for Bill Average'),
+         'bill_month': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months for Bill Average',help="Depends on the months define utility company"),
          'bill_total': fields.float('Electric Bills Total Amount', help="Electric Bills Total 12-24-months depending on utility company"),
          'rate_plan': fields.char('Rate Plan', size=32),
          'bill_summer': fields.float('Summer Monthly Bill Amount',help="Monthly electrical bill cost in Summer"),
@@ -130,11 +131,20 @@ class crm_lead(osv.osv):
     _defaults = {
             'name': '/',
             'home':'own',
-            'bill_month':'12_month',
+#            'bill_month':'12_month',
             'bill_winter': 150.0,
             
     }
     
+    def onchange_utility_company_id(self, cr, uid, ids, utility_company_id,context=None):
+        
+        if not utility_company_id:
+            return {'value': {'bill_month': '12_month',
+                            }
+                   }
+        partner = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
+        return {'value': {'bill_month': partner.month_selection}}
+        
     def redirect_lead_view(self, cr, uid, lead_id, context=None):
         models_data = self.pool.get('ir.model.data')
 
@@ -229,9 +239,8 @@ class crm_lead(osv.osv):
         if not context:
             context = {}
         winter_bill= vals.get('bill_winter')
-        print winter_bill
         if winter_bill < 150:
-            raise osv.except_osv(_('lead not Qualified'), _('The winter bill has to be at least 150 $ to qualify the lead!'))
+            raise osv.except_osv(_('lead not Qualified'), _('The winter bill(In Electricity Info) has to be at least 150 $ to qualify the lead!'))
         type_context= context.get('default_type')
         if type_context == 'opportunity':
             crm_case_stage_obj = self.pool.get('crm.case.stage')
@@ -300,10 +309,10 @@ class crm_lead(osv.osv):
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
-        winter_bill= vals.get('bill_winter')
-        print winter_bill
-        if winter_bill < 150:
-            raise osv.except_osv(_('lead not Qualified'), _('The winter bill has to be at least 150 $ to qualify the lead!'))
+        if vals.get('bill_winter'):
+            winter_bill= vals.get('bill_winter')
+            if winter_bill < 150:
+                raise osv.except_osv(_('lead not Qualified'), _('The winter bill(In Electricity Info) has to be at least 150 $ to qualify the lead!'))
         if vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'name': ids[0],
@@ -479,6 +488,16 @@ class company_quotation(osv.osv):
         'product_ids' : fields.many2many('product.product', 'product_lead_rel', 'pro_id','lead_id','Equipments',help="Select or create equipments offered by the Company."),
         'quote_amount' : fields.float('Quoted Amount'),
         }
+    
+    def name_get(self, cr, uid, ids, context=None):
+        if not len(ids):
+            return []
+        rec_name = 'company_name'
+        res = []
+        for r in self.read(cr, uid, ids, [rec_name], context):
+            res.append((r['id'], r[rec_name][1]))
+        return res
+    
 company_quotation()
 
 #class heat_home(osv.osv):
@@ -598,11 +617,11 @@ class res_partner(osv.osv):
     
     _columns = {
         'spouse': fields.many2one('res.partner',string='Secondary Customer',  help="Secondary Customer (spouse) in case he/she exist."),
-        'month_selction': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months'),
+        'month_selection': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months'),
         }
     
     _defaults = {
-            'month_selction':'12_month',
+            'month_selection':'12_month',
             
     }
     

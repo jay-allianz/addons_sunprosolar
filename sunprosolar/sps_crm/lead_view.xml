@@ -23,6 +23,10 @@
                                 context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"/>
 				</xpath>
 				
+				<xpath expr="//button[@string='Cancel Case']" position="attributes">
+					<attribute name="string">Disqualify Lead</attribute>
+				</xpath>
+				
 				<xpath expr="//field[@name='contact_name']" position="attributes">
 					<attribute name="required">1</attribute>
 					<attribute name="Placeholder">First Name</attribute>
@@ -82,8 +86,8 @@
 				<xpath expr="//form/sheet/notebook/page[@string='Internal Notes']" position="after">
 				    <page string="Home Info">
 		                <group col="4" colspan="4">
-		                    <field name="home" required="1" />
-		                    <group col="10" colspan="10" attrs="{'invisible':[('home','!=','own')]}">
+              				<field name="home" required="1"/>
+              				<group col="10" colspan="10" attrs="{'invisible':[('home','!=','own')]}">
 		                              <field name="time_own_year" />
 		                              <span class="oe_grey"> Year </span><newline/>
 		                              <span class="oe_grey">  </span>
@@ -133,19 +137,20 @@
 		            </page>
 					<page string="Electricity Info">
 						<group col="4" colspan="4">
-						    <field name="utility_company" required="1"/>
-		                    <field name="acc_no"/>
-		                    <field name="meter_no"/>
-		                    <field name="bill_summer"/>
-		                    <field name="rate_plan"/>
-		                    <field name="bill_winter"/>
-		                    <label for="bill_average"/>
-		                    <div>
+						    <field name="utility_company_id" on_change="onchange_utility_company_id(utility_company_id)"  required="1"/>
+						    <field name="required_document"/>
+		                    <field name="acc_no" attrs="{'invisible':[('required_document','=',False)]}"/>
+		                    <field name="meter_no" attrs="{'invisible':[('required_document','=',False)]}"/>
+		                    <field name="bill_summer" attrs="{'invisible':[('required_document','=',False)]}"/>
+		                    <field name="rate_plan" attrs="{'invisible':[('required_document','=',False)]}"/>
+		                    <field name="bill_winter" attrs="{'invisible':[('required_document','=',False)]}"/>
+		                    <label for="bill_average" attrs="{'invisible':[('required_document','=',False)]}"/>
+		                    <div attrs="{'invisible':[('required_document','=',False)]}">
 			                    <field name="bill_average"/>
 			                    <span class="oe_grey"> of </span>
-			                    <field name="bill_month" nolabel="1"/>
+			                    <field name="bill_month" nolabel="1" readonly="1"/>
 		                    </div>
-		                    <field name="bill_total"/>
+		                    <field name="bill_total" attrs="{'invisible':[('required_document','=',False)]}"/>
 						</group>
 						<field name="see_lead_electricity_note" invisible="1" />
                         <label for="electricity_note"/>
@@ -387,24 +392,25 @@
 			</page>
 			<page string="Electricity Info">
                 <group col="4" colspan="4">
-                    <field name="utility_company" required="1"/>
-                    <field name="acc_no"/>
-                    <field name="meter_no"/>
-                    <field name="bill_summer"/>
-                    <field name="rate_plan"/>
-		            <field name="bill_winter"/>
-                    <label for="bill_average"/>
-                    <div>
+                    <field name="utility_company_id" on_change="onchange_utility_company_id(utility_company_id)" required="1"/>
+                    <field name="required_document"/>
+                    <field name="acc_no" attrs="{'invisible':[('required_document','=',False)]}"/>
+                    <field name="meter_no" attrs="{'invisible':[('required_document','=',False)]}"/>
+                    <field name="bill_summer" attrs="{'invisible':[('required_document','=',False)]}"/>
+                    <field name="rate_plan" attrs="{'invisible':[('required_document','=',False)]}"/>
+		            <field name="bill_winter" attrs="{'invisible':[('required_document','=',False)]}"/>
+                    <label for="bill_average" attrs="{'invisible':[('required_document','=',False)]}"/>
+                    <div attrs="{'invisible':[('required_document','=',False)]}">
 	                    <field name="bill_average"/>
 	                    <span class="oe_grey"> of </span>
-	                    <field name="bill_month" nolabel="1"/>
+	                    <field name="bill_month" nolabel="1" readonly="1"/>
                     </div>
-                    <field name="bill_total"/>
+                    <field name="bill_total" attrs="{'invisible':[('required_document','=',False)]}"/>
                 </group>                    
             </page> 
             <page string="Marketing Data">
                 <group col="4" colspan="4">
-                    <field name="lead_source" />
+                    <field name="lead_source"/>
                     <field name="level_of_lead" widget="selection"/>
                     <!--
 					<field name="schedule_appointment" />
@@ -714,7 +720,7 @@
             <field name="arch" type="xml">
                      <xpath expr="//label[@string='Address']" position="before">
                            <field name="spouse"/>
-                           <field name="month_selction"/>
+                           <field name="month_selection"/>
 					</xpath>
 					<xpath expr="//field[@name='mobile']" position="attributes">
 						<attribute name="string">Cell</attribute>

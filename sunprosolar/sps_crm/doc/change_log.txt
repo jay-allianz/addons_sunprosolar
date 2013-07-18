@@ -1,12 +1,16 @@
 ==================================================================================
  Version ChangeLog (sps_crm)
 ==================================================================================
-0.05 --> 17 July 2013 : Serpent Consulting Services
+0.08 --> 18 July 2013 : Serpent Consulting Services
+        * Added functionality of Electric Bill info months are depends on selected utility company.
+        * Improved Code.
+
+0.07 --> 17 July 2013 : Serpent Consulting Services
         * Added one2many field so user can see this appointments on the my calendar view.
         * Added level of lead functionality.
         * Added new fields in accounting data and remove some existing fields as per requirement.
         
-0.05 --> 16 July 2013 : Serpent Consulting Services
+0.06 --> 16 July 2013 : Serpent Consulting Services
         * Added fields and make some existing fields mandatory as per requirement.
         * Added functionality of identify which user have setup appointment and outcome of appointment.
         * Added functionality of identify a primary customer and a secondary customer.
