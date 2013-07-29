@@ -32,7 +32,7 @@
         'crm_lead_demo.xml',
     ],
     'data': [
-        'lead_view.xml','crm_data.xml',
+        'lead_view.xml','crm_data.xml','crm_report_view.xml',
     ],
     'installable': True,
     'application': True,

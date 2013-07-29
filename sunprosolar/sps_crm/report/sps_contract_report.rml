@@ -1,0 +1,547 @@
+<?xml version="1.0"?>
+<document filename="Sales Order.pdf">
+  <template title="Sales Order" author="OpenERP S.A.(sales@openerp.com)" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="15.0" y1="42.0" width="539" height="758"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#1a3344" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#1a3344" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#1a3344" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="7,0" stop="7,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="7,0" stop="7,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="7,-1" stop="7,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#1a3344" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="7,0" stop="7,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="7,0" stop="7,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="7,-1" stop="7,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="terp_header" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P2_bold" fontName="Helvetica-Bold" fontSize="7" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P3" fontSize="11.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P3_bold" fontName="Helvetica-Bold" fontSize="10" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_9" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_9" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_General_Centre" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_Centre_8" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_Details" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Centre" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Right" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_Centre_9" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_9" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_1" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_9_Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <images/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="540.0" style="Table1">
+        <tr>
+            <td>
+                <para style="P3_bold" alignment="CENTER">SUNPRO SOLAR INC. AGREEMENT</para>
+            </td>
+        </tr>
+    </blockTable>
+    
+    <blockTable colWidths="540.0" style="Table1">
+        <tr>
+            <td>
+                <para style="P3">The SunPro Solar Inc. Agreement (hereafter the “Agreement”) expressly includes the terms and conditions as defined in the Agreement, and excludes all other terms or conditions not contained, or referenced in the Agreement. Documents referenced in the Agreement include certain disclosures that are required by law. As such, it is important that anyone signing the Agreement understands the terms and conditions contained in the Agreement and have read and reviewed disclosures referenced herein.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">1. Parties.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">SunPro Solar Inc. is a business entity engaged in the design and installation of solar systems.SunPro Solar Inc. presently maintains a physical office location at 34859 Fredrick Street, Suite 101, Wildomar, California 92595 and services customers throughout Southern California. _______________________________ is hereafter referred to as “Customer” for purposes of the Agreement. The Agreement will also refer to the “Subject Property” in this Agreement.The Subject Property refers to the Customer’s property at which SunPro Solar Inc. is installing a SunPro Solar System.Customer and SunPro Solar Inc. may hereafter collectively be referred to as the “parties”.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">2. Initial Disclosures</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">Business and Professions Code Section 17500.3(a) requires that anyone soliciting the sale or order for goods or services at the buyer’s residence make the following disclosures:</para>
+                <para style="P3">a) Identifying himself or herself by name</para>
+                <para style="P3">b) Identifying the trade name of the person or company that he or she represents</para>
+                <para style="P3">c) Identifying the kind of goods or services being offered for sale</para>
+                <para style="P3">d) If the solicitation is in person, showing identification which contains the name of the solicitor, the entity he or she represents, and the address of that entity.</para>
+                <para style="P3">By signing this Agreement you are acknowledging that the disclosures identified in Paragraph 2(a) through 2(d) of this Agreement were made to you.</para>
+                <para style="P3">Contractors in California are required by law to be licensed and regulated by the Contractors State License Board, which can investigate complaints against contractors if a complaint regarding a patent act or omission is filed within four years of the date of the alleged violation.SunPro Solar Inc. is appropriately licensed under the designation C-10/46, License No.: 830451</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">3. Description Of Solar System Being Purchased.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">SunPro Solar Inc. will design and install a SunPro Solar System intended for the purpose of:</para>
+                <para style="P3">_____________________________________________________________________________.</para>
+                <para style="P3">The solar system will be installed at the Subject Property in the following location:</para>
+                <para style="P3">_____________________________________________________________________________.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">4. Price.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">Customer agrees to purchase the Solar System as described in Section 3 of the Agreement for the purchase price and terms as described in Exhibit B of this Agreement.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">5. Care and Maintenance.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">Although the SunPro Solar System requires little maintenance, on occasion, services may be required. SunPro Solar Inc. agrees to provide maintenance and service of your SunPro Solar System as detailed in Section 6 of this Agreement.</para>
+                <para style="P3">To avoid unnecessary service or maintenance, Customer agrees to the following:</para>
+                <para style="P3">a) Customer will not attach any structure, posts, wiring, lattice, frame, or any other material to any part or surface of the SunPro Solar System</para>
+                <para style="P3">b) Customer will keep trees, shrubs, bushes or other vegetation trimmed so as to avoid contact with or shading of the SunPro Solar System.</para>
+                <para style="P3">c) Customer will not physically alter the SunPro Solar System in any way, including relocating, modifying, or marking on the SunPro Solar System.</para>
+                <para style="P3">d) Customer will not permit any individual other than a representative of SunPro Solar Inc.to alter or modify the SunPro Solar System, including any wiring attached to the SunPro Solar System.</para>
+                <para style="P3">e) In the event the SunPro Solar System requires service or maintenance, Customer agrees to notify SunPro Solar Inc. immediately upon suspecting that the SunPro Solar System is not functioning properly.</para>
+                <para style="P3">f) Customer will keep the SunPro Solar System free of debris, including leaves, snow,sand or excessive dust. Removal of such debris can be done with a household brush or broom. The photovoltaic modules may also be cleaned with water.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">6. Warranty and Service.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">Your installed SunPro Solar System includes a 10 year warranty that includes no cost repair or replacement of the system components, including any associated labor as specified in the California Solar Initiative Handbook applicable on the date of this Agreement. Additional manufacturer’s warranty may be available and information regarding such warranty will be provided to you by SunPro Solar Inc. SunPro Solar Inc. warranties the roof directly under the array and an area extending 3’ beyond the array, or to the next change in roof plane, whichever is closer, to be free from roof leaks for a period of 10 years from date of final inspection. All aspects of this warranty are void if any other person enters or performs work on these areas or materials other than a representative of SunPro Solar Inc.</para>
+                <para style="P3">Sunpro Solar may also provide additional service or maintenance work on equipment or items installed by other companies, pursuant to their contractor’s license. In such circumstances,Customer understands that there may additional fees or charges that will be discussed and contracted for prior to such work being performed.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">7. License To Access The Subject Property.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">In order to design, install and maintain the SunPro Solar System on the Subject Property,SunPro Solar Inc. will need your permission to enter onto the Subject Property for this purpose.Customer is hereby granting a license to SunPro Solar Inc. to carry out their duties as described in the Agreement and as referenced in this Section. SunPro Solar Inc. agrees to provide you with reasonable notice of any such entries.</para>
+                <para style="P3">Customer will take reasonable efforts to accommodate access and entry upon the Subject Property by SunPro Solar Inc. by ensuring that any pets are safely secured so as not to harm the SunPro Solar Inc. System or escape upon a representative of SunPro Solar Inc. entering the Subject Property. Customer agrees to release SunPro Solar Inc. of any liability with respect to pets that do escape during SunPro Solar Inc.’s visit, or any harm to Customer’s pet as a result of actions taken by a SunPro Solar Inc. representative for purposes of restraining Customer’s pet.</para>
+                <para style="P3">SunPro Solar Inc.’s license to access the Subject Property shall expire 30 days after the installation of the SunPro Solar System at the Subject Property but can be reinstated upon a request by Customer for service or maintenance of the SunPro Solar System, or any other request that requires SunPro Solar Inc. to enter the Subject Property. In such an event, the license will be limited for the duration of the visit at the Subject Property by a representative of SunPro Solar Inc.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">8. Lien.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">In the event SunPro Solar Inc. is not paid as agreed and in accordance with Section 4 of this Agreement, Customer acknowledges that SunPro Solar Inc. may record a Mechanics Lien on the Subject Property by following the procedures set forth in California Civil Code Section 8410-8424. A Mechanics Lien will encumber the Subject Property and may be used foreclosed on resulting in the sale of the Subject Property in order to satisfy the outstanding financial obligation.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">9. Permission To Use Images.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">SunPro Solar Inc. reserves the right to take pictures or digital images of the installation of a SunPro Solar System at Customer’s location. These pictures or images may be taken of complete installations, partial installations or pre-installations. SunPro Solar Inc. respects the privacy of its Customers. As such, SunPro Solar Inc. will not display or distribute such pictures or images without the express permission of the Customer.</para>
+                <para style="P3">If you agree to allow SunPro Solar Inc. to use pictures or images described in above for purposes of advertising, including but limited to, website, print advertisement or other public displays, please initial below. If you do not initial below, we will not use pictures or images of the installation of a SunPro Solar System at your location without first obtaining your express permission.</para>
+                <para style="P3">Customer Initials___________Customer Initials___________</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">10. Mediation And Arbitration Of Disputes.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">Any dispute, claim or controversy arising out of or relating to this Agreement or the breach,termination, enforcement, interpretation or validity thereof, including the determination of the scope or applicability of this agreement to arbitrate, shall be determined by arbitration in Riverside, California, or another location agreed to by the parties. The arbitration shall be administered by ADR Services, Inc. (“ADR Services”). The arbitration shall be held before a sole arbitrator and shall be binding with no right of appeal.</para>
+                <para style="P3">The arbitration shall be conducted pursuant to the ADR Services, Inc. Standard Arbitration Rules. The arbitration shall be commenced by filing a demand for arbitration with the administrator of ADR Services and serving the demand on the opposing party. The responding party may file a response and/or a counter-claim within fifteen (15) calendar days. If no response is filed, all the allegations of the demand shall be deemed denied. The parties shall select an arbitrator by mutual agreement through ADR Services within thirty (30) calendar days of the date the demand for arbitration is filed. If the parties are unable to agree on the selection of an arbitrator within such time, the administrator of ADR Services, Inc. shall select an independent arbitrator. The costs of the arbitration, including the arbitrator’s fees, shall be borne equally by the parties to the arbitration, unless the arbitrator orders otherwise.</para>
+                <para style="P3">BY PLACING THEIR INITIALS HERE, THE PARTIES TO THIS AGREEMENT ACKNOWLEDGE THEY HAVE READ THE FOREGOING ARBITRATION PROVISION AND AGREE TO BE BOUND THEREBY.</para>
+                <para style="P3">Customer Initials___________Customer Initials___________</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P2_bold">11. Modification Of Agreement.</para>3
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">This Agreement may be modified by subsequent agreement of the parties hereto only by an instrument in writing signed by all parties.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">12. Entire Agreement.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">This Agreement contains the entire agreement of the parties. No other agreement, statement,or promise made on or before the effective date of this Agreement will be binding on the parties.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">13. Severability In Event Of Partial Invalidity.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">If any provision of this Agreement is held in whole or in part to be unenforceable for any reason, the remainder of that provision and of the entire Agreement shall be severable and remain in effect.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold">14. Effective Date Of Agreement.</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">The effective date of this Agreement will be the date when the enclosed original copy is executed by Client where indicated below and returned to the Firm.</para>
+                <para style="P3">__________________________</para>
+                <para style="P3">Customer’s Signature  Date</para>
+                <para style="P3">__________________________</para>
+                <para style="P3">Customer’s Printed Name</para>
+                <para style="P3">__________________________</para>
+                <para style="P3">Customer’s Signature  Date</para>
+                <para style="P3">__________________________</para>
+                <para style="P3">Customer’s Printed Name</para>
+                <para style="P3_bold">SUNPRO SOLAR INC.</para>
+                <para style="P3">__________________________________________</para>
+                <para style="P3">Authorized Representative’s Signature DATE</para>
+                <para style="P3">__________________________________________</para>
+                <para style="P3">Authorized Representative’s Signature DATE</para>
+                <para style="P3">You, the buyer may cancel this transaction at any time prior to midnight of the third business day after the date of this transaction. See the attached notice of cancellation form for an explanation of this right. The notice of cancellation form is attached as Exhibit A to this Agreement.</para>
+                <para style="P3">By executing the signature below, you are acknowledging that you have received two completed Notice of Cancellation forms and you understand you can sign one of these forms and deliver it to SunPro Solar Inc. to cancel the Agreement, provided it is delivered or mailed within three business days of the date you execute the Agreement.</para>
+                <para style="P3">__________________________</para>
+                <para style="P3">Customer’s Signature  Date</para>
+                <para style="P3">__________________________</para>
+                <para style="P3">Customer’s Signature  Date</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3_bold" alignment="CENTER">EXHIBIT A</para>
+                <para style="P3" alignment="CENTER">NOTICE OF CANCELLATION</para>
+                <para style="P3_bold" alignment="CENTER">STATUTORILY-REQUIRED LANGUAGE</para>
+                <para style="P3_bold" alignment="CENTER">C.C. § 1689.7(c)</para>
+                <para style="P3_bold" alignment="CENTER">"Notice of Cancellation"</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="P3">Date of transaction:</para>
+                <para style="P3">You may cancel this transaction, without any penalty or obligation, within three business days from the above date. If you cancel, any property traded in, any payments made by you under the contract or sale, and any negotiable instrument executed by you will be returned within 10 days following receipt by the seller of your cancellation notice, and any security interest arising out of the transaction will be canceled. If you cancel, you must make available to the seller at your residence, in substantially as good condition as when received, any goods delivered to you under this contract or sale, or you may, if you wish, comply with the instructions of the seller regarding the return shipment of the goods at the seller's expense and risk. If you do make the goods available to the seller and the seller does not pick them up within 20 days of the date of your notice of cancellation, you may retain or dispose of the goods without any further obligation. If you fail to make the goods available to the seller, or if you agree to return the goods to the seller and fail to do so, then you remain liable for performance of all obligations under the contract. To cancel this transaction, mail or deliver a signed and dated copy of this cancellation notice, or any other written notice, or send a telegram to:</para>
+                <para style="P3_bold" alignment="CENTER">SunPro Solar Inc.</para>
+                <para style="P3_bold" alignment="CENTER">34859 Fredrick Street, Suite 101</para>
+                <para style="P3_bold" alignment="CENTER">Wildomar, CA 92595</para>
+                <para style="P3_bold" alignment="CENTER">951-678-7730 (fax)</para>
+                <para style="P3">not later than midnight of __________(date).</para>
+                <para style="P3">I hereby cancel this transaction.</para>
+                <para style="P3">______________________________</para>
+                <para style="P3">(Date)</para>
+                <para style="P3">______________________________</para>
+                <para style="P3">(Buyer's Signature)</para>
+            </td>
+        </tr>
+    </blockTable>
+    
+    
+    
+    <blockTable colWidths="540.0" style="Table1">
+        <tr>
+            <td>
+                <blockTable colWidths="270.0,270.0" style="Table2">
+                    <tr>
+                        <td><para style="P2">NAME</para></td>
+                        <td><para style="P2">SUNPRO REPRESENTATIVE</para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">ADDRESS</para></td>
+                        <td><para style="P2">CUSTOMER NEEDS _______ DAYS NOTICE TO SHIP PRODUCT</para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">CITY</para></td>
+                        <td><para style="P2">EMAIL</para></td>
+                    </tr>
+                </blockTable>
+                <blockTable colWidths="180.0,180.0,180.0" style="Table3">
+                    <tr>
+                        <td><para style="P2">PHONE(H)</para></td>
+                        <td><para style="P2">PHONE(W)</para></td>
+                        <td><para style="P2">PHONE(C)</para></td>
+                    </tr>
+                </blockTable>
+                <blockTable colWidths="270.0,270.0" style="Table2">
+                    <tr>
+                        <td><para style="P2">TYPE OF INSTALL</para></td>
+                        <td><para style="P2">EST. INSTALL DATE</para></td>
+                    </tr>
+                </blockTable>
+                <blockTable colWidths="25.0,50.0,70.0,40.0,45.0,40.0,270.0" style="Table4">
+                    <tr>
+                        <td><para style="P2_bold">QTY.</para></td>
+                        <td><para style="P2_bold">PART NO.</para></td>
+                        <td><para style="P2_bold">DESCRIPTION</para></td>
+                        <td><para style="P2_bold">PRICE</para></td>
+                        <td><para style="P2_bold">AMOUNT</para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2">ROOF TYPE</para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2">SPECIAL INSTRUCTION</para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                </blockTable>
+                <blockTable colWidths="145.0,40.0,45.0,40.0,270.0" style="Table4">
+                    <tr>
+                        <td><para style="P2">TOTAL SYSTEM VALUE</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">ESTIMATED CSI REBATE TO BE CARRIED BY SUNPRO SOLAR</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">TOTAL CONTRACT PRICE</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">ESTIMATED FEDERAL TAX CREDIT</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">TOTAL NET PRICE TO CUSTOMER</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                </blockTable>
+                <blockTable colWidths="145.0,40.0,45.0,40.0,270.0" style="Table5">
+                    <tr>
+                        <td>
+                            <para style="P2">SAME AS CASH</para>
+                            <para style="P2">CASH # ________</para>
+                            <para style="P2">C.C. # ________</para>
+                            <para style="P2">CASH</para>
+                            <para style="P2">LOAN</para>
+                        </td>
+                        <td><para style="P2">TOTAL DUE</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2">ESTIMATED START DATE</para></td>
+                    </tr>
+                </blockTable>
+                
+                <blockTable colWidths="540.0" style="Table4">
+                    <tr><td><para style="P2_bold" alignment="CENTER">SITE SPECIFIC INFORMATION</para></td></tr>
+                </blockTable>
+                <blockTable colWidths="135.0,135.0,135.0,135.0" style="Table4">
+                    <tr>
+                        <td><para style="P2">Utility Company</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"># of Roof Vents To Be Moved</para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">Meter No.</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"># of Dormers To Be Moved</para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">Utility Acc. No.</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2">Service Upgrade Needed</para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">Est. Tilt/Azimuth of Roof</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2">Trenching</para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">Roof Type/Age</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2">Ground / Roof Mount</para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="P2">Elect Panel Svc Rating</para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                        <td><para style="P2"></para></td>
+                    </tr>
+                </blockTable>
+                <blockTable colWidths="270.0,270.0" style="Table4">
+                    <tr>
+                        <td><para style="P2">Contractors are required by law to be licensed and regulated by the Contractors State License Board, which can investigate complaints against contractors if a complaint regarding a patent act or omission is filled within four years of the date of the alleged violation. Contractors lien laws and maximum interest will apply after 30 days of non- payment. 10% restocking fee will apply if job is cancelled after the material has been delivered. Fees associated with unpermitted structures on the property are the customer’s responsibility. By signing the agreement you agree to pay SUNPRO SOLAR.</para></td>
+                        <td>
+                            <para style="P2_bold">PAYMENT SCHEDULE</para>
+                            <blockTable colWidths="170.0,90.0" style="Table4">
+                                <tr>
+                                    <td><para style="P2">10% DOWN PAYMENT (MAX $1000)</para></td>
+                                    <td><para style="P2"></para></td>
+                                </tr>
+                                <tr>
+                                    <td><para style="P2">1ST PAYMENT (80% OF TOTAL DUE) (Upon delivery of materials)</para></td>
+                                    <td><para style="P2"></para></td>
+                                </tr>
+                                <tr>
+                                    <td><para style="P2">FINAL PAYMENT (Due upon building inspection final)</para></td>
+                                    <td><para style="P2"></para></td>
+                                </tr>
+                            </blockTable>
+                        </td>
+                    </tr>
+                </blockTable>
+            </td>
+        </tr>
+    </blockTable>
+  </story>
+</document>

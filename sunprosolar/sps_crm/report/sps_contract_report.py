@@ -20,7 +20,17 @@
 #
 ##############################################################################
 
-import report
-import lead
+import time
+
+from openerp.report import report_sxw
+
+class contract(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context=None):
+        super(contract, self).__init__(cr, uid, name, context=context)
+        self.localcontext.update({
+            'time': time, 
+        })
+
+report_sxw.report_sxw('report.crm.contract', 'sale.order', 'addons/sps_crm/report/sps_contract_report.rml', parser=contract, header=False)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

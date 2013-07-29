@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-import report
-import lead
+import sps_contract_report
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

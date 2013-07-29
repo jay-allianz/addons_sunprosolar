@@ -1,6 +1,9 @@
 ==================================================================================
  Version ChangeLog (sps_crm)
 ==================================================================================
+0.09 --> 29 July 2013 : Serpent Consulting Services
+        * Added Contract Report Formate in Sale Order
+        
 0.08 --> 18 July 2013 : Serpent Consulting Services
         * Added functionality of Electric Bill info months are depends on selected utility company.
         * Improved Code.

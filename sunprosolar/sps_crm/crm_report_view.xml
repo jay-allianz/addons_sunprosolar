@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report auto="False" id="report_sale_contract" model="sale.order" name="crm.contract"
+                rml="sps_crm/report/sps_contract_report.rml" string="Contract / SPS"
+                usage="default"/>
+
+    </data>
+</openerp>
