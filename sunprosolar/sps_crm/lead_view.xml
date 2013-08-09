@@ -212,13 +212,13 @@
                     <page string="Viewing Home Notes" attrs="{'invisible':[('see_lead_home_note','=',False)]}">
                         <field name="crm_lead_home_note_ids" readonly="1" >
                             <tree>
-                                <field name="user_id" />
+                                <field name="home_user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
-                                    <field name="user_id" />
+                                    <field name="home_user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -232,13 +232,13 @@
                     <page string="Viewing Electricity Notes" attrs="{'invisible':[('see_lead_electricity_note','=',False)]}">
                         <field name="crm_lead_electricity_note_ids" readonly="1" >
                             <tree>
-                                <field name="user_id" />
+                                <field name="electricity_user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
-                                    <field name="user_id" />
+                                    <field name="electricity_user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -249,13 +249,13 @@
                     <page string="Viewing Marketing Notes" attrs="{'invisible':[('see_lead_marketing_note','=',False)]}">
                         <field name="crm_lead_marketing_note_ids" readonly="1" >
                             <tree>
-                                <field name="user_id" />
+                                <field name="marketing_user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
-                                    <field name="user_id" />
+                                    <field name="marketing_user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -266,13 +266,13 @@
                     <page string="Viewing Accounting Notes" attrs="{'invisible':[('see_lead_accounting_note','=',False)]}">
                         <field name="crm_lead_accounting_note_ids" readonly="1" >
                             <tree>
-                                <field name="user_id" />
+                                <field name="accounting_user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
-                                    <field name="user_id" />
+                                    <field name="accounting_user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -283,13 +283,13 @@
                     <page string="Viewing System Notes" attrs="{'invisible':[('see_lead_system_note','=',False)]}">
                         <field name="crm_lead_system_note_ids" readonly="1" >
                             <tree>
-                                <field name="user_id" />
+                                <field name="system_user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
-                                    <field name="user_id" />
+                                    <field name="system_user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -300,13 +300,13 @@
                     <page string="Viewing All Notes" attrs="{'invisible':[('see_lead_all_note','=',False)]}">
                         <field name="crm_lead_all_tabs_note_ids" readonly="1" >
                             <tree>
-                                <field name="user_id" />
+                                <field name="all_tab_user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
-                                    <field name="user_id" />
+                                    <field name="all_tab_user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
