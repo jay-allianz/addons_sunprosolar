@@ -253,55 +253,65 @@ class crm_lead(osv.osv):
         if res and vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['home_note']
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['home_note']
                                                             })
         if res and vals and vals.get('electricity_note'):
             self.pool.get('crm.lead.electricity.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['electricity_note']
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['electricity_note']
                                                             })
         if res and vals and vals.get('marketing_note'):
             self.pool.get('crm.lead.marketing.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['marketing_note']
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['marketing_note']
                                                             })
         if res and vals and vals.get('accounting_note'):
             self.pool.get('crm.lead.accounting.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['accounting_note']
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['accounting_note']
                                                             })
         if res and vals and vals.get('system_note'):
             self.pool.get('crm.lead.system.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['system_note']
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': res,
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['system_note']
                                                             })
@@ -316,55 +326,65 @@ class crm_lead(osv.osv):
         if vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('home_note')
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('home_note')
                                                             })
         if vals and vals.get('electricity_note'):
             self.pool.get('crm.lead.electricity.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('electricity_note')
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('electricity_note')
                                                             })
         if vals and vals.get('marketing_note'):
             self.pool.get('crm.lead.marketing.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('marketing_note')
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('marketing_note')
                                                             })
         if vals and vals.get('accounting_note'):
             self.pool.get('crm.lead.accounting.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('accounting_note')
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('accounting_note')
                                                             })
         if vals and vals.get('system_note'):
             self.pool.get('crm.lead.system.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('system_note')
                                                             })
             self.pool.get('crm.lead.all.tabs.description').create(cr, uid, {
                                                                 'name': ids[0],
+                                                                'user_id': uid,
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals.get('system_note')
                                                             })
@@ -407,6 +427,7 @@ class crm_lead_home_description(osv.osv):
 
     _columns = {
             'name': fields.many2one('crm.lead','Name'),
+            'user_id': fields.many2one('res.users', 'User'),
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
@@ -420,10 +441,11 @@ class crm_lead_electricity_description(osv.osv):
 
     _columns = {
             'name': fields.many2one('crm.lead','Name'),
+            'user_id': fields.many2one('res.users', 'User'),
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
-crm_lead_home_description()
+crm_lead_electricity_description()
 
 class crm_lead_marketing_description(osv.osv):
 
@@ -433,6 +455,7 @@ class crm_lead_marketing_description(osv.osv):
 
     _columns = {
             'name': fields.many2one('crm.lead','Name'),
+            'user_id': fields.many2one('res.users', 'User'),
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
@@ -446,6 +469,7 @@ class crm_lead_accounting_description(osv.osv):
 
     _columns = {
             'name': fields.many2one('crm.lead','Name'),
+            'user_id': fields.many2one('res.users', 'User'),
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
@@ -459,6 +483,7 @@ class crm_lead_system_description(osv.osv):
 
     _columns = {
             'name': fields.many2one('crm.lead','Name'),
+            'user_id': fields.many2one('res.users', 'User'),
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
@@ -472,6 +497,7 @@ class crm_lead_all_tabs_description(osv.osv):
 
     _columns = {
             'name': fields.many2one('crm.lead','Name'),
+            'user_id': fields.many2one('res.users', 'User'),
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }

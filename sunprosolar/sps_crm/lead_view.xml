@@ -8,25 +8,18 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
 			<field name="arch" type="xml">
-						
-				<xpath expr="//button[@string='Schedule/Log Call']" position="replace">
-                        <button string="Schedule/Log Call" 
-                                name="%(crm.opportunity2phonecall_act)d"
-                        		states="open"
-                                type="action"/>
-				</xpath>
-
+<!--				<xpath expr="//button[@string='Schedule/Log Call']" position="replace">-->
+<!--	                <button string="Schedule/Log Call" name="%(crm.opportunity2phonecall_act)d" states="open" type="action"/>-->
+<!--				</xpath>-->
 				<xpath expr="///button[@string='Schedule/Log Call']" position="after">
 					<button string="Meeting"
                                 name="action_makeMeeting"
                                 type="object"
                                 context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"/>
 				</xpath>
-				
 				<xpath expr="//button[@string='Cancel Case']" position="attributes">
 					<attribute name="string">Disqualify Lead</attribute>
 				</xpath>
-				
 				<xpath expr="//field[@name='contact_name']" position="attributes">
 					<attribute name="required">1</attribute>
 					<attribute name="Placeholder">First Name</attribute>
@@ -35,15 +28,9 @@
 				<field name="contact_name" position="after">
 				    <field name="last_name" placeholder="Last Name" required="1"/>
 				</field>
-				
 				<xpath expr="//field[@name='street']" position="attributes">
 					<attribute name="required">1</attribute>
 				</xpath>
-				
-				<xpath expr="//field[@name='street2']" position="attributes">
-					<attribute name="required">1</attribute>
-				</xpath>
-				
 				<xpath expr="//field[@name='city']" position="attributes">
 					<attribute name="required">1</attribute>
 				</xpath>
@@ -225,11 +212,13 @@
                     <page string="Viewing Home Notes" attrs="{'invisible':[('see_lead_home_note','=',False)]}">
                         <field name="crm_lead_home_note_ids" readonly="1" >
                             <tree>
+                                <field name="user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
+                                    <field name="user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -243,11 +232,13 @@
                     <page string="Viewing Electricity Notes" attrs="{'invisible':[('see_lead_electricity_note','=',False)]}">
                         <field name="crm_lead_electricity_note_ids" readonly="1" >
                             <tree>
+                                <field name="user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
+                                    <field name="user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -258,11 +249,13 @@
                     <page string="Viewing Marketing Notes" attrs="{'invisible':[('see_lead_marketing_note','=',False)]}">
                         <field name="crm_lead_marketing_note_ids" readonly="1" >
                             <tree>
+                                <field name="user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
+                                    <field name="user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -273,11 +266,13 @@
                     <page string="Viewing Accounting Notes" attrs="{'invisible':[('see_lead_accounting_note','=',False)]}">
                         <field name="crm_lead_accounting_note_ids" readonly="1" >
                             <tree>
+                                <field name="user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
+                                    <field name="user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -288,11 +283,13 @@
                     <page string="Viewing System Notes" attrs="{'invisible':[('see_lead_system_note','=',False)]}">
                         <field name="crm_lead_system_note_ids" readonly="1" >
                             <tree>
+                                <field name="user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
+                                    <field name="user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -303,11 +300,13 @@
                     <page string="Viewing All Notes" attrs="{'invisible':[('see_lead_all_note','=',False)]}">
                         <field name="crm_lead_all_tabs_note_ids" readonly="1" >
                             <tree>
+                                <field name="user_id" />
                                 <field name="date" />
                                 <field name="notes" />
                             </tree>
                             <form>
                                 <group>
+                                    <field name="user_id" />
                                     <field name="date" />
                                     <field name="notes" />
                                 </group>
@@ -320,7 +319,7 @@
 			</field>
 		</record>
 			
-	<!-- Opportunities Form View -->
+	   <!-- Opportunities Form View -->
 		<record id="view_sun_crm_opp_form" model="ir.ui.view">
 		<field name="name">crm.opp.form</field>
 		<field name="model">crm.lead</field>
@@ -331,9 +330,9 @@
 			<button name="type_change" string="Convert to Lead" type="object" states="draft,open,pending" help="Convert to Lead" />
 		</xpath>
 		
-		<xpath expr="/form/sheet/div[1]/button[1][@string='Schedule/Log Call']" position="attributes">
-                <attribute name="invisible">1</attribute>
-        </xpath>
+<!--		<xpath expr="/form/sheet/div[1]/button[1][@string='Schedule/Log Call']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--        </xpath>-->
         
         <xpath expr="//form/sheet/div[2]/h2" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -345,24 +344,29 @@
         <xpath expr="//field[@name='mobile']" position="attributes">
 				<attribute name="string">Cell</attribute>
 		</xpath>
-
+        <field name="planned_revenue" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </field>
+        <label for="planned_revenue" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </label>
 		<xpath expr="//notebook/page[@string='Lead']" position="after">
 			<page string="Home Info">
 				<group col="4" colspan="4">
               		<field name="home" required="1"/>
               		<group col="10" colspan="10" attrs="{'invisible':[('home','!=','own')]}">
-		                              <field name="time_own_year" />
-		                              <span class="oe_grey"> Year </span><newline/>
-		                              <span class="oe_grey">  </span>
-		                              <field name="time_own_month"  nolabel="1"/>
-		                              <span class="oe_grey"> Month </span>
-		                              <span class="oe_grey">  </span>
-		                              <span class="oe_grey">  </span>
-		                              <span class="oe_grey">  </span>
-		                              <span class="oe_grey">  </span>
-		                              <span class="oe_grey">  </span>
-		                              <span class="oe_grey">  </span>
-		                    	</group>
+                         <field name="time_own_year" />
+                         <span class="oe_grey"> Year </span><newline/>
+                         <span class="oe_grey">  </span>
+                         <field name="time_own_month"  nolabel="1"/>
+                         <span class="oe_grey"> Month </span>
+                         <span class="oe_grey">  </span>
+                         <span class="oe_grey">  </span>
+                         <span class="oe_grey">  </span>
+                         <span class="oe_grey">  </span>
+                         <span class="oe_grey">  </span>
+                         <span class="oe_grey">  </span>
+                   	</group>
                   	<field name="quote" />
                   	<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
 					    <field name="quote_info"/>
