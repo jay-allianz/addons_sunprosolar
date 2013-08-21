@@ -6,5 +6,9 @@
                 rml="sps_crm/report/sps_contract_report.rml" string="Contract / SPS"
                 usage="default"/>
 
+        <report auto="False" id="report_customer_barcode" model="sale.order" name="customer.sale.barcode"
+                rml="sps_crm/report/sps_customer_barcode.rml" string="Barcode Label for customer" 
+                usage="default"/>
+
     </data>
 </openerp>

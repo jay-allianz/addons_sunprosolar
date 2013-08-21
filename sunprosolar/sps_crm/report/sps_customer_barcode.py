@@ -20,7 +20,24 @@
 #
 ##############################################################################
 
-import sps_contract_report
-import sps_customer_barcode
+import time
+
+from openerp.report import report_sxw
+
+class customer_barcode(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context=None):
+        super(customer_barcode, self).__init__(cr, uid, name, context=context)
+        self.localcontext.update({
+            'time': time,
+            'product_get': self._product_get 
+        })
+        
+    def _product_get(self, order_line):
+        result= order_line.product_id.name
+        for product in order_line:
+            result += product.product_id.name
+        return result
+    
+report_sxw.report_sxw('report.customer.sale.barcode', 'sale.order', 'addons/sps_crm/report/sps_customer_barcode.rml', parser=customer_barcode, header=False)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

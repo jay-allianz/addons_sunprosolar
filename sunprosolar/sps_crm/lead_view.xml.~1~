@@ -132,8 +132,7 @@
                                  <field name="home_sq_foot" /><newline/>
                                  <field name="roof_type" />
                                  <field name="estimate_shade" />
-                                 <separator string="Tilt and Azimuth Reading" colspan="4"/>
-                                 <field name="tilt_azimuth" colspan="4" nolabel="1">
+                                 <field name="tilt_azimuth" colspan="4">
                                       <tree string="Tilt and Azimuth" editable="bottom">
                                            <field name = "tilt"/>
                                            <field name = "azimuth"/>
@@ -162,10 +161,9 @@
                           </group>
                      </page>
                      <page string="Electricity Info">
-                         <group col="4" colspan="4">
+                         <group col="4" colspan="4">on_change_utility_company
                              <field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)" required="1"/><newline/>
-                             <separator string="Required Documents" colspan="4"/>
-                             <field name="document_ids" colspan="4" nolabel="1">
+                             <field name="document_ids" colspan="4">
                                   <tree string="Documents" editable="bottom">
                                        <field name="name"/>
                                        <field name="doc"/>

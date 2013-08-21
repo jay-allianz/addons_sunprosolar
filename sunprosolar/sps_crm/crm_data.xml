@@ -61,6 +61,21 @@
         </record>
         <delete model='crm.case.stage' id='crm.stage_lead5'/>
         
+        <!--Level of Lead -->
+		<record model="level.lead" id="leavel1">
+            <field name="name">New Customer</field>
+         </record>
+         <record model="level.lead" id="leavel2">
+            <field name="name">Sales Notified</field>
+         </record>
+         <record model="level.lead" id="leavel3">
+            <field name="name">Initial Contact</field>
+         </record>
+         <record model="level.lead" id="leavel4">
+            <field name="name">Disqualified</field>
+         </record>
+
+
         <!-- Type of roof -->
          <!--
 									<record model="roof.type" id="roof1">

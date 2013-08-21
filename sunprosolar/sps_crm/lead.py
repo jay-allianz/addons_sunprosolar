@@ -37,7 +37,7 @@ WEB_LINK_URL = "db=%s&uid=%s&pwd=%s&id=%s&state=%s&action_id=%s"
 class crm_lead(osv.osv):
     """ Model for CRM Lead. """
     _inherit = "crm.lead"
-    
+
     def _reponsible_user(self, cr, uid, ids, field_name, arg, context=None):
         res={}
         for u in self.browse(cr, uid, ids, context=context):
@@ -45,12 +45,24 @@ class crm_lead(osv.osv):
             user = partner.name
             res[u.id] =  user
         return res
+
+    def _get_require_doc(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for data in self.browse(cr, uid, ids, context=context):
+            for doc in data.document_ids:
+                if doc.doc == False:
+                    res[data.id] = False
+                else:
+                    res[data.id] = True
+        return res
     
     _columns = {
          'last_name': fields.char('Last Name', size=32),
-#         'utility_company': fields.boolean('Utility Company'),
+         'property': fields.selection([('commercial', 'Commercial'),('residential','Residential')], 'Property',help="Which type of Property?"),
+         'spouse': fields.many2one('res.partner',string='Secondary Customer',  help="Secondary Customer (spouse) in case he/she exist."),
          'utility_company_id': fields.many2one('res.partner','Utility Company'),
-         'required_document': fields.boolean('Required Document Collected?',help="Checked if Yes."),
+         'document_ids': fields.one2many('documents.all','document_id','Required Documents'),
+         'required_document':fields.function(_get_require_doc, method=True, type='boolean',string="Required Document Collected?",help="Checked if Yes."),
          'acc_no':fields.char('Account Number', size=32),
          'meter_no': fields.char('Meter Number', size=32),
          'bill_average': fields.float(' Electric Bill Amount Average'),
@@ -70,11 +82,9 @@ class crm_lead(osv.osv):
          'quote': fields.boolean('Had a Solar Quote?', help = 'Checked if customer have Solar Quotation of any other Company.'),
          'quote_info': fields.many2one('company.quotation','Quotation Information'),
          'heat_home': fields.selection([('natural_gas','Natural Gas'),('propane','Propane'),('all_electric','All Electric')], 'Heat Home Technique'),
-#         'heat_home': fields.many2one('heat.home','Heat Home Technique'),
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
          'age_house_month': fields.integer('Age of House month'),
-#         'roof_type': fields.many2one('roof.type','Type of Roof '),
          'roof_type':fields.selection([('s_family', 'Single Family'),('Mobil','Mobil'),('manufactured','Manufactured')], 'Type Of Roof',),
 #         'roof_type': fields.char('Type Of Roof', size=32),
          'time_own_year': fields.integer('Owned Home Time',help="How long have you owned your home?"),   
@@ -82,19 +92,12 @@ class crm_lead(osv.osv):
          'pool': fields.boolean('Is Pool?',help="Have a pool or not? Checked if Yes."),
          'spent_money': fields.float('Money spent to Heat Home',help='How much spent to heat home?'),
          'equity': fields.boolean('Equity',help="Do you have equity in your home? Checked if Yes."),
-         'tilt': fields.integer('Tilt'),
-         'azimuth': fields.integer('Azimuth'),
-#         'contract_id' : fields.many2one('account.analytic.account','Contract'),
+         'tilt_azimuth': fields.one2many('tilt.azimuth','tilt_azimuth_id','Tilt & Azimuth Reading'),
          'estimate_shade': fields.integer('Estimated Shading'),
          'ahj': fields.selection([('structural', 'Structural'),('electrical','Electrical')], 'AHJ',help="Authority Having Jurisdiction"),
          'utility_bill' : fields.boolean('Utility Bill',help="Checked Utility bill to sign customer contract."),
-#         'bill_ids' : fields.one2many('utility.bill','lead_id','Certificate'),
         'lead_source': fields.char('Lead Source', size=32),
-#        'level_of_lead': fields.many2one('crm.case.stage', 'Level Of Lead'),
         'level_of_lead': fields.many2one('level.lead', 'Level Of Lead'),
-#        'schedule_appointment': fields.date('Schedule Appointment'),
-#        'outcome_appointment': fields.date('Outcome of The Appointment'),
-#        'marketing_note': fields.text('Notes'),
         'qualified': fields.boolean('Qualification Data?'),
         'annual_income': fields.float('Annual Income'),
         'tax_liability': fields.float('Tax Liability'),
@@ -131,20 +134,20 @@ class crm_lead(osv.osv):
     _defaults = {
             'name': '/',
             'home':'own',
-#            'bill_month':'12_month',
-            'bill_winter': 150.0,
-            
+            'bill_month':'12_month',
+            'property': 'residential',
     }
     
-    def onchange_utility_company_id(self, cr, uid, ids, utility_company_id,context=None):
-        
-        if not utility_company_id:
-            return {'value': {'bill_month': '12_month',
-                            }
-                   }
-        partner = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
-        return {'value': {'bill_month': partner.month_selection}}
-        
+    def on_change_utility_company(self, cr, uid, ids, utility_company_id, context=None):
+        values = {}
+        document_list=[]
+        if utility_company_id:
+            utility_company = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
+            for document in utility_company.documents_id:
+                document_list.append(document.id)
+            values = {'document_ids' : document_list or False}
+        return {'value' : values}
+    
     def redirect_lead_view(self, cr, uid, lead_id, context=None):
         models_data = self.pool.get('ir.model.data')
 
@@ -191,9 +194,6 @@ class crm_lead(osv.osv):
     def salesteam_send_email(self, cr, uid, ids, context=None):
         if not context:
             context = {}
-        schedule_mail_object = self.pool.get('mail.message')
-        data_obj = self.pool.get('ir.model.data')
-        group_object = self.pool.get('res.groups')
         obj_mail_server = self.pool.get('ir.mail_server')
         crm_case_stage_obj = self.pool.get('crm.case.stage')
         mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
@@ -238,9 +238,6 @@ class crm_lead(osv.osv):
     def create(self, cr, uid, vals, context=None):
         if not context:
             context = {}
-        winter_bill= vals.get('bill_winter')
-        if winter_bill < 150:
-            raise osv.except_osv(_('lead not Qualified'), _('The winter bill(In Electricity Info) has to be at least 150 $ to qualify the lead!'))
         type_context= context.get('default_type')
         if type_context == 'opportunity':
             crm_case_stage_obj = self.pool.get('crm.case.stage')
@@ -319,10 +316,6 @@ class crm_lead(osv.osv):
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
-        if vals.get('bill_winter'):
-            winter_bill= vals.get('bill_winter')
-            if winter_bill < 150:
-                raise osv.except_osv(_('lead not Qualified'), _('The winter bill(In Electricity Info) has to be at least 150 $ to qualify the lead!'))
         if vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'home_id': ids[0],
@@ -538,18 +531,18 @@ class company_quotation(osv.osv):
     
 company_quotation()
 
-#class heat_home(osv.osv):
-#    """ Model for Heat home. """
-#    _name = "heat.home"
-#    _description= "Heat Home technique Information."
-#    
-#    _columns = {
-#        'name': fields.char('Technique Name'),
-#        'description': fields.text('Description'),
-#        }
-#heat_home()
-
-
+class tilt_azimuth(osv.osv):
+    """ Model for Tilt and Azimuth. """
+    _name = "tilt.azimuth"
+    _description= "Tilt and Azimuth Information."
+    
+    _columns = {
+         'tilt_azimuth_id': fields.many2one('crm.lead','Tilt and Azimuth'),
+         'tilt': fields.integer('Tilt'),
+         'azimuth': fields.integer('Azimuth'),
+        }
+    
+tilt_azimuth()
 
 class level_lead(osv.osv):
     """ Model for Lead Level. """
@@ -559,7 +552,33 @@ class level_lead(osv.osv):
     _columns = {
         'name': fields.char('Technique Name'),
         'description': fields.text('Description'),
+        'parent_id': fields.many2one('level.lead', 'Parent Level'),
         }
+    
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', 'The name of the Lead Level must be unique !')
+    ]
+    
+    _constraints = [
+        (osv.osv._check_recursion, 'Error ! You cannot create recursive Sales team.', ['parent_id'])
+    ]
+    
+    def name_get(self, cr, uid, ids, context=None):
+        """Overrides orm name_get method"""
+        if not isinstance(ids, list) :
+            ids = [ids]
+        res = []
+        if not ids:
+            return res
+        reads = self.read(cr, uid, ids, ['name', 'parent_id'], context)
+
+        for record in reads:
+            name = record['name']
+            if record['parent_id']:
+                name = record['parent_id'][1] + ' / ' + name
+            res.append((record['id'], name))
+        return res
+    
 level_lead()
 
 
@@ -574,24 +593,6 @@ class roof_type(osv.osv):
         }
 roof_type()
 
-#class account_analytic_account(osv.osv):
-#    
-#    _inherit="account.analytic.account"
-#    
-#    _columns = {
-#            'contract_id':fields.char('Contract ID'),
-#            'contract_date': fields.date('Contract Date'),
-#            'type_of_finance': fields.many2one('account.account.type','Type of Financing '),
-#            'amount': fields.float('Contract Amount'),
-#            'deposit' :fields. float('Deposit Collected'),
-#            'planet': fields.selection([('lease','Lease'),('ppa','PPA')], 'Plant'),
-#            'power': fields.selection([('sun_power','Sun Power'),('cpf','CPF')], 'Plant'),
-#            
-##            'equipment_ids': fields.one2many('equipment.line','equipment_id','Equipments'),
-##            'product_ids' : fields.many2many('product.product', 'product_account_rel', 'product_id','prod_id','Products'),
-#            'members': fields.many2many('res.users', 'project_user_relation', 'project_id', 'uid', 'Project Members'),
-#        }
-#account_analytic_account()
 
 class crm_opportunity2phonecall(osv.osv_memory):
     """Converts Opportunity to Phonecall"""
@@ -604,33 +605,6 @@ class crm_opportunity2phonecall(osv.osv_memory):
         return action_res
 
 crm_opportunity2phonecall()
-
-class crm_make_sale(osv.osv_memory):
-
-    _inherit = 'crm.make.sale'
-
-#    def makeOrder(self, cr, uid, ids, context=None):
-#        """
-#        This function  create Quotation on given case.
-#        @param self: The object pointer
-#        @param cr: the current row, from the database cursor,
-#        @param uid: the current user’s ID for security checks,
-#        @param ids: List of crm make sales' ids
-#        @param context: A standard dictionary for contextual values
-#        @return: Dictionary value of created sales order.
-#        """
-#        order_res = super(crm_make_sale, self).makeOrder(cr, uid, ids, context=context)
-#        data = context and context.get('active_ids', []) or []
-#        case_obj = self.pool.get('crm.lead')
-#        crm_case_stage_obj = self.pool.get('crm.case.stage')
-#        if order_res['res_id']:
-#            for case in case_obj.browse(cr, uid, data, context=context):
-#                self.pool.get('sale.order').write(cr, uid, [order_res['res_id']], {'project_id': case.contract_id.id})
-##        stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Proposition')])
-##        case_obj.write(cr, uid, data, {'stage_id': stage_id[0]})
-#        return order_res
-
-crm_make_sale()
 
 class project_project(osv.osv):
     
@@ -649,19 +623,33 @@ class project_project(osv.osv):
     
 project_project()
 
+class documents_all(osv.osv):
+    """ Model for document information """
+    _name = "documents.all"
+    _description= "Documents Information."
+    
+    _columns = {
+         'name': fields.char('Document Name'),
+         'code': fields.char('Code'),
+         'document_id': fields.many2one('crm.lead','Document'),
+         'doc': fields.binary('Scanned Document'),
+        }
+    
+    _sql_constraints = [
+        ('code_uniq', 'unique (code)', 'The code of the Document must be unique !')
+    ]
+documents_all()
+
 class res_partner(osv.osv):
     """ Model for Partner. """
     _inherit = "res.partner"
     
     _columns = {
         'spouse': fields.many2one('res.partner',string='Secondary Customer',  help="Secondary Customer (spouse) in case he/she exist."),
-        'month_selection': fields.selection([('12_month', '12 Months'),('24_month','24 Months')], 'Months'),
+        'last_name': fields.char('Last Name'),
+        'middle_name' : fields.char('Middle Name'),
+        'documents_id': fields. many2many('documents.all', 'partner_id','document_id','partner_document_rel', 'Required Documents'),
         }
-    
-    _defaults = {
-            'month_selection':'12_month',
-            
-    }
     
 res_partner()
 
@@ -672,11 +660,6 @@ class crm_meeting(osv.Model):
     _columns = {
             'meeting_type': fields.selection([('appointment','Appointment'),('assistance','Assistance'),('general_meeting','General Meeting')], 'Meeting Type'),
             'schedule_appointment': fields.datetime('Schedule Date'),
-#            'appointment_outcome': fields.selection([('qualified_sit','Qualified Sit'),('1_leg_sit','1-leg sit'),('n_q','NQ'),('sale','Sale'),('r_s','Reset'),('n_s','No Show'),('cxl','Cancel')], 'Outcome from Appointment',help="Qualified Sit(All decision makers are present)"\
-#                                                                                                                                                                        "\n1-leg sit(Not all decision makers are present)\n NQ(Not Qualified)"\
-#                                                                                                                                                                        "\nSALE(We sold a system)\n Reset(appointment reset or wants to reset their appointment.)"\
-#                                                                                                                                                                        "\n No show (Energy consultant went to the appointment and no one was home)"\
-#                                                                                                                                                                        "\n Cancel (Appointment canceled and does not want to be reset at this time)]"),
             'appointment_outcome': fields.text('Outcome of the Appointment'),
             'crm_id':fields.many2one('crm.lead','CRM'),
             'reason': fields.text('Reason'),
@@ -689,7 +672,6 @@ class crm_meeting(osv.Model):
     
     def create(self, cr, uid, ids, context=None):
         res = super(crm_meeting, self).create(cr, uid, ids, context=context)
-        type= context.get('default_type')
         if type == 'opportunity':
             if context.get('default_opportunity_id'):
                 crm_case_stage_obj = self.pool.get('crm.case.stage')
