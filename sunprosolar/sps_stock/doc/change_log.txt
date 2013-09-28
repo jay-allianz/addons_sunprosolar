@@ -1,0 +1,13 @@
+==================================================================================
+ Version ChangeLog (sps_sale)
+==================================================================================
+0.02 --> 26 Sep 2013 : Serpent Consulting Services
+        * Added functionality of email send to users in warehouse when order point called
+        
+0.02 --> 26 Sep 2013 : Serpent Consulting Services
+        * Added a access right group for cost price.
+        * Added m2m field in warehouse.
+        
+0.01 --> 25 Sep 2013 : Serpent Consulting Services
+        * Added a module of sps_stock
+
