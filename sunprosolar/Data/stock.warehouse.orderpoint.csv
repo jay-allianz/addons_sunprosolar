@@ -1,0 +1,904 @@
+id,active,company_id/id,procurement_id/id,location_id/id,product_max_qty,product_min_qty,name,product_id/id,product_uom/id,qty_multiple,logic,warehouse_id/id
+Orderpoint_01,True,base.main_company,,stock.stock_location_stock,,,10-32 K-LOCK NUT W/EXTERNAL STAR STAINLESS STEEL,Pro_01,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_02,True,base.main_company,,stock.stock_location_stock,,,5/16-18X1 WHIZ FLANGE BOLT STAINLESS STEEL,Pro_02,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_03,True,base.main_company,,stock.stock_location_stock,,,5/16-18X1 HEX CAP SCREW STAINLESS STEEL,Pro_03,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_04,True,base.main_company,,stock.stock_location_stock,,,5/16-18X 1-1/4 HEX CAP SCREW STAINLESS STEEL,Pro_04,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_05,True,base.main_company,,stock.stock_location_stock,,,5/16-18X 1-3/4 HEX CAP SCREW STAINLESS STEEL,Pro_05,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_06,True,base.main_company,,stock.stock_location_stock,,,5/16-18X 2 HEX CAP SCREW STAINLESS STEEL,Pro_06,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_07,True,base.main_company,,stock.stock_location_stock,,,5/16-18 2-3/4 HEX CAP SCREW STAINLESS STEEL,Pro_07,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_08,True,base.main_company,,stock.stock_location_stock,,,5/16-18X 3/4 HEX CAP SCREW STAINLESS STEEL,Pro_08,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_09,True,base.main_company,,stock.stock_location_stock,,,5/16-18 FINISHED HEX NUT STAINLESS STEEL,Pro_09,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_10,True,base.main_company,,stock.stock_location_stock,,,5/16-18 CHANNEL SPRING NUT 316 STAINLESS STEEL,Pro_10,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_11,True,base.main_company,,stock.stock_location_stock,,,5/16-18 CHANNEL SPRING NUT STEEL HD/GALV,Pro_11,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_12,True,base.main_company,,stock.stock_location_stock,,,5/16-18 WHIZ FLANGE NUT STAINLESS STEEL,Pro_12,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_13,True,base.main_company,,stock.stock_location_stock,,,5/16X3 LAG BOLT STAINLESS STEEL,Pro_13,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_14,True,base.main_company,,stock.stock_location_stock,,,5/16X 3-1/2 LAG BOLT STAINLESS STEEL,Pro_14,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_15,True,base.main_company,,stock.stock_location_stock,,,5/16X 4 LAG BOLT STAINLESS STEEL,Pro_15,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_16,True,base.main_company,,stock.stock_location_stock,,,5/16X 4-1/2 LAG BOLT STAINLESS STEEL,Pro_16,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_17,True,base.main_company,,stock.stock_location_stock,,,5/16X 5 LAG BOLT STAINLESS STEEL,Pro_17,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_18,True,base.main_company,,stock.stock_location_stock,,,5/16X 3/4 FLAT WASHER STAINLESS STEEL,Pro_18,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_19,True,base.main_company,,stock.stock_location_stock,,,5/16 MED SPLIT LOCK WASHER STAINLESS STEEL,Pro_19,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_20,True,base.main_company,,stock.stock_location_stock,,,3/8-16X1 HEX CAP SCREW STAINLESS STEEL,Pro_20,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_21,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 1-1/4 HEX CAP SCREW STAINLESS STEEL,Pro_21,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_22,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 1-1/2 HEX CAP SCREW STAINLESS STEEL,Pro_22,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_23,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 1-12 SOCKET CAP SCREW ALLOY,Pro_23,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_24,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 2 SOCKET CAP SCREW ALLOY,Pro_24,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_25,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 2 FLAT SOCKET CAP SCREW ALLOY,Pro_25,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_26,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 2-1/2 SOCKET CAP SCREW ALLOY,Pro_26,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_27,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 3 SOCKET CAP SCREW ALLOY,Pro_27,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_28,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 3-1/2 SOCKET CAP SCREW ALLOY,Pro_28,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_29,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 4 SOCKET CAP SCREW ALLOY,Pro_29,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_30,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 4-1/2 SOCKET SCREW ALLOY,Pro_30,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_31,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 3/4 HEX CAP SCREW STAINLESS STEEL,Pro_31,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_32,True,base.main_company,,stock.stock_location_stock,,,3/8-16X 7/8 SOCKET CAP SCREW ALLOY,Pro_32,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_33,True,base.main_company,,stock.stock_location_stock,,,3/8-16 FINISHED HEX NUT STAINLESS STEEL,Pro_33,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_34,True,base.main_company,,stock.stock_location_stock,,,3/8-16 CHANNEL SPRING NUT 316 STAINLESS STEEL,Pro_34,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_35,True,base.main_company,,stock.stock_location_stock,,,3/8-16 CHANNEL SPRING NUT STAINLESS STEEL,Pro_35,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_36,True,base.main_company,,stock.stock_location_stock,,,3/8-16 CHANNEL SPRING NUT STEEL HD/GALV,Pro_36,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_37,True,base.main_company,,stock.stock_location_stock,,,3/8-16 CHANNEL SPRING NUT STEEL ZINC,Pro_37,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_38,True,base.main_company,,stock.stock_location_stock,,,3/8-16 WHIZ FLANGE NUT STAINLESS STEEL,Pro_38,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_39,True,base.main_company,,stock.stock_location_stock,,,3/8X 1-1/4 FENDER WASHER STAINLESS STEEL,Pro_39,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_40,True,base.main_company,,stock.stock_location_stock,,,3/8X 3-1/2 LAG BOLT STAINLESS STEEL,Pro_40,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_41,True,base.main_company,,stock.stock_location_stock,,,3/8X 4 LAG BOLTS STAINLESS STEEL,Pro_41,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_42,True,base.main_company,,stock.stock_location_stock,,,3/8X 3/4 BONDED SEAL WASHER STAINLESS STEEL,Pro_42,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_43,True,base.main_company,,stock.stock_location_stock,,,3/8X 7/8  FLAT WASHER STAINLESS STEEL,Pro_43,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_44,True,base.main_company,,stock.stock_location_stock,,,3/8 MEDIUM SPLIT LOCK WASHER STAINLESS STEEL,Pro_44,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_45,True,base.main_company,,stock.stock_location_stock,,,#8 EXTERNAL TOOTH LOCK WASHER 400 STAINLESS STEEL,Pro_45,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_46,True,base.main_company,,stock.stock_location_stock,6,2,"4"" E-Curb kit gray",Pro_46,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_47,True,base.main_company,,stock.stock_location_stock,250,75,Soft Aluminum 1' flashings,Pro_47,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_48,True,base.main_company,,stock.stock_location_stock,250,100,"Galanized 1"" flashings",Pro_48,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_49,True,base.main_company,,stock.stock_location_stock,8,2,Flat O-Hagans,Pro_49,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_50,True,base.main_company,,stock.stock_location_stock,12,3,Tri Built Roof Accessory Paint Hickory,Pro_50,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_51,True,base.main_company,,stock.stock_location_stock,12,12,Tri Built Roof Accessory Paint Weathered Wood,Pro_51,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_52,True,base.main_company,,stock.stock_location_stock,12,12,Tri Built RoofAccessory Paint Tile Red,Pro_52,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_53,True,base.main_company,,stock.stock_location_stock,12,12,Tri Built RoofAccessory Paint Cedar,Pro_53,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_54,True,base.main_company,,stock.stock_location_stock,12,12,Tri Built RoofAccessory Paint Slate Gray,Pro_54,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_55,True,base.main_company,,stock.stock_location_stock,2000,200,"1"" EMT",Pro_55,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_56,True,base.main_company,,stock.stock_location_stock,20,10,"1 1/4"" EMT",Pro_56,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_57,True,base.main_company,,stock.stock_location_stock,10,4,"3/4"" Rigid",Pro_57,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_58,True,base.main_company,,stock.stock_location_stock,2,,Square D SOLAR ALL IN ONE,Pro_58,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_59,True,base.main_company,,stock.stock_location_stock,10,,Square D 100A LOAD CENTER,Pro_59,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_60,True,base.main_company,,stock.stock_location_stock,5,,Square D 125A LOAD CENTER,Pro_60,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_61,True,base.main_company,,stock.stock_location_stock,10,,Square D 30A NONFUSED DISCONNECT,Pro_61,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_62,True,base.main_company,,stock.stock_location_stock,20,,Square D 60A NONFUSED DISCONNECT,Pro_62,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_63,True,base.main_company,,stock.stock_location_stock,10,,Square D 15AMP TWIN BREAKER,Pro_63,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_64,True,base.main_company,,stock.stock_location_stock,10,,Square D 20AMP TWIN BREAKER,Pro_64,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_65,True,base.main_company,,stock.stock_location_stock,10,,Square D 15/20AMP TWIN BREAKER,Pro_65,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_66,True,base.main_company,,stock.stock_location_stock,10,,Square D 15/15 QUAD BREAKER,Pro_66,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_67,True,base.main_company,,stock.stock_location_stock,10,,Square D 15/20 QUAD BREAKER,Pro_67,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_68,True,base.main_company,,stock.stock_location_stock,10,,Square D 15/30 QUAD BREAKER,Pro_68,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_69,True,base.main_company,,stock.stock_location_stock,10,,Squqre D 15/40 QUAD BREAKER,Pro_69,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_70,True,base.main_company,,stock.stock_location_stock,10,,Square D 15/50 QUAD BREAKER,Pro_70,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_71,True,base.main_company,,stock.stock_location_stock,10,,Square D 20/20 QUAD BREAKER,Pro_71,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_72,True,base.main_company,,stock.stock_location_stock,10,,Square D 20/30 QUAD BREAKER,Pro_72,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_73,True,base.main_company,,stock.stock_location_stock,10,,Square D 20/40 QUAD BREAKER,Pro_73,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_74,True,base.main_company,,stock.stock_location_stock,10,,Square D 20/50 QUAD BREAKER,Pro_74,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_75,True,base.main_company,,stock.stock_location_stock,30,,"Square D 1"" HUB",Pro_75,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_76,True,base.main_company,,stock.stock_location_stock,10,,"Square D 1-1/4"" HUB",Pro_76,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_77,True,base.main_company,,stock.stock_location_stock,200,,#4 BARE COPPER,Pro_77,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_78,True,base.main_company,,stock.stock_location_stock,315,,#6 BARE COPPER,Pro_78,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_79,True,base.main_company,,stock.stock_location_stock,500,,#8 BARE COPPER,Pro_79,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_80,True,base.main_company,,stock.stock_location_stock,800,,#10 BARE COPPER,Pro_80,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_81,True,base.main_company,,stock.stock_location_stock,2000,,#10 THHN/THWN-2 COPPER BLACK,Pro_81,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_82,True,base.main_company,,stock.stock_location_stock,2000,,#10 THHN/THWN-2 COPPER BLUE,Pro_82,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_83,True,base.main_company,,stock.stock_location_stock,2000,,#10 THHN/THWN-2 COPPER RED,Pro_83,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_84,True,base.main_company,,stock.stock_location_stock,2000,,#10 THHN/THWN-2 COPPER GREEN,Pro_84,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_85,True,base.main_company,,stock.stock_location_stock,2000,,#10 THHN/THWN-2 COPPER GRAY,Pro_85,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_86,True,base.main_company,,stock.stock_location_stock,2000,,#10 THHN/THWN-2 COPPER WHITE,Pro_86,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_87,True,base.main_company,,stock.stock_location_stock,1000,,#8 THHN/THWN-2 COPPER BLACK,Pro_87,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_88,True,base.main_company,,stock.stock_location_stock,1000,,#8 THHN/THWN-2 COPPER BLUE,Pro_88,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_89,True,base.main_company,,stock.stock_location_stock,1000,,#8 THHN/THWN-2 COPPER RED,Pro_89,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_90,True,base.main_company,,stock.stock_location_stock,1000,,#8 THHN/THWN-2 COPPER GREEN,Pro_90,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_91,True,base.main_company,,stock.stock_location_stock,1000,,#8 THHN/THWN-2 COPPER WHITE,Pro_91,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_92,True,base.main_company,,stock.stock_location_stock,500,,#6 THHN/THWN-2 COPPER BLACK,Pro_92,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_93,True,base.main_company,,stock.stock_location_stock,500,,#6 THHN/THWN-2 COPPER GREEN,Pro_93,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_94,True,base.main_company,,stock.stock_location_stock,500,,#6 THHN/THWN-2 COPPER WHITE,Pro_94,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_95,True,base.main_company,,stock.stock_location_stock,500,,#6 THHN/THWN-2 COPPER RED,Pro_95,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_96,True,base.main_company,,stock.stock_location_stock,200,,#14 THHN SOLID BLACK,Pro_96,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_97,True,base.main_company,,stock.stock_location_stock,2000,,#14 THHN SOLID WHITE,Pro_97,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_98,True,base.main_company,,stock.stock_location_stock,2000,,#14 THHN SOLID GREEN,Pro_98,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_99,True,base.main_company,,stock.stock_location_stock,2000,,#14 THHN SOLID RED,Pro_99,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_100,True,base.main_company,,stock.stock_location_stock,3000,,#10 USE - 2 WIRE,Pro_100,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_101,True,base.main_company,,stock.stock_location_stock,2000,,#10 PV WIRE 2KV/1KV,Pro_101,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_102,True,base.main_company,,stock.stock_location_stock,100,,CRIMP LUG #4/#6,Pro_102,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_103,True,base.main_company,,stock.stock_location_stock,100,,"3/4""CARFLEX/NONMETALLIC FLEX",Pro_103,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_104,True,base.main_company,,stock.stock_location_stock,50,,"1""CARFLEX/NONMETALLIC FLEX",Pro_104,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_105,True,base.main_company,,stock.stock_location_stock,50,,"1-1/4""CARFLEX/NONMETALLIC FLEX",Pro_105,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_106,True,base.main_company,,stock.stock_location_stock,1500,,"1"" ALUMINUM FLEX",Pro_106,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_107,True,base.main_company,,stock.stock_location_stock,250,,"1-1/4"" ALUMINUM FLEX",Pro_107,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_108,True,base.main_company,,stock.stock_location_stock,2000,,"1"" EMT",Pro_108,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_109,True,base.main_company,,stock.stock_location_stock,300,,"1-1/4"" EMT",Pro_109,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_110,True,base.main_company,,stock.stock_location_stock,4,,"1"" RUNNING THREAD",Pro_110,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_111,True,base.main_company,,stock.stock_location_stock,50,,"1""GALV COUPLING",Pro_111,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_112,True,base.main_company,,stock.stock_location_stock,10,,"1-1/4"" GALV COUPLING",Pro_112,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_113,True,base.main_company,,stock.stock_location_stock,25,,"1"" X CLOSE NIPPLE",Pro_113,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_114,True,base.main_company,,stock.stock_location_stock,25,,"1"" X 2"" NIPPLE",Pro_114,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_115,True,base.main_company,,stock.stock_location_stock,25,,"1"" X 4"" NIPPLE",Pro_115,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_116,True,base.main_company,,stock.stock_location_stock,25,,"1"" X 6"" NIPPLE",Pro_116,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_117,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4""x CLOSE NIPPLE",Pro_117,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_118,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4 X 2"" NIPPLE",Pro_118,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_119,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4 X 4"" NIPPLE",Pro_119,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_120,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4 X 6"" NIPPLE",Pro_120,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_121,True,base.main_company,,stock.stock_location_stock,25,,"1"" CHASE NIPPLE",Pro_121,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_122,True,base.main_company,,stock.stock_location_stock,25,,"1-1/4"" CHASE NIPPLE",Pro_122,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_123,True,base.main_company,,stock.stock_location_stock,40,,"1"" LB",Pro_123,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_124,True,base.main_company,,stock.stock_location_stock,40,,"1"" LL",Pro_124,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_125,True,base.main_company,,stock.stock_location_stock,40,,"1"" LR",Pro_125,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_126,True,base.main_company,,stock.stock_location_stock,40,,"1"" SHORT LB",Pro_126,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_127,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4"" LB",Pro_127,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_128,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4"" LL",Pro_128,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_129,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4"" LR",Pro_129,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_130,True,base.main_company,,stock.stock_location_stock,6,,"1-1/4"" SHORT LB",Pro_130,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_131,True,base.main_company,,stock.stock_location_stock,25,,"1"" PLASTIC BUSHING",Pro_131,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_132,True,base.main_company,,stock.stock_location_stock,25,,"1-1/4"" PLASTIC BUSHING",Pro_132,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_133,True,base.main_company,,stock.stock_location_stock,100,,"1"" GROUND BUSHING",Pro_133,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_134,True,base.main_company,,stock.stock_location_stock,50,,"1-1/4"" GROUND BUSHING",Pro_134,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_135,True,base.main_company,,stock.stock_location_stock,30,,PVC J-BOX 6X6X6,Pro_135,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_136,True,base.main_company,,stock.stock_location_stock,20,,PVC J-BOX 6X6X4,Pro_136,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_137,True,base.main_company,,stock.stock_location_stock,10,,PVC J-BOX 8X8X4,Pro_137,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_138,True,base.main_company,,stock.stock_location_stock,4,,PVC J-BOX 12X12X4,Pro_138,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_139,True,base.main_company,,stock.stock_location_stock,10,,"1"" SHORT TELEPHONE 90",Pro_139,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_140,True,base.main_company,,stock.stock_location_stock,10,,"1"" LONG TELEPHONE 90",Pro_140,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_141,True,base.main_company,,stock.stock_location_stock,250,,"1"" RAINTITE CONN",Pro_141,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_142,True,base.main_company,,stock.stock_location_stock,250,,"1"" RAINTITE COUP",Pro_142,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_143,True,base.main_company,,stock.stock_location_stock,60,,"1-1/4"" RAINTITE CONN",Pro_143,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_144,True,base.main_company,,stock.stock_location_stock,60,,"1-1/4"" RAINTITE COUP",Pro_144,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_145,True,base.main_company,,stock.stock_location_stock,500,,"1"" EMT 1-HOLE STRAP",Pro_145,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_146,True,base.main_company,,stock.stock_location_stock,100,,"1"" RIGID/FLEX 1-HOLE STRAP",Pro_146,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_147,True,base.main_company,,stock.stock_location_stock,100,,"1-1/4"" EMT 1-HOLE STRAP",Pro_147,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_148,True,base.main_company,,stock.stock_location_stock,100,,"1-1/4"" RIGID/FLEX 1-HOLE STRAP",Pro_148,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_149,True,base.main_company,,stock.stock_location_stock,100,,"1"" FLEX CONN",Pro_149,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_150,True,base.main_company,,stock.stock_location_stock,100,,"1"" FLEX COUP",Pro_150,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_151,True,base.main_company,,stock.stock_location_stock,100,,"1"" FLEX TO EMT CONN",Pro_151,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_152,True,base.main_company,,stock.stock_location_stock,100,,"1-1/4"" FLEX CONN",Pro_152,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_153,True,base.main_company,,stock.stock_location_stock,10,,"1-1/4"" FLEX COUP",Pro_153,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_154,True,base.main_company,,stock.stock_location_stock,100,,"1"" INSULATED GROUND BUSHING",Pro_154,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_155,True,base.main_company,,stock.stock_location_stock,100,,"3/4"" EMT 1-HOLE STRAP",Pro_155,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_156,True,base.main_company,,stock.stock_location_stock,10,,SQUARE D 35A DOUBLE PULL CIRCUIT BREAKER,Pro_156,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_157,True,base.main_company,,stock.stock_location_stock,10,,SQUARE D 45A DOUBLE PULL CIRCUIT BREAKER,Pro_157,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_158,True,base.main_company,,stock.stock_location_stock,10,,GE 35A DOUBLE PULL CIRCUIT BREAKER,Pro_158,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_159,True,base.main_company,,stock.stock_location_stock,10,4,2x4,Pro_159,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_160,True,base.main_company,,stock.stock_location_stock,8,4,2x3,Pro_160,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_161,True,base.main_company,,stock.stock_location_stock,10,4,"2""x10' ABS pipe",Pro_161,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_162,True,base.main_company,,stock.stock_location_stock,10,4,"1 1/2"" ABS pipe",Pro_162,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_163,True,base.main_company,,stock.stock_location_stock,5,1,Husky Contrator clean up bags 42gal 32 count,Pro_163,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_164,True,base.main_company,,stock.stock_location_stock,3,1,Stanley utility blades 50 count,Pro_164,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_165,True,base.main_company,,stock.stock_location_stock,24,12,Chemlink Nova Link Gray,Pro_165,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_166,True,base.main_company,,stock.stock_location_stock,24,12,Chemlink Nova Link White,Pro_166,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_167,True,base.main_company,,stock.stock_location_stock,24,12,Chemlink Nova Link Medium Bronze,Pro_167,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_168,True,base.main_company,,stock.stock_location_stock,24,12,Chemlink Nova Link Terra Cotta,Pro_168,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_169,True,base.main_company,,stock.stock_location_stock,48,24,Chemlink Clear,Pro_169,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_170,True,base.main_company,,stock.stock_location_stock,240,48,Chemlink M-1 Gray,Pro_170,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_171,True,base.main_company,,stock.stock_location_stock,24,12,Chemlink Tile Secure Medium bronze,Pro_171,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_172,True,base.main_company,,stock.stock_location_stock,24,12,Chemlink Tile Secure Terra Cotta,Pro_172,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_173,True,base.main_company,,stock.stock_location_stock,24,12,Chemlink Tile Secure Stone,Pro_173,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_174,True,base.main_company,,stock.stock_location_stock,6,1,WD-40,Pro_174,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_175,True,base.main_company,,stock.stock_location_stock,12,2,DAP Alex Ultra 230 Brown,Pro_175,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_176,True,base.main_company,,stock.stock_location_stock,12,2,DAP Alex Ultra 230 Almond,Pro_176,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_177,True,base.main_company,,stock.stock_location_stock,12,2,DAP Alex Ultra 230 Cedar Tan,Pro_177,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_178,True,base.main_company,,stock.stock_location_stock,12,2,GE SiliconeI Clear,Pro_178,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_179,True,base.main_company,,stock.stock_location_stock,12,2,GE SiliconeI White,Pro_179,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_180,True,base.main_company,,stock.stock_location_stock,,24,Henry 212 crystal clear all purpose patch,Pro_180,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_181,True,base.main_company,,stock.stock_location_stock,,24,Henry 208R Rubberized wet patch roof cement,Pro_181,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_182,True,base.main_company,,stock.stock_location_stock,,1,Henry 209 Elastomastic roof patch,Pro_182,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_183,True,base.main_company,,stock.stock_location_stock,3,1,Hanson No melt lumber crayon 12 pack Red,Pro_183,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_184,True,base.main_company,,stock.stock_location_stock,3,1,Hanson No melt lumber crayon 12 pack Black,Pro_184,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_185,True,base.main_company,,stock.stock_location_stock,3,1,Hanson No melt lumber crayon 12 pack Yellow,Pro_185,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_186,True,base.main_company,,stock.stock_location_stock,,1,Henry Asphalt Emulsion Sealer & Dampproofer,Pro_186,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_187,True,base.main_company,,stock.stock_location_stock,,7,Rustoleum marking paint Red Orange,Pro_187,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_188,True,base.main_company,,stock.stock_location_stock,,5,Rustoleum Cold Galvanizing Compound,Pro_188,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_189,True,base.main_company,,stock.stock_location_stock,,5,Rustoleum Bright Galvanizing Compound,Pro_189,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_190,True,base.main_company,,stock.stock_location_stock,,3,Rustoleum Gray Primer,Pro_190,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_191,True,base.main_company,,stock.stock_location_stock,,3,Rustoleum Light Gray Primer,Pro_191,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_192,True,base.main_company,,stock.stock_location_stock,,3,Rustoleum Dark Gray Primer,Pro_192,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_193,True,base.main_company,,stock.stock_location_stock,,2,Rustoleum Rusty Metal Primer,Pro_193,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_194,True,base.main_company,,stock.stock_location_stock,,2,Rustoleum Red Primer,Pro_194,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_195,True,base.main_company,,stock.stock_location_stock,,4,Rustoleum Satin Espresso,Pro_195,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_196,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Gloss Almond,Pro_196,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_197,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Satin Fossil,Pro_197,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_198,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Satin Granite,Pro_198,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_199,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Satin Heirloom White,Pro_199,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_200,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Satin Ivory Silk,Pro_200,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_201,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Satin Cinnamon,Pro_201,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_202,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Satin Shell White,Pro_202,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_203,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Camouflage Deep Forest Green,Pro_203,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_204,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Camouflage Earth Brown,Pro_204,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_205,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum Camouflage Army Green,Pro_205,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_206,True,base.main_company,,stock.stock_location_stock,9,4,Rustoleum  Camouflage Khaki,Pro_206,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_207,True,base.main_company,,stock.stock_location_stock,9,4,FGP Roof Accessory Premium Spray Paint Cedar,Pro_207,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_208,True,base.main_company,,stock.stock_location_stock,9,4,FGP Roof Accessory Premium Spray Paint Slate Gray,Pro_208,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_209,True,base.main_company,,stock.stock_location_stock,9,4,FGP Roof Accessory Premium Spray Paint Hickory,Pro_209,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_210,True,base.main_company,,stock.stock_location_stock,9,4,FGP Roof Accessory Premium Spray Paint Hunter Green,Pro_210,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_211,True,base.main_company,,stock.stock_location_stock,,1,Intermodule Clamps 2.25 Black,Pro_211,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_212,True,base.main_company,,stock.stock_location_stock,,1,Intermodule Clamps 2.25 Clear,Pro_212,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_213,True,base.main_company,,stock.stock_location_stock,,1,Intermodule Clamps 2.50 Clear,Pro_213,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_214,True,base.main_company,,stock.stock_location_stock,,,Intermodule Clamps 2.75 Clear,Pro_214,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_215,True,base.main_company,,stock.stock_location_stock,,,Intermodule Clamps 2.75 Black,Pro_215,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_216,True,base.main_company,,stock.stock_location_stock,,1,End Clamps 1.572 Black,Pro_216,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_217,True,base.main_company,,stock.stock_location_stock,,1,End Clamps 1.660 Clear,Pro_217,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_218,True,base.main_company,,stock.stock_location_stock,,2,End Clamps 1.810 Black,Pro_218,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_219,True,base.main_company,,stock.stock_location_stock,,2,End Clamps 1.810 Clear,Pro_219,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_220,True,base.main_company,,stock.stock_location_stock,,,End Clamps 1.968 Clear,Pro_220,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_221,True,base.main_company,,stock.stock_location_stock,,,End Clamps 1.968 Black,Pro_221,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_222,True,base.main_company,,stock.stock_location_stock,,,Rail Channel Nut,Pro_222,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_223,True,base.main_company,,stock.stock_location_stock,,,Stainless Steel U-Bolt Asembly,Pro_223,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_224,True,base.main_company,,stock.stock_location_stock,,,Solar Wedge 5 Degree,Pro_224,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_225,True,base.main_company,,stock.stock_location_stock,,,Solar Wedge,Pro_225,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_226,True,base.main_company,,stock.stock_location_stock,,,Tile Trac,Pro_226,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_227,True,base.main_company,,stock.stock_location_stock,,,Tilt Up Kits,Pro_227,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_228,True,base.main_company,,stock.stock_location_stock,,,FAST JACK,Pro_228,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_229,True,base.main_company,,stock.stock_location_stock,,,"PRO SOLAR SUPPORT RAIL 1.5"" 136""",Pro_229,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_230,True,base.main_company,,stock.stock_location_stock,,,"PRO SOLAR SUPPORT RAIL 2.5"" 124""",Pro_230,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_231,True,base.main_company,,stock.stock_location_stock,,,"PRO SOLAR SUPPORT RAIL 2.5"" 136""",Pro_231,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_232,True,base.main_company,,stock.stock_location_stock,,,"PRO SOLAR SUPPORT RAIL 3"" 136""",Pro_232,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_233,True,base.main_company,,stock.stock_location_stock,,,"PRO SOLAR SUPPORT RAIL 3"" 164""",Pro_233,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_234,True,base.main_company,,stock.stock_location_stock,,,"PRO SOLAR SUPPORT RAIL 3"" 172""",Pro_234,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_235,True,base.main_company,,stock.stock_location_stock,,,SF Rail,Pro_235,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_236,True,base.main_company,,stock.stock_location_stock,,,SF Rail Cap,Pro_236,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_237,True,base.main_company,,stock.stock_location_stock,,,SF Rail Cap Screws,Pro_237,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_238,True,base.main_company,,stock.stock_location_stock,,,SF Rubber Cap Screws,Pro_238,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_239,True,base.main_company,,stock.stock_location_stock,,,SF Rail L brackets,Pro_239,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_240,True,base.main_company,,stock.stock_location_stock,,,SF Rail Splice Bar,Pro_240,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_241,True,base.main_company,,stock.stock_location_stock,,,SF Rail Rubber End Cap,Pro_241,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_242,True,base.main_company,,stock.stock_location_stock,,,SF Rail kit  (complete),Pro_242,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_243,True,base.main_company,,stock.stock_location_stock,,,Ground Lug,Pro_243,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_244,True,base.main_company,,stock.stock_location_stock,,,Ground Lug,Pro_244,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_245,True,base.main_company,,stock.stock_location_stock,,,Ground Lug made Long,Pro_245,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_246,True,base.main_company,,stock.stock_location_stock,,,Ground Lug made Short,Pro_246,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_247,True,base.main_company,,stock.stock_location_stock,,,Ground Lug made Short,Pro_247,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_248,True,base.main_company,,stock.stock_location_stock,,,Long Silver Rail Cap,Pro_248,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_249,True,base.main_company,,stock.stock_location_stock,,,Long Silver SF Rail,Pro_249,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_250,True,base.main_company,,stock.stock_location_stock,,,"Schedule 580 3/4""x8' PVC Grey",Pro_250,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_251,True,base.main_company,,stock.stock_location_stock,,,"Schedule 580 1""x8' PVC Grey",Pro_251,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_252,True,base.main_company,,stock.stock_location_stock,,,Tilt Kit Aluminum Rods 20',Pro_252,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_253,True,base.main_company,,stock.stock_location_stock,,,"1/2""x10' Copper Pipe",Pro_253,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_254,True,base.main_company,,stock.stock_location_stock,,,"3/4""x10' Copper Pipe",Pro_254,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_255,True,base.main_company,,stock.stock_location_stock,,,"1""x10' Copper Pipe",Pro_255,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_256,True,base.main_company,,stock.stock_location_stock,,,"1,1/2""x10' Copper Pipe",Pro_256,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_257,True,base.main_company,,stock.stock_location_stock,,,"3/8""x10' Copper Pipe",Pro_257,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_258,True,base.main_company,,stock.stock_location_stock,,,Deep Channel Unistrut,Pro_258,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_259,True,base.main_company,,stock.stock_location_stock,,,Shallow Channel Unistrut,Pro_259,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_260,True,base.main_company,,stock.stock_location_stock,,,"Schedule 40 PVC white 1""x10'",Pro_260,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_261,True,base.main_company,,stock.stock_location_stock,,,"Schedule 40 PVC white 3/4""x10'",Pro_261,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_262,True,base.main_company,,stock.stock_location_stock,,,"1"" Flex PVC 10'",Pro_262,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_263,True,base.main_company,,stock.stock_location_stock,,,"1/2""x10' EMT",Pro_263,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_264,True,base.main_company,,stock.stock_location_stock,,,"3/4""x10' EMT",Pro_264,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_265,True,base.main_company,,stock.stock_location_stock,,,Aleo S18240 Module,Pro_265,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_266,True,base.main_company,,stock.stock_location_stock,,,Aleo S79235 Module,Pro_266,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_267,True,base.main_company,,stock.stock_location_stock,,,Aleo S79240 Module,Pro_267,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_268,True,base.main_company,,stock.stock_location_stock,,,Canadian Solar CS6P Module,Pro_268,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_269,True,base.main_company,,stock.stock_location_stock,,,Sunpower 327 Module,Pro_269,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_270,True,base.main_company,,stock.stock_location_stock,,,Sunpower 240 Module,Pro_270,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_271,True,base.main_company,,stock.stock_location_stock,,,Sunpower 230 Module,Pro_271,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_272,True,base.main_company,,stock.stock_location_stock,,,Inverter battery charger,Pro_272,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_273,True,base.main_company,,stock.stock_location_stock,,,Sunny Boy 5000us,Pro_273,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_274,True,base.main_company,,stock.stock_location_stock,,,inverter disconnect,Pro_274,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_275,True,base.main_company,,stock.stock_location_stock,,,PVI 5000 W inverter,Pro_275,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_276,True,base.main_company,,stock.stock_location_stock,,,MNBE-A battery enclosure,Pro_276,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_277,True,base.main_company,,stock.stock_location_stock,,,MNBE-A battery enclosure,Pro_277,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_278,True,base.main_company,,stock.stock_location_stock,,,Blue Planet 2502xi,Pro_278,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_279,True,base.main_company,,stock.stock_location_stock,,,Fronius Inverter-8000f,Pro_279,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_280,True,base.main_company,,stock.stock_location_stock,,,Fronius Inverter-11401f,Pro_280,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_281,True,base.main_company,,stock.stock_location_stock,,,SPR Monitoring,Pro_281,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_282,True,base.main_company,,stock.stock_location_stock,,,SPR Monitoring,Pro_282,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_283,True,base.main_company,,stock.stock_location_stock,,,SPR Fronius-6501f-IUNI,Pro_283,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_284,True,base.main_company,,stock.stock_location_stock,,,SPR Fronius-3301f-IUNI,Pro_284,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_285,True,base.main_company,,stock.stock_location_stock,,,SPR-SMA-3000M,Pro_285,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_286,True,base.main_company,,stock.stock_location_stock,,,SPR-SMA-3000M,Pro_286,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_287,True,base.main_company,,stock.stock_location_stock,,,SPR-SMA-4000M,Pro_287,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_288,True,base.main_company,,stock.stock_location_stock,,,SPR-SMA-3000M,Pro_288,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_289,True,base.main_company,,stock.stock_location_stock,,,SPR-SMA-3000M,Pro_289,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_290,True,base.main_company,,stock.stock_location_stock,,,SPR-DC-DISC-M-US,Pro_290,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_291,True,base.main_company,,stock.stock_location_stock,,,SPR-DC-DISC-M-US,Pro_291,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_292,True,base.main_company,,stock.stock_location_stock,,,SPR-DC-DISC-M-US,Pro_292,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_293,True,base.main_company,,stock.stock_location_stock,,,SPR-DC-DISC-M-US,Pro_293,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_294,True,base.main_company,,stock.stock_location_stock,,,Field mod kit-GTUL01,Pro_294,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_295,True,base.main_company,,stock.stock_location_stock,,,SPR-DMR-ENC,Pro_295,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_296,True,base.main_company,,stock.stock_location_stock,,,SPR-5000-TL-I Power one,Pro_296,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_297,True,base.main_company,,stock.stock_location_stock,,,SPR-6000-TL-I Power One,Pro_297,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_298,True,base.main_company,,stock.stock_location_stock,,,SPR-6000-TL-I Power One,Pro_298,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_299,True,base.main_company,,stock.stock_location_stock,,,SPR-4200-TL-I Power One,Pro_299,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_300,True,base.main_company,,stock.stock_location_stock,,,Rustoleum Satin Nutmeg Spraypaint,Pro_300,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_301,True,base.main_company,,stock.stock_location_stock,,,3 in 1 Oil,Pro_301,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_302,True,base.main_company,,stock.stock_location_stock,,,Goof Off,Pro_302,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_303,True,base.main_company,,stock.stock_location_stock,,,Rustoleum Flat Black,Pro_303,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_304,True,base.main_company,,stock.stock_location_stock,,,Power Gray Loctite,Pro_304,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_305,True,base.main_company,,stock.stock_location_stock,,,Homax Ceiling Texture,Pro_305,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_306,True,base.main_company,,stock.stock_location_stock,,,Homax Knock Down Texture,Pro_306,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_307,True,base.main_company,,stock.stock_location_stock,,,Tribuilt Tile Red,Pro_307,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_308,True,base.main_company,,stock.stock_location_stock,,,Self Tappes Tech Screws,Pro_308,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_309,True,base.main_company,,stock.stock_location_stock,,,Rail Bolts,Pro_309,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_310,True,base.main_company,,stock.stock_location_stock,,,"1/4"" Beam Clamps",Pro_310,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_311,True,base.main_company,,stock.stock_location_stock,,,"1"" Conduit Hangers",Pro_311,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_312,True,base.main_company,,stock.stock_location_stock,,,"1"" One Hole Strap ",Pro_312,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_313,True,base.main_company,,stock.stock_location_stock,,,"1/2"" Black Button Push In Connector",Pro_313,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_314,True,base.main_company,,stock.stock_location_stock,,,"1"" RD SE Cable Connector",Pro_314,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_315,True,base.main_company,,stock.stock_location_stock,,,"1/8"" Insulated Multi Tap Connector",Pro_315,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_316,True,base.main_company,,stock.stock_location_stock,,,2 Hole Wire Connector,Pro_316,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_317,True,base.main_company,,stock.stock_location_stock,,,"1"" Pipe Nail Straps",Pro_317,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_318,True,base.main_company,,stock.stock_location_stock,,,"1"" Pull 90",Pro_318,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_319,True,base.main_company,,stock.stock_location_stock,,,"1"" Offset Nipple",Pro_319,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_320,True,base.main_company,,stock.stock_location_stock,,,"3/4"" One Hole Set EMT",Pro_320,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_321,True,base.main_company,,stock.stock_location_stock,,,"3"" Grounding Bar Kit",Pro_321,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_322,True,base.main_company,,stock.stock_location_stock,,,"8"" Grounding Bar Kit",Pro_322,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_323,True,base.main_company,,stock.stock_location_stock,,,2-8 Crimpit,Pro_323,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_324,True,base.main_company,,stock.stock_location_stock,,,6-4 Crimpit,Pro_324,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_325,True,base.main_company,,stock.stock_location_stock,,,Universal Ground Rod Clamp,Pro_325,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_326,True,base.main_company,,stock.stock_location_stock,,,"1/2"" - 1""Ground Clamp",Pro_326,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_327,True,base.main_company,,stock.stock_location_stock,,,Set Screw Wire Connector,Pro_327,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_328,True,base.main_company,,stock.stock_location_stock,,,Electrical Spring Connector,Pro_328,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_329,True,base.main_company,,stock.stock_location_stock,,,Class R Fuse Reducer,Pro_329,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_330,True,base.main_company,,stock.stock_location_stock,,,Porcelain Lampholder Keyless,Pro_330,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_331,True,base.main_company,,stock.stock_location_stock,,,Smoke and Carbon Monoxide Alarm,Pro_331,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_332,True,base.main_company,,stock.stock_location_stock,,,Kiddie-Carbon Monoxide Alarm,Pro_332,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_333,True,base.main_company,,stock.stock_location_stock,,,Code One-Carbon Monoxide Alarm,Pro_333,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_334,True,base.main_company,,stock.stock_location_stock,,,First Alert-Carbon Monoxide Alarm,Pro_334,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_335,True,base.main_company,,stock.stock_location_stock,,,Automatic Security Light Kit,Pro_335,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_336,True,base.main_company,,stock.stock_location_stock,,,Meter Sockets,Pro_336,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_337,True,base.main_company,,stock.stock_location_stock,,,Meters,Pro_337,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_338,True,base.main_company,,stock.stock_location_stock,,,Locus Monitors,Pro_338,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_339,True,base.main_company,,stock.stock_location_stock,,,#2 WIRE BLK,Pro_339,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_340,True,base.main_company,,stock.stock_location_stock,,,#2 WIRE RED,Pro_340,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_341,True,base.main_company,,stock.stock_location_stock,,,#2 WIRE GREEN,Pro_341,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_342,True,base.main_company,,stock.stock_location_stock,,,#2 WIRE WHITE,Pro_342,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_343,True,base.main_company,,stock.stock_location_stock,,,#4 WIRE BLK,Pro_343,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_344,True,base.main_company,,stock.stock_location_stock,,,#4 WIRE RED,Pro_344,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_345,True,base.main_company,,stock.stock_location_stock,,,#4 WIRE GREEN,Pro_345,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_346,True,base.main_company,,stock.stock_location_stock,,,#4 WIRE WHITE,Pro_346,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_347,True,base.main_company,,stock.stock_location_stock,,,#12 WIRE SOLID WHITE,Pro_347,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_348,True,base.main_company,,stock.stock_location_stock,,,#12 WIRE SOLID RED,Pro_348,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_349,True,base.main_company,,stock.stock_location_stock,,,#12 WIRE SOLID BLK,Pro_349,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_350,True,base.main_company,,stock.stock_location_stock,,,#12 WIRE SOLID YELLOW,Pro_350,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_351,True,base.main_company,,stock.stock_location_stock,,,#12 STRANDED WIRE GREEN,Pro_351,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_352,True,base.main_company,,stock.stock_location_stock,,,#12 STRANDED WIRE BLUE,Pro_352,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_353,True,base.main_company,,stock.stock_location_stock,,,#12 STRANDED WIRE RED,Pro_353,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_354,True,base.main_company,,stock.stock_location_stock,,,#12 STRANDED WIRE WHITE,Pro_354,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_355,True,base.main_company,,stock.stock_location_stock,,,#12 STRANDED WIRE ORANGE,Pro_355,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_356,True,base.main_company,,stock.stock_location_stock,,,"3/4"" ALUMINUM FLEX",Pro_356,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_357,True,base.main_company,,stock.stock_location_stock,,,Model 508S Tempo Wire Finder,Pro_357,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_358,True,base.main_company,,stock.stock_location_stock,,,Makita Light,Pro_358,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_359,True,base.main_company,,stock.stock_location_stock,,,2 Stage Epoxy Gun,Pro_359,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_360,True,base.main_company,,stock.stock_location_stock,,,50' Air Hoses,Pro_360,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_361,True,base.main_company,,stock.stock_location_stock,,,Bay of 80 ear plugs,Pro_361,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_362,True,base.main_company,,stock.stock_location_stock,,,Harness roof mounts,Pro_362,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_363,True,base.main_company,,stock.stock_location_stock,,,Boxes of straight blades for knife,Pro_363,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_364,True,base.main_company,,stock.stock_location_stock,,,Harness,Pro_364,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_365,True,base.main_company,,stock.stock_location_stock,,,Safety Goggles,Pro_365,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_366,True,base.main_company,,stock.stock_location_stock,,,Dust Masks,Pro_366,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_367,True,base.main_company,,stock.stock_location_stock,,,Husky Trash Bags,Pro_367,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_368,True,base.main_company,,stock.stock_location_stock,,,Re-usable Ear Plugs,Pro_368,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_369,True,base.main_company,,stock.stock_location_stock,,,Dust Pan,Pro_369,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_370,True,base.main_company,,stock.stock_location_stock,,,Paint Roller Semi Smooth Surface,Pro_370,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_371,True,base.main_company,,stock.stock_location_stock,,,Med Bronze,Pro_371,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_372,True,base.main_company,,stock.stock_location_stock,,,PVAC 10 Output Cable,Pro_372,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_373,True,base.main_company,,stock.stock_location_stock,,,Stucco Tray,Pro_373,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_374,True,base.main_company,,stock.stock_location_stock,,,Hamk,Pro_374,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_375,True,base.main_company,,stock.stock_location_stock,,,Concrete Broom,Pro_375,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_376,True,base.main_company,,stock.stock_location_stock,,,Wood Floats,Pro_376,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_377,True,base.main_company,,stock.stock_location_stock,,,Pool Trowels,Pro_377,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_378,True,base.main_company,,stock.stock_location_stock,,,Magnesium Float,Pro_378,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_379,True,base.main_company,,stock.stock_location_stock,,,Notch Broom,Pro_379,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_380,True,base.main_company,,stock.stock_location_stock,,,Knotch Trowel,Pro_380,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_381,True,base.main_company,,stock.stock_location_stock,,,Edging Trowel,Pro_381,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_382,True,base.main_company,,stock.stock_location_stock,,,Joiner,Pro_382,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_383,True,base.main_company,,stock.stock_location_stock,,,Mixing Paddles,Pro_383,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_384,True,base.main_company,,stock.stock_location_stock,,,Spade Trowels,Pro_384,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_385,True,base.main_company,,stock.stock_location_stock,,,Maraine Trowels,Pro_385,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_386,True,base.main_company,,stock.stock_location_stock,,,Stucco Float,Pro_386,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_387,True,base.main_company,,stock.stock_location_stock,,,S-Tile Flashings,Pro_387,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_388,True,base.main_company,,stock.stock_location_stock,,,M-Tile Flashings,Pro_388,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_389,True,base.main_company,,stock.stock_location_stock,,,208R Tubes,Pro_389,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_390,True,base.main_company,,stock.stock_location_stock,,,212 Tubes,Pro_390,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_391,True,base.main_company,,stock.stock_location_stock,,,Brown DAP,Pro_391,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_392,True,base.main_company,,stock.stock_location_stock,,,Almond DAP Tubes,Pro_392,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_393,True,base.main_company,,stock.stock_location_stock,,,Cedar Tan DAP Tubes,Pro_393,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_394,True,base.main_company,,stock.stock_location_stock,,,Liquid Nail,Pro_394,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_395,True,base.main_company,,stock.stock_location_stock,,,900 Henry Tubes,Pro_395,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_396,True,base.main_company,,stock.stock_location_stock,,,100 Silicone White,Pro_396,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_397,True,base.main_company,,stock.stock_location_stock,,,Roberts Wall Base Adhexive 7200,Pro_397,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_398,True,base.main_company,,stock.stock_location_stock,,,Fire Barrier Sealant CP25 Net,Pro_398,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_399,True,base.main_company,,stock.stock_location_stock,,,Clear DAP,Pro_399,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_400,True,base.main_company,,stock.stock_location_stock,,,Chemlink Clear General Purpose Sealant,Pro_400,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_401,True,base.main_company,,stock.stock_location_stock,,,3m 560 Polyurethane,Pro_401,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_402,True,base.main_company,,stock.stock_location_stock,,,Suntrek bond roofing sealant,Pro_402,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_403,True,base.main_company,,stock.stock_location_stock,,,Gray Nova Link,Pro_403,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_404,True,base.main_company,,stock.stock_location_stock,,,White Nova Link,Pro_404,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_405,True,base.main_company,,stock.stock_location_stock,,,Old Style Stand Off Washers,Pro_405,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_406,True,base.main_company,,stock.stock_location_stock,,,Terra Cotta Nova Link,Pro_406,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_407,True,base.main_company,,stock.stock_location_stock,,,"8d Ext Galvanized 2.5""",Pro_407,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_408,True,base.main_company,,stock.stock_location_stock,,,Roof Nails,Pro_408,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_409,True,base.main_company,,stock.stock_location_stock,,,2 3/8 x 113 Nails,Pro_409,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_410,True,base.main_company,,stock.stock_location_stock,,,2.75 Roofing Nails,Pro_410,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_411,True,base.main_company,,stock.stock_location_stock,,,Hitachi 2 3/8 x.118,Pro_411,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_412,True,base.main_company,,stock.stock_location_stock,,,"21'3"" x .131 Smooth Shank",Pro_412,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_413,True,base.main_company,,stock.stock_location_stock,,,1-3/4 Staples,Pro_413,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_414,True,base.main_company,,stock.stock_location_stock,,,Metal Cap Roof Nails,Pro_414,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_415,True,base.main_company,,stock.stock_location_stock,,,1-1/4 Coil Nails,Pro_415,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_416,True,base.main_company,,stock.stock_location_stock,,,3/4 Coil Nails,Pro_416,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_417,True,base.main_company,,stock.stock_location_stock,,,"1"" Coil Nails",Pro_417,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_418,True,base.main_company,,stock.stock_location_stock,,,"21'3-1/2"" x .162",Pro_418,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_419,True,base.main_company,,stock.stock_location_stock,,,Quick Mount Boxes,Pro_419,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_420,True,base.main_company,,stock.stock_location_stock,,,All Threads,Pro_420,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_421,True,base.main_company,,stock.stock_location_stock,,,Long Sliders,Pro_421,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_422,True,base.main_company,,stock.stock_location_stock,,,Short Sliders,Pro_422,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_423,True,base.main_company,,stock.stock_location_stock,,,Nuts,Pro_423,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_424,True,base.main_company,,stock.stock_location_stock,,,Big Washers,Pro_424,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_425,True,base.main_company,,stock.stock_location_stock,,,Flashing,Pro_425,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_426,True,base.main_company,,stock.stock_location_stock,,,Lag Bolts,Pro_426,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_427,True,base.main_company,,stock.stock_location_stock,,,Smaller Washers,Pro_427,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_428,True,base.main_company,,stock.stock_location_stock,,,Female Connector to MC,Pro_428,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_429,True,base.main_company,,stock.stock_location_stock,,,Female Connector to Insulator,Pro_429,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_430,True,base.main_company,,stock.stock_location_stock,,,Male Connector to MC,Pro_430,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_431,True,base.main_company,,stock.stock_location_stock,,,Male Connector to Insulator,Pro_431,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_432,True,base.main_company,,stock.stock_location_stock,,,Terminator End Cap,Pro_432,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_433,True,base.main_company,,stock.stock_location_stock,,,Terminator Cap for Rope,Pro_433,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_434,True,base.main_company,,stock.stock_location_stock,,,AC PV Terminator Cap End Male,Pro_434,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_435,True,base.main_company,,stock.stock_location_stock,,,AC PV Terminator Cap End Female,Pro_435,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_436,True,base.main_company,,stock.stock_location_stock,,,Aurora Terminator Cap,Pro_436,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_437,True,base.main_company,,stock.stock_location_stock,,,Aurora Terminator Cap Removal Tool,Pro_437,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_438,True,base.main_company,,stock.stock_location_stock,,,Terminator Cap Removal Tool,Pro_438,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_439,True,base.main_company,,stock.stock_location_stock,,,Rope Splice,Pro_439,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_440,True,base.main_company,,stock.stock_location_stock,,,"3/4"" Rigid Pipe Full",Pro_440,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_441,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" Rigid Pipe 4",Pro_441,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_442,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" Conduit 4",Pro_442,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_443,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" Conduit Full",Pro_443,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_444,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" Conduit Full",Pro_444,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_445,True,base.main_company,,stock.stock_location_stock,,,"1"" Conduit Full",Pro_445,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_446,True,base.main_company,,stock.stock_location_stock,,,"3/4"" Conduit Full",Pro_446,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_447,True,base.main_company,,stock.stock_location_stock,,,"1/2"" Conduit Full",Pro_447,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_448,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" Pipe Bender",Pro_448,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_449,True,base.main_company,,stock.stock_location_stock,,,#10 BROWN,Pro_449,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_450,True,base.main_company,,stock.stock_location_stock,,,#10 ORANGE,Pro_450,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_451,True,base.main_company,,stock.stock_location_stock,,,5/16 x 2.25 HEX CAP SCREW STAINLESS STEEL,Pro_451,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_452,True,base.main_company,,stock.stock_location_stock,,,5/16 X 2.5 HEX CAP SCREW STAINLESS STEEL,Pro_452,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_453,True,base.main_company,,stock.stock_location_stock,,,SF RAIL TECH SCREWS,Pro_453,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_454,True,base.main_company,,stock.stock_location_stock,,,Sideways Wire Clips,Pro_454,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_455,True,base.main_company,,stock.stock_location_stock,,,"3"" Primeguard Exterior Screw",Pro_455,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_456,True,base.main_company,,stock.stock_location_stock,,,"Fixed 8"" Stand Off",Pro_456,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_457,True,base.main_company,,stock.stock_location_stock,,,"3-1/2"" 2P Lag Bolt",Pro_457,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_458,True,base.main_company,,stock.stock_location_stock,,,"3/8 x 1-1/4"" SS Bolt",Pro_458,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_459,True,base.main_company,,stock.stock_location_stock,,,3/8 SS Lock Washer,Pro_459,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_460,True,base.main_company,,stock.stock_location_stock,,,Rain Boots (Pairs),Pro_460,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_461,True,base.main_company,,stock.stock_location_stock,,,"Chemlink 4"" E-Curlo Kit",Pro_461,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_462,True,base.main_company,,stock.stock_location_stock,,,.9 Gal Can of 107 Henly,Pro_462,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_463,True,base.main_company,,stock.stock_location_stock,,,.9 Gal Can of 209 Henly,Pro_463,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_464,True,base.main_company,,stock.stock_location_stock,,,.9 Gal Can of 208 Henly,Pro_464,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_465,True,base.main_company,,stock.stock_location_stock,,,"4"" x 150' Henry Roof Repair Fabric",Pro_465,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_466,True,base.main_company,,stock.stock_location_stock,,,16d 3.5 Hot Dipped Galvanized (LBS),Pro_466,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_467,True,base.main_company,,stock.stock_location_stock,,,8d 2.5 Exterior 5000 Galvanized (LBS),Pro_467,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_468,True,base.main_company,,stock.stock_location_stock,,,8d 2-3/8 Coated Sinker (LBS),Pro_468,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_469,True,base.main_company,,stock.stock_location_stock,,,ACER ASPIRE 1 LAP TOP,Pro_469,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_470,True,base.main_company,,stock.stock_location_stock,,,D-LINK 8 PORT ETHERNET SWITCH,Pro_470,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_471,True,base.main_company,,stock.stock_location_stock,,,ACTIONTEC POWERLINE NETWORK ADAPTER,Pro_471,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_472,True,base.main_company,,stock.stock_location_stock,,,#12 THHN SOLID GREEN,Pro_472,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_473,True,base.main_company,,stock.stock_location_stock,,,STANLEY 300' TAPE,Pro_473,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_474,True,base.main_company,,stock.stock_location_stock,,,WERNER 32' LADDER,Pro_474,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_475,True,base.main_company,,stock.stock_location_stock,,,WERNER 16' LADDER,Pro_475,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_476,True,base.main_company,,stock.stock_location_stock,,,WERNER 4' STOOL,Pro_476,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_477,True,base.main_company,,stock.stock_location_stock,,,EASYSHARE KODAK CAMERA WITH CASE,Pro_477,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_478,True,base.main_company,,stock.stock_location_stock,,,"CE ZIP TIES 8""",Pro_478,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_479,True,base.main_company,,stock.stock_location_stock,,,EATON 15 A AFC BREAKER,Pro_479,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_480,True,base.main_company,,stock.stock_location_stock,,,CUTLER HAMMER 2 POLE 15 A BREAKER,Pro_480,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_481,True,base.main_company,,stock.stock_location_stock,,,CUTLER HAMMER SPLIT 15 A BREAKER,Pro_481,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_482,True,base.main_company,,stock.stock_location_stock,,,MURRAY 15 A BREAKER,Pro_482,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_483,True,base.main_company,,stock.stock_location_stock,,,EATON 15 A BREAKER,Pro_483,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_484,True,base.main_company,,stock.stock_location_stock,,,BUSSMAN KLM 1 A FUSE,Pro_484,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_485,True,base.main_company,,stock.stock_location_stock,,,BUSSMAN KLM 15 A FUSE,Pro_485,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_486,True,base.main_company,,stock.stock_location_stock,,,SQUARE D SPLIT 15 A BREAKER,Pro_486,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_487,True,base.main_company,,stock.stock_location_stock,,,SQUARE D 15 A BREAKER,Pro_487,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_488,True,base.main_company,,stock.stock_location_stock,,,SQUARE D 20 A BREAKER,Pro_488,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_489,True,base.main_company,,stock.stock_location_stock,,,SQUARE D 2 POLE 20 A BREAKER,Pro_489,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_490,True,base.main_company,,stock.stock_location_stock,,,WI-FI ADAPTER NETGEAR,Pro_490,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_491,True,base.main_company,,stock.stock_location_stock,,,LEVITON WALL PLATES,Pro_491,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_492,True,base.main_company,,stock.stock_location_stock,,,LEVITON 15 A OUTLETS,Pro_492,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_493,True,base.main_company,,stock.stock_location_stock,,,ENPHASE 100 MBPS POWELINE NETWORK ADAPTORS,Pro_493,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_494,True,base.main_company,,stock.stock_location_stock,,,SPR 100 MBPS POWERLINE NETWORK ADAPTORS,Pro_494,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_495,True,base.main_company,,stock.stock_location_stock,,,NETGEAR 100 MBPS POWERLINE NETWORK ADAPTERS,Pro_495,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_496,True,base.main_company,,stock.stock_location_stock,,,PROJECT SOURCE 3 OUTLET ADAPTER,Pro_496,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_497,True,base.main_company,,stock.stock_location_stock,,,15 A LIGHT SWITCH,Pro_497,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_498,True,base.main_company,,stock.stock_location_stock,,,2 PRONG OUTLET ADAPTER,Pro_498,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_499,True,base.main_company,,stock.stock_location_stock,,,"IDEAL IN SURE WIRE CONNECTORS, 2 PORT",Pro_499,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_500,True,base.main_company,,stock.stock_location_stock,,,"LOW VOLT STAPLES 1/4"" GARDNER BENDER",Pro_500,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_501,True,base.main_company,,stock.stock_location_stock,,,NETGEAR 5 PORT SWITCH,Pro_501,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_502,True,base.main_company,,stock.stock_location_stock,,,6 OUTLET POWER STRIP,Pro_502,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_503,True,base.main_company,,stock.stock_location_stock,,,ETHERNET CABLES 6',Pro_503,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_504,True,base.main_company,,stock.stock_location_stock,,,"ETHERNET CABLES 6""",Pro_504,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_505,True,base.main_company,,stock.stock_location_stock,,,RS485 CABLE,Pro_505,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_506,True,base.main_company,,stock.stock_location_stock,,,RS232 CABLE,Pro_506,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_507,True,base.main_company,,stock.stock_location_stock,,,100 A CTS,Pro_507,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_508,True,base.main_company,,stock.stock_location_stock,,,"1/2"" LIQUIDTITE FLEX",Pro_508,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_509,True,base.main_company,,stock.stock_location_stock,,,"3/4"" LIQUIDTITE FLEX FITTING STRAIGHT",Pro_509,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_510,True,base.main_company,,stock.stock_location_stock,,,"3/4"" LIQUIDTITE FLEX 90 FITTING",Pro_510,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_511,True,base.main_company,,stock.stock_location_stock,,,"1/2"" LIQUIDTITE STRAIGHT FITTING",Pro_511,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_512,True,base.main_company,,stock.stock_location_stock,,,"1/2"" LIQUIDTITE 90 FITTING",Pro_512,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_513,True,base.main_company,,stock.stock_location_stock,,,CE TECH COAXIAL CABLE BUSHINGS,Pro_513,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_514,True,base.main_company,,stock.stock_location_stock,,,"1/2"" CORD GRIPS",Pro_514,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_515,True,base.main_company,,stock.stock_location_stock,,,SIEMENS 15 A BREAKER,Pro_515,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_516,True,base.main_company,,stock.stock_location_stock,,,CUTLER HAMMER 15 A BREAKER,Pro_516,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_517,True,base.main_company,,stock.stock_location_stock,,,CUTLER HAMMER 20 A BREAKER,Pro_517,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_518,True,base.main_company,,stock.stock_location_stock,,,GREEN ANCHORS,Pro_518,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_519,True,base.main_company,,stock.stock_location_stock,,,BREAKER 20 A 1 POLE,Pro_519,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_520,True,base.main_company,,stock.stock_location_stock,,,BREAKER 15 A 1 POLE,Pro_520,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_521,True,base.main_company,,stock.stock_location_stock,,,BREAKER 30 A 2 POLE,Pro_521,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_522,True,base.main_company,,stock.stock_location_stock,,,BREAKER 15 A 2 POLE,Pro_522,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_523,True,base.main_company,,stock.stock_location_stock,,,BREAKER 35 A 2 POLE,Pro_523,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_524,True,base.main_company,,stock.stock_location_stock,,,"3/4"" FLEX CONNECTOR",Pro_524,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_525,True,base.main_company,,stock.stock_location_stock,,,4 x 4 J BOX,Pro_525,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_526,True,base.main_company,,stock.stock_location_stock,,,ODD ATTENA,Pro_526,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_527,True,base.main_company,,stock.stock_location_stock,,,ZEXEL WIRELESS NETWORK ADAPTOR,Pro_527,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_528,True,base.main_company,,stock.stock_location_stock,,,RS485 GREEN CABLE,Pro_528,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_529,True,base.main_company,,stock.stock_location_stock,,,RS485 RED CABLE,Pro_529,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_530,True,base.main_company,,stock.stock_location_stock,,,MASTER LOCKS,Pro_530,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_531,True,base.main_company,,stock.stock_location_stock,,,6 X 1005 SWITCH,Pro_531,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_532,True,base.main_company,,stock.stock_location_stock,,,WIRE NUTS,Pro_532,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_533,True,base.main_company,,stock.stock_location_stock,,,CAT 6 (FEET),Pro_533,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_534,True,base.main_company,,stock.stock_location_stock,,,SHOP RAGS (BAG),Pro_534,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_535,True,base.main_company,,stock.stock_location_stock,,,STUCCO PATCH (BAG),Pro_535,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_536,True,base.main_company,,stock.stock_location_stock,,,"3/8"" POLY POLL STRING",Pro_536,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_537,True,base.main_company,,stock.stock_location_stock,,,TROE TAPE,Pro_537,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_538,True,base.main_company,,stock.stock_location_stock,,,INSULATED MULTITAP CONNECTOR 2 PORT,Pro_538,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_539,True,base.main_company,,stock.stock_location_stock,,,INSULATED MULTITAP CONNECTOR 3 PORT,Pro_539,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_540,True,base.main_company,,stock.stock_location_stock,,,INSULATED MULTITAP CONNECTOR 4 PORT,Pro_540,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_541,True,base.main_company,,stock.stock_location_stock,,,WIRE NUT RED 3M,Pro_541,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_542,True,base.main_company,,stock.stock_location_stock,,,WIRE NUT BLUE 3M,Pro_542,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_543,True,base.main_company,,stock.stock_location_stock,,,SET SCREW WIRE NUT IDEAL,Pro_543,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_544,True,base.main_company,,stock.stock_location_stock,,,3M FIRE BLOCK,Pro_544,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_545,True,base.main_company,,stock.stock_location_stock,,,GREAT STUFF EXPANDING FOAM,Pro_545,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_546,True,base.main_company,,stock.stock_location_stock,,,MYERS HUB,Pro_546,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_547,True,base.main_company,,stock.stock_location_stock,,,"3/4"" SEAL TIGHT CONNECTOR",Pro_547,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_548,True,base.main_company,,stock.stock_location_stock,,,"3/4"" SEAL TIGHT CONNECTOR 90",Pro_548,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_549,True,base.main_company,,stock.stock_location_stock,,,"3/4"" STRAIN RELIEF CONNECTOR",Pro_549,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_550,True,base.main_company,,stock.stock_location_stock,,,"1"" STRAIN RELIEF CONNECTOR",Pro_550,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_551,True,base.main_company,,stock.stock_location_stock,,,"1/2"" K/O SEALS",Pro_551,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_552,True,base.main_company,,stock.stock_location_stock,,,"1"" STRUT STRAP",Pro_552,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_553,True,base.main_company,,stock.stock_location_stock,,,PANEL CLIPS,Pro_553,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_554,True,base.main_company,,stock.stock_location_stock,,,EXTENSION CORD - 100',Pro_554,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_555,True,base.main_company,,stock.stock_location_stock,,,CONE,Pro_555,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_556,True,base.main_company,,stock.stock_location_stock,,,ROOF PAPER (SQUARE FEET),Pro_556,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_557,True,base.main_company,,stock.stock_location_stock,,,LEAF BLOWER,Pro_557,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_558,True,base.main_company,,stock.stock_location_stock,,,5/16 X 1/4 TECH SCREW,Pro_558,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_559,True,base.main_company,,stock.stock_location_stock,,,CRIMP LUG #2/#4,Pro_559,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_560,True,base.main_company,,stock.stock_location_stock,,,SF PANEL CLIPS,Pro_560,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_561,True,base.main_company,,stock.stock_location_stock,,,BODY SUIT,Pro_561,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_562,True,base.main_company,,stock.stock_location_stock,,,HAND CLEANER,Pro_562,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_563,True,base.main_company,,stock.stock_location_stock,,,ZIP TIES - STAINLESS,Pro_563,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_564,True,base.main_company,,stock.stock_location_stock,,,ZIP TIES - PLASTIC,Pro_564,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_565,True,base.main_company,,stock.stock_location_stock,,,CHAINS AND LOCK,Pro_565,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_566,True,base.main_company,,stock.stock_location_stock,,,MC CRIMPER,Pro_566,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_567,True,base.main_company,,stock.stock_location_stock,,,RATCHET STEEPS,Pro_567,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_568,True,base.main_company,,stock.stock_location_stock,,,"4-1/2"" GRADE BLADE",Pro_568,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_569,True,base.main_company,,stock.stock_location_stock,,,"3/16"" DRILL BIT",Pro_569,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_570,True,base.main_company,,stock.stock_location_stock,,,"3/16"" PILOT BIT",Pro_570,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_571,True,base.main_company,,stock.stock_location_stock,,,"1/4"" PILOT BIT",Pro_571,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_572,True,base.main_company,,stock.stock_location_stock,,,"SCREWTIGHT BLADES 5""",Pro_572,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_573,True,base.main_company,,stock.stock_location_stock,,,IRREVERSIBLE GROUND CRIMPER,Pro_573,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_574,True,base.main_company,,stock.stock_location_stock,,,LADDER STRAP,Pro_574,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_575,True,base.main_company,,stock.stock_location_stock,,,CHALK LINE,Pro_575,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_576,True,base.main_company,,stock.stock_location_stock,,,HAND BRUSKS,Pro_576,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_577,True,base.main_company,,stock.stock_location_stock,,,"1-5/8"" EXTERIOR SCREWS",Pro_577,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_578,True,base.main_company,,stock.stock_location_stock,,,"1"" ROOFING NAILS (1 LB)",Pro_578,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_579,True,base.main_company,,stock.stock_location_stock,,,"1"" PIPE BENDER",Pro_579,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_580,True,base.main_company,,stock.stock_location_stock,,,PUSH BROOM,Pro_580,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_581,True,base.main_company,,stock.stock_location_stock,,,CAMERA,Pro_581,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_582,True,base.main_company,,stock.stock_location_stock,,,CLIP BOARD,Pro_582,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_583,True,base.main_company,,stock.stock_location_stock,,,FIRST AID KIT,Pro_583,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_584,True,base.main_company,,stock.stock_location_stock,,,MC4 NEGATIVES,Pro_584,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_585,True,base.main_company,,stock.stock_location_stock,,,MC4 POSITIVES,Pro_585,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_586,True,base.main_company,,stock.stock_location_stock,,,MC 4 METAL POSITIVE,Pro_586,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_587,True,base.main_company,,stock.stock_location_stock,,,MC4 METAL NEGATIVE,Pro_587,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_588,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" FART TUBE 90",Pro_588,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_589,True,base.main_company,,stock.stock_location_stock,,,"2"" FART TUBE 90",Pro_589,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_590,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" FART TUBE 45",Pro_590,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_591,True,base.main_company,,stock.stock_location_stock,,,"1"" CLAMP - RUBBER LINED",Pro_591,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_592,True,base.main_company,,stock.stock_location_stock,,,"1"" CLAMP - PIPE",Pro_592,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_593,True,base.main_company,,stock.stock_location_stock,,,"1"" X 1-1/2"" NIPPLE",Pro_593,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_594,True,base.main_company,,stock.stock_location_stock,,,"1"" SLB",Pro_594,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_595,True,base.main_company,,stock.stock_location_stock,,,"1"" X 1-1/4"" NIPPLE",Pro_595,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_596,True,base.main_company,,stock.stock_location_stock,,,PANEL GROUNDS,Pro_596,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_597,True,base.main_company,,stock.stock_location_stock,,,"3/8"" - 3/4"" SOCKET CAP SCREWS",Pro_597,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_598,True,base.main_company,,stock.stock_location_stock,,,SF RAIL CAP BOLTS,Pro_598,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_599,True,base.main_company,,stock.stock_location_stock,,,SHOP VAC,Pro_599,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_600,True,base.main_company,,stock.stock_location_stock,,,LADDER 24',Pro_600,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_601,True,base.main_company,,stock.stock_location_stock,,,4' A FRAME,Pro_601,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_602,True,base.main_company,,stock.stock_location_stock,,,8' A FRAME,Pro_602,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_603,True,base.main_company,,stock.stock_location_stock,,,10' X 10' EZ UP,Pro_603,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_604,True,base.main_company,,stock.stock_location_stock,,,WIRE CART,Pro_604,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_605,True,base.main_company,,stock.stock_location_stock,,,ROLE CART,Pro_605,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_606,True,base.main_company,,stock.stock_location_stock,,,ROPE (SAFETY),Pro_606,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_607,True,base.main_company,,stock.stock_location_stock,,,CLEAT (SAFETY),Pro_607,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_608,True,base.main_company,,stock.stock_location_stock,,,CRIMP LUG #8/#10,Pro_608,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_609,True,base.main_company,,stock.stock_location_stock,,,CRIMP LUG #5/#8,Pro_609,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_610,True,base.main_company,,stock.stock_location_stock,,,BREAKER SQUARE D 40 A 2 POLE,Pro_610,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_611,True,base.main_company,,stock.stock_location_stock,,,BREAKER SQUARE D 50 A 2 POLE,Pro_611,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_612,True,base.main_company,,stock.stock_location_stock,,,BREAKER SQUARE D 60 A 2 POLE,Pro_612,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_613,True,base.main_company,,stock.stock_location_stock,,,Square D 15/35 QUAD BREAKER,Pro_613,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_614,True,base.main_company,,stock.stock_location_stock,,,BREAKER SQUARE D 25 A 2 POLE,Pro_614,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_615,True,base.main_company,,stock.stock_location_stock,,,BREAKER SQUARE D 45 A 2 POLE,Pro_615,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_616,True,base.main_company,,stock.stock_location_stock,,,"1"" CORE GRIP",Pro_616,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_617,True,base.main_company,,stock.stock_location_stock,,,"3/4"" CORE GRIP",Pro_617,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_618,True,base.main_company,,stock.stock_location_stock,,,"1"" SCREW CONNECTOR",Pro_618,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_619,True,base.main_company,,stock.stock_location_stock,,,"1"" SCREW COUPLINGS",Pro_619,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_620,True,base.main_company,,stock.stock_location_stock,,,"1/2"" 2 SCREW CONNECTORS",Pro_620,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_621,True,base.main_company,,stock.stock_location_stock,,,"1"" 2 SCREW CONNECTORS",Pro_621,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_622,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" 2 SCREW CONNECTORS",Pro_622,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_623,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" 2 SCREW CONNECTORS",Pro_623,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_624,True,base.main_company,,stock.stock_location_stock,,,"2"" 2 SCREW CONNECTORS",Pro_624,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_625,True,base.main_company,,stock.stock_location_stock,,,"1/2"" PLASTIC BUSHING",Pro_625,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_626,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PLASTIC BUSHING",Pro_626,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_627,True,base.main_company,,stock.stock_location_stock,,,1-1/2 PLASTIC BUSHING,Pro_627,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_628,True,base.main_company,,stock.stock_location_stock,,,"2"" PLASTIC BUSHING",Pro_628,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_629,True,base.main_company,,stock.stock_location_stock,,,"2"" PVC CONNECTOR",Pro_629,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_630,True,base.main_company,,stock.stock_location_stock,,,"2"" LOCK RINGS",Pro_630,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_631,True,base.main_company,,stock.stock_location_stock,,,"3"" PVC CONNECTOR",Pro_631,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_632,True,base.main_company,,stock.stock_location_stock,,,"3"" LOCK RINGS",Pro_632,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_633,True,base.main_company,,stock.stock_location_stock,,,3/8 ONE HOLE STRAP,Pro_633,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_634,True,base.main_company,,stock.stock_location_stock,,,"1/4"" ONE HOLE STRAP",Pro_634,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_635,True,base.main_company,,stock.stock_location_stock,,,"8"" CABLE TIES",Pro_635,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_636,True,base.main_company,,stock.stock_location_stock,,,"2"" - 1-1/2"" REDUCER WASHERS",Pro_636,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_637,True,base.main_company,,stock.stock_location_stock,,,"2-1/2"" - 2"" REDUCER WASHERS",Pro_637,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_638,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" - 1"" REDUCER WASHERS",Pro_638,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_639,True,base.main_company,,stock.stock_location_stock,,,"1"" - 3/4"" REDUCER WASHER",Pro_639,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_640,True,base.main_company,,stock.stock_location_stock,,,"3/4"" LIQUID TIGHT CONNECTOR",Pro_640,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_641,True,base.main_company,,stock.stock_location_stock,,,"3/4"" 90 LT CONNECTOR",Pro_641,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_642,True,base.main_company,,stock.stock_location_stock,,,"3/4"" K/O SEALS",Pro_642,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_643,True,base.main_company,,stock.stock_location_stock,,,"1"" K/O SEALS",Pro_643,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_644,True,base.main_company,,stock.stock_location_stock,,,"1-3/4"" K/O SEALS",Pro_644,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_645,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" - 1-1/2"" GROUND CLAMP",Pro_645,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_646,True,base.main_company,,stock.stock_location_stock,,,"1-2"" - 5/8"" GROUNDING ACORN",Pro_646,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_647,True,base.main_company,,stock.stock_location_stock,,,3 HOLE WIRE CONNECTOR,Pro_647,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_648,True,base.main_company,,stock.stock_location_stock,,,4 HOLE WIRE CONNECTOR,Pro_648,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_649,True,base.main_company,,stock.stock_location_stock,,,GROUND BAR KIT,Pro_649,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_650,True,base.main_company,,stock.stock_location_stock,,,2 PORT QUICK CONNECTOR,Pro_650,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_651,True,base.main_company,,stock.stock_location_stock,,,3 PORT QUICK CONNECTOR,Pro_651,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_652,True,base.main_company,,stock.stock_location_stock,,,3M ELECTRICAL SPRING CONNECTOR,Pro_652,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_653,True,base.main_company,,stock.stock_location_stock,,,ALUMINUM J BOX PLATES,Pro_653,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_654,True,base.main_company,,stock.stock_location_stock,,,"1"" ROUND FLASHINGS",Pro_654,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_655,True,base.main_company,,stock.stock_location_stock,,,SMOKE ALARMS,Pro_655,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_656,True,base.main_company,,stock.stock_location_stock,,,CARBON ALARMS,Pro_656,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_657,True,base.main_company,,stock.stock_location_stock,,,12 - 2 ROMEX,Pro_657,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_658,True,base.main_company,,stock.stock_location_stock,,,#6 ARMOR CABLE,Pro_658,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_659,True,base.main_company,,stock.stock_location_stock,,,#2 WOOD SCREWS,Pro_659,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_660,True,base.main_company,,stock.stock_location_stock,,,"3/4"" TECH SCREWS",Pro_660,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_661,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" TECH SCREWS",Pro_661,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_662,True,base.main_company,,stock.stock_location_stock,,,"1/4"" X 1-1/2"" LAGS",Pro_662,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_663,True,base.main_company,,stock.stock_location_stock,,,"5/16"" X 3"" LAGS",Pro_663,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_664,True,base.main_company,,stock.stock_location_stock,,,"3/8"" X 3"" LAGS",Pro_664,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_665,True,base.main_company,,stock.stock_location_stock,,,"3/8"" FLAT WASHER",Pro_665,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_666,True,base.main_company,,stock.stock_location_stock,,,"1"" LOCK RING",Pro_666,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_667,True,base.main_company,,stock.stock_location_stock,,,BLACK TAPE (ROLL),Pro_667,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_668,True,base.main_company,,stock.stock_location_stock,,,GREEN TAPE (ROLL),Pro_668,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_669,True,base.main_company,,stock.stock_location_stock,,,RED TAPE (ROLL),Pro_669,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_670,True,base.main_company,,stock.stock_location_stock,,,WHITE TAPE (ROLL),Pro_670,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_671,True,base.main_company,,stock.stock_location_stock,,,BLACK END CAP SCREW,Pro_671,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_672,True,base.main_company,,stock.stock_location_stock,,,OLD STYLE PRODUCTION METER,Pro_672,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_673,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" OVERHEAD",Pro_673,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_674,True,base.main_company,,stock.stock_location_stock,,,"1/2"" FLEX TO FLEX CONNECTOR",Pro_674,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_675,True,base.main_company,,stock.stock_location_stock,,,"1/2"" RIGID COUPLING",Pro_675,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_676,True,base.main_company,,stock.stock_location_stock,,,RUSTOLEUM FLAT WHITE,Pro_676,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_677,True,base.main_company,,stock.stock_location_stock,,,"1"" CORD GRIP",Pro_677,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_678,True,base.main_company,,stock.stock_location_stock,,,"3/4"" CORD GRIP",Pro_678,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_679,True,base.main_company,,stock.stock_location_stock,,,"SEAL TIGHT - 3/4"" 90 CONNECTOR",Pro_679,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_680,True,base.main_company,,stock.stock_location_stock,,,"SEAL TIGHT - 3/4"" CONNECTOR",Pro_680,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_681,True,base.main_company,,stock.stock_location_stock,,,"SEAL TIGHT - 1/2"" CONNECTOR",Pro_681,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_682,True,base.main_company,,stock.stock_location_stock,,,"SEAL TIGHT - 1/2"" 90 CONNECTOR",Pro_682,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_683,True,base.main_company,,stock.stock_location_stock,,,"SEAL TIGHT - 1"" CONNECTOR",Pro_683,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_684,True,base.main_company,,stock.stock_location_stock,,,"SEAL TIGHT - 1"" 90 CONNECTOR",Pro_684,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_685,True,base.main_company,,stock.stock_location_stock,,,1/4 X 1/4 FENDER WASHER,Pro_685,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_686,True,base.main_company,,stock.stock_location_stock,,,8 X 1/2 SELF TAPER,Pro_686,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_687,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" DRYWALL SCREW",Pro_687,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_688,True,base.main_company,,stock.stock_location_stock,,,UNIVERSAL CRIMP,Pro_688,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_689,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PIPE BENDER",Pro_689,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_690,True,base.main_company,,stock.stock_location_stock,,,BREAKER - 20 A SLIM,Pro_690,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_691,True,base.main_company,,stock.stock_location_stock,,,BREAKER - 15 A SLIM,Pro_691,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_692,True,base.main_company,,stock.stock_location_stock,,,Square D 20/25 QUAD BREAKER,Pro_692,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_693,True,base.main_company,,stock.stock_location_stock,,,BREAKER - 125 A 2 POLE,Pro_693,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_694,True,base.main_company,,stock.stock_location_stock,,,Square D 40/40 QUAD BREAKER,Pro_694,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_695,True,base.main_company,,stock.stock_location_stock,,,Square D 50/50 QUAD BREAKER,Pro_695,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_696,True,base.main_company,,stock.stock_location_stock,,,Square D 50/30 QUAD BREAKER,Pro_696,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_697,True,base.main_company,,stock.stock_location_stock,,,Square D 40/30 QUAD BREAKER,Pro_697,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_698,True,base.main_company,,stock.stock_location_stock,,,Square D 30/30 QUAD BREAKER,Pro_698,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_699,True,base.main_company,,stock.stock_location_stock,,,BREAKER - 30 A SLIM,Pro_699,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_700,True,base.main_company,,stock.stock_location_stock,,,STRUT PIPE CLAMP,Pro_700,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_701,True,base.main_company,,stock.stock_location_stock,,,"CLAMP DOWN, 2 SCREW",Pro_701,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_702,True,base.main_company,,stock.stock_location_stock,,,"1/2"" THREADED",Pro_702,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_703,True,base.main_company,,stock.stock_location_stock,,,SPLIT BOLT,Pro_703,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_704,True,base.main_company,,stock.stock_location_stock,,,"1"" ROMEX CONNECTOR",Pro_704,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_705,True,base.main_company,,stock.stock_location_stock,,,"3/4"" ROMEX CONNECTOR",Pro_705,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_706,True,base.main_company,,stock.stock_location_stock,,,"1/2"" ROMEX CONNECTOR",Pro_706,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_707,True,base.main_company,,stock.stock_location_stock,,,"3/4"" 2 SCREW CONNECTORS",Pro_707,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_708,True,base.main_company,,stock.stock_location_stock,,,"1/2"" BLACK CONNECTOR",Pro_708,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_709,True,base.main_company,,stock.stock_location_stock,,,"3/4"" BLACK CONNECTOR",Pro_709,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_710,True,base.main_company,,stock.stock_location_stock,,,ROOF FELT (ROLL),Pro_710,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_711,True,base.main_company,,stock.stock_location_stock,,,SF RAIL WEEB CLIPS,Pro_711,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_712,True,base.main_company,,stock.stock_location_stock,,,SF RAIL GROUND CLIPS,Pro_712,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_713,True,base.main_company,,stock.stock_location_stock,,,WEEB CLIP,Pro_713,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_714,True,base.main_company,,stock.stock_location_stock,,,ACPB WEEB CLIP,Pro_714,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_715,True,base.main_company,,stock.stock_location_stock,,,ACPB TOP CLIP,Pro_715,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_716,True,base.main_company,,stock.stock_location_stock,,,2 WIRE PANEL CLIP,Pro_716,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_717,True,base.main_company,,stock.stock_location_stock,,,1 WIRE PANEL CLIP,Pro_717,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_718,True,base.main_company,,stock.stock_location_stock,,,ENPHASE TRUNK WIRE CLIP,Pro_718,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_719,True,base.main_company,,stock.stock_location_stock,,,"5/16"" X 1 HEX BOLT",Pro_719,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_720,True,base.main_company,,stock.stock_location_stock,,,LONG SILVER CAP RAIL,Pro_720,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_721,True,base.main_company,,stock.stock_location_stock,,,"FULL C CHANNEL 2""",Pro_721,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_722,True,base.main_company,,stock.stock_location_stock,,,"SHORT C CHANNEL 2""",Pro_722,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_723,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" FAT TUBE FULL",Pro_723,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_724,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" FART TUBE >5'",Pro_724,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_725,True,base.main_company,,stock.stock_location_stock,,,"1"" C CHANNEL 11'",Pro_725,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_726,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" FART TUBE <5'",Pro_726,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_727,True,base.main_company,,stock.stock_location_stock,,,LONG BLACK CAP RAIL,Pro_727,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_728,True,base.main_company,,stock.stock_location_stock,,,"2"" FART TUBE FULL",Pro_728,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_729,True,base.main_company,,stock.stock_location_stock,,,"2"" FART TUBE >5'",Pro_729,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_730,True,base.main_company,,stock.stock_location_stock,,,"2"" FART TUBE <5'",Pro_730,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_731,True,base.main_company,,stock.stock_location_stock,,,"1"" PVC 90",Pro_731,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_732,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PVC 45",Pro_732,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_733,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" PVC 45",Pro_733,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_734,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" PVC 80",Pro_734,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_735,True,base.main_company,,stock.stock_location_stock,,,"2"" PVC GRAY",Pro_735,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_736,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PVC GRAY",Pro_736,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_737,True,base.main_company,,stock.stock_location_stock,,,"1"" PVC S40",Pro_737,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_738,True,base.main_company,,stock.stock_location_stock,,,"1"" PVC 580",Pro_738,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_739,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PVC 580",Pro_739,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_740,True,base.main_company,,stock.stock_location_stock,,,"1/2"" PVC SWD",Pro_740,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_741,True,base.main_company,,stock.stock_location_stock,,,"1/2"" PVC 580",Pro_741,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_742,True,base.main_company,,stock.stock_location_stock,,,"1"" PVC 540",Pro_742,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_743,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PVC 540",Pro_743,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_744,True,base.main_company,,stock.stock_location_stock,,,"1"" PVC FULL",Pro_744,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_745,True,base.main_company,,stock.stock_location_stock,,,Tilt Kit Aluminum Rods 3',Pro_745,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_746,True,base.main_company,,stock.stock_location_stock,,,Tilt Kit Aluminum Rods 4',Pro_746,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_747,True,base.main_company,,stock.stock_location_stock,,,"1""x 6-8' Copper Pipe",Pro_747,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_748,True,base.main_company,,stock.stock_location_stock,,,"1"" RAINTIGHT COUPLINGS",Pro_748,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_749,True,base.main_company,,stock.stock_location_stock,,,"1"" NIPPLE CONNECTOR",Pro_749,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_750,True,base.main_company,,stock.stock_location_stock,,,"2"" CONDUIT HANGER",Pro_750,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_751,True,base.main_company,,stock.stock_location_stock,,,"3"" STRUT STRAP",Pro_751,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_752,True,base.main_company,,stock.stock_location_stock,,,"1"" INDOOR SET SCREW CONNECTOR",Pro_752,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_753,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" STRUT STRAP",Pro_753,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_754,True,base.main_company,,stock.stock_location_stock,,,"1"" EMT LIQUID TIGHT CONNECTOR",Pro_754,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_755,True,base.main_company,,stock.stock_location_stock,,,"1"" 90 TELEPHONE METALLIC LONG",Pro_755,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_756,True,base.main_company,,stock.stock_location_stock,,,"1"" 90 TELEPHONE METALLIC SHORT",Pro_756,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_757,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" CONDUIT HANGER",Pro_757,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_758,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" GROUND BUSHING",Pro_758,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_759,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" OFFSET NIPPLE",Pro_759,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_760,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" 2 HOLE STRAP",Pro_760,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_761,True,base.main_company,,stock.stock_location_stock,,,"2"" RAINTIGHT CONNECTOR",Pro_761,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_762,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" PVC COUPLING",Pro_762,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_763,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" FEMALE ADAPTER",Pro_763,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_764,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" PVC CONNECTOR",Pro_764,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_765,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" EMT CONNECTOR",Pro_765,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_766,True,base.main_company,,stock.stock_location_stock,,,"2-1/4"" METALLIC COUPLING",Pro_766,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_767,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" EMT TO LIQUID TIGHT",Pro_767,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_768,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" LR",Pro_768,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_769,True,base.main_company,,stock.stock_location_stock,,,"1"" CONNECTOR",Pro_769,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_770,True,base.main_company,,stock.stock_location_stock,,,"2"" RAINTIGHT COUPLING",Pro_770,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_771,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" LL",Pro_771,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_772,True,base.main_company,,stock.stock_location_stock,,,"2"" POWER STRUT",Pro_772,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_773,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" 1 HOLE STRAP",Pro_773,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_774,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" METALLIC COUPLING NIPPLE",Pro_774,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_775,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" LIQUID TIGHT",Pro_775,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_776,True,base.main_company,,stock.stock_location_stock,,,1-1/4 STRUT STRAP,Pro_776,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_777,True,base.main_company,,stock.stock_location_stock,,,"3"" RAINTIGHT COUPLING",Pro_777,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_778,True,base.main_company,,stock.stock_location_stock,,,"1"" 2 HOLE STRAP",Pro_778,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_779,True,base.main_company,,stock.stock_location_stock,,,"2"" BOLT-ON HUB",Pro_779,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_780,True,base.main_company,,stock.stock_location_stock,,,"1"" BOLT-ON HUB",Pro_780,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_781,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" BOLT-ON HUB",Pro_781,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_782,True,base.main_company,,stock.stock_location_stock,,,BREAKER - 40 A 1 POLE,Pro_782,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_783,True,base.main_company,,stock.stock_location_stock,,,BREAKER - 15/20 A 1 POLE,Pro_783,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_784,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" POWER STRUT",Pro_784,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_785,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" OFFSET NIPPLE",Pro_785,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_786,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" CONDUIT LOCK HURTS",Pro_786,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_787,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" FLEX CONDUIT CONNECTOR",Pro_787,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_788,True,base.main_company,,stock.stock_location_stock,,,"1/2"" EMT CONDUIT HANGER",Pro_788,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_789,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT HW CONDUIT HANGER",Pro_789,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_790,True,base.main_company,,stock.stock_location_stock,,,"1/4"" EMT HW CONDUIT HANGER",Pro_790,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_791,True,base.main_company,,stock.stock_location_stock,,,THREADED HUB,Pro_791,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_792,True,base.main_company,,stock.stock_location_stock,,,"3"" RIGID NIPPLE",Pro_792,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_793,True,base.main_company,,stock.stock_location_stock,,,30 OFFSET BEND,Pro_793,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_794,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" EMT CONNECTOR",Pro_794,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_795,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" COUPLING",Pro_795,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_796,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" RIGID",Pro_796,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_797,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" NIPPLE",Pro_797,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_798,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" CONDUIT HANGER",Pro_798,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_799,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" THREADED HUB",Pro_799,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_800,True,base.main_company,,stock.stock_location_stock,,,"3"" CONDUIT CONNECTOR",Pro_800,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_801,True,base.main_company,,stock.stock_location_stock,,,"3"" CONDUIT HANGER",Pro_801,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_802,True,base.main_company,,stock.stock_location_stock,,,"3"" THREADED HUB",Pro_802,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_803,True,base.main_company,,stock.stock_location_stock,,,2 SCREW COUPLING,Pro_803,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_804,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT COUPLING",Pro_804,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_805,True,base.main_company,,stock.stock_location_stock,,,"1"" RAINTIGHT CONNECTOR",Pro_805,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_806,True,base.main_company,,stock.stock_location_stock,,,"3/4"" MALE CONNECTOR",Pro_806,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_807,True,base.main_company,,stock.stock_location_stock,,,"3/4"" 2 HOLE PVC HW STRAP",Pro_807,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_808,True,base.main_company,,stock.stock_location_stock,,,"1/2"" 1 HOLE EMT STRAP",Pro_808,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_809,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT TO FLEX CONNECTOR",Pro_809,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_810,True,base.main_company,,stock.stock_location_stock,,,"3/4"" 90 TELEPHONE",Pro_810,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_811,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" X 3/4"" CLOSE NIPPLE",Pro_811,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_812,True,base.main_company,,stock.stock_location_stock,,,"3/4"" X 2"" OPEN NIPPLE",Pro_812,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_813,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PVC COUPLING",Pro_813,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_814,True,base.main_company,,stock.stock_location_stock,,,"3/4"" TELEPHONE 90",Pro_814,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_815,True,base.main_company,,stock.stock_location_stock,,,"3/4"" 90 ELBOW METTALIC",Pro_815,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_816,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PVC 90",Pro_816,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_817,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT SHORT LB",Pro_817,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_818,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT LB",Pro_818,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_819,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT LL",Pro_819,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_820,True,base.main_company,,stock.stock_location_stock,,,"1"" EMT LB",Pro_820,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_821,True,base.main_company,,stock.stock_location_stock,,,"1"" EMT LR",Pro_821,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_822,True,base.main_company,,stock.stock_location_stock,,,"1"" OFFSET CONDUIT NIPPLE",Pro_822,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_823,True,base.main_company,,stock.stock_location_stock,,,"1"" RAINTIGHT EMT CONNECTOR",Pro_823,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_824,True,base.main_company,,stock.stock_location_stock,,,"1"" RT COUPLER",Pro_824,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_825,True,base.main_company,,stock.stock_location_stock,,,"1"" 1 HOLE STRAP",Pro_825,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_826,True,base.main_company,,stock.stock_location_stock,,,J NAIL,Pro_826,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_827,True,base.main_company,,stock.stock_location_stock,,,"1"" INDOOR COUPLING",Pro_827,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_828,True,base.main_company,,stock.stock_location_stock,,,"1"" EMT TO FLEX CONNECTOR",Pro_828,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_829,True,base.main_company,,stock.stock_location_stock,,,"1"" LOCK WASHER",Pro_829,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_830,True,base.main_company,,stock.stock_location_stock,,,"1"" FLEX TO FLEX CONNECTOR",Pro_830,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_831,True,base.main_company,,stock.stock_location_stock,,,"2"" 90 STREET ELBOW",Pro_831,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_832,True,base.main_company,,stock.stock_location_stock,,,"2"" X 2.25"" ELBOW",Pro_832,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_833,True,base.main_company,,stock.stock_location_stock,,,"2"" COUPLER PVC",Pro_833,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_834,True,base.main_company,,stock.stock_location_stock,,,"2"" 90 ELBOW",Pro_834,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_835,True,base.main_company,,stock.stock_location_stock,,,"2"" METAL COUPLING",Pro_835,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_836,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" 45 STREET ELBOW",Pro_836,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_837,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" X 2.25"" STREET ELBOW",Pro_837,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_838,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" X 2.25"" ELBOW",Pro_838,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_839,True,base.main_company,,stock.stock_location_stock,,,"1"" EMT COUPLING",Pro_839,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_840,True,base.main_company,,stock.stock_location_stock,,,"1"" TRANSITION EMT/FMC COUPLING",Pro_840,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_841,True,base.main_company,,stock.stock_location_stock,,,"1"" THREADED HUB",Pro_841,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_842,True,base.main_company,,stock.stock_location_stock,,,"1"" FLEX CONDUIT CONNECTOR",Pro_842,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_843,True,base.main_company,,stock.stock_location_stock,,,"3/4"" WEATHER TELEPHONE 90",Pro_843,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_844,True,base.main_company,,stock.stock_location_stock,,,"3/4"" STRAIGHT PVC LIQUID TIGHT CONNECTOR",Pro_844,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_845,True,base.main_company,,stock.stock_location_stock,,,LIQUID TIGHT CORD,Pro_845,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_846,True,base.main_company,,stock.stock_location_stock,,,"1"" STRAIGHT STRAIN RELIEF CORD",Pro_846,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_847,True,base.main_company,,stock.stock_location_stock,,,"1"" LIQUID TIGHT STRAIGHT FITTING",Pro_847,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_848,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" RAINTIGHT EMT COUPLING",Pro_848,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_849,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" RAINTIGHT EMT CONNECTOR",Pro_849,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_850,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" PIPE STRAP EMT 1 HOLE",Pro_850,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_851,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" FLEX CONDUIT CONNECTOR",Pro_851,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_852,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" CONDUIT BODY WITH COVER LB",Pro_852,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_853,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" X 4 NIPPLE METALLIC",Pro_853,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_854,True,base.main_company,,stock.stock_location_stock,,,"1-3/4"" X 4 NIPPLE METALLIC",Pro_854,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_855,True,base.main_company,,stock.stock_location_stock,,,"1-1/4"" EMT COUPLING",Pro_855,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_856,True,base.main_company,,stock.stock_location_stock,,,"2"" X 2"" RUBBER COUPLING",Pro_856,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_857,True,base.main_company,,stock.stock_location_stock,,,"1"" EMT CONDUIT HANGER",Pro_857,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_858,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT CONDUIT HANGER",Pro_858,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_859,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" EMT CONDUIT HANGER",Pro_859,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_860,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" X 1-1/2"" RUBBER COUPLING",Pro_860,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_861,True,base.main_company,,stock.stock_location_stock,,,"3/4"" RAINTIGHT EMT COUPLING",Pro_861,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_862,True,base.main_company,,stock.stock_location_stock,,,"3/4"" LOCK NUT",Pro_862,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_863,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT CONNECTOR NIPPLE",Pro_863,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_864,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PVC 2 HOLE STRA[",Pro_864,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_865,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT PVC 2 HOLE",Pro_865,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_866,True,base.main_company,,stock.stock_location_stock,,,"3/4"" STRUT STRAP",Pro_866,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_867,True,base.main_company,,stock.stock_location_stock,,,"3/4"" PLASTIC PUSH IN CONNECTOR",Pro_867,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_868,True,base.main_company,,stock.stock_location_stock,,,"3/4"" 1 HOLE EMT STRAP",Pro_868,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_869,True,base.main_company,,stock.stock_location_stock,,,"3/4"" 1 HOLE PVC STRAP",Pro_869,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_870,True,base.main_company,,stock.stock_location_stock,,,"3/4"" EMT INDOOR COUPLER",Pro_870,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_871,True,base.main_company,,stock.stock_location_stock,,,"3/4"" RAINTIGHT EMT CONNECTOR",Pro_871,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_872,True,base.main_company,,stock.stock_location_stock,,,WHITE ELECTRICAL TAPE,Pro_872,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_873,True,base.main_company,,stock.stock_location_stock,,,GREEN ELECTRICAL TAPE,Pro_873,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_874,True,base.main_company,,stock.stock_location_stock,,,RED ELECTRICAL TAPE,Pro_874,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_875,True,base.main_company,,stock.stock_location_stock,,,BLACK ELECTRICAL TAPE,Pro_875,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_876,True,base.main_company,,stock.stock_location_stock,,,BLUE ELECTRICAL TAPE,Pro_876,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_877,True,base.main_company,,stock.stock_location_stock,,,GRAY ELECTRICAL TAPE,Pro_877,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_878,True,base.main_company,,stock.stock_location_stock,,,PURPLE PRIMER (CAN),Pro_878,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_879,True,base.main_company,,stock.stock_location_stock,,,RED HOT BLUE GLUE (16 FL OZ),Pro_879,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_880,True,base.main_company,,stock.stock_location_stock,,,RED HOT BLUE GLUE (8 FL OZ),Pro_880,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_881,True,base.main_company,,stock.stock_location_stock,,,790 MULTI PURPOSE PIPE CEMENT (8 FL OZ),Pro_881,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_882,True,base.main_company,,stock.stock_location_stock,,,ABS CEMENT (16 FL OZ),Pro_882,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_883,True,base.main_company,,stock.stock_location_stock,,,BLUE HOT PVC CEMENT (32 FL OZ),Pro_883,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_884,True,base.main_company,,stock.stock_location_stock,,,773 ABS BLACK (8 FL OZ),Pro_884,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_885,True,base.main_company,,stock.stock_location_stock,,,PVC CEMENT (16 FL OZ),Pro_885,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_886,True,base.main_company,,stock.stock_location_stock,,,PIPE JOINT COMPOUND (8 FL OZ),Pro_886,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_887,True,base.main_company,,stock.stock_location_stock,,,RED HOT BLUE GLUE (32 FL OZ),Pro_887,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_888,True,base.main_company,,stock.stock_location_stock,,,PURPLE POOL PRIMER (32 FL OZ),Pro_888,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_889,True,base.main_company,,stock.stock_location_stock,,,773 ABS (16 FL OZ),Pro_889,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_890,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" PIPE STRAP 2 HOLE",Pro_890,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_891,True,base.main_company,,stock.stock_location_stock,,,"2"" PIPE STRAP 2 HOLE",Pro_891,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_892,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" ABS SAN TEE",Pro_892,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_893,True,base.main_company,,stock.stock_location_stock,,,"2-1/2"" PIPE STRAP 2 HOLE",Pro_893,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_894,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" ABS 45 ELBOW PVC PIPE",Pro_894,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_895,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" ABS 90 ELBOW PVC PIPE",Pro_895,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_896,True,base.main_company,,stock.stock_location_stock,,,"2"" ABS SANITARY TAPE",Pro_896,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_897,True,base.main_company,,stock.stock_location_stock,,,"2"" ABS 45 ELBOW",Pro_897,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_898,True,base.main_company,,stock.stock_location_stock,,,"2"" ABS 90 VENT ELBOW",Pro_898,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_899,True,base.main_company,,stock.stock_location_stock,,,"2"" ABS 22.5 ELBOW",Pro_899,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_900,True,base.main_company,,stock.stock_location_stock,,,"2"" ABS SAN TEE TO 45 ELBOW",Pro_900,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_901,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" ABS SAN TEE TO 45 ELBOW",Pro_901,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_902,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" ABS SAN TEE TO STRAIGHT 90",Pro_902,product.product_uom_unit,1,Order to Max,stock.warehouse0
+Orderpoint_903,True,base.main_company,,stock.stock_location_stock,,,"1-1/2"" PVC COUPLER",Pro_903,product.product_uom_unit,1,Order to Max,stock.warehouse0
