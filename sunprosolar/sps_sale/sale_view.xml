@@ -6,11 +6,11 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/header/button[@name='action_button_confirm']" position="attributes">
-                     <attribute name="states">sent,contract_generated,contract_signed,site_inspection,progress</attribute>
+                <xpath expr="//form/header/button[8][@string='Confirm Sale']" position="replace">
+                     <button name="action_button_confirm" states="sent,contract_generated,contract_signed,site_inspection,progress" string="Confirm Sale" class="oe_highlight" type="object" groups="base.group_user"/>
 				</xpath>
-				<xpath expr="/form/header/button[@name='print_quotation']" position="attributes">
-                     <attribute name="states">sent,contract_generated,contract_signed,site_inspection,progress</attribute>
+				<xpath expr="//form/header/button[6][@string='Print']" position="replace">
+                     <button name="print_quotation" string="Print" type="object" states="sent,contract_generated,contract_signed,site_inspection,progress" groups="base.group_user"/>
 				</xpath>
 				
                 <xpath expr="//form/header/field[@name='state']" position="replace">
