@@ -46,6 +46,7 @@ class sale_order(osv.osv):
                 ('sent', 'Quotation Sent'),
                 ('contract_generated','Contract Generated'),
                 ('contract_signed','Contract Signed'),
+                ('manual', 'Sale to Invoice'),
                 ('site_inspection','Site Inspection'),
                 ('progress', 'Sales Order'),
                 ], 'Status', readonly=True, track_visibility='onchange',

@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import fields, osv
 
 class stock_warehouse(osv.osv):
 
@@ -28,11 +28,14 @@ class stock_warehouse(osv.osv):
     _columns = {
           'alert_users_ids' : fields.many2many('res.users','warehouse_users_rel','user_id','warehouse_id','Alert Users'),
           }
+stock_warehouse
 
 class procurement_order(osv.osv):
     _inherit = 'procurement.order'
 
-    def _procure_orderpoint_confirm(self, cr, uid, automatic=False, use_new_cursor=False, context=None, user_id=False):
+    def _procure_orderpoint_confirm(self, cr, uid, automatic=False,\
+            use_new_cursor=False, context=None, user_id=False):
+        print "_procure_orderpoint_confirm_procure_orderpoint_confirm_procure_orderpoint_confirm============================="
         res = super(procurement_order, self)._procure_orderpoint_confirm(cr, uid, automatic=automatic, use_new_cursor=use_new_cursor, context=context, user_id=user_id)
         if context is None:
             context = {}
@@ -54,7 +57,6 @@ class procurement_order(osv.osv):
                         to_email= ''
                         for user in user_ids:
                             to_email+=user.email + ','
-                            
                         emil_obj.write(cr,uid, template_id, {'email_to': to_email})
                         self.pool.get('email.template').send_mail(cr,uid,template_id[0],op.id,force_send=True, context=context)
             if ids:
