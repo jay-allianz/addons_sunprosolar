@@ -35,7 +35,6 @@ class procurement_order(osv.osv):
 
     def _procure_orderpoint_confirm(self, cr, uid, automatic=False,\
             use_new_cursor=False, context=None, user_id=False):
-        print "_procure_orderpoint_confirm_procure_orderpoint_confirm_procure_orderpoint_confirm============================="
         res = super(procurement_order, self)._procure_orderpoint_confirm(cr, uid, automatic=automatic, use_new_cursor=use_new_cursor, context=context, user_id=user_id)
         if context is None:
             context = {}
