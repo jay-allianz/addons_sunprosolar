@@ -34,7 +34,7 @@ import base64
 import netsvc
 WEB_LINK_URL = "db=%s&uid=%s&pwd=%s&id=%s&state=%s&action_id=%s"
 
-class sale_order(osv.osv):
+class sale_order(osv.Model):
 
     _inherit="sale.order"
     
@@ -78,7 +78,6 @@ class sale_order(osv.osv):
         return True
     
     def change_sent_customer(self, cr, uid, ids, context=None):
-        print "context=========",context
         contract_obj=self.pool.get('account.analytic.account')
         
 #            schedule_mail_object = self.pool.get('mail.message')
@@ -167,7 +166,7 @@ class sale_order(osv.osv):
     
 sale_order()
 
-class account_analytic_account(osv.osv):
+class account_analytic_account(osv.Model):
     
     _inherit="account.analytic.account"
     

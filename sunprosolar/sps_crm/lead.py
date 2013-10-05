@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, osv
 import time
 import netsvc
 import datetime
@@ -34,7 +34,7 @@ import base64
 import netsvc
 WEB_LINK_URL = "db=%s&uid=%s&pwd=%s&id=%s&state=%s&action_id=%s"
 
-class crm_lead(osv.osv):
+class crm_lead(osv.Model):
     """ Model for CRM Lead. """
     _inherit = "crm.lead"
 
@@ -412,7 +412,7 @@ class crm_lead(osv.osv):
         return True
 crm_lead()
 
-class crm_lead_home_description(osv.osv):
+class crm_lead_home_description(osv.Model):
 
     """ Model for CRM Lead Home Information Notes. """
 
@@ -428,7 +428,7 @@ class crm_lead_home_description(osv.osv):
     }
 crm_lead_home_description()
 
-class crm_lead_electricity_description(osv.osv):
+class crm_lead_electricity_description(osv.Model):
 
     """ Model for CRM Lead Electricity Information Notes. """
 
@@ -444,7 +444,7 @@ class crm_lead_electricity_description(osv.osv):
     }
 crm_lead_electricity_description()
 
-class crm_lead_marketing_description(osv.osv):
+class crm_lead_marketing_description(osv.Model):
 
     """ Model for CRM Lead Marketing Information Notes. """
 
@@ -460,7 +460,7 @@ class crm_lead_marketing_description(osv.osv):
     }
 crm_lead_marketing_description()
 
-class crm_lead_accounting_description(osv.osv):
+class crm_lead_accounting_description(osv.Model):
 
     """ Model for CRM Lead Accounting Information Notes. """
 
@@ -476,7 +476,7 @@ class crm_lead_accounting_description(osv.osv):
     }
 crm_lead_accounting_description()
 
-class crm_lead_system_description(osv.osv):
+class crm_lead_system_description(osv.Model):
 
     """ Model for CRM Lead System Information Notes. """
 
@@ -492,7 +492,7 @@ class crm_lead_system_description(osv.osv):
     }
 crm_lead_system_description()
 
-class crm_lead_all_tabs_description(osv.osv):
+class crm_lead_all_tabs_description(osv.Model):
 
     """ Model for CRM Lead All Tab Information Notes. """
 
@@ -508,7 +508,7 @@ class crm_lead_all_tabs_description(osv.osv):
     }
 crm_lead_all_tabs_description()
 
-class company_quotation(osv.osv):
+class company_quotation(osv.Model):
     """ Model for Product. """
     _name = "company.quotation"
     _description= "Other Company Quotation Information."
@@ -531,7 +531,7 @@ class company_quotation(osv.osv):
     
 company_quotation()
 
-class tilt_azimuth(osv.osv):
+class tilt_azimuth(osv.Model):
     """ Model for Tilt and Azimuth. """
     _name = "tilt.azimuth"
     _description= "Tilt and Azimuth Information."
@@ -582,7 +582,7 @@ class level_lead(osv.osv):
 level_lead()
 
 
-class roof_type(osv.osv):
+class roof_type(osv.Model):
     """ Model for Heat home. """
     _name = "roof.type"
     _description= "Type of Roof Information."
@@ -606,7 +606,7 @@ class crm_opportunity2phonecall(osv.osv_memory):
 
 crm_opportunity2phonecall()
 
-class project_project(osv.osv):
+class project_project(osv.Model):
     
     _inherit = 'project.project'
     
@@ -623,7 +623,7 @@ class project_project(osv.osv):
     
 project_project()
 
-class documents_all(osv.osv):
+class documents_all(osv.Model):
     """ Model for document information """
     _name = "documents.all"
     _description= "Documents Information."
@@ -640,7 +640,7 @@ class documents_all(osv.osv):
     ]
 documents_all()
 
-class res_partner(osv.osv):
+class res_partner(osv.Model):
     """ Model for Partner. """
     _inherit = "res.partner"
     

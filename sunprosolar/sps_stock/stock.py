@@ -28,9 +28,9 @@ class stock_warehouse(osv.osv):
     _columns = {
           'alert_users_ids' : fields.many2many('res.users','warehouse_users_rel','user_id','warehouse_id','Alert Users'),
           }
-stock_warehouse
+stock_warehouse()
 
-class procurement_order(osv.osv):
+class procurement_order(osv.Model):
     _inherit = 'procurement.order'
 
     def _procure_orderpoint_confirm(self, cr, uid, automatic=False,\
@@ -61,3 +61,27 @@ class procurement_order(osv.osv):
             if ids:
                 break
         return res
+procurement_order()
+
+class product_template(osv.Model):
+    _inherit = "product.template"
+    
+    _columns = {
+            'cost_method': fields.selection([('standard','Standard Price'), ('average','Average Price'),('lifo','LIFO Costing')], 'Costing Method', required=True,
+                                            help="Standard Price: The cost price is manually updated at the end of a specific period (usually every year). \nAverage Price: The cost price is recomputed at each incoming shipment."),
+              }
+product_template()
+
+class purchase_order(osv.Model):
+    _inherit = "purchase.order"
+    
+    def wkf_confirm_order(self, cr, uid, ids, context=None):
+        res = super(purchase_order, self).wkf_confirm_order(cr, uid, ids, context=context)
+        product_obj = self.pool.get('product.product')
+        purchase_data = self.browse(cr, uid, ids, context=context)
+        for po in purchase_data:
+            for line in po.order_line:
+                if line.product_id.cost_method == "lifo":
+                    product_obj.write(cr, uid, line.product_id.id, {'standard_price' : line.price_unit})
+        return res
+purchase_order()
