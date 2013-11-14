@@ -1,25 +1,25 @@
-"id","name","customer","supplier"
-"Sun_01","ABABA BOLT","FALSE","TRUE"
-"Sun_02","Allied Building Supply","FALSE","TRUE"
-"Sun_03","CED","FALSE","TRUE"
-"Sun_04","Home Depot","FALSE","TRUE"
-"Sun_05","Lowes","FALSE","TRUE"
-"Sun_06","Roofing Wholesale","FALSE","TRUE"
-"Sun_07","Soligent","FALSE","TRUE"
-"Sun_08","SMA","FALSE","TRUE"
-"Sun_09","Solectra","FALSE","TRUE"
-"Sun_10","Midnight Solar Inc","FALSE","TRUE"
-"Sun_11","Inverter","FALSE","TRUE"
-"Sun_12","Sunpower","FALSE","TRUE"
-"Sun_13","Xantrex","FALSE","TRUE"
-"Sun_14","Dottie","FALSE","TRUE"
-"Sun_15","AI","FALSE","TRUE"
-"Sun_16","Bridgeport","FALSE","TRUE"
-"Sun_17","Nimbus","FALSE","TRUE"
-"Sun_18","Polaris","FALSE","TRUE"
-"Sun_19","Bell Outdoor","FALSE","TRUE"
-"Sun_20","SMK","FALSE","TRUE"
-"Sun_21","Enphase","FALSE","TRUE"
-"Sun_22","J & R MUSIC","FALSE","TRUE"
-"Sun_23","BEST BUY","FALSE","TRUE"
-"Sun_24","PRO SOLAR","FALSE","TRUE"
+id,name
+Sun_01,ABABA BOLT
+Sun_02,Allied Building Supply
+Sun_03,CED
+Sun_04,Home Depot
+Sun_05,Lowes
+Sun_06,Roofing Wholesale
+Sun_07,Soligent
+Sun_08,SMA
+Sun_09,Solectra
+Sun_10,Midnight Solar Inc
+Sun_11,Inverter
+Sun_12,Sunpower
+Sun_13,Xantrex
+Sun_14,Dottie
+Sun_15,AI
+Sun_16,Bridgeport
+Sun_17,Nimbus
+Sun_18,Polaris
+Sun_19,Bell Outdoor
+Sun_20,SMK
+Sun_21,Enphase
+Sun_22,J & R MUSIC
+Sun_23,BEST BUY
+Sun_24,PRO SOLAR

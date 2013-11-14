@@ -1,8 +1,12 @@
 ==================================================================================
  Version ChangeLog (sps_sale)
 ==================================================================================
-0.02 --> 26 Sep 2013 : Serpent Consulting Services
-        * Added functionality of email send to users in warehouse when order point called
+
+0.03 --> 05 Oct 2013 : Serpent Consulting Services
+        * Added functionality of LIFO costing method for product.
+
+0.03 --> 26 Sep 2013 : Serpent Consulting Services
+        * Added functionality of email send to users in warehouse when order point called.
         
 0.02 --> 26 Sep 2013 : Serpent Consulting Services
         * Added a access right group for cost price.

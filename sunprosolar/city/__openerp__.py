@@ -28,9 +28,8 @@
     "description": """Creates a model for storing cities
 Zip code, city, state and country fields are replaced with a location field in partner and partner contact forms.
 This module helps to keep homogeneous address data in the database.""",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "update_xml" : [
+    "depends" : ["base","crm"],
+    "data" : [
         'city_view.xml',
         'security/ir.model.access.csv'
         ],

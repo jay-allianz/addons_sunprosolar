@@ -25,6 +25,31 @@
                 </xpath>
         </field>
     </record>
+    
+    <!-- Add location to the Lead form -->
+    <record model="ir.ui.view" id="view_lead_form_city">
+        <field name="name">crm.lead.form.city</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/> 
+        <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/group/div/field[@name='street2']" position="after">
+                    <field name="city_id" colspan="4" />
+                </xpath>
+                <xpath expr="/form/sheet/group/group/div/div/field[@name='city']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/group/group/div/div/field[@name='state_id']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/group/group/div/div/field[@name='zip']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/group/group/div/field[@name='country_id']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                </xpath>
+        </field>
+    </record>
+
 
 
     <!-- Add cities to the State form -->
@@ -43,9 +68,8 @@
     <record model="ir.ui.view" id="view_city_tree">
         <field name="name">city.city.tree</field>
         <field name="model">city.city</field>
-        <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="City Tree View">
+            <tree string="City Tree View" version="7.0">
                 <field name="zip"/>
                 <field name="name"/>
                 <field name="state_id"/>
@@ -57,14 +81,17 @@
     <record model="ir.ui.view" id="view_city_form">
         <field name="name">city.city.form</field>
         <field name="model">city.city</field>
-        <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="City Form View">
+            <form string="City Form View" version="7.0">
+             <sheet>
+               <group>
                 <field name="zip" select="1"/>
                 <field name="country_id" />
                 <field name="name" select="1"/>
                 <field name="state_id" select="1"/>
                 <field name="code" select="2"/>
+              </group>
+             </sheet>
             </form>
         </field>
     </record>

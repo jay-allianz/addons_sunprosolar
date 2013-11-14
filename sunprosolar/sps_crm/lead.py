@@ -31,7 +31,9 @@ import addons
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 import logging
 import base64
-import netsvc
+import json
+import pprint
+import urllib
 WEB_LINK_URL = "db=%s&uid=%s&pwd=%s&id=%s&state=%s&action_id=%s"
 
 class crm_lead(osv.Model):
@@ -56,13 +58,206 @@ class crm_lead(osv.Model):
                     res[data.id] = True
         return res
     
+    def _get_stc_dc_rating(self, cr, uid, ids, name, args, context=None):
+        res={}
+        rating=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                rating += line.stc_dc_rating
+                line_number += 1
+            res[data.id] = rating/line_number
+        return res
+    
+    def _get_ptc_dc_rating(self, cr, uid, ids, name, args, context=None):
+        res={}
+        rating=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                rating += line.ptc_dc_rating
+                line_number += 1
+            res[data.id] = rating/line_number
+        return res
+    
+    def _get_cec_ac_rating(self, cr, uid, ids, name, args, context=None):
+        res={}
+        rating=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                rating += line.cec_ac_rating
+                line_number += 1
+            res[data.id] = rating/ line_number
+        return res
+    
+    def _get_ptc_stc_ratio(self, cr, uid, ids, name, args, context=None):
+        res={}
+        rating=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                rating += line.ptc_stc_ratio
+                line_number += 1
+            res[data.id] = rating/line_number
+        return res
+    
+    def _get_annual_solar_prod(self, cr, uid, ids, name, args, context=None):
+        res={}
+        annual_prod=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                annual_prod += line.annual_solar_prod
+                line_number += 1
+            res[data.id] = annual_prod/line_number
+        return res
+    
+    def _get_annual_ele_usage(self, cr, uid, ids, name, args, context=None):
+        res={}
+        annual_ele_usage=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                annual_ele_usage += line.annual_ele_usage
+                line_number += 1
+            res[data.id] = annual_ele_usage/line_number
+        return res
+    
+    def _get_site_avg_sun_hour(self, cr, uid, ids, name, args, context=None):
+        res={}
+        site_avg_hour=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                site_avg_hour += line.site_avg_sun_hour
+                line_number += 1
+            res[data.id] = site_avg_hour/line_number
+        return res
+    
+    def _get_co2_offset_tons(self, cr, uid, ids, name, args, context=None):
+        res={}
+        co2_offset_tons=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                co2_offset_tons += line.co2_offset_tons
+                line_number += 1
+            res[data.id] = co2_offset_tons/line_number
+        return res 
+    
+    def _get_co2_offset_pounds(self, cr, uid, ids, name, args, context=None):
+        res={}
+        co2_offset_pounds=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                co2_offset_pounds += line.co2_offset_pounds
+                line_number += 1
+            res[data.id] = co2_offset_pounds/line_number
+        return res
+    
+    def _get_cars_off_roads(self, cr, uid, ids, name, args, context=None):
+        res={}
+        cars_off_roads=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                cars_off_roads += line.cars_off_roads
+                line_number += 1
+            res[data.id] = cars_off_roads/line_number
+        return res
+    
+    def _get_gasoline_equi(self, cr, uid, ids, name, args, context=None):
+        res={}
+        gasoline_equi=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                gasoline_equi += line.gasoline_equi
+                line_number += 1
+            res[data.id] = gasoline_equi/line_number
+        return res
+    
+    def _get_tree_equi(self, cr, uid, ids, name, args, context=None):
+        res={}
+        tree_equi=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                tree_equi += line.tree_equi
+                line_number += 1
+            res[data.id] = tree_equi/line_number
+        return res
+    
+    def _get_tree_planting_equi(self, cr, uid, ids, name, args, context=None):
+        res={}
+        tree_planting_equi=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                tree_planting_equi += line.tree_planting_equi
+                line_number += 1
+            res[data.id] = tree_planting_equi/line_number
+        return res
+    
+    def _get_ave_home_powered(self, cr, uid, ids, name, args, context=None):
+        res={}
+        ave_home_powered=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                ave_home_powered += line.ave_home_powered
+                line_number += 1
+            res[data.id] = ave_home_powered/line_number
+        return res
+    
+    def _get_ave_light_bulb_powered(self, cr, uid, ids, name, args, context=None):
+        res={}
+        ave_light_bulb_powered=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                ave_light_bulb_powered += line.ave_light_bulb_powered
+                line_number += 1
+            res[data.id] = ave_light_bulb_powered/line_number
+        return res
+    
+    def _get_years_40_offset_tree(self, cr, uid, ids, name, args, context=None):
+        res={}
+        years_40_offset_tree=0.0
+        for data in self.browse(cr, uid, ids, context):
+            years_40_offset_tree = data.annual_equvi_tree*40
+            res[data.id] = years_40_offset_tree
+        return res
+    
+    def _get_annnual_co2_car(self, cr, uid, ids, name, args, context=None):
+        res={}
+        annnual_co2_car=0.0
+        for data in self.browse(cr, uid, ids, context):
+            annnual_co2_car = data.medium_pollusion*data.avg_yearly_miles
+            res[data.id] = annnual_co2_car
+        return res
+    
+    def _get_annual_home_ele(self, cr, uid, ids, name, args, context=None):
+        res={}
+        annual_home_ele=0.0
+        for data in self.browse(cr, uid, ids, context):
+            annual_home_ele = 8900*data.avg_co2_ele
+            res[data.id] = annual_home_ele
+        return res
+
     _columns = {
          'last_name': fields.char('Last Name', size=32),
-         'property': fields.selection([('commercial', 'Commercial'),('residential','Residential')], 'Property',help="Which type of Property?"),
+         'middle_name':fields.char("Middle Name", size=32),
+         'property': fields.selection([('commercial', 'Commercial'),('residential','Residential'),('none profit','None Profit')], 'Property',help="Which type of Property?"),
          'spouse': fields.many2one('res.partner',string='Secondary Customer',  help="Secondary Customer (spouse) in case he/she exist."),
          'utility_company_id': fields.many2one('res.partner','Utility Company'),
          'document_ids': fields.one2many('documents.all','document_id','Required Documents'),
          'required_document':fields.function(_get_require_doc, method=True, type='boolean',string="Required Document Collected?",help="Checked if Yes."),
+         'notify_customer':fields.boolean("Notify Customer?",help="Checked if Yes."),
+         'notify_user':fields.boolean("Notify User?",help="Checked if Yes."),
+         'user_notification_id': fields.many2many('res.partner', 'res_partner_crm_lead_sps_rel', 'res_partner_id','crm_lead_id', 'Users to Notify'),
          'acc_no':fields.char('Account Number', size=32),
          'meter_no': fields.char('Meter Number', size=32),
          'bill_average': fields.float(' Electric Bill Amount Average'),
@@ -85,14 +280,27 @@ class crm_lead(osv.Model):
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
          'age_house_month': fields.integer('Age of House month'),
-         'roof_type':fields.selection([('s_family', 'Single Family'),('Mobil','Mobil'),('manufactured','Manufactured')], 'Type Of Roof',),
-#         'roof_type': fields.char('Type Of Roof', size=32),
+#         'roof_type':fields.selection([('s_family', 'Single Family'),('Mobil','Mobil'),('manufactured','Manufactured')], 'Type Of Roof',),
+         'roof_type': fields.many2one('roof.type','Type Of Roof'),
          'time_own_year': fields.integer('Owned Home Time',help="How long have you owned your home?"),   
          'time_own_month': fields.integer('Owned home Time month'),
          'pool': fields.boolean('Is Pool?',help="Have a pool or not? Checked if Yes."),
          'spent_money': fields.float('Money spent to Heat Home',help='How much spent to heat home?'),
          'equity': fields.boolean('Equity',help="Do you have equity in your home? Checked if Yes."),
-         'tilt_azimuth': fields.one2many('tilt.azimuth','tilt_azimuth_id','Tilt & Azimuth Reading'),
+#          'tilt_azimuth': fields.one2many('tilt.azimuth','tilt_azimuth_id','Tilt & Azimuth Reading'),
+        'loc_station_id' : fields.many2one('insolation.incident.yearly','Closest NERL Locations'),
+        'tilt_degree' : fields.selection(
+                    [
+                        ('n','[N]North'),
+                        ('ne','[NE]North-East'),
+                        ('e','[E]East'),
+                        ('se','[SE]South-East'),
+                        ('s','[S]South'),
+                        ('sw','[SW]South-West'),
+                        ('w','[W]West'),
+                        ('nw','[NW]North-West')
+                    ],'Tilt Degree'),
+        'faceing' : fields.many2one('tilt.tilt','Faceing'),
          'estimate_shade': fields.integer('Estimated Shading'),
          'ahj': fields.selection([('structural', 'Structural'),('electrical','Electrical')], 'AHJ',help="Authority Having Jurisdiction"),
          'utility_bill' : fields.boolean('Utility Bill',help="Checked Utility bill to sign customer contract."),
@@ -118,6 +326,7 @@ class crm_lead(osv.Model):
         'main_ele_serviece_panel': fields.char('Main Electrical Service Panel information', size=32),
         'see_lead_home_note': fields.boolean('See Lead Home Note'),
         'crm_lead_home_note_ids': fields.one2many('crm.lead.home.description', 'home_id', 'Notes'),
+        'anual_electricity_usage_ids' : fields.one2many('electricity.usage', 'lead_id', 'Anual Electricity Usage'),
         'see_lead_electricity_note': fields.boolean('See Lead Electricity Note'),
         'crm_lead_electricity_note_ids': fields.one2many('crm.lead.electricity.description', 'electricity_id', 'Notes'),
         'see_lead_marketing_note': fields.boolean('See Lead Marketing Note'),
@@ -129,15 +338,188 @@ class crm_lead(osv.Model):
         'see_lead_all_note': fields.boolean('See Lead All Note'),
         'crm_lead_all_tabs_note_ids': fields.one2many('crm.lead.all.tabs.description', 'all_tab_id', 'Notes'),
         'responsible_user': fields.function(_reponsible_user,type='char', method=True, string="Responsible User for Appointment", help="Responsible User for Appointment setup"),
+        
+#        'module_product_id': fields.many2one('product.product','Module Name', domain=[('product_group','=','module')], type='module', required=True),
+#        'num_of_module': fields.integer('Number of modules'),
+#        'inverter_product_id':fields.many2one('product.product','Inverters Name', domain=[('product_group','=','inverter')], type='inverter', required=True),
+#        'num_of_invertor':fields.integer('Number of Inverters'),
+#        'num_of_arrays':fields.integer('Number of Arrays'),
+        
+        'solar_ids' : fields.one2many("solar.solar","crm_lead_id","Solar Information"),
+        
+        'loan_period' :fields.float("Loan Period(Years)"),
+        'down_payment' :fields.float("Down Payment"),
+        'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
+        'pv_kw_decline':fields.float('PV KW Decline (%)'),
+        'grid_energy_rate':fields.float("Electricity Grid energy intial Rate Per KWh/$"),
+        'grid_rate_increase_by':fields.float('Grid Rate Increase By'),
+        'rebate':fields.float("Rebate"),
+        'pbi - epbb_incentives':fields.float('PBI-EPBB Incentives'),
+        'srec':fields.float('SREC/kwh'),
+        'number_of_years':fields.float('Number Of Years'),
+        'replace_inverter_every':fields.float('Replace Inverter Every(Years)'),
+        'fedral_tax':fields.float('Fedral Tax'),
+        'sales_tax':fields.float('Sales Tax'),
+        'auto_zip' : fields.char(string="Auto-Zipcode"),
+        
+        'avg_co2_ele': fields.float("Average CO2 emitted to produce Electricity(lbs)"),
+        'annual_equvi_tree': fields.float("Annual offset of One Growing Tree(lbs)"),
+        'years_40_offset_tree': fields.function(_get_years_40_offset_tree,type="float",string="40 Years Offset of One Growing Tree(lbs)"),
+        'medium_pollusion': fields.float("Medium Car CO2 Pollution per Mile(lbs)"),
+        'avg_yearly_miles': fields.float("Average Yearly Miles Driven(Miles)"),
+        'annnual_co2_car': fields.function(_get_annnual_co2_car,type="float",string="Annual CO2 for Medium Car(lbs)"),
+        'annual_home_ele': fields.function(_get_annual_home_ele,type="float",string="Average Yearly Home Electricity(lbs)"),
+        'avg_light_bulb': fields.float("Average Yearly Light Bulb(KWh)"),
+        'avg_comp': fields.float("Average Yearly Computer((KWh))"),
+        'emmision_gas': fields.float("Emissions from a Gallon of Gas(lbs)"),
+        
+        'co2_offset_tons' : fields.function(_get_co2_offset_tons, string='CO2 Offset', type='float', help="Tons of Carbon Annually"),
+        'co2_offset_pounds' : fields.function(_get_co2_offset_pounds, string='CO2 Offset', type="float", help="Pounds of Carbon annually Eliminated"),
+        'cars_off_roads' : fields.function(_get_cars_off_roads, string='Cars off the Road',type="float", help="Cars taken off the road for one year"),
+        'gasoline_equi' : fields.function(_get_gasoline_equi, string='Gasoline Equivalent (Gallons of Gas)',type='float'),
+        'tree_equi' : fields.function(_get_tree_equi, string='Tree Equivalent',type='float', help="Trees cleaning the Air for one year"),
+        'tree_planting_equi' : fields.function(_get_tree_planting_equi, string='Tree Planting Equivalent',type='float', help="Trees planted for life of tree"),
+        'ave_home_powered' : fields.function(_get_ave_home_powered, string='Average Homes Powered',type='float', help="Homes Powered for One Year"),
+        'ave_light_bulb_powered' : fields.function(_get_ave_light_bulb_powered, string='Average Light-bulbs Powered',type='float', help="Light-bulbs Powered for One Year"),
+        
+        'stc_dc_rating': fields.function(_get_stc_dc_rating, string='STC-DC Rating', type='float'),
+        'ptc_dc_rating': fields.function(_get_ptc_dc_rating, string='PTC-DC Rating', type='float'),
+        'cec_ac_rating': fields.function(_get_cec_ac_rating, string='CEC-AC Rating', type='float'),
+        'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float'),
+        
+        'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='float'),
+        'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float'),
+        'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Avarage Sun Hours', type='float'),
         }
-    
+
     _defaults = {
             'name': '/',
             'home':'own',
             'bill_month':'12_month',
             'property': 'residential',
+            'avg_co2_ele':1.34,
+            'emmision_gas':19.4,
+            'annual_equvi_tree':50,
+            'avg_yearly_miles': 15000,
+            'avg_light_bulb':116.8,
+            'annual_home_ele': 11926,
+            'avg_comp':1,
+            'medium_pollusion':1.1,
+            'avg_yearly_miles':15000
     }
     
+    def on_change_address(self, cr, uid, ids, street, street2, city, state_id, context=None):
+        res = {}
+        try:
+            state_obj = self.pool.get('res.country.state')
+            LOCATION = 'https://api.smartystreets.com/street-address'
+            ARGS = {        # entire query sting must be URL-Encoded
+                'auth-id': r'fd16c051-ede5-440e-836c-d379ab74e4be',
+                'auth-token': r'Y7QPpGmWxxjxjXxKtMeumsNd3zTlqrZbIGV0h974PGPb9M0zxXpPniV2vRE4CSK6USHTmeiAP2vXcvzVgujDdQ==',
+            }
+            if street:
+                ARGS.update({'street':street})
+            if street2:
+                if street:
+                    ARGS.update({'street2':street + " " + street2})
+                else:
+                    ARGS.update({'street2':street2})
+            if city:
+                ARGS.update({'city':city})
+            if state_id:
+                state_data = state_obj.browse(cr, uid, state_id, context=context)
+                if state_data:
+                    ARGS.update({'state':state_data.code})
+            QUERY_STRING = urllib.urlencode(ARGS)
+            URL = LOCATION + '?' + QUERY_STRING
+            response = urllib.urlopen(URL).read()
+            structure = json.loads(response)
+            zipc = 'Zip Not Found'
+            if structure:
+                zipc = structure[0].get('components',{}).get('zipcode',r'not found')
+                res['zip']=zipc
+            res['auto_zip'] = zipc
+        except:
+            res['auto_zip'] = 'Zip Not Found'
+        return {'value':res}
+    
+    def on_change_notifiy_customer(self, cr, uid, ids, notify_customer, context=None):
+        if notify_customer==True:
+            for data in self.browse(cr, uid, ids, context=context):
+                for doc in data.document_ids:
+                    if doc.doc == False:
+                        return False
+                    else:
+                        obj_mail_server = self.pool.get('ir.mail_server')
+                        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+                        if not mail_server_ids:
+                            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+                        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+                        email_from = mail_server_record.smtp_user
+                        if not email_from:
+                            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+                        if not data.email_from:
+                            raise osv.except_osv(_('Warning'), _('%s User have no email defined !' % data.contact_name))
+                        else:
+                            subject_line = 'Notification For uploded Document.'
+                            message_body = 'Hello,' + tools.ustr(data.contact_name) + ' ' + tools.ustr(data.last_name) +'<br/><br/>The Documents: <br/>' + tools.ustr(doc.name) +'<br/>is successfully Uploded.<br/><br/> Thank You.'
+                            message_user = obj_mail_server.build_email(
+                                email_from=email_from, 
+                                email_to=[data.email_from], 
+                                subject=subject_line, 
+                                body=message_body, 
+                                body_alternative=message_body, 
+                                email_cc=None, 
+                                email_bcc=None, 
+                                attachments=None, 
+                                references = None, 
+                                object_id=None, 
+                                subtype='html', 
+                                subtype_alternative=None, 
+                                headers=None)
+                            self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
+        return True
+    
+    def on_change_notifiy_user(self, cr, uid, ids, notify_user, context=None):
+        if notify_user==True:
+            for data in self.browse(cr, uid, ids, context=context):
+                for doc in data.document_ids:
+                    if doc.doc == False:
+                        return False
+                    else:
+                        obj_mail_server = self.pool.get('ir.mail_server')
+                        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+                        if not mail_server_ids:
+                            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+                        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+                        email_from = mail_server_record.smtp_user
+                        if not email_from:
+                            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+                        email_to=[]
+                        for user in data.user_notification_id:
+                            if not user.email:
+                                raise osv.except_osv(_('Warning'), _('%s User have no email defined !' % user.name))
+                            else:
+                                email_to.append(user.email)
+                                subject_line = 'Notification For uploded Document.'
+                                message_body = 'Hello,' + tools.ustr(user.name) + '<br/><br/>The Document <br/>' + tools.ustr(doc.name) +'<br/>is successfully Uploded.<br/><br/> Thank You.'
+                                message_user = obj_mail_server.build_email(
+                                    email_from=email_from, 
+                                    email_to=email_to, 
+                                    subject=subject_line, 
+                                    body=message_body, 
+                                    body_alternative=message_body, 
+                                    email_cc=None, 
+                                    email_bcc=None, 
+                                    attachments=None, 
+                                    references = None, 
+                                    object_id=None, 
+                                    subtype='html', 
+                                    subtype_alternative=None, 
+                                    headers=None)
+                                self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
+        return True
+                            
     def on_change_utility_company(self, cr, uid, ids, utility_company_id, context=None):
         values = {}
         document_list=[]
@@ -410,8 +792,119 @@ class crm_lead(osv.Model):
     def exit_notes(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'see_lead_home_note': False, 'see_lead_electricity_note': False, 'see_lead_marketing_note': False, 'see_lead_accounting_note': False, 'see_lead_system_note': False, 'see_lead_all_note': False})
         return True
-crm_lead()
 
+class solar_solar(osv.Model):
+    """Model for Solar Information"""
+    
+    _name= 'solar.solar'
+    
+    def _get_system_rating_data(self, cr, uid, ids, name, args, context=None):
+        res={}
+        for data in self.browse(cr, uid, ids, context):
+            res[data.id] = {
+                'stc_dc_rating': 0.0,
+                'ptc_dc_rating': 0.0,
+                'cec_ac_rating': 0.0,
+                'ptc_stc_ratio': 0.0,
+                'co2_offset_tons' : 0,
+                'co2_offset_pounds' : 0,
+                'cars_off_roads' : 0,
+                'gasoline_equi' : 0,
+                'tree_equi' : 0,
+                'tree_planting_equi' : 0,
+                'ave_home_powered' : 0,
+                'ave_light_bulb_powered' : 0,
+                'annual_solar_prod' : 0,
+                'annual_ele_usage' : 0,
+                'site_avg_sun_hour' : 0,
+            }
+            stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = 0.00
+            stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = None
+            if data.module_product_id.pv_module_power_stc:
+                stc_dc_rating_amount = (data.num_of_module * data.module_product_id.pv_module_power_stc) / 1000
+            if data.module_product_id.module_ptc_rating:
+                ptc_dc_rating_amount = (data.num_of_module * data.module_product_id.module_ptc_rating ) / 1000
+                cec_ac_rating_amount = (ptc_dc_rating_amount * data.inverter_product_id.cec_efficiency) / 100
+            if stc_dc_rating_amount:
+                ptc_stc_ratio_amount = (ptc_dc_rating_amount / stc_dc_rating_amount) * 100
+            res[data.id]['stc_dc_rating'] = stc_dc_rating_amount or 0.0
+            res[data.id]['ptc_dc_rating'] = ptc_dc_rating_amount or 0.0
+            res[data.id]['cec_ac_rating'] = cec_ac_rating_amount or 0.0
+            res[data.id]['ptc_stc_ratio'] = ptc_stc_ratio_amount or 0.0
+            
+            production = None
+            avg_sun_hour = 0.0
+            tot_sun_hour = 0
+            if data.crm_lead_id and data.crm_lead_id.loc_station_id:
+                if data.crm_lead_id.loc_station_id and data.crm_lead_id.loc_station_id.tilt_azimuth_ids:
+                    for t_a_data in data.crm_lead_id.loc_station_id.tilt_azimuth_ids:
+                        if t_a_data.azimuth == data.crm_lead_id.tilt_degree and t_a_data.tilt.id == data.crm_lead_id.faceing.id:
+                            production = t_a_data.production
+                            res[data.id]['annual_ele_usage'] = t_a_data.annual_avg
+                        if t_a_data.azimuth == data.crm_lead_id.tilt_degree and t_a_data.tilt.id == data.crm_lead_id.faceing.id:
+                            tot_sun_hour = tot_sun_hour + t_a_data.production
+                        avg_sun_hour = tot_sun_hour / 12
+                    if production:
+                        output = data.num_of_arrays * production
+                        co2_offset_tons = (output * data.crm_lead_id.avg_co2_ele)/2000
+                        res[data.id]['co2_offset_tons'] = co2_offset_tons
+                        co2_offset_pounds = co2_offset_tons*2000
+                        res[data.id]['co2_offset_pounds'] = co2_offset_pounds
+                        cars_off_roads = co2_offset_pounds/data.crm_lead_id.annnual_co2_car
+                        res[data.id]['cars_off_roads'] = cars_off_roads
+                        gasoline_equi = co2_offset_pounds / data.crm_lead_id.emmision_gas
+                        res[data.id]['gasoline_equi'] = gasoline_equi
+                        tree_equi = output / data.crm_lead_id.annual_equvi_tree
+                        res[data.id]['tree_equi'] = tree_equi
+                        tree_planting_equi = output / data.crm_lead_id.years_40_offset_tree
+                        res[data.id]['tree_planting_equi'] = tree_planting_equi
+                        ave_home_powered = output / data.crm_lead_id.annual_home_ele
+                        res[data.id]['ave_home_powered'] = ave_home_powered
+                        ave_light_bulb_powered = output / data.crm_lead_id.avg_light_bulb
+                        res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
+                        if stc_dc_rating_amount:
+                            annual_solar_prod = production * stc_dc_rating_amount or 0.0
+                            res[data.id]['annual_solar_prod'] = annual_solar_prod
+                        res[data.id]['site_avg_sun_hour'] = avg_sun_hour
+        #                 'annual_ele_usage' : 0,
+        #                 'site_avg_sun_hour' : 0,
+        return res
+    
+    _columns = {
+                'crm_lead_id': fields.many2one('crm.lead',"Lead"),
+                'module_product_id': fields.many2one('product.product','Module Name', domain=[('product_group','=','module')], type='module', required=True),
+                'num_of_module': fields.integer('Number of modules', required=True),
+                'inverter_product_id':fields.many2one('product.product','Inverters Name', domain=[('product_group','=','inverter')], type='inverter', required=True),
+                'num_of_invertor':fields.integer('Number of Inverters'),
+                'num_of_arrays':fields.integer('Number of Arrays'),
+                
+                'stc_dc_rating': fields.function(_get_system_rating_data, string='STC-DC Rating', type='float', multi='rating_all'),
+                'ptc_dc_rating': fields.function(_get_system_rating_data, string='PTC-DC Rating', type='float', multi='rating_all'),
+                'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all'),
+                'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all'),
+                
+#                'co2_offset_tons' : fields.float('CO2 Offset Tons',help="Tons of Carbon Annually"),
+#                'co2_offset_pounds' : fields.float('CO2 Offset Pounds', help="Pounds of Carbon annually Eliminated"),
+#                'cars_off_roads' : fields.float('Cars off the Road', help="Cars taken off the road for one year"),
+#                'gasoline_equi' : fields.float('Gasoline Equivalent', help="Gallons of Gas"),
+#                'tree_equi' : fields.float('Tree Equivalent', help="Trees cleaning the Air for one year"),
+#                'tree_planting_equi' : fields.float('Tree Planting Equivalent', help="Trees planted for life of tree"),
+#                'ave_home_powered' : fields.float('Average Homes Powered', help="Homes Powered for One Year"),
+#                'ave_light_bulb_powered' : fields.float('Average Light-bulbs Powered', help="Light-bulbs Powered for One Year"),
+                
+                'co2_offset_tons' : fields.function(_get_system_rating_data, string='CO2 Offset', type='float', multi='green_all', help="Tons of Carbon Annually"),
+                'co2_offset_pounds' : fields.function(_get_system_rating_data, string='CO2 Offset', type="float", multi='green_all', help="Pounds of Carbon annually Eliminated"),
+                'cars_off_roads' : fields.function(_get_system_rating_data, string='Cars off the Road',type="float", multi='green_all', help="Cars taken off the road for one year"),
+                'gasoline_equi' : fields.function(_get_system_rating_data, string='Gasoline Equivalent (Gallons of Gas)',type='float',multi="green_all"),
+                'tree_equi' : fields.function(_get_system_rating_data, string='Tree Equivalent',type='float',multi="green_all", help="Trees cleaning the Air for one year"),
+                'tree_planting_equi' : fields.function(_get_system_rating_data, string='Tree Planting Equivalent',type='float',multi="green_all", help="Trees planted for life of tree"),
+                'ave_home_powered' : fields.function(_get_system_rating_data, string='Average Homes Powered',type='float',multi="green_all", help="Homes Powered for One Year"),
+                'ave_light_bulb_powered' : fields.function(_get_system_rating_data, string='Average Light-bulbs Powered',type='float',multi="green_all", help="Light-bulbs Powered for One Year"),
+                
+                'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='float', multi='rating_all'),
+                'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all'),
+                'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
+                }
 class crm_lead_home_description(osv.Model):
 
     """ Model for CRM Lead Home Information Notes. """
@@ -426,7 +919,6 @@ class crm_lead_home_description(osv.Model):
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
-crm_lead_home_description()
 
 class crm_lead_electricity_description(osv.Model):
 
@@ -442,7 +934,6 @@ class crm_lead_electricity_description(osv.Model):
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
-crm_lead_electricity_description()
 
 class crm_lead_marketing_description(osv.Model):
 
@@ -458,7 +949,6 @@ class crm_lead_marketing_description(osv.Model):
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
-crm_lead_marketing_description()
 
 class crm_lead_accounting_description(osv.Model):
 
@@ -474,7 +964,6 @@ class crm_lead_accounting_description(osv.Model):
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
-crm_lead_accounting_description()
 
 class crm_lead_system_description(osv.Model):
 
@@ -490,7 +979,6 @@ class crm_lead_system_description(osv.Model):
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
-crm_lead_system_description()
 
 class crm_lead_all_tabs_description(osv.Model):
 
@@ -506,7 +994,6 @@ class crm_lead_all_tabs_description(osv.Model):
             'date': fields.datetime('Date Time'),
             'notes': fields.text('Note')
     }
-crm_lead_all_tabs_description()
 
 class company_quotation(osv.Model):
     """ Model for Product. """
@@ -529,21 +1016,6 @@ class company_quotation(osv.Model):
             res.append((r['id'], r[rec_name][1]))
         return res
     
-company_quotation()
-
-class tilt_azimuth(osv.Model):
-    """ Model for Tilt and Azimuth. """
-    _name = "tilt.azimuth"
-    _description= "Tilt and Azimuth Information."
-    
-    _columns = {
-         'tilt_azimuth_id': fields.many2one('crm.lead','Tilt and Azimuth'),
-         'tilt': fields.integer('Tilt'),
-         'azimuth': fields.integer('Azimuth'),
-        }
-    
-tilt_azimuth()
-
 class level_lead(osv.osv):
     """ Model for Lead Level. """
     _name = "level.lead"
@@ -579,9 +1051,6 @@ class level_lead(osv.osv):
             res.append((record['id'], name))
         return res
     
-level_lead()
-
-
 class roof_type(osv.Model):
     """ Model for Heat home. """
     _name = "roof.type"
@@ -591,10 +1060,8 @@ class roof_type(osv.Model):
         'name': fields.char('Technique Name'),
         'description': fields.text('Description'),
         }
-roof_type()
 
-
-class crm_opportunity2phonecall(osv.osv_memory):
+class crm_opportunity2phonecall(osv.TransientModel):
     """Converts Opportunity to Phonecall"""
     _inherit = 'crm.opportunity2phonecall'
 
@@ -603,8 +1070,6 @@ class crm_opportunity2phonecall(osv.osv_memory):
         stage_id = self.pool.get('crm.case.stage').search(cr, uid, [('name','=','Initial Contact')])
         self.pool.get('crm.lead').write(cr, uid, context.get('active_ids'), {'stage_id': stage_id[0]})
         return action_res
-
-crm_opportunity2phonecall()
 
 class project_project(osv.Model):
     
@@ -621,8 +1086,6 @@ class project_project(osv.Model):
                     self.write(cr, uid, [project_id], {'members': member_list})
         return project_id
     
-project_project()
-
 class documents_all(osv.Model):
     """ Model for document information """
     _name = "documents.all"
@@ -638,8 +1101,7 @@ class documents_all(osv.Model):
     _sql_constraints = [
         ('code_uniq', 'unique (code)', 'The code of the Document must be unique !')
     ]
-documents_all()
-
+    
 class res_partner(osv.Model):
     """ Model for Partner. """
     _inherit = "res.partner"
@@ -679,6 +1141,4 @@ class crm_meeting(osv.Model):
                 stage_id = crm_case_stage_obj.search(cr, uid, [('name','=','Appointment Set')])
                 opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
         return res
-
-crm_meeting()
 

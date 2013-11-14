@@ -21,10 +21,10 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import fields, osv
 #import wizard
 
-class city(osv.osv):
+class city(osv.Model):
 
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
@@ -64,18 +64,17 @@ class city(osv.osv):
         'code': fields.char('City Code', size=64,
             help="The official code for the city"),
     }
-city()
 
 
-class CountryState(osv.osv):
+class CountryState(osv.Model):
     _inherit = 'res.country.state'
     _columns = {
         'city_ids': fields.one2many('city.city', 'state_id', 'Cities'),
     }
-CountryState()
 
 
-class res_partner(osv.osv):
+class res_partner(osv.Model):
+    
     _inherit = "res.partner"
     _columns = {
         'city_id': fields.many2one('city.city', 'Location', select=1),
@@ -90,4 +89,20 @@ class res_partner(osv.osv):
                                      relation="res.country", string="Country",
                                      store=False),
     }
-res_partner()
+    
+class crm_lead(osv.Model):
+    
+    _inherit = "crm.lead"
+    _columns = {
+        'city_id': fields.many2one('city.city', 'Location', select=1),
+        'zip_related': fields.related('city_id', 'zip', type="char", string="Zip",
+                               store=False),
+        'city_related': fields.related('city_id', 'name', type="char", string="City",
+                               store=False),
+        'state_id_related': fields.related('city_id', 'state_id', type="many2one",
+                                   relation="res.country.state", string="State",
+                                   store=False),
+        'country_id_related': fields.related('city_id', 'country_id', type="many2one",
+                                     relation="res.country", string="Country",
+                                     store=False),
+    }

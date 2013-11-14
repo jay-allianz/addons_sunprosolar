@@ -5,7 +5,6 @@
         <record id="view_product_standard_price_form" model="ir.ui.view">
             <field name="name">product.product.standard.price.form.inherit</field>
             <field name="model">product.product</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="stock.view_product_standard_price_form"/>
             <field name="arch" type="xml">
                  <xpath expr="//label[@string='Cost Price']" position="attributes">
@@ -20,7 +19,6 @@
          <record id="view_warehouse_form_inherit" model="ir.ui.view">
             <field name="name">stock.warehouse.form.inherit</field>
             <field name="model">stock.warehouse</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="stock.view_warehouse"/>
             <field name="arch" type="xml">
                 <xpath expr="/form" position="inside">

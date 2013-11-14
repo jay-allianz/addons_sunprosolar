@@ -161,10 +161,6 @@ class sale_order(osv.Model):
         self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
         self.write(cr, uid, ids, {'state': 'site_inspection'})
         return True
-    
-       
-    
-sale_order()
 
 class account_analytic_account(osv.Model):
     
@@ -183,6 +179,3 @@ class account_analytic_account(osv.Model):
 #            'product_ids' : fields.many2many('product.product', 'product_account_rel', 'product_id','prod_id','Products'),
             'members': fields.many2many('res.users', 'project_user_relation', 'project_id', 'uid', 'Project Members'),
         }
-    
-account_analytic_account()
-

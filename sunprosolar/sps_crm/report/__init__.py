@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+import sps_proposal
 import sps_contract_report
 import sps_customer_barcode
 

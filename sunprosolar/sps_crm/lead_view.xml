@@ -25,18 +25,25 @@
 
 
         <!-- CRM Lead Form View  -->
+        
+        <record id="view_sun_opportunity_form" model="ir.ui.view">
+            <field name="name">opportunity.form</field>
+            <field name="model">crm.lead</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+	            <xpath expr="//page[@string='Internal Notes']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        
         <record id="view_sun_crm_lead_form" model="ir.ui.view">
                 <field name="name">crm.lead.form</field>
                 <field name="model">crm.lead</field>
                 <field name="type">form</field>
                 <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
                 <field name="arch" type="xml">
-                    <xpath expr="///button[@string='Schedule/Log Call']" position="after">
-                        <button string="Meeting"
-                                name="action_makeMeeting"
-                                type="object"
-                                context="{'search_default_attendee_id': active_id, 'default_attendee_id' : active_id}"/>
-                    </xpath>
                     <xpath expr="//button[@string='Cancel Case']" position="attributes">
                         <attribute name="string">Disqualify Lead</attribute>
                     </xpath>
@@ -45,301 +52,309 @@
                          <attribute name="Placeholder">First Name</attribute>
                     </xpath>
                     <field name="contact_name" position="after">
-                    <field name="last_name" placeholder="Last Name" required="1"/>
+                        <field name="last_name" placeholder="Last Name" required="1"/>
+                    </field>
+	                <xpath expr="//field[@name='street']" position="attributes">
+	                      <attribute name="required">1</attribute>
+	                      <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	                </xpath>
+	                <xpath expr="//field[@name='street2']" position="attributes">
+	                    <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	                </xpath>
+	                <!--
+																	<xpath expr="//field[@name='city']" position="attributes">
+	                      <attribute name="required">1</attribute>
+	                      <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	                </xpath>
+	                <xpath expr="//field[@name='state_id']" position="attributes">
+	                      <attribute name="required">1</attribute>
+	                      <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	                </xpath>
+	                <xpath expr="//field[@name='zip']" position="attributes">
+	                       <attribute name="required">1</attribute>
+	                </xpath>
+	                <xpath expr="//field[@name='country_id']" position="attributes">
+	                       <attribute name="required">1</attribute>
+	                </xpath>
+																	-->
+	                <xpath expr="//field[@name='phone']" position="attributes">
+	                      <attribute name="required">1</attribute>
+	                </xpath>
+	                <xpath expr="//field[@name='email_from']" position="attributes">
+	                      <attribute name="required">1</attribute>
+	                </xpath>
+	                <xpath expr="//field[@name='mobile']" position="attributes">
+	                      <attribute name="string">Cell</attribute>
+	                </xpath>
+	                <!-- <xpath expr="//page[@string='Notes']" position="attributes">
+	                      <attribute name="invisible">1</attribute>
+	                </xpath> -->
+	                <field name="user_id" position="before">
+	                      <field name="ahj" selection="1"/>
+	                      <field name="see_lead_all_note" invisible="1" />
+	                </field>
+	                <field name="section_id" position="after">
+	                     <button name="salesteam_send_email" type="object" string="Send Mail" attrs="{'invisible': ['|', ('section_id','=',False), ('user_id', '=', False)]}" />
+	                </field>
+	                <xpath expr="/form/sheet/group/group/field[@name='categ_ids']" position="after">
+	                     <field name="property"/>
+	                </xpath>
+	                <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
+	                     <field name="spouse"/>
+	                </xpath>
+	                <xpath expr="//form/sheet/notebook/page[@string='Internal Notes']" position="after">
+	                    <page string="Viewing All Notes">
+	                        <field name="crm_lead_all_tabs_note_ids" readonly="1" >
+	                            <tree>
+	                                <field name="all_tab_user_id" />
+	                                <field name="date" />
+	                                <field name="notes" />
+	                            </tree>
+	                            <form>
+	                                <group>
+	                                    <field name="all_tab_user_id" />
+	                                    <field name="date" />
+	                                    <field name="notes" />
+	                                </group>
+	                            </form>
+	                        </field>
+	                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+	                    </page>
+	                    <page string="Home Info">
+	                        <group col="4" colspan="4">
+	                            <field name="home" required="1"/>
+	                                 <group col="10" colspan="10" attrs="{'invisible':[('home','!=','own')]}">
+	                                      <field name="time_own_year" />
+	                                      <span class="oe_grey"> Year </span><newline/>
+	                                      <span class="oe_grey">  </span>
+	                                      <field name="time_own_month"  nolabel="1"/>
+	                                      <span class="oe_grey"> Month </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                 </group>
+	                                 <field name="quote" />
+	                                 <group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
+	                                      <field name="quote_info" />
+	                                 </group>
+	                                 <field name="heat_home" />
+	                                 <field name="pool"/>
+	                                 <field name="spent_money"/>
+	                                 <field name="equity"/>
+	                                 <field name="home_sq_foot" /><newline/>
+	                                 <field name="roof_type" />
+	                                 <field name="estimate_shade" />
+	                                 <field name="loc_station_id" required="1"/><newline/>
+	                                 <field name="tilt_degree" required="1"/><newline/>
+	                                 <field name="faceing" required="1"/>
+	                                 <group col="10" colspan="10">
+	                                      <field name="age_house_year" />
+	                                      <span class="oe_grey"> Year </span><newline/>
+	                                      <span class="oe_grey">  </span>
+	                                      <field name="age_house_month"  nolabel="1"/>
+	                                      <span class="oe_grey"> Month </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                      <span class="oe_grey">  </span>
+	                                </group>
+	                          </group>
+	                          <field name="see_lead_home_note" invisible="1" />
+	                          <label for="home_note"/>
+	                          <field name="home_note" colspan="4" />
+	                          <button name="view_lead_home_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
+	                          <group>
+	                               <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
+	                          </group>
+	                     </page>
+	                     <page string="Electricity Info">
+	                         <group col="4" colspan="4">
+	                             <field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)" required="1"/><newline/>
+	                             <separator string="Required Documents" colspan="4"/>
+	                             <field name="document_ids" colspan="4" nolabel="1">
+	                                  <tree string="Documents" editable="bottom">
+	                                       <field name="name"/>
+	                                       <field name="doc"/>
+	                                  </tree>
+	                             </field>
+	                             <field name="required_document"/>
+	                             <field name="notify_customer" on_change="on_change_notifiy_customer(notify_customer)"/>
+	                             <field name="notify_user" on_change="on_change_notifiy_user(notify_user)"/>
+	                             <separator string="Users to Notify" colspan="4"/>
+	                             <field name="user_notification_id" colspan="4" nolabel="1"/>
+	                             <field name="acc_no" attrs="{'invisible':[('required_document','=',False)]}"/>
+	                             <field name="meter_no" attrs="{'invisible':[('required_document','=',False)]}"/>
+	                             <field name="bill_summer" attrs="{'invisible':[('required_document','=',False)]}"/>
+	                             <field name="rate_plan" attrs="{'invisible':[('required_document','=',False)]}"/>
+	                             <field name="bill_winter" attrs="{'invisible':[('required_document','=',False)]}"/>
+	                             <label for="bill_average" attrs="{'invisible':[('required_document','=',False)]}"/>
+	                             <div attrs="{'invisible':[('required_document','=',False)]}">
+	                                  <field name="bill_average"/>
+	                                  <span class="oe_grey"> of </span>
+	                                  <field name="bill_month" nolabel="1"/>
+	                             </div>
+	                             <field name="bill_total" attrs="{'invisible':[('required_document','=',False)]}"/>
+	                        </group>
+	                        <field name="see_lead_electricity_note" invisible="1" />
+	                        <label for="electricity_note"/>
+	                        <field name="electricity_note" colspan="4" />
+	                        <button name="view_lead_electricity_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
+	                        <group>
+	                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
+	                        </group>
+	                   </page>
+	                   <page string="Marketing Data">
+	                        <group col="4" colspan="4">
+	                            <field name="lead_source" />
+	                            <field name="level_of_lead"/>
+	                            <field name="qualified" />
+	                            <field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}"/>
+	                            <field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}"/>
+	                            <field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}"/>
+	                            <field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}"/>
+	                        </group>
+	                        <field name="see_lead_marketing_note" invisible="1" />
+	                        <separator string="Appointments" colspan="4"/>
+	                        <field name="appointment_ids" mode="tree" nolabel="1" colspan="4"/>
+	                        <label for="marketing_note"/>
+	                        <field name="marketing_note" colspan="4" />
+	                        <button name="view_lead_marketing_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
+	                        <group>
+	                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
+	                        </group>
+	                    </page>
+	                    <page string="Accounting Data">
+	                        <group col="4" colspan="4">
+	                            <field name="type_of_sale" />
+	                            <field name="deadline" />
+	                            <field name="deposit" />
+	                            <field name="federal_tax" />
+	                            <field name="property_tax" />
+	                            <field name="mortgage" />
+	                            <field name="bankruptcy" />
+	                            <field name="rate_credit" />
+	                        </group>
+	                        <field name="see_lead_accounting_note" invisible="1" />
+	                        <label for="accounting_note"/>
+	                        <field name="accounting_note" colspan="4" />
+	                        <button name="view_lead_accounting_notes" string="Viewing This Tab Notes" type="object" class="oe_link" />
+	                        <newline/>
+	                        <group>
+	                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link" />
+	                        </group>
+	                    </page>
+	                    <page string="System Data">
+	                        <group col="4" colspan="4">
+	                             <field name="type_of_module" />
+	                             <field name="inverter" />
+	                             <field name="main_ele_serviece_panel" />
+	                        </group>
+	                        <field name="see_lead_system_note" invisible="1" />
+	                        <label for="system_note"/>
+	                        <field name="system_note" colspan="4" />
+	                        <button name="view_lead_system_notes" string="Viewing This Tab Notes" type="object" class="oe_link" colspan="4"/>
+	                        <group>
+	                              <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link" colspan="4"/>
+	                        </group>
+	                    </page>
+	                    <page string="Attachments">
+	                        <field name="attachment_ids" nolabel="1" colspan="4"/>
+	                    </page>
+	                    <page string="Viewing Home Notes" attrs="{'invisible':[('see_lead_home_note','=',False)]}">
+	                        <field name="crm_lead_home_note_ids" readonly="1" >
+	                            <tree>
+	                                <field name="home_user_id" />
+	                                <field name="date" />
+	                                <field name="notes" />
+	                            </tree>
+	                            <form>
+	                                <group>
+	                                    <field name="home_user_id" />
+	                                    <field name="date" />
+	                                    <field name="notes" />
+	                                </group>
+	                            </form>
+	                        </field>
+	                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+	                    </page>
+	                    <page string="Internal Notes">
+	                            <field name="description"/>
+	                        </page>
+	                    <page string="Viewing Electricity Notes" attrs="{'invisible':[('see_lead_electricity_note','=',False)]}">
+	                        <field name="crm_lead_electricity_note_ids" readonly="1" >
+	                            <tree>
+	                                <field name="electricity_user_id" />
+	                                <field name="date" />
+	                                <field name="notes" />
+	                            </tree>
+	                            <form>
+	                                <group>
+	                                    <field name="electricity_user_id" />
+	                                    <field name="date" />
+	                                    <field name="notes" />
+	                                </group>
+	                            </form>
+	                        </field>
+	                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+	                    </page>
+	                    <page string="Viewing Marketing Notes" attrs="{'invisible':[('see_lead_marketing_note','=',False)]}">
+	                        <field name="crm_lead_marketing_note_ids" readonly="1" >
+	                            <tree>
+	                                <field name="marketing_user_id" />
+	                                <field name="date" />
+	                                <field name="notes" />
+	                            </tree>
+	                            <form>
+	                                <group>
+	                                    <field name="marketing_user_id" />
+	                                    <field name="date" />
+	                                    <field name="notes" />
+	                                </group>
+	                            </form>
+	                        </field>
+	                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+	                    </page>
+	                    <page string="Viewing Accounting Notes" attrs="{'invisible':[('see_lead_accounting_note','=',False)]}">
+	                        <field name="crm_lead_accounting_note_ids" readonly="1" >
+	                            <tree>
+	                                <field name="accounting_user_id" />
+	                                <field name="date" />
+	                                <field name="notes" />
+	                            </tree>
+	                            <form>
+	                                <group>
+	                                    <field name="accounting_user_id" />
+	                                    <field name="date" />
+	                                    <field name="notes" />
+	                                </group>
+	                            </form>
+	                        </field>
+	                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+	                    </page>
+	                    <page string="Viewing System Notes" attrs="{'invisible':[('see_lead_system_note','=',False)]}">
+	                        <field name="crm_lead_system_note_ids" readonly="1" >
+	                            <tree>
+	                                <field name="system_user_id" />
+	                                <field name="date" />
+	                                <field name="notes" />
+	                            </tree>
+	                            <form>
+	                                <group>
+	                                    <field name="system_user_id" />
+	                                    <field name="date" />
+	                                    <field name="notes" />
+	                                </group>
+	                            </form>
+	                        </field>
+	                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
+	                    </page>
+	               </xpath>
                 </field>
-                <xpath expr="//field[@name='street']" position="attributes">
-                      <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='city']" position="attributes">
-                      <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='state_id']" position="attributes">
-                      <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='zip']" position="attributes">
-                       <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='country_id']" position="attributes">
-                       <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='phone']" position="attributes">
-                      <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='email_from']" position="attributes">
-                      <attribute name="required">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='mobile']" position="attributes">
-                      <attribute name="string">Cell</attribute>
-                </xpath>
-                <xpath expr="//page[@string='Internal Notes']" position="attributes">
-                      <attribute name="invisible">1</attribute>
-                </xpath>
-                <field name="user_id" position="before">
-                      <field name="ahj" selection="1"/>
-                      <field name="see_lead_all_note" invisible="1" />
-                </field>
-                <field name="section_id" position="after">
-                     <button name="salesteam_send_email" type="object" string="Send Mail" attrs="{'invisible': ['|', ('section_id','=',False), ('user_id', '=', False)]}" />
-                </field>
-                <xpath expr="/form/sheet/group/group/field[@name='categ_ids']" position="after">
-                     <field name="property"/>
-                </xpath>
-                <xpath expr="/form/sheet/group/group/field[@name='partner_id']" position="after">
-                     <field name="spouse"/>
-                </xpath>
-                <xpath expr="//form/sheet/notebook/page[@string='Internal Notes']" position="after">
-                    <page string="Viewing All Notes">
-                        <field name="crm_lead_all_tabs_note_ids" readonly="1" >
-                            <tree>
-                                <field name="all_tab_user_id" />
-                                <field name="date" />
-                                <field name="notes" />
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="all_tab_user_id" />
-                                    <field name="date" />
-                                    <field name="notes" />
-                                </group>
-                            </form>
-                        </field>
-                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
-                    </page>
-                    <page string="Home Info">
-                        <group col="4" colspan="4">
-                            <field name="home" required="1"/>
-                                 <group col="10" colspan="10" attrs="{'invisible':[('home','!=','own')]}">
-                                      <field name="time_own_year" />
-                                      <span class="oe_grey"> Year </span><newline/>
-                                      <span class="oe_grey">  </span>
-                                      <field name="time_own_month"  nolabel="1"/>
-                                      <span class="oe_grey"> Month </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                 </group>
-                                 <field name="quote" />
-                                 <group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
-                                      <field name="quote_info" />
-                                 </group>
-                                 <field name="heat_home" />
-                                 <field name="pool"/>
-                                 <field name="spent_money"/>
-                                 <field name="equity"/>
-                                 <field name="home_sq_foot" /><newline/>
-                                 <field name="roof_type" />
-                                 <field name="estimate_shade" />
-                                 <separator string="Tilt and Azimuth Reading" colspan="4"/>
-                                 <field name="tilt_azimuth" colspan="4" nolabel="1">
-                                      <tree string="Tilt and Azimuth" editable="bottom">
-                                           <field name = "tilt"/>
-                                           <field name = "azimuth"/>
-                                      </tree>
-                                 </field>
-                                 <group col="10" colspan="10">
-                                      <field name="age_house_year" />
-                                      <span class="oe_grey"> Year </span><newline/>
-                                      <span class="oe_grey">  </span>
-                                      <field name="age_house_month"  nolabel="1"/>
-                                      <span class="oe_grey"> Month </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                      <span class="oe_grey">  </span>
-                                </group>
-                          </group>
-                          <field name="see_lead_home_note" invisible="1" />
-                          <label for="home_note"/>
-                          <field name="home_note" colspan="4" />
-                          <button name="view_lead_home_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
-                          <group>
-                               <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
-                          </group>
-                     </page>
-                     <page string="Electricity Info">
-                         <group col="4" colspan="4">
-                             <field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)" required="1"/><newline/>
-                             <separator string="Required Documents" colspan="4"/>
-                             <field name="document_ids" colspan="4" nolabel="1">
-                                  <tree string="Documents" editable="bottom">
-                                       <field name="name"/>
-                                       <field name="doc"/>
-                                  </tree>
-                             </field>
-                             <field name="required_document"/>
-                             <field name="acc_no" attrs="{'invisible':[('required_document','=',False)]}"/>
-                             <field name="meter_no" attrs="{'invisible':[('required_document','=',False)]}"/>
-                             <field name="bill_summer" attrs="{'invisible':[('required_document','=',False)]}"/>
-                             <field name="rate_plan" attrs="{'invisible':[('required_document','=',False)]}"/>
-                             <field name="bill_winter" attrs="{'invisible':[('required_document','=',False)]}"/>
-                             <label for="bill_average" attrs="{'invisible':[('required_document','=',False)]}"/>
-                             <div attrs="{'invisible':[('required_document','=',False)]}">
-                                  <field name="bill_average"/>
-                                  <span class="oe_grey"> of </span>
-                                  <field name="bill_month" nolabel="1"/>
-                             </div>
-                             <field name="bill_total" attrs="{'invisible':[('required_document','=',False)]}"/>
-                        </group>
-                        <field name="see_lead_electricity_note" invisible="1" />
-                        <label for="electricity_note"/>
-                        <field name="electricity_note" colspan="4" />
-                        <button name="view_lead_electricity_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
-                        <group>
-                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
-                        </group>
-                   </page>
-                   <page string="Marketing Data">
-                        <group col="4" colspan="4">
-                            <field name="lead_source" />
-                            <field name="level_of_lead"/>
-                            <field name="qualified" />
-                            <field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}"/>
-                            <field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}"/>
-                            <field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}"/>
-                            <field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}"/>
-                        </group>
-                        <field name="see_lead_marketing_note" invisible="1" />
-                        <separator string="Appointments" colspan="4"/>
-                        <field name="appointment_ids" mode="tree" nolabel="1" colspan="4"/>
-                        <label for="marketing_note"/>
-                        <field name="marketing_note" colspan="4" />
-                        <button name="view_lead_marketing_notes" string="Viewing This Tab Notes" type="object" class="oe_link"/>
-                        <group>
-                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link"/>
-                        </group>
-                    </page>
-                    <page string="Accounting Data">
-                        <group col="4" colspan="4">
-                            <field name="type_of_sale" />
-                            <field name="deadline" />
-                            <field name="deposit" />
-                            <field name="federal_tax" />
-                            <field name="property_tax" />
-                            <field name="mortgage" />
-                            <field name="bankruptcy" />
-                            <field name="rate_credit" />
-                        </group>
-                        <field name="see_lead_accounting_note" invisible="1" />
-                        <label for="accounting_note"/>
-                        <field name="accounting_note" colspan="4" />
-                        <button name="view_lead_accounting_notes" string="Viewing This Tab Notes" type="object" class="oe_link" />
-                        <newline/>
-                        <group>
-                        <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link" />
-                        </group>
-                    </page>
-                    <page string="System Data">
-                        <group col="4" colspan="4">
-                             <field name="type_of_module" />
-                             <field name="inverter" />
-                             <field name="main_ele_serviece_panel" />
-                        </group>
-                        <field name="see_lead_system_note" invisible="1" />
-                        <label for="system_note"/>
-                        <field name="system_note" colspan="4" />
-                        <button name="view_lead_system_notes" string="Viewing This Tab Notes" type="object" class="oe_link" colspan="4"/>
-                        <group>
-                              <button name="view_lead_all_tab_notes" string="Viewing All Tab Notes" type="object" class="oe_link" colspan="4"/>
-                        </group>
-                    </page>
-                    <page string="Attachments">
-                        <field name="attachment_ids" nolabel="1" colspan="4"/>
-                    </page>
-                    <page string="Viewing Home Notes" attrs="{'invisible':[('see_lead_home_note','=',False)]}">
-                        <field name="crm_lead_home_note_ids" readonly="1" >
-                            <tree>
-                                <field name="home_user_id" />
-                                <field name="date" />
-                                <field name="notes" />
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="home_user_id" />
-                                    <field name="date" />
-                                    <field name="notes" />
-                                </group>
-                            </form>
-                        </field>
-                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
-                    </page>
-                    <page string="Internal Notes">
-                            <field name="description"/>
-                        </page>
-                    <page string="Viewing Electricity Notes" attrs="{'invisible':[('see_lead_electricity_note','=',False)]}">
-                        <field name="crm_lead_electricity_note_ids" readonly="1" >
-                            <tree>
-                                <field name="electricity_user_id" />
-                                <field name="date" />
-                                <field name="notes" />
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="electricity_user_id" />
-                                    <field name="date" />
-                                    <field name="notes" />
-                                </group>
-                            </form>
-                        </field>
-                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
-                    </page>
-                    <page string="Viewing Marketing Notes" attrs="{'invisible':[('see_lead_marketing_note','=',False)]}">
-                        <field name="crm_lead_marketing_note_ids" readonly="1" >
-                            <tree>
-                                <field name="marketing_user_id" />
-                                <field name="date" />
-                                <field name="notes" />
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="marketing_user_id" />
-                                    <field name="date" />
-                                    <field name="notes" />
-                                </group>
-                            </form>
-                        </field>
-                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
-                    </page>
-                    <page string="Viewing Accounting Notes" attrs="{'invisible':[('see_lead_accounting_note','=',False)]}">
-                        <field name="crm_lead_accounting_note_ids" readonly="1" >
-                            <tree>
-                                <field name="accounting_user_id" />
-                                <field name="date" />
-                                <field name="notes" />
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="accounting_user_id" />
-                                    <field name="date" />
-                                    <field name="notes" />
-                                </group>
-                            </form>
-                        </field>
-                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
-                    </page>
-                    <page string="Viewing System Notes" attrs="{'invisible':[('see_lead_system_note','=',False)]}">
-                        <field name="crm_lead_system_note_ids" readonly="1" >
-                            <tree>
-                                <field name="system_user_id" />
-                                <field name="date" />
-                                <field name="notes" />
-                            </tree>
-                            <form>
-                                <group>
-                                    <field name="system_user_id" />
-                                    <field name="date" />
-                                    <field name="notes" />
-                                </group>
-                            </form>
-                        </field>
-                        <button name="exit_notes" string="Exit Notes" type="object" class="oe_link"/>
-                    </page>
-               </xpath>
-           </field>
         </record>
 
         <!-- Opportunities Form View -->
@@ -366,6 +381,28 @@
                   <label for="planned_revenue" position="attributes">
                        <attribute name="invisible">1</attribute>
                   </label>
+                  <xpath expr="//notebook/page/group/group/field[@name='partner_name']" position="after">
+                      <field name="middle_name" placeholder="Middle Name" />
+                      <field name="last_name" placeholder="Last Name" />
+                  </xpath>
+                  <field name="country_id" position="after">
+                        <field name="auto_zip" placeholder="Auto-Zipcode" readonly="1"/>
+                  </field>
+                  <xpath expr="//notebook/page/group/group/field[@name='fax']" position="after">
+                      <field name="property"/>
+                  </xpath>
+                  <xpath expr="//field[@name='street']" position="attributes">
+                      <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	              </xpath>
+	              <xpath expr="//field[@name='street2']" position="attributes">
+	                  <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	              </xpath>
+	              <xpath expr="//field[@name='city']" position="attributes">
+	                    <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	              </xpath>
+	              <xpath expr="//field[@name='state_id']" position="attributes">
+	                    <attribute name="on_change">on_change_address(street,street2,city,state_id)</attribute>
+	              </xpath>
                   <xpath expr="//notebook/page[@string='Lead']" position="after">
                         <page string="Home Info">
                              <group col="4" colspan="4">
@@ -393,12 +430,9 @@
                              <group col="4" colspan="4">
                                   <field name="roof_type"/>
                                   <field name="estimate_shade"/>
-                                  <field name="tilt_azimuth" colspan="4">
-                                       <tree string="Tilt and Azimuth" editable="bottom">
-                                             <field name = "tilt"/>
-                                             <field name = "azimuth"/>
-                                       </tree>
-                                  </field>
+                                  <field name="loc_station_id" required="1"/><newline/>
+                                  <field name="tilt_degree" required="1"/><newline/>
+                                  <field name="faceing" required="1"/>
                                   <group col="10" colspan="10">
                                         <field name="age_house_year"/>
                                         <span class="oe_grey"> Year </span><newline/>
@@ -468,9 +502,201 @@
                       <page string="Attachments">
                            <field name="attachment_ids" nolabel="1" colspan="4"/>
                       </page>
+                      <page string="Solar">
+                          <separator string="Solar Information"/>
+                              <field name="solar_ids" colspan="4" nolabel="1">
+                                    <tree string="Solar Tree" editable="top">
+                                       <field name="module_product_id"/>
+                                       <field name="inverter_product_id"/>
+                                       <field name="num_of_module"/>
+                                       <field name="num_of_invertor"/>
+                                       <field name="num_of_arrays"/>
+                                       <field name="co2_offset_tons"/>
+		                               <field name="co2_offset_pounds"/>
+		                               <field name="cars_off_roads"/>
+		                               <field name="gasoline_equi"/>
+		                               <field name="tree_equi"/>
+		                               <field name="tree_planting_equi"/>
+		                               <field name="ave_home_powered"/>
+		                               <field name="ave_light_bulb_powered"/>
+		                               <field name="stc_dc_rating" />
+		                          	   <field name="ptc_dc_rating" />
+		                          	   <field name="cec_ac_rating" />
+		                               <field name="ptc_stc_ratio" />
+		                               <field name="annual_solar_prod"/>
+		                               <field name="annual_ele_usage"/>
+		                               <field name="site_avg_sun_hour"/>
+                                    </tree>
+                              </field>
+                                    
+                          <group col="4" colspan="4">
+		                          <group col="2" colspan="2" string="Calculation Field">
+			                          	<field name="stc_dc_rating" />
+			                          	<field name="ptc_dc_rating" />
+			                          	<field name="cec_ac_rating" />
+			                            <field name="ptc_stc_ratio" />
+			                            <field name="annual_solar_prod"/>
+			                            <field name="annual_ele_usage"/>
+			                            <field name="site_avg_sun_hour"/>
+		                          </group>
+		                          
+			                      <group col="2" colspan="2" string="Cleaner and Greener Environment">
+			                              <field name="co2_offset_tons"/>
+			                              <field name="co2_offset_pounds"/>
+			                              <field name="cars_off_roads"/>
+			                              <field name="gasoline_equi"/>
+			                              <field name="tree_equi"/>
+			                              <field name="tree_planting_equi"/>
+			                              <field name="ave_home_powered"/>
+			                              <field name="ave_light_bulb_powered"/>
+		                          </group>
+                         </group>
+                      </page>
+					  <page string="Cleaner and Greener Environment">
+                          <group col="2" colspan="4">
+                              <separator colspan="4" string="Equivalencies and Value Factors"/>
+                              <field name="avg_co2_ele"/>
+                              <field name="annual_equvi_tree"/>
+                              <field name="years_40_offset_tree"/>
+                              <field name="medium_pollusion"/>
+                              <field name="avg_yearly_miles"/>
+                              <field name="annnual_co2_car"/>
+                              <field name="annual_home_ele"/>
+                              <field name="avg_light_bulb"/>
+                              <field name="avg_comp"/>
+                              <field name="emmision_gas"/>
+                          </group>
+                      </page>
+                      
+                      <page string="Solar PV Economics">
+                          <group col="4" colspan="4">
+	                          <separator colspan="4" string="Economics Details"/>
+	                            <field name="loan_interest_rate"/>
+	                            <field name="loan_period"/>
+	                            <field name="down_payment"/>
+	                            <field name="number_of_years"/>
+	                            <field name="pv_kw_decline"/>
+	                            <field name="replace_inverter_every"/>
+	                            <field name="grid_energy_rate"/>
+	                            <field name="grid_rate_increase_by"/>
+	                            <field name="rebate"/>
+	                            <field name="pbi - epbb_incentives"/>
+	                            <field name="fedral_tax"/>
+	                            <field name="srec"/>
+	                            <field name="sales_tax"/>
+	                         </group>
+                      </page>
+                      <page string="Annual Electricity Usage">
+                          <group col="4" colspan="4">
+                              <separator colspan="4" string="Annual Electricity Usage"/>
+                              <field name = "anual_electricity_usage_ids" nolabel="1">
+                                  <form>
+                                      <field name="name"/>
+                                      <field name="jan" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="feb" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="mar" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name='apr' on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="may" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="jun" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="jul" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="aug" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="sep" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="oct" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="nov" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="dec" on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)"/>
+                                      <field name="usage_kwh"/>
+                                  </form>
+                                  <tree>
+                                      <field name="name"/>
+                                      <field name="usage_kwh"/>
+                                  </tree>
+                              </field>
+                          </group>
+                      </page>
                  </xpath>
              </field>
         </record>
+        
+		<!-- Solar Search View  -->
+        <record model="ir.ui.view" id="solar_search">
+            <field name="name">solar_Search</field>
+            <field name="model">solar.solar</field>
+            <field name="arch" type="xml">
+               <search string="Solar Search">
+                   <field name="module_product_id"/>
+                   <field name="inverter_product_id"/>
+                   <field name="num_of_invertor"/>
+                   <field name="num_of_arrays"/>
+                   <field name="co2_offset_tons"/>
+                   <field name="co2_offset_pounds"/>
+                   <field name="cars_off_roads"/>
+                   <field name="gasoline_equi"/>
+                   <field name="tree_equi"/>
+                   <field name="tree_planting_equi"/>
+                   <field name="ave_home_powered"/>
+                   <field name="ave_light_bulb_powered"/>
+              </search>
+            </field>
+        </record>
+
+        <!-- Solar Form View  -->
+        <record model="ir.ui.view" id="solar_form">
+            <field name="name">solar_Form</field>
+            <field name="model">solar.solar</field>
+            <field name="arch" type="xml">
+               <form string="Solar Form" version="7.0">
+                  <sheet>
+                      <group col="4" colspan="4">
+                           <field name="module_product_id"/>
+		                   <field name="inverter_product_id"/>
+		                   <field name="num_of_invertor"/>
+		                   <field name="num_of_arrays"/>
+		                   <field name="co2_offset_tons"/>
+                           <field name="co2_offset_pounds"/>
+                           <field name="cars_off_roads"/>
+                           <field name="gasoline_equi"/>
+                           <field name="tree_equi"/>
+                           <field name="tree_planting_equi"/>
+                           <field name="ave_home_powered"/>
+                           <field name="ave_light_bulb_powered"/>
+                      </group>
+                 </sheet>
+              </form>
+           </field>
+        </record>
+
+        <!-- Solar Tree View  -->
+        <record model="ir.ui.view" id="Solar_tree">
+        <field name="name">solar_Tree</field>
+        <field name="model">solar.solar</field>
+        <field name="arch" type="xml">
+            <tree string="Solar Tree">
+                   <field name="module_product_id"/>
+                   <field name="inverter_product_id"/>
+                   <field name="num_of_invertor"/>
+                   <field name="num_of_arrays"/>
+                   <field name="co2_offset_tons"/>
+                   <field name="co2_offset_pounds"/>
+                   <field name="cars_off_roads"/>
+                   <field name="gasoline_equi"/>
+                   <field name="tree_equi"/>
+                   <field name="tree_planting_equi"/>
+                   <field name="ave_home_powered"/>
+                   <field name="ave_light_bulb_powered"/>
+            </tree>
+        </field>
+        </record>
+
+        <!-- Solar -->
+        <record id="action_solar" model="ir.actions.act_window">
+             <field name="name">Solar</field>
+             <field name="res_model">solar.solar</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_solar" id="menu_solar" parent="base.menu_crm_config_lead" 
+					string="Solar"  sequence="10"/>
 
         <!-- Company Quotation Search View  -->
         <record model="ir.ui.view" id="company_quotation_search">
@@ -528,27 +754,27 @@
 					string="Company Quotation"  sequence="11"/>
 
         <!--tilt and azimuth Search View  -->
-        <record model="ir.ui.view" id="tilt_azimuth_search">
-            <field name="name">tilt_azimuth_Search</field>
-            <field name="model">tilt.azimuth</field>
+        <record model="ir.ui.view" id="roof_type_search">
+            <field name="name">roof_type_Search</field>
+            <field name="model">roof.type</field>
             <field name="arch" type="xml">
-                <search string="Tilt and Azimuth Search">
-                    <field name = "tilt"/>
-                    <field name = "azimuth"/>
+                <search string="Type of Roof Search">
+                    <field name = "name"/>
+                    <field name = "description"/>
                 </search>
             </field>
         </record>
 
         <!-- tilt and azimuthe Form View  -->
-        <record model="ir.ui.view" id="tilt_azimuth_form">
-             <field name="name">tilt_azimuth__Form</field>
-             <field name="model">tilt.azimuth</field>
+        <record model="ir.ui.view" id="roof_type_form">
+             <field name="name">roof_type_Form</field>
+             <field name="model">roof.type</field>
              <field name="arch" type="xml">
-                 <form string="Tilt and Azimuth Form" version="7.0">
+                 <form string="Type of Roof Form" version="7.0">
                       <sheet>
                             <group col="4" colspan="4">
-                                <field name = "tilt"/><newline/>
-                                <field name = "azimuth"/>
+                                <field name = "name"/><newline/>
+                                <field name = "description"/>
                             </group>
                      </sheet>
                 </form>
@@ -556,27 +782,27 @@
         </record>
 
         <!-- tilt and azimuth Tree View  -->
-        <record model="ir.ui.view" id="tilt_azimuth_tree">
-              <field name="name">heat_home_Tree</field>
-              <field name="model">tilt.azimuth</field>
+        <record model="ir.ui.view" id="roof_type_tree">
+              <field name="name">roof_type_Tree</field>
+              <field name="model">roof.type</field>
               <field name="arch" type="xml">
-                    <tree string="Tilt and Azimuth">
-                        <field name = "tilt"/>
-                        <field name = "azimuth"/>
+                    <tree string="Type of Roof">
+                        <field name = "name"/>
+                        <field name = "description"/>
                     </tree>
               </field>
         </record>
 
         <!-- tilt and azimuth -->
-        <record id="action_tilt_azimuth" model="ir.actions.act_window">
-            <field name="name">Tilt and Azimuth</field>
-            <field name="res_model">tilt.azimuth</field>
+        <record id="action_roof_type" model="ir.actions.act_window">
+            <field name="name">Type of Roof</field>
+            <field name="res_model">roof.type</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem action="action_tilt_azimuth" id="menu_tilt_azimuth" parent="base.menu_crm_config_lead" 
-					string="Tilt and Azimuth" sequence="13"/>
+        <menuitem action="action_roof_type" id="menu_roof_type" parent="base.menu_crm_config_lead" 
+					string="Type of Roof" sequence="12"/>
 
         <!--Required Documents Search View  -->
         <record model="ir.ui.view" id="req_doc_search">
@@ -627,8 +853,7 @@
         </record>
 
         <menuitem action="action_req_doc" id="menu_req_doc" parent="base.menu_crm_config_lead" 
-					string="Required Documents" sequence="14"/>
-
+					string="Required Documents" sequence="15" />
 
         <!-- Level Lead Search View  -->
         <record model="ir.ui.view" id="level_lead_search">
@@ -681,7 +906,7 @@
         </record>
 
         <menuitem action="action_level_lead" id="menu_level_lead" parent="base.menu_crm_config_lead" 
-					string="Level of Lead" sequence="12"/>
+					string="Level of Lead" sequence="13" />
 
         <!-- Customer Information Form View -->
         <record model="ir.ui.view" id="view_customer_form">
