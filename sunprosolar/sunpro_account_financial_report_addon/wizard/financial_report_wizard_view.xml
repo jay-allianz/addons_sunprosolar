@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="wizard_report_view_inherit_YTD" model="ir.ui.view">
+            <field name="name">YTD Financial Reports</field>
+            <field name="model">wizard.report</field>
+            <field name="inherit_id" ref="sunpro_account_financial_report.wizard_report_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='inf_type']" position="replace">
+                    <field name="inf_type"/>
+                </xpath>
+                <separator string="Ending Total" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </separator>
+                <field name="tot_check" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="lab_str" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//field[@name='analytic_ledger']" position="attributes">
+                    <attribute name="string">General Ledger</attribute>
+                </xpath>
+                <xpath expr="//group[@col='2']" position="replace">
+                    <group colspan="4" col="4">
+                        <button type='special' special='cancel' string='_Cancel' icon='gtk-cancel'/>
+                        <button name="print_report" string="Print in PDF Format" type="object" icon='gtk-print' invisible="1"/>
+                        <button name="print_report_aeroo" string="Print" type="object" icon='gtk-print'/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="wizard_periodic_financial_report_view_inherit" model="ir.ui.view">
+            <field name="name">Periodic Financial Reports</field>
+            <field name="model">wizard.report</field>
+            <field name="inherit_id" ref="sunpro_account_financial_report.wizard_periodic_financial_report_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='analytic_ledger']" position="attributes">
+                    <attribute name="string">General Ledger</attribute>
+                </xpath>
+                <xpath expr="//field[@name='analytic_ledger']" position="after">
+                    <newline/>
+<!--                    <field name="show_earning" invisible="1"/>-->
+<!--                    <field name="earning_account" domain="[('type', '!=', 'view')]" invisible="1"/>-->
+                </xpath>
+                <separator string="Ending Total" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </separator>
+                <field name="tot_check" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="lab_str" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//button[@name='periodic_print_report']" position="attributes">
+                    <attribute name="string">Print in PDF Format</attribute>
+                </xpath>
+                <button name="periodic_print_report" position="after">
+                    <button name="periodic_print_report_aeroo" string="Print" type="object" icon='gtk-print'/>
+                </button>
+                <xpath expr="//button[@name='periodic_print_report']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

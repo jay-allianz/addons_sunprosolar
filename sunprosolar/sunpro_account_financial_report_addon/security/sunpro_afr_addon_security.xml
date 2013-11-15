@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="sunpro_afr_user_report_templates_rule" model="ir.rule">
+            <field name="name">Report Templates</field>
+            <field model="ir.model" name="model_id" ref="sunpro_account_financial_report.model_afr"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+        </record>
+    </data>
+</openerp>

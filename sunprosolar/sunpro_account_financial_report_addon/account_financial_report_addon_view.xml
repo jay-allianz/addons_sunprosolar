@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="sunpro_report_templates_tree_view_inherit">
+            <field name="name">sunpro.report.templates.tree.view.inherit</field>
+            <field name="model">afr</field>
+            <field name="inherit_id" ref="sunpro_account_financial_report.account_financial_report_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[@name='display_account']" position="after">
+                    <field name="user_id" />
+                </xpath>
+                <xpath expr="//field[@name='inf_type']" position="replace">
+                    <field name="inf_type" />
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="account_financial_report_view_inherit">
+            <field name="name">sunpro.report.templates.form.view.inherit</field>
+            <field name="model">afr</field>
+            <field name="inherit_id" ref="sunpro_account_financial_report.account_financial_report_view" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group[4]/group/field[@name='account_ids']" position="attributes">
+                    <attribute name="domain">[('company_id','=',company_id)]</attribute>
+                </xpath>
+                <xpath expr="//separator[@string=' Ending Total']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tot_check']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lab_str']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="wizard_report_view_inherit">
+            <field name="name">wizard.report.view.inherit</field>
+            <field name="model">wizard.report</field>
+            <field name="inherit_id" ref="sunpro_account_financial_report.wizard_report_view" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/group[3]/group/field[@name='account_list']" position="attributes">
+                    <attribute name="domain">[('company_id','=',company_id)]</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

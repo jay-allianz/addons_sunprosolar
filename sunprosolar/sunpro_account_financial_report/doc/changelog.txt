@@ -1,0 +1,9 @@
+==================================================================================
+ Version ChangeLog (sunpro_account_financial_report)
+==================================================================================
+0.2  --> 10 october  2013 : 
+    *Improvements in Report wizard view.
+
+0.1  --> 9 october  2013 : 
+    *Created module sunpro_account_financial_report for account financial report.
+

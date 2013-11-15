@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="wizard_periodic_financial_report_view" model="ir.ui.view">
+            <field name="name">Periodic Financial Reports</field>
+            <field name="model">wizard.report</field>
+            <field name="arch" type="xml">
+            <form string="Print Periodic Financial Report" version="7.0">
+                <group colspan="4" col="4">
+                    <group colspan="2">
+                        <separator string="Company" colspan="2"/>
+                        <field name="company_id" on_change='onchange_company_id(company_id)' colspan="2"/>
+                        <field name="currency_id" domain="[('company_id','=',company_id)]" attrs="{'readonly':[('analytic_ledger','=',True)]}" colspan="2"/>
+                    </group>
+                    <group colspan="2">
+                        <separator string="Report" colspan="2"/>
+                        <field name="afr_id"  on_change='onchange_afr_id(afr_id)'  colspan="2" string="Report Template"/>
+                        <field name="inf_type" colspan="2" on_change='onchange_inf_type(inf_type)'/>
+                        <field name="periodic_columns" colspan="2" /> <!-- on_change='onchange_columns(periodic_columns,fiscalyear, periods)' -->
+                        <field name="analytic_ledger" colspan="2" attrs="{'readonly':['|',('periodic_columns','!=','four'),('inf_type','!=','BS')],}" on_change='onchange_analytic_ledger(company_id,analytic_ledger)'/> 
+                    </group>
+                </group>
+                <group colspan='4' col="4">
+                        <separator string="Accounts Parameters" colspan="4"/>
+                        <field name="display_account" required="True" colspan="4"/>
+                        <field name="display_account_level" required="True" colspan="4"/>
+                </group>
+                <notebook colspan="4">
+                    <page string="General">
+	                    <group colspan="1">
+	                        <separator string="Accounts to Include" colspan="4"/>
+	                        <field name="account_list" nolabel="1" colspan="4" domain="[('company_id','=',company_id)]">
+	                            <tree>
+	                                <field name='code'/>
+	                                <field name='name'/>
+	                                <field name='type'/>
+	                                <field name='level'/>
+	                            </tree>
+	                        </field>
+	                    </group>
+<!--	                     <group colspan="1">-->
+<!--	                        <separator string="Periods to Include" colspan="4"/>-->
+<!--	                        <field -->
+<!--	                            name="periods" -->
+<!--	                            colspan="4" -->
+<!--	                            nolabel="1" -->
+<!--	                            domain="[('fiscalyear_id','=',fiscalyear),('special','=',False),('company_id','=',company_id)]"-->
+<!--	                             >-->
+<!--	                        -->
+<!--	                            <tree>-->
+<!--	                                <field name='code'/>-->
+<!--	                                <field name='name'/>-->
+<!--	                                <field name='state'/>-->
+<!--	                            </tree>-->
+<!--	                        </field>-->
+<!--	                    </group> -->
+                    <newline/>
+                    </page>
+                    <page string="Filters">
+                        <notebook>
+                        <page string="Filters">
+                            <group colspan="4" col="4">
+                            <field name="filter" colspan="4"/>
+                            <field name="fiscalyear" colspan="4" domain="[('id','!=',compr0_fiscalyear_id),('id','!=' , compr1_fiscalyear_id)]"/>
+                            <separator string="Dates" colspan="4"/>
+                            <field name="date_from" colspan="4" on_change='onchange_date_from(date_from , fiscalyear)' 
+                                   attrs="{'readonly':[('filter','=','byperiod')],'required':['|',('filter','=','bydate'),('filter','=','all')],'invisible':['|',('filter','=','none'),('filter','=',False)]}" />
+                            <field name="date_to" colspan="4" on_change='onchange_date_to(date_to , fiscalyear)' 
+                                   attrs="{'readonly':[('filter','=','byperiod')],'required':['|',('filter','=','bydate'),('filter','=','all')],'invisible':['|',('filter','=','none'),('filter','=',False)]}" />
+                            <separator string="Periods" colspan="4"/>
+                            <field name="org_periods_from" colspan="4" domain="[('fiscalyear_id','=',fiscalyear)]" 
+                                    attrs="{'readonly':[('filter','=','bydate')],'required':['|',('filter','=','byperiod'),('filter','=','all')],'invisible':['|',('filter','=','none'),('filter','=',False)]}"
+                                    on_change='onchange_org_periods_from( filter,org_periods_from)'/>
+                            <field name="org_periods_to" colspan="4" domain="[('fiscalyear_id','=',fiscalyear), ('special','=',False)]" 
+                                    attrs="{'readonly':[('filter','=','bydate')],'required':['|',('filter','=','byperiod'),('filter','=','all')],'invisible':['|',('filter','=','none'),('filter','=',False)]}"
+                                    on_change='onchange_org_periods_to( filter,org_periods_to)' />
+                            </group>
+                        </page>
+                        <page string="Comparison 1" attrs="{'invisible':[('afr_id','=',False)]}">
+                             <group colspan="4" col="4">
+                            <field name="compr0_filter" colspan="4"/>
+                            <field name="compr0_fiscalyear_id" colspan="4" domain="[('id','!=',fiscalyear),('id','!=',compr1_fiscalyear_id)]" /> 
+                            <separator string="Dates" colspan="4"/>
+                            <field name="compr0_date_from" colspan="4" attrs="{'readonly':[('compr0_filter','=','byperiod')],'required':['|',('compr0_filter','=','bydate'),('compr0_filter','=','all')],'invisible':['|',('compr0_filter','=','none'),('compr0_filter','=',False)]}"
+                              on_change='onchange_compr0_date_from(compr0_date_from , compr0_fiscalyear_id)' />
+                            <field name="compr0_date_to" colspan="4" attrs="{'readonly':[('compr0_filter','=','byperiod')],'required':['|',('compr0_filter','=','bydate'),('compr0_filter','=','all')],'invisible':['|',('compr0_filter','=','none'),('compr0_filter','=',False)]}"
+                            on_change='onchange_compr0_date_to(compr0_date_to, compr0_fiscalyear_id)' /> 
+                            <separator string="Periods" colspan="4"/>
+                            <field name="compr0_periods_from" colspan="4" 
+                                    domain="[('fiscalyear_id','=',compr0_fiscalyear_id)]" 
+                                    attrs="{'readonly':[('compr0_filter','=','bydate')],'required':['|',('compr0_filter','=','byperiod'),('compr0_filter','=','all')],'invisible':['|',('compr0_filter','=','none'),('compr0_filter','=',False)]}"
+                                    on_change='onchange_compr0_periods_from( compr0_filter,compr0_periods_from)' />
+                            <field name="compr0_periods_to" colspan="4" 
+                                    domain="[('fiscalyear_id','=',compr0_fiscalyear_id), ('special','=',False)]" 
+                                    attrs="{'readonly':[('compr0_filter','=','bydate')],'required':['|',('compr0_filter','=','byperiod'),('compr0_filter','=','all')],'invisible':['|',('compr0_filter','=','none'),('compr0_filter','=',False)]}"
+                                    on_change='onchange_compr0_periods_to(compr0_filter,compr0_periods_to)' />
+                            </group>
+                        </page>
+                        <page string="Comparison 2" attrs="{'invisible':[('afr_id','=',False)]}">
+                            <group colspan="4" col="4">
+                            <field name="compr1_filter" colspan="4"/>
+                            <field name="compr1_fiscalyear_id" colspan="4" domain="[('id','!=',fiscalyear),('id','!=',compr0_fiscalyear_id)]"/>
+                            <separator string="Dates" colspan="4"/>
+                            <field name="compr1_date_from" colspan="4" attrs="{'readonly':[('compr1_filter','=','byperiod')],'required':['|',('compr1_filter','=','bydate'),('compr1_filter','=','all')],'invisible':['|',('compr1_filter','=','none'),('compr1_filter','=',False)]}"
+                                    on_change='onchange_compr1_date_from(compr1_date_from , compr1_fiscalyear_id)'/>
+                            <field name="compr1_date_to" colspan="4" attrs="{'readonly':[('compr1_filter','=','byperiod')],'required':['|',('compr1_filter','=','bydate'),('compr1_filter','=','all')],'invisible':['|',('compr1_filter','=','none'),('compr1_filter','=',False)]}"
+                                    on_change='onchange_compr1_date_to(compr1_date_to, compr1_fiscalyear_id)'/>
+                            <separator string="Periods" colspan="4"/>
+                            <field name="compr1_periods_from" colspan="4" 
+                                    domain="[('fiscalyear_id','=',compr1_fiscalyear_id)]" 
+                                    attrs="{'readonly':[('compr1_filter','=','bydate')],'required':['|',('compr1_filter','=','byperiod'),('compr1_filter','=','all')],'invisible':['|',('compr1_filter','=','none'),('compr1_filter','=',False)]}"
+                                    on_change='onchange_compr1_periods_from( compr1_filter,compr1_periods_from)'/>
+                            <field name="compr1_periods_to" colspan="4" 
+                                    domain="[('fiscalyear_id','=',compr1_fiscalyear_id), ('special','=',False)]" 
+                                    attrs="{'readonly':[('compr1_filter','=','bydate')],'required':['|',('compr1_filter','=','byperiod'),('compr1_filter','=','all')],'invisible':['|',('compr1_filter','=','none'),('compr1_filter','=',False)]}"
+                                    on_change='onchange_compr1_periods_to(compr1_filter,compr1_periods_to)'/>
+                            </group>
+                        </page>
+                        </notebook>
+                    </page>
+                </notebook >
+                <separator string="Ending Total" colspan="4"/>
+                <field name="tot_check" colspan="4" string="Ending Total For Financial Statements?"/>
+                <field name="lab_str" colspan="4" string="Description For Ending Total" attrs="{'required':[('tot_check','=',True)], 'readonly':[('tot_check','=',False)],}" />
+                <group colspan='4' col='4'>
+                    <group colspan="2">
+                        <footer>
+                        <separator string="" colspan="4"/>
+                        <button type='special' special='cancel' string='_Cancel' icon='gtk-cancel'/>
+                        <button name="periodic_print_report" string="Print" type="object" icon='gtk-print'/>
+                        </footer>
+                    </group>
+                </group>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_periodic_financial_wizard_report" model="ir.actions.act_window">
+            <field name="name">Print Periodic Financial Reports</field>
+            <field name="res_model">wizard.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_periodic_financial_report_view"/>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem 
+            id="menu_periodic_financial_wizard_report"
+            name="Periodic Financial Reports"
+            parent="account.final_accounting_reports"
+            sequence="103"
+            groups="sunpro_account_financial_report.group_afreport"
+            action="action_periodic_financial_wizard_report"/> 
+    </data>
+</openerp>

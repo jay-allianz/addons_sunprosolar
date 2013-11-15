@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <!-- Periodic Report for Single Columns -->
+        <record id="periodic_col_report_aeroo" model="ir.actions.report.xml">
+            <field name="name">Periodic 1 Columna Balance Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">periodic1.1cols.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/periodic_financial_report.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="vperiodic_col_report_menu" model="ir.values">
+            <field name="name">Periodic 1 Columna Balance Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(periodic_col_report_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- YTD Report for Single Columns -->
+        
+        <record id="balance_full_report_aeroo" model="ir.actions.report.xml">
+            <field name="name">Balance Full Report Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">balance.full.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/balance_full_report.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="balance_full_report_menu" model="ir.values">
+            <field name="name">Balance Full Report Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(balance_full_report_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- YTD Report for Credit/Debit Columns -->
+        
+        <record id="balance_full_two_report_aeroo" model="ir.actions.report.xml">
+            <field name="name">Balance Credit/Debit Report Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">balance.full.two.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/balance_full_two_report.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="balance_full_two_report_menu" model="ir.values">
+            <field name="name">Balance Credit/Debit Report Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(balance_full_two_report_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- Periodic Report for Credit/Debit Columns -->
+        
+        <record id="periodic_two_report_aeroo" model="ir.actions.report.xml">
+            <field name="name">Periodic Credit/Debit Report Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">periodic.two.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/periodic_two_report.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="periodic_two_report_menu" model="ir.values">
+            <field name="name">Periodic Credit/Debit Report Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(periodic_two_report_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- Periodic Report for Comparison of 2 Fiscal Years -->
+        
+        <record id="periodic_financial_report_2_aeroo" model="ir.actions.report.xml">
+            <field name="name">Comparision Report Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">periodic.financial.report.two.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/periodic_financial_report_2.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="periodic_financial_report_2_menu" model="ir.values">
+            <field name="name">Comparision Report Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(periodic_financial_report_2_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- Periodic Report for Comparison of 3 Fiscal Years -->
+        
+        <record id="periodic_financial_report_3_aeroo" model="ir.actions.report.xml">
+            <field name="name">Comparision Report 3 Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">periodic.financial.report.three.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/periodic_financial_report_3.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="periodic_financial_report_3_menu" model="ir.values">
+            <field name="name">Comparision Report 3 Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(periodic_financial_report_3_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- YTD Report for 4 QTR Columns -->
+        
+        <record id="balance_qtr_report_aeroo" model="ir.actions.report.xml">
+            <field name="name">4th QTR Report Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">balance.qtr.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/balance_qtr_report.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="balance_qtr_report_menu" model="ir.values">
+            <field name="name">4th QTR Report Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(balance_qtr_report_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- YTD Report for 13 Columns -->
+        
+        <record id="balance_monthly_report_aeroo" model="ir.actions.report.xml">
+            <field name="name">Monthly Report Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">balance.monthly.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/balance_monthly_report.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="balance_monthly_report_menu" model="ir.values">
+            <field name="name">Monthly Report Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(balance_monthly_report_aeroo)" name="value_unpickle" />
+        </record>
+        
+        <!-- Analytic Ledger Report -->
+        
+        <record id="analytic_ledger_report_aeroo" model="ir.actions.report.xml">
+            <field name="name">Analytic Ledger Report Excel</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">wizard.report</field>
+            <field name="report_name">analytic.ledger.aeroo</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-ods</field>
+            <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>
+            <field name="content_fname">xls</field>
+            <field name="parser_loc">sunpro_account_financial_report_addon/report/financial_report_aeroo.py</field>
+            <field name="report_rml">sunpro_account_financial_report_addon/report/analytic_ledger_report.ods</field>
+            <field name="parser_state">loc</field>
+            <field name="tml_source">file</field>
+        </record>
+    
+        <record id="analytic_ledger_report_menu" model="ir.values">
+            <field name="name">Analytic Ledger Report Excel</field>
+            <field name="model">wizard.report</field>
+            <field eval="'client_print_multi'" name="key2" />
+            <field eval="'ir.actions.report.xml,' +str(analytic_ledger_report_aeroo)" name="value_unpickle" />
+        </record>
+        
+    </data>
+</openerp>

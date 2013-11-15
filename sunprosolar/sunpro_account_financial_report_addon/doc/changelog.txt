@@ -1,0 +1,8 @@
+==================================================================================
+ Version ChangeLog (sunpro_account_financial_report_addon)
+==================================================================================
+0.2  --> 10 october  2013 : 
+    *Improvements in code for make financial report compatible with any chart of account .
+    
+0.1  --> 9 october  2013 : 
+    *Created module sunpro_account_financial_report_addon for account financial report.
