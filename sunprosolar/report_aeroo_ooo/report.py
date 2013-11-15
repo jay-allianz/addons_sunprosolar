@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2008-2011 Alistek Ltd (http://www.alistek.com) All Rights Reserved.
+# Copyright (c) 2008-2012 Alistek Ltd (http://www.alistek.com) All Rights Reserved.
 #                    General contacts <info@alistek.com>
 #
 # WARNING: This program as such is intended to be used by professional
@@ -55,7 +55,6 @@ class oo_config(osv.osv):
         
     }
 
-oo_config()
 
 class report_xml(osv.osv):
     _name = 'ir.actions.report.xml'
@@ -65,6 +64,4 @@ class report_xml(osv.osv):
         'process_sep':fields.boolean('Process separately'),
         
     }
-
-report_xml()
 

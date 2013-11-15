@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2008-2011 Alistek Ltd (http://www.alistek.com) All Rights Reserved.
+# Copyright (c) 2008-2012 Alistek Ltd (http://www.alistek.com) All Rights Reserved.
 #                    General contacts <info@alistek.com>
 #
 # WARNING: This program as such is intended to be used by professional
@@ -91,7 +91,7 @@ class aeroo_config_installer(osv.osv_memory):
 
     def check(self, cr, uid, ids, context=None):
         config_obj = self.pool.get('oo.config')
-        data = self.read(cr, uid, ids)[0]
+        data = self.read(cr, uid, ids, ['host','port'])[0]
         del data['id']
         config_id = config_obj.search(cr, 1, [], context=context)
         if config_id:
@@ -124,7 +124,15 @@ class aeroo_config_installer(osv.osv_memory):
             msg = _('Connection to OpenOffice.org instance was not established or convertion to PDF unsuccessful!')
         else:
             msg = _('Connection to the OpenOffice.org instance was successfully established and PDF convertion is working.')
-        return self.write(cr, uid, ids, {'msg':msg,'error_details':error_details,'state':state})
+        self.write(cr, uid, ids, {'msg':msg,'error_details':error_details,'state':state})
+
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+        result = mod_obj.get_object_reference(cr, uid, 'report_aeroo_ooo', 'action_aeroo_config_wizard')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, id, context=context)
+        result['res_id'] = ids[0]
+        return result
 
     _defaults = {
         'config_logo': _get_image,
@@ -133,6 +141,4 @@ class aeroo_config_installer(osv.osv_memory):
         'state':'init',
         'link':'http://www.alistek.com/wiki/index.php/Aeroo_Reports_Linux_server#Installation_.28Dependencies_and_Base_system_setup.29',
     }
-
-aeroo_config_installer()
 

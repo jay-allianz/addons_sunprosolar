@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2008-2011 Alistek Ltd (http://www.alistek.com) All Rights Reserved.
+# Copyright (c) 2008-2012 Alistek Ltd (http://www.alistek.com) All Rights Reserved.
 #                    General contacts <info@alistek.com>
 #
 # WARNING: This program as such is intended to be used by professional
@@ -60,6 +60,4 @@ class report_print_by_action(osv.osv_memory):
     _defaults = {
         'name': _get_model,
     }
-
-report_print_by_action()
 

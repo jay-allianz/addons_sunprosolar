@@ -7,7 +7,7 @@
 #
 # Copyright (C) 2008 Mirko Nasato <mirko@artofsolving.com>
 #                    Matthew Holloway <matthew@holloway.co.nz>
-#                    Alistek Ltd (www.alistek.com) 
+#                    Alistek Ltd. (www.alistek.com) 
 # Licensed under the GNU LGPL v2.1 - http://www.gnu.org/licenses/lgpl-2.1.html
 # - or any later version.
 #
@@ -205,5 +205,6 @@ class DocumentConverter:
             prop.Name = key
             prop.Value = args[key]
             props.append(prop)
+        print "tuple(props)", tuple(props)
         return tuple(props)
 

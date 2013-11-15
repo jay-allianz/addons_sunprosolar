@@ -58,8 +58,12 @@ class report_print_actions(osv.osv_memory):
 
     def _out_format_get(self, cr, uid, context={}):
         obj = self.pool.get('report.mimetypes')
-        in_format = self.pool.get('ir.actions.report.xml').read(cr, uid, context['report_action_id'], ['in_format'])['in_format']
-        ids = obj.search(cr, uid, [('compatible_types','=',in_format)], context=context)
+        report_action_id = context.get('report_action_id')
+        if report_action_id:
+            in_format = self.pool.get('ir.actions.report.xml').read(cr, uid, report_action_id, ['in_format'])['in_format']
+            ids = obj.search(cr, uid, [('compatible_types','=',in_format)], context=context)
+        else:
+            ids = obj.search(cr, uid, [], context=context)
         res = obj.read(cr, uid, ids, ['name'], context)
         return [(r['id'], r['name']) for r in res]
     
@@ -81,5 +85,4 @@ class report_print_actions(osv.osv_memory):
         'out_format': _get_default_outformat,
         'copies': _get_default_number_of_copies,
     }
-report_print_actions()
 
