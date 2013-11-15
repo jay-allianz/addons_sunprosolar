@@ -21,7 +21,7 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
-class wizard_report(osv.TransientModel):
+class wizard_report(osv.osv_memory):
     _inherit = "wizard.report"
     _columns = {
         'show_earning': fields.boolean('Is this a Balance Sheet ?'),
@@ -41,6 +41,7 @@ class wizard_report(osv.TransientModel):
 
     def print_report(self, cr, uid, ids, data, context=None):
         res = super(wizard_report, self).print_report(cr, uid, ids, data, context=context)
+#        print "res:::::of print report:::",res
         if res['report_name'] == 'afr.1cols':
             res['report_name'] = 'afr.1cols.inherit'
         if res['report_name'] == 'afr.2cols':
@@ -59,6 +60,7 @@ class wizard_report(osv.TransientModel):
     
     def print_report_aeroo(self, cr, uid, ids, data, context=None):
         res = super(wizard_report, self).print_report(cr, uid, ids, data, context=context)
+        print "call meyhod????Aerrooo",res
         res['datas']['ids'] = [1]
         if res['report_name'] == 'afr.1cols':
             res['report_name'] = 'balance.full.aeroo'
@@ -125,4 +127,5 @@ class wizard_report(osv.TransientModel):
             res['report_name'] = 'periodic3.4cols.inherit'
         return res
 
+wizard_report()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

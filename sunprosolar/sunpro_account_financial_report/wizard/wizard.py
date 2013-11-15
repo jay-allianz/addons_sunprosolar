@@ -25,8 +25,7 @@ from openerp import pooler
 import time
 from openerp.tools.translate import _
 
-class wizard_report(osv.TransientModel):
-
+class wizard_report(osv.osv_memory):
     _name = "wizard.report"
 
     _columns = {
@@ -577,4 +576,5 @@ class wizard_report(osv.TransientModel):
             name = 'afr.13cols'
         return {'type': 'ir.actions.report.xml', 'report_name': name, 'datas': data}
 
+wizard_report()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

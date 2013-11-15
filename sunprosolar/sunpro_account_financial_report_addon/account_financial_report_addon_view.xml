@@ -5,6 +5,7 @@
             <field name="name">sunpro.report.templates.tree.view.inherit</field>
             <field name="model">afr</field>
             <field name="inherit_id" ref="sunpro_account_financial_report.account_financial_report_tree" />
+            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <xpath expr="/tree/field[@name='display_account']" position="after">
                     <field name="user_id" />
@@ -19,6 +20,7 @@
             <field name="name">sunpro.report.templates.form.view.inherit</field>
             <field name="model">afr</field>
             <field name="inherit_id" ref="sunpro_account_financial_report.account_financial_report_view" />
+            <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/sheet/group[4]/group/field[@name='account_ids']" position="attributes">
                     <attribute name="domain">[('company_id','=',company_id)]</attribute>
@@ -39,6 +41,7 @@
             <field name="name">wizard.report.view.inherit</field>
             <field name="model">wizard.report</field>
             <field name="inherit_id" ref="sunpro_account_financial_report.wizard_report_view" />
+            <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/group[3]/group/field[@name='account_list']" position="attributes">
                     <attribute name="domain">[('company_id','=',company_id)]</attribute>

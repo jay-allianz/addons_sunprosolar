@@ -32,6 +32,7 @@
     "\n"\
     """Please remember to go to the Account Signage tab, which is found within your company's profile (Settings > Companies > Companies) in order to prevent accounts with credit balances from being displayed with negative signs.""",
                     
+    "init_xml" : [],
     "demo" : [],
     "data" : [
         "security/security.xml",

@@ -29,5 +29,7 @@ class account_financial_report(osv.Model):
     _columns = {
         'inf_type': fields.selection([('BS','Balance Sheet'),('IS','Income Statement'),('TB', 'Trial Balance'),('GL', 'General Ledger')],'Type',required=True),
     }
+    
+account_financial_report()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

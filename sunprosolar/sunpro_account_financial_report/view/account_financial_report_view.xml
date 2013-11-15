@@ -79,7 +79,7 @@
             <field name="name">Report Templates</field>
             <field name="model">afr</field>
             <field name="arch" type="xml">
-            <tree string="Report Templates" version="7.0">
+            <tree string="Report Templates">
                 <field name="name"/>
                 <field name="company_id"/>
                 <field name="currency_id"/>
