@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+     <record id="product_normal_form_view_inherit1" model="ir.ui.view">
+            <field name="name">product.product.standard.price.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='description']" position="before">
+                        <group col="4" colspan="2">
+                             <field name="product_group" colspan="4" required="1"/>
+                             <field name="pv_module_name" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="brand_module" attrs="{'invisible':[('product_group','!=','module')]}"/>
+	                         <field name="pv_module_power_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
+<!--                             <field name="no_module" attrs="{'invisible':[('product_group','!=','module')]}"/-->
+                             <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="module_hieght" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="module_stc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="module_width" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="module_ptc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="module_weight" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="cost_per_stc_watt" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="panel_area" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="labor_per_stc_watt" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="markup" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="materials_per_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="invertor_name" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+                             <field name="brand_invertor" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+                             <field name="meter" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+                             <field name="cost_per_ac_capacity_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+<!--                             <field name="no_invertor" attrs="{'invisible':[('product_group','!=','inverter')]}"/-->
+                             <field name="labor_per_ac_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+                             <field name="cec_efficiency" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+                             <field name="materials_per_ac_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+                             <field name="power_rating" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+                      </group>
+                 </xpath>
+            </field>
+        </record>
+        
+        <!-- PV Module Name Search View  -->
+        <record model="ir.ui.view" id="module_master_search">
+            <field name="name">module_master_Search</field>
+            <field name="model">module.master</field>
+            <field name="arch" type="xml">
+                <search string="PV Module Name Search" version="7.0">
+                   <field name="name"/>
+                   <field name="description"/>
+               </search>
+            </field>
+        </record>
+        
+        <!-- PV Module Name Form View  -->
+        <record model="ir.ui.view" id="module_master_form">
+            <field name="name">module_master_Form</field>
+            <field name="model">module.master</field>
+            <field name="arch" type="xml">
+               <form string="PV Module Name Form" version="7.0">
+                   <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" required="1"/><newline/>
+                            <field name="description" colspan="4"/>
+                        </group>
+                   </sheet>
+              </form>
+           </field>
+        </record>
+
+        <!-- PV Module Name Tree View  -->
+        <record model="ir.ui.view" id="module_master_tree">
+            <field name="name">module_master_Tree</field>
+            <field name="model">module.master</field>
+            <field name="arch" type="xml">
+               <tree string="PV Module Name Tree" version="7.0">
+                   <field name="name"/>
+                   <field name="description" colspan="4"/>
+               </tree>
+            </field>
+        </record>
+
+        <!-- PV Module Name-->
+        <record id="action_module_master" model="ir.actions.act_window">
+              <field name="name">PV Module Name</field>
+              <field name="res_model">module.master</field>
+              <field name="view_type">form</field>
+              <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_module_master" id="menu_module_master" parent="product.prod_config_main" 
+					string="PV Module Name" sequence="11"/>
+
+        <!-- Product Module Brand Search View  -->
+        <record model="ir.ui.view" id="product_brand_search">
+            <field name="name">product_brand_Search</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <search string="Product Module Brand Search" version="7.0">
+                   <field name="name"/>
+                   <field name="description"/>
+               </search>
+            </field>
+        </record>
+        
+        <!-- Product Module Brand Form View  -->
+        <record model="ir.ui.view" id="product_brand_form">
+            <field name="name">product_brand_Form</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+               <form string="Product Module Brand Form" version="7.0">
+                   <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" required="1"/><newline/>
+                            <field name="description" colspan="4"/>
+                        </group>
+                   </sheet>
+              </form>
+           </field>
+        </record>
+
+        <!-- Product Module Brand Tree View  -->
+        <record model="ir.ui.view" id="product_brand_tree">
+            <field name="name">product_brand_Tree</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+               <tree string="Product Module Brand Tree" version="7.0">
+                   <field name="name"/>
+                   <field name="description" colspan="4"/>
+               </tree>
+            </field>
+        </record>
+
+        <!-- Product Module Brand-->
+        <record id="action_product_brand" model="ir.actions.act_window">
+              <field name="name">Product Module Brand</field>
+              <field name="res_model">product.brand</field>
+              <field name="view_type">form</field>
+              <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_product_brand" id="menu_product_brand" parent="product.prod_config_main" 
+					string="Product Module Brand" sequence="12"/>
+
+        <!--Product Inverter Brand  Search View  -->
+        <record model="ir.ui.view" id="product_invertor_brand_search">
+            <field name="name">product_invertor_brand_Search</field>
+            <field name="model">product.invertor.brand</field>
+            <field name="arch" type="xml">
+                <search string="Product Invertor Brand Search" version="7.0">
+                   <field name="name"/>
+                   <field name="description"/>
+               </search>
+            </field>
+        </record>
+        
+        <!-- Product Inverter Brand Form View  -->
+        <record model="ir.ui.view" id="product_invertor_brand_form">
+            <field name="name">product_brand_Form</field>
+            <field name="model">product.invertor.brand</field>
+            <field name="arch" type="xml">
+               <form string="Product Inverter Brand Form" version="7.0">
+                   <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" required="1"/><newline/>
+                            <field name="description" colspan="4"/>
+                        </group>
+                   </sheet>
+              </form>
+           </field>
+        </record>
+
+        <!-- Product Inverter Brand Tree View  -->
+        <record model="ir.ui.view" id="product_invertor_brand_tree">
+            <field name="name">product_brand_Tree</field>
+            <field name="model">product.invertor.brand</field>
+            <field name="arch" type="xml">
+               <tree string="Product Invertor Brand Tree" version="7.0">
+                   <field name="name"/>
+                   <field name="description" colspan="4"/>
+               </tree>
+            </field>
+        </record>
+
+        <!-- Product Inverter Brand-->
+        <record id="action_product_invertor_brand" model="ir.actions.act_window">
+              <field name="name">Product Inverter Brand</field>
+              <field name="res_model">product.invertor.brand</field>
+              <field name="view_type">form</field>
+              <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_product_invertor_brand" id="menu_product_invertor_brand" parent="product.prod_config_main" 
+					string="Product Invertor Brand" sequence="13"/>
+
+    </data>
+</openerp>
