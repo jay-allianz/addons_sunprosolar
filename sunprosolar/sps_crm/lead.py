@@ -66,7 +66,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 rating += line.stc_dc_rating
                 line_number += 1
-            res[data.id] = rating/line_number
+            if line_number is not 0:
+                res[data.id] = rating/line_number
+            else:
+                res[data.id] = rating
         return res
     
     def _get_ptc_dc_rating(self, cr, uid, ids, name, args, context=None):
@@ -77,7 +80,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 rating += line.ptc_dc_rating
                 line_number += 1
-            res[data.id] = rating/line_number
+            if line_number is not 0:
+                res[data.id] = rating/line_number
+            else:
+                res[data.id] = rating
         return res
     
     def _get_cec_ac_rating(self, cr, uid, ids, name, args, context=None):
@@ -88,7 +94,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 rating += line.cec_ac_rating
                 line_number += 1
-            res[data.id] = rating/ line_number
+            if line_number is not 0:
+                res[data.id] = rating/ line_number
+            else:
+                res[data.id] = rating
         return res
     
     def _get_ptc_stc_ratio(self, cr, uid, ids, name, args, context=None):
@@ -99,7 +108,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 rating += line.ptc_stc_ratio
                 line_number += 1
-            res[data.id] = rating/line_number
+            if line_number is not 0:
+                res[data.id] = rating/line_number
+            else:
+                res[data.id] = rating
         return res
     
     def _get_annual_solar_prod(self, cr, uid, ids, name, args, context=None):
@@ -110,7 +122,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 annual_prod += line.annual_solar_prod
                 line_number += 1
-            res[data.id] = annual_prod/line_number
+            if line_number is not 0:
+                res[data.id] = annual_prod/line_number
+            else:
+                res[data.id] = annual_prod
         return res
     
     def _get_annual_ele_usage(self, cr, uid, ids, name, args, context=None):
@@ -121,7 +136,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 annual_ele_usage += line.annual_ele_usage
                 line_number += 1
-            res[data.id] = annual_ele_usage/line_number
+            if line_number is not 0:
+                res[data.id] = annual_ele_usage/line_number
+            else:
+                res[data.id] = annual_ele_usage
         return res
     
     def _get_site_avg_sun_hour(self, cr, uid, ids, name, args, context=None):
@@ -132,7 +150,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 site_avg_hour += line.site_avg_sun_hour
                 line_number += 1
-            res[data.id] = site_avg_hour/line_number
+            if line_number is not 0:
+                res[data.id] = site_avg_hour/line_number
+            else:
+                res[data.id] = site_avg_hour
         return res
     
     def _get_co2_offset_tons(self, cr, uid, ids, name, args, context=None):
@@ -143,7 +164,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 co2_offset_tons += line.co2_offset_tons
                 line_number += 1
-            res[data.id] = co2_offset_tons/line_number
+            if line_number is not 0:
+                res[data.id] = co2_offset_tons/line_number
+            else:
+                res[data.id] = co2_offset_tons
         return res 
     
     def _get_co2_offset_pounds(self, cr, uid, ids, name, args, context=None):
@@ -154,7 +178,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 co2_offset_pounds += line.co2_offset_pounds
                 line_number += 1
-            res[data.id] = co2_offset_pounds/line_number
+            if line_number:
+                res[data.id] = co2_offset_pounds/line_number
+            else:
+                res[data.id] = co2_offset_pounds
         return res
     
     def _get_cars_off_roads(self, cr, uid, ids, name, args, context=None):
@@ -165,7 +192,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 cars_off_roads += line.cars_off_roads
                 line_number += 1
-            res[data.id] = cars_off_roads/line_number
+            if line_number is not 0:
+                res[data.id] = cars_off_roads/line_number
+            else:
+                res[data.id] = cars_off_roads
         return res
     
     def _get_gasoline_equi(self, cr, uid, ids, name, args, context=None):
@@ -176,7 +206,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 gasoline_equi += line.gasoline_equi
                 line_number += 1
-            res[data.id] = gasoline_equi/line_number
+            if line_number is not 0:
+                res[data.id] = gasoline_equi/line_number
+            else:
+                res[data.id] = gasoline_equi
         return res
     
     def _get_tree_equi(self, cr, uid, ids, name, args, context=None):
@@ -187,7 +220,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 tree_equi += line.tree_equi
                 line_number += 1
-            res[data.id] = tree_equi/line_number
+            if line_number is not 0:
+                res[data.id] = tree_equi/line_number
+            else:
+                res[data.id] = tree_equi
         return res
     
     def _get_tree_planting_equi(self, cr, uid, ids, name, args, context=None):
@@ -198,7 +234,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 tree_planting_equi += line.tree_planting_equi
                 line_number += 1
-            res[data.id] = tree_planting_equi/line_number
+            if line_number is not 0:
+                res[data.id] = tree_planting_equi/line_number
+            else:
+                res[data.id] = tree_planting_equi
         return res
     
     def _get_ave_home_powered(self, cr, uid, ids, name, args, context=None):
@@ -209,7 +248,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 ave_home_powered += line.ave_home_powered
                 line_number += 1
-            res[data.id] = ave_home_powered/line_number
+            if line_number is not 0:
+                res[data.id] = ave_home_powered/line_number
+            else:
+                res[data.id] = ave_home_powered
         return res
     
     def _get_ave_light_bulb_powered(self, cr, uid, ids, name, args, context=None):
@@ -220,7 +262,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 ave_light_bulb_powered += line.ave_light_bulb_powered
                 line_number += 1
-            res[data.id] = ave_light_bulb_powered/line_number
+            if line_number is not 0:
+                res[data.id] = ave_light_bulb_powered/line_number
+            else:
+                res[data.id] = ave_light_bulb_powered
         return res
     
     def _get_years_40_offset_tree(self, cr, uid, ids, name, args, context=None):
@@ -339,11 +384,11 @@ class crm_lead(osv.Model):
         'crm_lead_all_tabs_note_ids': fields.one2many('crm.lead.all.tabs.description', 'all_tab_id', 'Notes'),
         'responsible_user': fields.function(_reponsible_user,type='char', method=True, string="Responsible User for Appointment", help="Responsible User for Appointment setup"),
         
-#        'module_product_id': fields.many2one('product.product','Module Name', domain=[('product_group','=','module')], type='module', required=True),
-#        'num_of_module': fields.integer('Number of modules'),
-#        'inverter_product_id':fields.many2one('product.product','Inverters Name', domain=[('product_group','=','inverter')], type='inverter', required=True),
-#        'num_of_invertor':fields.integer('Number of Inverters'),
-#        'num_of_arrays':fields.integer('Number of Arrays'),
+        'module_product_id': fields.many2one('product.product','Module Name', domain=[('product_group','=','module')], type='module', required=True),
+        'num_of_module': fields.integer('Number of modules'),
+        'inverter_product_id':fields.many2one('product.product','Inverters Name', domain=[('product_group','=','inverter')], type='inverter', required=True),
+        'num_of_invertor':fields.integer('Number of Inverters'),
+        'num_of_arrays':fields.integer('Number of Arrays'),
         
         'solar_ids' : fields.one2many("solar.solar","crm_lead_id","Solar Information"),
         
@@ -390,6 +435,8 @@ class crm_lead(osv.Model):
         'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='float'),
         'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float'),
         'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Avarage Sun Hours', type='float'),
+        
+        'project_photo_ids' : fields.one2many('project.photos','crm_lead_id',"Project Photos")
         }
 
     _defaults = {
@@ -882,16 +929,6 @@ class solar_solar(osv.Model):
                 'ptc_dc_rating': fields.function(_get_system_rating_data, string='PTC-DC Rating', type='float', multi='rating_all'),
                 'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all'),
                 'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all'),
-                
-#                'co2_offset_tons' : fields.float('CO2 Offset Tons',help="Tons of Carbon Annually"),
-#                'co2_offset_pounds' : fields.float('CO2 Offset Pounds', help="Pounds of Carbon annually Eliminated"),
-#                'cars_off_roads' : fields.float('Cars off the Road', help="Cars taken off the road for one year"),
-#                'gasoline_equi' : fields.float('Gasoline Equivalent', help="Gallons of Gas"),
-#                'tree_equi' : fields.float('Tree Equivalent', help="Trees cleaning the Air for one year"),
-#                'tree_planting_equi' : fields.float('Tree Planting Equivalent', help="Trees planted for life of tree"),
-#                'ave_home_powered' : fields.float('Average Homes Powered', help="Homes Powered for One Year"),
-#                'ave_light_bulb_powered' : fields.float('Average Light-bulbs Powered', help="Light-bulbs Powered for One Year"),
-                
                 'co2_offset_tons' : fields.function(_get_system_rating_data, string='CO2 Offset', type='float', multi='green_all', help="Tons of Carbon Annually"),
                 'co2_offset_pounds' : fields.function(_get_system_rating_data, string='CO2 Offset', type="float", multi='green_all', help="Pounds of Carbon annually Eliminated"),
                 'cars_off_roads' : fields.function(_get_system_rating_data, string='Cars off the Road',type="float", multi='green_all', help="Cars taken off the road for one year"),
@@ -1142,3 +1179,69 @@ class crm_meeting(osv.Model):
                 opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
         return res
 
+class project_photos(osv.Model):
+    
+    _name = "project.photos"
+    
+    _columns = {
+        'name' : fields.char('Name'),
+        'photo' : fields.binary("Photo"),
+        'tag_line' : fields.char('Tagline'),
+        'crm_lead_id' : fields.many2one("crm.lead","Lead")
+    }
+    
+    def send_email(self, cr, uid, message, mail_server_id, context):
+        '''
+           This method sends mail using information given in message 
+        '''
+        obj_mail_server = self.pool.get('ir.mail_server')
+        obj_mail_server.send_email(cr, uid, message=message, mail_server_id=mail_server_id, context=context)
+    
+    def create(self, cr, uid, vals, context=None):
+        res = super(project_photos, self).create(cr, uid, vals, context=context)
+        
+        if not context:
+            context={}
+        
+        user_obj = self.pool.get('res.users')
+        user_rec = user_obj.browse(cr, uid, uid, context=context)
+        auto_email_id = user_rec.company_id.auto_email_id
+        
+        obj_mail_server = self.pool.get('ir.mail_server')
+        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+        if not mail_server_ids:
+            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+        email_from = mail_server_record.smtp_user
+        if not email_from:
+            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+        if not auto_email_id:
+            raise osv.except_osv(_('Warning'), _('No Auto email ID defined in Company Configuration !'))
+        else:
+            subject_line = 'Notification For uploded Project Photo.'
+            message_body = 'Hello Admin,</br>' + user_rec.name + ' uploaded a photo as a project photo.' +'<br/><br/>The Photo is successfully Uploded.<br/><br/> Thank You.'
+            message_user = obj_mail_server.build_email(
+                email_from=email_from, 
+                email_to=[auto_email_id], 
+                subject=subject_line, 
+                body=message_body, 
+                body_alternative=message_body, 
+                email_cc=None, 
+                email_bcc=None, 
+                attachments=None, 
+                references = None, 
+                object_id=None, 
+                subtype='html', 
+                subtype_alternative=None, 
+                headers=None)
+            self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
+        return res
+
+class res_company(osv.Model):
+    
+    _inherit = "res.company"
+    
+    _columns = {
+        'auto_email_id' : fields.char("Auto Email ID")
+    }
+    

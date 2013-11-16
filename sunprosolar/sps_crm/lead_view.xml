@@ -613,6 +613,22 @@
                               </field>
                           </group>
                       </page>
+                      <page string="Project Photos">
+                          <group col="4" colspan="4">
+                              <field name="project_photo_ids" nolabel="1">
+                                  <form>
+                                      <field name="name" required="1"/>
+                                      <field name="photo" widget="image" required="1"/>
+                                      <field name="tag_line" required="1"/>
+                                  </form>
+                                  <tree>
+                                      <field name="name" required="1"/>
+                                      <field name="photo" widget="image" required="1"/>
+                                      <field name="tag_line" required="1"/>
+                                  </tree>
+                              </field>
+                          </group>
+                      </page>
                  </xpath>
              </field>
         </record>
@@ -985,6 +1001,18 @@
                   </xpath>
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="inherited_view_res_company_form">
+            <field name="name">res.company.email.inherited</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name='website' position="after">
+                    <field name="auto_email_id"/>
+                </field>
+            </field>
+        </record>
+        
 
     </data>
 </openerp>

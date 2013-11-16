@@ -23,11 +23,10 @@
 from openerp.osv import osv,fields
 from openerp.tools.translate import _
 
-class res_company(osv.osv):
+class res_company(osv.Model):
     _inherit = 'res.company'
     _columns = {
         'credit_account_ids':fields.many2many('account.account','credit_account_company_rel','company_id', 'account_id','Creditable Accounts'),
         'debit_account_ids':fields.many2many('account.account','debit_account_company_rel','company_id', 'account_id','Debitable Accounts'),
     }
-res_company()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

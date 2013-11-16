@@ -22,7 +22,7 @@
 
 import time
 from openerp.report import report_sxw
-import pygal                                                       # First import pygal
+# import pygal                                                       # First import pygal
 
 
 class proposal_report(report_sxw.rml_parse):

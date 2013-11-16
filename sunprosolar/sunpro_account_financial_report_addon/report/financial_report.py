@@ -156,7 +156,6 @@ class account_balance_inherit(account_balance):
         self.show_earnings = False
         ids = []
         acc_ids = []
-        print "form::of pdf:::-----",form
 #        rev = 0.00
 #        cogs = 0.00
 #        opexp = 0.00
@@ -288,7 +287,6 @@ class account_balance_inherit(account_balance):
         if form.has_key('account_list') and form['account_list']:
             selected_accounts = form['account_list']
             account_ids = form['account_list']
-            print "account_ids=======account_ids========",account_ids
 #            del form['account_list']
         
         credit_account_ids = self.get_company_accounts(form['company_id'] and type(form['company_id']) in (list, tuple) and form['company_id'][0] or form['company_id'], 'credit')
@@ -404,9 +402,7 @@ class account_balance_inherit(account_balance):
                 'total'     : aa_id[2], 
                 'change_sign' : credit_account_ids and (id  in credit_account_ids and -1 or 1) or 1
                 }
-#                print "aa_id====aa_id",aa_id,aa_id[2],aa_id[1]
                 if form['columns'] == 'qtr':
-                    print "for of colllll is qtr???"
                     pn = 1
                     for p_id in p:
                         form['periods'] = p_id
@@ -558,7 +554,6 @@ class account_balance_inherit(account_balance):
 #                        self.total_liabilities_dbr5 = self.liabilitiesdbr5 + self.equitydbr5
                 
                 elif form['columns'] == 'thirteen':
-                    print "form of colllllumnssss 13"
                     pn = 1
                     for p_id in period_ids:
                         form['periods'] = [p_id]
@@ -835,7 +830,6 @@ class account_balance_inherit(account_balance):
                         res.update({
                             'balance': self.exchange(d-c), 
                         })
-#                        print "res::::::::::::after update::::::::::",res
                         report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                         for ytd_acc_data in report_data.account_list:
                             if ytd_acc_data.type == 'view':
@@ -846,21 +840,16 @@ class account_balance_inherit(account_balance):
                             if parent_id == acc_data.id:
                                 acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
 #                                a = res.get('total') == True
-#                                print "res get total:::::",a,res.get('name')
 #                                b = res.get('type') == 'view'
-#                                print "res get type:::::",b,res.get('name')
                                 if res.get('total') == True and res.get('type') == 'view':
                                     self.bal = self.bal + res.get('balance')
                                 bal = []
                                 for res_acc in result_acc:
                                     if res_acc.get('name')=='Total Net Ordinary Income':
                                         balance_res = res_acc.get('balance')
-                                        print "result______accccccccccc",res_acc
                                         bal.append(balance_res)
-                                print "ba%%%%%%:bal:::bal",bal,len(bal)
                                 if len(bal) > 0 :
                                     self.gross_profit = bal[0]
-                                    print "in pdf 1st----=====######",self.gross_profit
                                 for acc in account_obj.browse(self.cr, self.uid, acc_ids):
 #                                    income_child_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc.id)])
 #                                    if acc.user_type.name == 'Revenue' or acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
@@ -1120,21 +1109,16 @@ class account_balance_inherit(account_balance):
         afr_list = []
         if form['inf_type'] == 'BS':
             afr_ids = afr_obj.search(self.cr, self.uid, [('name', '=', 'Income Statement')])
-            print "afr_ids:::",afr_ids
             if afr_ids:
                 afr_data = afr_obj.browse(self.cr, self.uid, afr_ids[0]).account_ids
                 for afr_id in afr_data:
                     afr_list.append(afr_id.id)
             form['account_list'] = afr_list
-            print "afr list afr list afr list::--->>>",afr_list
             form_copy = form.copy()
-            print "form copy form copryyyy",form_copy
             form_copy['inf_type'] = 'IS'
             self.lines(form_copy, 0)
             total_profit_loss = self.net_profit
             
-            print "self net proffit:::::::::",self.net_profit
-            print "self self.gross_profit-------",self.gross_profit
             self.total_profit_loss = {
                 'balance' : total_profit_loss, 
                 'id' : False, 
@@ -1268,9 +1252,7 @@ class account_balance_inherit(account_balance):
                         result_acc.insert(index+11,res_acc)
                         result_acc.pop(index)
 #                        balance = res_acc.get('balance')
-#                        print "balance:::::::of net ordeinary income::",balance
 #                bal.append(balance)
-#                print "bal:::::bal:::bal",bal
                 total_gross_profit = self.gross_profit
 #                total_gross_profit = self.gross_profit
 #                dbr3 = self.gross_profit_dbr3
@@ -1945,12 +1927,9 @@ class account_balance_inherit(account_balance):
                                 for res_acc in result_acc:
                                     if res_acc.get('name')=='Total Net Ordinary Income':
                                         balance_res = res_acc.get('balance')
-                                        print "result______accccccccccc",res_acc,balance_res
                                         bal.append(balance_res)
-                                print "ba%%%%%%:bal:::bal",bal,len(bal)
                                 if len(bal) > 0 :
                                     self.gross_profit = bal[0]
-                                    print "in pdf periodic----=====######",self.gross_profit
 #                            self.gross_profit = self.bal
                             for acc in account_obj.browse(self.cr, self.uid, acc_ids):
                                 if acc.name == 'Cost Of Goods Sold' or acc.name == 'Cost of Sales' and acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
@@ -2230,19 +2209,15 @@ class account_balance_inherit(account_balance):
 #            dict_expence = {'balance': 0.0, 'code': '80', 'name': 'Total Other Expense', 'level': 2, 'credit': 0.0, 'debit': 0.0, 'label': False, 'parent_id': 586, 'mayor': [], 'change_sign': 1, 'balanceinit': 0.0, 'ytd': 0.0, 'total': True, 'type': 'view', 'id': 590}
 #            index_exp = result_acc.index(dict_expence)
 #            result_acc.pop(index_exp)
-#            print "result_accc::::::----======result_accc",result_acc
-#            print "indexxxxxxxxx",index,index_exp
 #            
         else:
             if not form['afr_id'][1] == 'Balance Sheet':
 #                if {'id': False, 'name': ''} not in result_acc:
 #                        raise osv.except_osv(_('Configuration Error'), _('Please configure all type of Revenue, Cost Of Goods Sold, Expense, Income and Taxes accounts for Income Statement !'))
 #                index = result_acc.index({'id': False, 'name': ''})
-                print "result accccccccccc---------",result_acc
                 for res_acc in result_acc:
                     if res_acc.get('name')=='Total Net Ordinary Income':
                         index = result_acc.index(res_acc)
-                        print "indev:::::in ytd::",index
                         result_acc.insert(index+11,res_acc)
                         result_acc.pop(index)
                 

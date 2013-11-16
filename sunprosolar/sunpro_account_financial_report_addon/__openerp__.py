@@ -30,7 +30,6 @@
         'sunpro_account_financial_report',
         'report_aeroo_ooo'
     ],
-    'init_xml': [],
     'data': [
         'wizard/financial_report_wizard_view.xml',
         'report/financial_report_view.xml',
