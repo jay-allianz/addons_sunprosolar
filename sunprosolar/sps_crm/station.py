@@ -41,9 +41,9 @@ class insolation_incident(osv.Model):
         'name' : fields.char('Station Name'),
         'parent_id' : fields.many2one('insolation.incident.yearly',"Parent Station"),
         'parent_persentage': fields.float("Parent Station %"),
-#        'from_zip' : fields.char('Zip (From)'),
-#        'to_zip' : fields.char('Zip (To)'),
-        'zip_id' : fields.many2one('city.city',"Zip"),
+        'from_zip' : fields.char('Zip (From)'),
+        'to_zip' : fields.char('Zip (To)'),
+        'zip_ids' : fields.many2many('city.city','city_inso_rel',"city_id","inso_id","Zip"),
         'tilt_azimuth_ids': fields.one2many('tilt.azimuth','tilt_azimuth_id','Tilt & Azimuth Reading'),
     }
     
@@ -82,7 +82,7 @@ class tilt_azimuth(osv.Model):
         res={}
         for anual_avg in self.browse(cr, uid, ids, context=context):
             avg = anual_avg.jan + anual_avg.feb + anual_avg.mar + anual_avg.apr + anual_avg.may + anual_avg.jun + anual_avg.jul + anual_avg.aug + anual_avg.sep + anual_avg.oct + anual_avg.nov + anual_avg.dec
-            res[anual_avg.id] =  avg
+            res[anual_avg.id] =  avg/12
         return res
     
     
@@ -163,7 +163,7 @@ class electricity_usage(osv.Model):
     _description = "Annual Electricity Usage"
     
     def onchange_month_value(self, cr, uid ,ids, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec, context=None):
-        avg = (jan + feb + mar + apr + may + jun + jul + aug + sep + oct + nov + dec)/12
+        avg = jan + feb + mar + apr + may + jun + jul + aug + sep + oct + nov + dec
         return {'value':{'usage_kwh':avg}}
     
     _columns = {
@@ -182,6 +182,7 @@ class electricity_usage(osv.Model):
         'dec' : fields.integer("December"),
         'usage_kwh' : fields.integer("Usage (KWh)"),
         'lead_id' : fields.many2one("crm.lead"),
+        'type' : fields.selection([('monthly','Monthly'),('yearly','Yearly')],'Type',help="It is a duration of electricity usage Monthly or Yearly"),
     }
     
     _defaults = {
@@ -198,5 +199,6 @@ class electricity_usage(osv.Model):
         'oct' : 0,
         'nov' : 0,
         'dec' : 0,
+        'type' : 'yearly',
     }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name" : "SPS - CRM",
-    "version" : "4.0",
+    "version" : "6.3",
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",

@@ -1,247 +1,211 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>
-        
-        <!-- Insolation Incident insolation.incident.yearly Search View -->
-        <record model="ir.ui.view" id='inso_master_search'>
-            <field name="name">Insolation Incident Search</field>
-            <field name="model">insolation.incident.yearly</field>
-            <field name="arch" type="xml">
-                <search string="Insolation Incident Search">
-                    <field name = "name"/>
-                    <field name="parent_id" />
-                    <field name="parent_persentage" />
-                </search>
-            </field>
-        </record>
-        
-        <!-- Insolation Incident insolation.incident.yearly Master From View -->
-        <record model="ir.ui.view" id="inso_master_form">
-            <field name="name">Insolation Incident Form</field>
-            <field name="model">insolation.incident.yearly</field>
-            <field name="arch" type="xml">
-                <form string="Insolation Incident" version="7.0">
-                    <sheet>
-                        <group col="4" colspan="4">
-                            <field name="name" required="1"/>
-                            <field name="parent_id" />
-                            <field name="zip_id"/>
-                            <label for="parent_persentage"/>
-                            <div>
-	                            <field name="parent_persentage" />
-	                            <button name="compute_percentage" string="Compute"  type="object"/>
-                            </div>
-                        </group>
-                        <group col="4" colspan="4" string="Tilt - Azimuth Reading">
-                            <field name="tilt_azimuth_ids" nolabel="1"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        
-        <!-- Insolation Incident insolation.incident.yearly Master Tree View -->
-        <record model="ir.ui.view" id="inso_master_tree">
-            <field name="name">Insolation Incident Tree</field>
-            <field name="model">insolation.incident.yearly</field>
-            <field name="arch" type="xml">
-                <tree string="Station" >
-                   <field name="name"/>
-                   <field name="zip_id"/>
-                </tree>
-            </field>
-        </record>
-        
-        <!-- Station Master Search View -->
-        <record model="ir.ui.view" id='station_master_search'>
-            <field name="name">Station Search</field>
-            <field name="model">station.station</field>
-            <field name="arch" type="xml">
-                <search string="Station Search">
-                    <field name = "name"/>
-                </search>
-            </field>
-        </record>
+	<data>
 
-        <!-- Station Master From View -->
-        <record model="ir.ui.view" id="station_master_form">
-            <field name="name">Station Form</field>
-            <field name="model">station.station</field>
-            <field name="arch" type="xml">
-                <form string="Station" version="7.0">
-                    <sheet>
-                        <group col="4" colspan="4">
-                            <field name="name"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        
-        <!-- Station Master Tree View -->
-        <record model="ir.ui.view" id="station_master_tree">
-            <field name="name">Station Tree</field>
-            <field name="model">station.station</field>
-            <field name="arch" type="xml">
-                <tree string="Station" >
-                   <field name="name"/>
-                </tree>
-            </field>
-        </record>
-        
-        <!-- Tilt Master Search View -->
-        <record model="ir.ui.view" id='tilt_master_search'>
-            <field name="name">Tilt Search</field>
-            <field name="model">tilt.tilt</field>
-            <field name="arch" type="xml">
-                <search string="Tilt Search">
-                    <field name = "tilt"/>
-                </search>
-            </field>
-        </record>
-        
-        <!-- Tilt Master From View -->
-        <record model="ir.ui.view" id="tilt_master_form">
-            <field name="name">Tilt Form</field>
-            <field name="model">tilt.tilt</field>
-            <field name="arch" type="xml">
-                <form string="Tilt" version="7.0">
-                    <sheet>
-                        <group col="4" colspan="4">
-                            <field name="tilt"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        
-        <!-- Tilt Master Tree View -->
-        <record model="ir.ui.view" id="tilt_master_tree">
-            <field name="name">Tilt Tree</field>
-            <field name="model">tilt.tilt</field>
-            <field name="arch" type="xml">
-                <tree string="Tilt" >
-                   <field name="tilt"/>
-                </tree>
-            </field>
-        </record>
-        
-        <!--tilt and azimuth Search View  -->
-        <record model="ir.ui.view" id="tilt_azimuth_search">
-            <field name="name">tilt_azimuth_Search</field>
-            <field name="model">tilt.azimuth</field>
-            <field name="arch" type="xml">
-                <search string="Tilt and Azimuth Search">
-                    <field name = "tilt"/>
-                    <field name = "azimuth"/>
-                    <field name = "jan"/>
-                    <field name = "feb"/>
-                    <field name = "mar"/>
-                    <field name = "apr"/>
-                    <field name = "may"/>
-                    <field name = "jun"/>
-                    <field name = "jul"/>
-                    <field name = "aug"/>
-                    <field name = "sep"/>
-                    <field name = "oct"/>
-                    <field name = "nov"/>
-                    <field name = "dec"/>
-                    <field name = "annual_avg"/>
-                    <field name = "production"/>
-                </search>
-            </field>
-        </record>
+		<!-- Insolation Incident insolation.incident.yearly Search View -->
+		<record model="ir.ui.view" id='inso_master_search'>
+			<field name="name">Insolation Incident Search</field>
+			<field name="model">insolation.incident.yearly</field>
+			<field name="arch" type="xml">
+				<search string="Insolation Incident Search">
+					<field name="name" />
+					<field name="parent_id" />
+					<field name="parent_persentage" />
+				</search>
+			</field>
+		</record>
 
-        <!-- tilt and azimuthe Form View  -->
-        <record model="ir.ui.view" id="tilt_azimuth_form">
-             <field name="name">tilt_azimuth__Form</field>
-             <field name="model">tilt.azimuth</field>
-             <field name="arch" type="xml">
-                 <form string="Tilt and Azimuth Form" version="7.0">
-                      <sheet>
-                            <group col="4" colspan="4">
-                                <field name = "tilt"/><newline/>
-                                <field name = "azimuth"/><newline/>
-                                <field name = "production"/>
-                            </group>
-                     </sheet>
-                </form>
-            </field>
-        </record>
+		<!-- Insolation Incident insolation.incident.yearly Master From View -->
+		<record model="ir.ui.view" id="inso_master_form">
+			<field name="name">Insolation Incident Form</field>
+			<field name="model">insolation.incident.yearly</field>
+			<field name="arch" type="xml">
+				<form string="Insolation Incident" version="7.0">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="name" required="1" />
+							<field name="parent_id" />
+							<field name="from_zip" required="1" />
+							<field name="to_zip" required="1" />
+							<label for="parent_persentage" />
+							<div>
+								<field name="parent_persentage" />
+								<button name="compute_percentage" string="Compute" type="object" />
+							</div>
+						</group>
+						<group col="4" colspan="4" string="Zip">
+							<field name="zip_ids" nolabel="1" />
+						</group>
+						<group col="4" colspan="4" string="Tilt - Azimuth Reading">
+							<field name="tilt_azimuth_ids" nolabel="1" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
 
-        <!-- tilt and azimuth Tree View  -->
-        <record model="ir.ui.view" id="tilt_azimuth_tree">
-              <field name="name">heat_home_Tree</field>
-              <field name="model">tilt.azimuth</field>
-              <field name="arch" type="xml">
-                    <tree string="Tilt and Azimuth"  editable="top">
-                        <field name = "tilt" required="1"/>
-                        <field name = "azimuth" required="1"/>
-                        <field name = "jan"/>
-		                <field name = "feb"/>
-		                <field name = "mar"/>
-		                <field name = "apr"/>
-		                <field name = "may"/>
-		                <field name = "jun"/>
-		                <field name = "jul"/>
-		                <field name = "aug"/>
-		                <field name = "sep"/>
-		                <field name = "oct"/>
-		                <field name = "nov"/>
-		                <field name = "dec"/>
-		                <field name = "annual_avg"/>
-                        <field name = "production" required="1"/>
-                    </tree>
-              </field>
-        </record>
-        
-        <!-- tilt and azimuth -->
-        <record id="action_tilt_azimuth" model="ir.actions.act_window">
-            <field name="name">Tilt and Azimuth</field>
-            <field name="res_model">tilt.azimuth</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        
-        <!-- Tilt Master Action -->
-        <record model="ir.actions.act_window" id="action_tilt_master">
-            <field name="name">Tilt</field>
-            <field name="res_model">tilt.tilt</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        
-        <!-- Station Master Action -->
-        <record model="ir.actions.act_window" id="action_station_master">
-            <field name="name">Station</field>
-            <field name="res_model">station.station</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        
-        <!-- Insolation Incident insolation.incident.yearly Action -->
-        <record model="ir.actions.act_window" id="action_inso_master">
-            <field name="name">Insolation Incident</field>
-            <field name="res_model">insolation.incident.yearly</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        
-        <!-- Menu for Tilt and Azimuth -->
-        <menuitem action="action_tilt_azimuth" id="menu_tilt_azimuth" parent="base.menu_crm_config_lead" 
-                    string="Tilt and Azimuth" sequence="14" />
-        
-        <!-- Menu for Tilt -->
-        <menuitem action="action_tilt_master" id="menu_tilt_master" parent="base.menu_crm_config_lead" 
-                    string="Tilt" sequence="15" />
-        
-        <!-- Menu for Station -->
-        <menuitem action="action_station_master" id="menu_station_master" parent="base.menu_crm_config_lead" 
-                    string="Station" />
-        
-        <!-- Menu for Insolation Incident -->
-        <menuitem action="action_inso_master" id="menu_inso_master" parent="base.menu_sales" 
-                    string="Station" />
-        
-    </data>
+		<!-- Insolation Incident insolation.incident.yearly Master Tree View -->
+		<record model="ir.ui.view" id="inso_master_tree">
+			<field name="name">Insolation Incident Tree</field>
+			<field name="model">insolation.incident.yearly</field>
+			<field name="arch" type="xml">
+				<tree string="Station">
+					<field name="name" />
+					<field name="from_zip" />
+					<field name="to_zip" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Tilt Master Search View -->
+		<record model="ir.ui.view" id='tilt_master_search'>
+			<field name="name">Tilt Search</field>
+			<field name="model">tilt.tilt</field>
+			<field name="arch" type="xml">
+				<search string="Tilt Search">
+					<field name="tilt" />
+				</search>
+			</field>
+		</record>
+
+		<!-- Tilt Master From View -->
+		<record model="ir.ui.view" id="tilt_master_form">
+			<field name="name">Tilt Form</field>
+			<field name="model">tilt.tilt</field>
+			<field name="arch" type="xml">
+				<form string="Tilt" version="7.0">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="tilt" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Tilt Master Tree View -->
+		<record model="ir.ui.view" id="tilt_master_tree">
+			<field name="name">Tilt Tree</field>
+			<field name="model">tilt.tilt</field>
+			<field name="arch" type="xml">
+				<tree string="Tilt">
+					<field name="tilt" />
+				</tree>
+			</field>
+		</record>
+
+		<!--tilt and azimuth Search View -->
+		<record model="ir.ui.view" id="tilt_azimuth_search">
+			<field name="name">tilt_azimuth_Search</field>
+			<field name="model">tilt.azimuth</field>
+			<field name="arch" type="xml">
+				<search string="Tilt and Azimuth Search">
+					<field name="tilt" />
+					<field name="azimuth" />
+					<!-- <field name = "month"/ -->
+					<field name="jan" />
+					<field name="feb" />
+					<field name="mar" />
+					<field name="apr" />
+					<field name="may" />
+					<field name="jun" />
+					<field name="jul" />
+					<field name="aug" />
+					<field name="sep" />
+					<field name="oct" />
+					<field name="nov" />
+					<field name="dec" />
+					<field name="annual_avg" />
+					<field name="production" />
+				</search>
+			</field>
+		</record>
+
+		<!-- tilt and azimuthe Form View -->
+		<record model="ir.ui.view" id="tilt_azimuth_form">
+			<field name="name">tilt_azimuth__Form</field>
+			<field name="model">tilt.azimuth</field>
+			<field name="arch" type="xml">
+				<form string="Tilt and Azimuth Form" version="7.0">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="tilt" />
+							<newline />
+							<field name="azimuth" />
+							<newline />
+							<!-- <field name = "month"/><newline/ -->
+							<field name="production" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- tilt and azimuth Tree View -->
+		<record model="ir.ui.view" id="tilt_azimuth_tree">
+			<field name="name">heat_home_Tree</field>
+			<field name="model">tilt.azimuth</field>
+			<field name="arch" type="xml">
+				<tree string="Tilt and Azimuth" editable="top">
+					<field name="tilt" required="1" />
+					<field name="azimuth" required="1" />
+					<field name="jan" />
+					<field name="feb" />
+					<field name="mar" />
+					<field name="apr" />
+					<field name="may" />
+					<field name="jun" />
+					<field name="jul" />
+					<field name="aug" />
+					<field name="sep" />
+					<field name="oct" />
+					<field name="nov" />
+					<field name="dec" />
+					<field name="annual_avg" />
+
+					<!-- <field name = "month" required="1"/ -->
+					<field name="production" required="1" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- tilt and azimuth -->
+		<record id="action_tilt_azimuth" model="ir.actions.act_window">
+			<field name="name">Tilt and Azimuth</field>
+			<field name="res_model">tilt.azimuth</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- Tilt Master Action -->
+		<record model="ir.actions.act_window" id="action_tilt_master">
+			<field name="name">Tilt</field>
+			<field name="res_model">tilt.tilt</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!-- Insolation Incident insolation.incident.yearly Action -->
+		<record model="ir.actions.act_window" id="action_inso_master_main">
+			<field name="name">Stations</field>
+			<field name="res_model">insolation.incident.yearly</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- Menu for Tilt and Azimuth -->
+		<menuitem action="action_tilt_azimuth" id="menu_tilt_azimuth"
+			parent="base.menu_crm_config_lead" string="Tilt and Azimuth"
+			sequence="14" />
+
+		<!-- Menu for Tilt -->
+		<menuitem action="action_tilt_master" id="menu_tilt_master"
+			parent="base.menu_crm_config_lead" string="Tilt" sequence="15" />
+
+		<!-- Menu for Insolation Incident -->
+		<menuitem action="action_inso_master_main" id="mn_inso_master"
+			parent="base.menu_sales" string="Stations" />
+
+	</data>
 </openerp>

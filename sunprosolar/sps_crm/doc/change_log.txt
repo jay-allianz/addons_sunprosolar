@@ -1,13 +1,8 @@
 ==================================================================================
  Version ChangeLog (sps_crm)
 ==================================================================================
-0.11 --> 15 Nov 2013 : Serpent Consulting Services
-        * Added Code for Tilt-Azimuth and Station.
-        * Added CSV for Tilt-Azimuth and Station.
-        * Improved Code according to new requirements.
-        
 0.10 --> 21 Aug 2013 : Serpent Consulting Services
-        * Added Barcode Label Report for customer in Sale Order
+        * Added Barcode Label Reportfor cusomer in Sale Order
         * Added city module functionality.
         
 0.09 --> 29 July 2013 : Serpent Consulting Services

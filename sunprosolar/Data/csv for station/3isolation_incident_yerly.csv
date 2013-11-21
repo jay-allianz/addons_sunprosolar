@@ -1,1441 +1,1441 @@
-"id"	"parent_id/id"	"parent_persentage"	"name"	"tilt_azimuth_ids/id"	"zip_id/id"
-"insolation_incident_yearly_1"			"DAGGETT"	"tilt_azimuth_1"	
-				"tilt_azimuth_2"	
-				"tilt_azimuth_3"	
-				"tilt_azimuth_4"	
-				"tilt_azimuth_5"	
-				"tilt_azimuth_6"	
-				"tilt_azimuth_7"	
-				"tilt_azimuth_8"	
-				"tilt_azimuth_9"	
-				"tilt_azimuth_10"	
-				"tilt_azimuth_11"	
-				"tilt_azimuth_12"	
-				"tilt_azimuth_13"	
-				"tilt_azimuth_14"	
-				"tilt_azimuth_15"	
-				"tilt_azimuth_16"	
-				"tilt_azimuth_17"	
-				"tilt_azimuth_18"	
-				"tilt_azimuth_19"	
-				"tilt_azimuth_20"	
-				"tilt_azimuth_21"	
-				"tilt_azimuth_22"	
-				"tilt_azimuth_23"	
-				"tilt_azimuth_24"	
-				"tilt_azimuth_25"	
-				"tilt_azimuth_26"	
-				"tilt_azimuth_27"	
-				"tilt_azimuth_28"	
-				"tilt_azimuth_29"	
-				"tilt_azimuth_30"	
-				"tilt_azimuth_31"	
-				"tilt_azimuth_32"	
-				"tilt_azimuth_33"	
-				"tilt_azimuth_34"	
-				"tilt_azimuth_35"	
-				"tilt_azimuth_36"	
-				"tilt_azimuth_37"	
-				"tilt_azimuth_38"	
-				"tilt_azimuth_39"	
-				"tilt_azimuth_40"	
-				"tilt_azimuth_41"	
-				"tilt_azimuth_42"	
-				"tilt_azimuth_43"	
-				"tilt_azimuth_44"	
-				"tilt_azimuth_45"	
-				"tilt_azimuth_46"	
-				"tilt_azimuth_47"	
-				"tilt_azimuth_48"	
-				"tilt_azimuth_49"	
-				"tilt_azimuth_50"	
-				"tilt_azimuth_51"	
-				"tilt_azimuth_52"	
-				"tilt_azimuth_53"	
-				"tilt_azimuth_54"	
-				"tilt_azimuth_55"	
-				"tilt_azimuth_56"	
-				"tilt_azimuth_57"	
-				"tilt_azimuth_58"	
-				"tilt_azimuth_59"	
-				"tilt_azimuth_60"	
-				"tilt_azimuth_61"	
-				"tilt_azimuth_62"	
-				"tilt_azimuth_63"	
-				"tilt_azimuth_64"	
-				"tilt_azimuth_65"	
-				"tilt_azimuth_66"	
-				"tilt_azimuth_67"	
-				"tilt_azimuth_68"	
-				"tilt_azimuth_69"	
-				"tilt_azimuth_70"	
-				"tilt_azimuth_71"	
-				"tilt_azimuth_72"	
-				"tilt_azimuth_73"	
-				"tilt_azimuth_74"	
-				"tilt_azimuth_75"	
-				"tilt_azimuth_76"	
-				"tilt_azimuth_77"	
-				"tilt_azimuth_78"	
-				"tilt_azimuth_79"	
-				"tilt_azimuth_80"	
-				"tilt_azimuth_81"	
-				"tilt_azimuth_82"	
-				"tilt_azimuth_83"	
-				"tilt_azimuth_84"	
-				"tilt_azimuth_85"	
-				"tilt_azimuth_86"	
-				"tilt_azimuth_87"	
-				"tilt_azimuth_88"	
-				"tilt_azimuth_89"	
-				"tilt_azimuth_90"	
-				"tilt_azimuth_91"	
-				"tilt_azimuth_92"	
-				"tilt_azimuth_93"	
-				"tilt_azimuth_94"	
-				"tilt_azimuth_95"	
-				"tilt_azimuth_96"	
-				"tilt_azimuth_97"	
-				"tilt_azimuth_98"	
-				"tilt_azimuth_99"	
-				"tilt_azimuth_100"	
-				"tilt_azimuth_101"	
-				"tilt_azimuth_102"	
-				"tilt_azimuth_103"	
-				"tilt_azimuth_104"	
-				"tilt_azimuth_105"	
-				"tilt_azimuth_106"	
-				"tilt_azimuth_107"	
-				"tilt_azimuth_108"	
-				"tilt_azimuth_109"	
-				"tilt_azimuth_110"	
-				"tilt_azimuth_111"	
-				"tilt_azimuth_112"	
-				"tilt_azimuth_113"	
-				"tilt_azimuth_114"	
-				"tilt_azimuth_115"	
-				"tilt_azimuth_116"	
-				"tilt_azimuth_117"	
-				"tilt_azimuth_118"	
-				"tilt_azimuth_119"	
-				"tilt_azimuth_120"	
-				"tilt_azimuth_121"	
-				"tilt_azimuth_122"	
-				"tilt_azimuth_123"	
-				"tilt_azimuth_124"	
-				"tilt_azimuth_125"	
-				"tilt_azimuth_126"	
-				"tilt_azimuth_127"	
-				"tilt_azimuth_128"	
-				"tilt_azimuth_129"	
-				"tilt_azimuth_130"	
-				"tilt_azimuth_131"	
-				"tilt_azimuth_132"	
-				"tilt_azimuth_133"	
-				"tilt_azimuth_134"	
-				"tilt_azimuth_135"	
-				"tilt_azimuth_136"	
-				"tilt_azimuth_137"	
-				"tilt_azimuth_138"	
-				"tilt_azimuth_139"	
-				"tilt_azimuth_140"	
-				"tilt_azimuth_141"	
-				"tilt_azimuth_142"	
-				"tilt_azimuth_143"	
-				"tilt_azimuth_144"	
-"insolation_incident_yearly_2"			"Los Angeles"	"tilt_azimuth_145"	
-				"tilt_azimuth_146"	
-				"tilt_azimuth_147"	
-				"tilt_azimuth_148"	
-				"tilt_azimuth_149"	
-				"tilt_azimuth_150"	
-				"tilt_azimuth_151"	
-				"tilt_azimuth_152"	
-				"tilt_azimuth_153"	
-				"tilt_azimuth_154"	
-				"tilt_azimuth_155"	
-				"tilt_azimuth_156"	
-				"tilt_azimuth_157"	
-				"tilt_azimuth_158"	
-				"tilt_azimuth_159"	
-				"tilt_azimuth_160"	
-				"tilt_azimuth_161"	
-				"tilt_azimuth_162"	
-				"tilt_azimuth_163"	
-				"tilt_azimuth_164"	
-				"tilt_azimuth_165"	
-				"tilt_azimuth_166"	
-				"tilt_azimuth_167"	
-				"tilt_azimuth_168"	
-				"tilt_azimuth_169"	
-				"tilt_azimuth_170"	
-				"tilt_azimuth_171"	
-				"tilt_azimuth_172"	
-				"tilt_azimuth_173"	
-				"tilt_azimuth_174"	
-				"tilt_azimuth_175"	
-				"tilt_azimuth_176"	
-				"tilt_azimuth_177"	
-				"tilt_azimuth_178"	
-				"tilt_azimuth_179"	
-				"tilt_azimuth_180"	
-				"tilt_azimuth_181"	
-				"tilt_azimuth_182"	
-				"tilt_azimuth_183"	
-				"tilt_azimuth_184"	
-				"tilt_azimuth_185"	
-				"tilt_azimuth_186"	
-				"tilt_azimuth_187"	
-				"tilt_azimuth_188"	
-				"tilt_azimuth_189"	
-				"tilt_azimuth_190"	
-				"tilt_azimuth_191"	
-				"tilt_azimuth_192"	
-				"tilt_azimuth_193"	
-				"tilt_azimuth_194"	
-				"tilt_azimuth_195"	
-				"tilt_azimuth_196"	
-				"tilt_azimuth_197"	
-				"tilt_azimuth_198"	
-				"tilt_azimuth_199"	
-				"tilt_azimuth_200"	
-				"tilt_azimuth_201"	
-				"tilt_azimuth_202"	
-				"tilt_azimuth_203"	
-				"tilt_azimuth_204"	
-				"tilt_azimuth_205"	
-				"tilt_azimuth_206"	
-				"tilt_azimuth_207"	
-				"tilt_azimuth_208"	
-				"tilt_azimuth_209"	
-				"tilt_azimuth_210"	
-				"tilt_azimuth_211"	
-				"tilt_azimuth_212"	
-				"tilt_azimuth_213"	
-				"tilt_azimuth_214"	
-				"tilt_azimuth_215"	
-				"tilt_azimuth_216"	
-				"tilt_azimuth_217"	
-				"tilt_azimuth_218"	
-				"tilt_azimuth_219"	
-				"tilt_azimuth_220"	
-				"tilt_azimuth_221"	
-				"tilt_azimuth_222"	
-				"tilt_azimuth_223"	
-				"tilt_azimuth_224"	
-				"tilt_azimuth_225"	
-				"tilt_azimuth_226"	
-				"tilt_azimuth_227"	
-				"tilt_azimuth_228"	
-				"tilt_azimuth_229"	
-				"tilt_azimuth_230"	
-				"tilt_azimuth_231"	
-				"tilt_azimuth_232"	
-				"tilt_azimuth_233"	
-				"tilt_azimuth_234"	
-				"tilt_azimuth_235"	
-				"tilt_azimuth_236"	
-				"tilt_azimuth_237"	
-				"tilt_azimuth_238"	
-				"tilt_azimuth_239"	
-				"tilt_azimuth_240"	
-				"tilt_azimuth_241"	
-				"tilt_azimuth_242"	
-				"tilt_azimuth_243"	
-				"tilt_azimuth_244"	
-				"tilt_azimuth_245"	
-				"tilt_azimuth_246"	
-				"tilt_azimuth_247"	
-				"tilt_azimuth_248"	
-				"tilt_azimuth_249"	
-				"tilt_azimuth_250"	
-				"tilt_azimuth_251"	
-				"tilt_azimuth_252"	
-				"tilt_azimuth_253"	
-				"tilt_azimuth_254"	
-				"tilt_azimuth_255"	
-				"tilt_azimuth_256"	
-				"tilt_azimuth_257"	
-				"tilt_azimuth_258"	
-				"tilt_azimuth_259"	
-				"tilt_azimuth_260"	
-				"tilt_azimuth_261"	
-				"tilt_azimuth_262"	
-				"tilt_azimuth_263"	
-				"tilt_azimuth_264"	
-				"tilt_azimuth_265"	
-				"tilt_azimuth_266"	
-				"tilt_azimuth_267"	
-				"tilt_azimuth_268"	
-				"tilt_azimuth_269"	
-				"tilt_azimuth_270"	
-				"tilt_azimuth_271"	
-				"tilt_azimuth_272"	
-				"tilt_azimuth_273"	
-				"tilt_azimuth_274"	
-				"tilt_azimuth_275"	
-				"tilt_azimuth_276"	
-				"tilt_azimuth_277"	
-				"tilt_azimuth_278"	
-				"tilt_azimuth_279"	
-				"tilt_azimuth_280"	
-				"tilt_azimuth_281"	
-				"tilt_azimuth_282"	
-				"tilt_azimuth_283"	
-				"tilt_azimuth_284"	
-				"tilt_azimuth_285"	
-				"tilt_azimuth_286"	
-				"tilt_azimuth_287"	
-				"tilt_azimuth_288"	
-"insolation_incident_yearly_3"			"Long Beach"	"tilt_azimuth_289"	
-				"tilt_azimuth_290"	
-				"tilt_azimuth_291"	
-				"tilt_azimuth_292"	
-				"tilt_azimuth_293"	
-				"tilt_azimuth_294"	
-				"tilt_azimuth_295"	
-				"tilt_azimuth_296"	
-				"tilt_azimuth_297"	
-				"tilt_azimuth_298"	
-				"tilt_azimuth_299"	
-				"tilt_azimuth_300"	
-				"tilt_azimuth_301"	
-				"tilt_azimuth_302"	
-				"tilt_azimuth_303"	
-				"tilt_azimuth_304"	
-				"tilt_azimuth_305"	
-				"tilt_azimuth_306"	
-				"tilt_azimuth_307"	
-				"tilt_azimuth_308"	
-				"tilt_azimuth_309"	
-				"tilt_azimuth_310"	
-				"tilt_azimuth_311"	
-				"tilt_azimuth_312"	
-				"tilt_azimuth_313"	
-				"tilt_azimuth_314"	
-				"tilt_azimuth_315"	
-				"tilt_azimuth_316"	
-				"tilt_azimuth_317"	
-				"tilt_azimuth_318"	
-				"tilt_azimuth_319"	
-				"tilt_azimuth_320"	
-				"tilt_azimuth_321"	
-				"tilt_azimuth_322"	
-				"tilt_azimuth_323"	
-				"tilt_azimuth_324"	
-				"tilt_azimuth_325"	
-				"tilt_azimuth_326"	
-				"tilt_azimuth_327"	
-				"tilt_azimuth_328"	
-				"tilt_azimuth_329"	
-				"tilt_azimuth_330"	
-				"tilt_azimuth_331"	
-				"tilt_azimuth_332"	
-				"tilt_azimuth_333"	
-				"tilt_azimuth_334"	
-				"tilt_azimuth_335"	
-				"tilt_azimuth_336"	
-				"tilt_azimuth_337"	
-				"tilt_azimuth_338"	
-				"tilt_azimuth_339"	
-				"tilt_azimuth_340"	
-				"tilt_azimuth_341"	
-				"tilt_azimuth_342"	
-				"tilt_azimuth_343"	
-				"tilt_azimuth_344"	
-				"tilt_azimuth_345"	
-				"tilt_azimuth_346"	
-				"tilt_azimuth_347"	
-				"tilt_azimuth_348"	
-				"tilt_azimuth_349"	
-				"tilt_azimuth_350"	
-				"tilt_azimuth_351"	
-				"tilt_azimuth_352"	
-				"tilt_azimuth_353"	
-				"tilt_azimuth_354"	
-				"tilt_azimuth_355"	
-				"tilt_azimuth_356"	
-				"tilt_azimuth_357"	
-				"tilt_azimuth_358"	
-				"tilt_azimuth_359"	
-				"tilt_azimuth_360"	
-				"tilt_azimuth_361"	
-				"tilt_azimuth_362"	
-				"tilt_azimuth_363"	
-				"tilt_azimuth_364"	
-				"tilt_azimuth_365"	
-				"tilt_azimuth_366"	
-				"tilt_azimuth_367"	
-				"tilt_azimuth_368"	
-				"tilt_azimuth_369"	
-				"tilt_azimuth_370"	
-				"tilt_azimuth_371"	
-				"tilt_azimuth_372"	
-				"tilt_azimuth_373"	
-				"tilt_azimuth_374"	
-				"tilt_azimuth_375"	
-				"tilt_azimuth_376"	
-				"tilt_azimuth_377"	
-				"tilt_azimuth_378"	
-				"tilt_azimuth_379"	
-				"tilt_azimuth_380"	
-				"tilt_azimuth_381"	
-				"tilt_azimuth_382"	
-				"tilt_azimuth_383"	
-				"tilt_azimuth_384"	
-				"tilt_azimuth_385"	
-				"tilt_azimuth_386"	
-				"tilt_azimuth_387"	
-				"tilt_azimuth_388"	
-				"tilt_azimuth_389"	
-				"tilt_azimuth_390"	
-				"tilt_azimuth_391"	
-				"tilt_azimuth_392"	
-				"tilt_azimuth_393"	
-				"tilt_azimuth_394"	
-				"tilt_azimuth_395"	
-				"tilt_azimuth_396"	
-				"tilt_azimuth_397"	
-				"tilt_azimuth_398"	
-				"tilt_azimuth_399"	
-				"tilt_azimuth_400"	
-				"tilt_azimuth_401"	
-				"tilt_azimuth_402"	
-				"tilt_azimuth_403"	
-				"tilt_azimuth_404"	
-				"tilt_azimuth_405"	
-				"tilt_azimuth_406"	
-				"tilt_azimuth_407"	
-				"tilt_azimuth_408"	
-				"tilt_azimuth_409"	
-				"tilt_azimuth_410"	
-				"tilt_azimuth_411"	
-				"tilt_azimuth_412"	
-				"tilt_azimuth_413"	
-				"tilt_azimuth_414"	
-				"tilt_azimuth_415"	
-				"tilt_azimuth_416"	
-				"tilt_azimuth_417"	
-				"tilt_azimuth_418"	
-				"tilt_azimuth_419"	
-				"tilt_azimuth_420"	
-				"tilt_azimuth_421"	
-				"tilt_azimuth_422"	
-				"tilt_azimuth_423"	
-				"tilt_azimuth_424"	
-				"tilt_azimuth_425"	
-				"tilt_azimuth_426"	
-				"tilt_azimuth_427"	
-				"tilt_azimuth_428"	
-				"tilt_azimuth_429"	
-				"tilt_azimuth_430"	
-				"tilt_azimuth_431"	
-				"tilt_azimuth_432"	
-"insolation_incident_yearly_4"			"San Diego"	"tilt_azimuth_433"	
-				"tilt_azimuth_434"	
-				"tilt_azimuth_435"	
-				"tilt_azimuth_436"	
-				"tilt_azimuth_437"	
-				"tilt_azimuth_438"	
-				"tilt_azimuth_439"	
-				"tilt_azimuth_440"	
-				"tilt_azimuth_441"	
-				"tilt_azimuth_442"	
-				"tilt_azimuth_443"	
-				"tilt_azimuth_444"	
-				"tilt_azimuth_445"	
-				"tilt_azimuth_446"	
-				"tilt_azimuth_447"	
-				"tilt_azimuth_448"	
-				"tilt_azimuth_449"	
-				"tilt_azimuth_450"	
-				"tilt_azimuth_451"	
-				"tilt_azimuth_452"	
-				"tilt_azimuth_453"	
-				"tilt_azimuth_454"	
-				"tilt_azimuth_455"	
-				"tilt_azimuth_456"	
-				"tilt_azimuth_457"	
-				"tilt_azimuth_458"	
-				"tilt_azimuth_459"	
-				"tilt_azimuth_460"	
-				"tilt_azimuth_461"	
-				"tilt_azimuth_462"	
-				"tilt_azimuth_463"	
-				"tilt_azimuth_464"	
-				"tilt_azimuth_465"	
-				"tilt_azimuth_466"	
-				"tilt_azimuth_467"	
-				"tilt_azimuth_468"	
-				"tilt_azimuth_469"	
-				"tilt_azimuth_470"	
-				"tilt_azimuth_471"	
-				"tilt_azimuth_472"	
-				"tilt_azimuth_473"	
-				"tilt_azimuth_474"	
-				"tilt_azimuth_475"	
-				"tilt_azimuth_476"	
-				"tilt_azimuth_477"	
-				"tilt_azimuth_478"	
-				"tilt_azimuth_479"	
-				"tilt_azimuth_480"	
-				"tilt_azimuth_481"	
-				"tilt_azimuth_482"	
-				"tilt_azimuth_483"	
-				"tilt_azimuth_484"	
-				"tilt_azimuth_485"	
-				"tilt_azimuth_486"	
-				"tilt_azimuth_487"	
-				"tilt_azimuth_488"	
-				"tilt_azimuth_489"	
-				"tilt_azimuth_490"	
-				"tilt_azimuth_491"	
-				"tilt_azimuth_492"	
-				"tilt_azimuth_493"	
-				"tilt_azimuth_494"	
-				"tilt_azimuth_495"	
-				"tilt_azimuth_496"	
-				"tilt_azimuth_497"	
-				"tilt_azimuth_498"	
-				"tilt_azimuth_499"	
-				"tilt_azimuth_500"	
-				"tilt_azimuth_501"	
-				"tilt_azimuth_502"	
-				"tilt_azimuth_503"	
-				"tilt_azimuth_504"	
-				"tilt_azimuth_505"	
-				"tilt_azimuth_506"	
-				"tilt_azimuth_507"	
-				"tilt_azimuth_508"	
-				"tilt_azimuth_509"	
-				"tilt_azimuth_510"	
-				"tilt_azimuth_511"	
-				"tilt_azimuth_512"	
-				"tilt_azimuth_513"	
-				"tilt_azimuth_514"	
-				"tilt_azimuth_515"	
-				"tilt_azimuth_516"	
-				"tilt_azimuth_517"	
-				"tilt_azimuth_518"	
-				"tilt_azimuth_519"	
-				"tilt_azimuth_520"	
-				"tilt_azimuth_521"	
-				"tilt_azimuth_522"	
-				"tilt_azimuth_523"	
-				"tilt_azimuth_524"	
-				"tilt_azimuth_525"	
-				"tilt_azimuth_526"	
-				"tilt_azimuth_527"	
-				"tilt_azimuth_528"	
-				"tilt_azimuth_529"	
-				"tilt_azimuth_530"	
-				"tilt_azimuth_531"	
-				"tilt_azimuth_532"	
-				"tilt_azimuth_533"	
-				"tilt_azimuth_534"	
-				"tilt_azimuth_535"	
-				"tilt_azimuth_536"	
-				"tilt_azimuth_537"	
-				"tilt_azimuth_538"	
-				"tilt_azimuth_539"	
-				"tilt_azimuth_540"	
-				"tilt_azimuth_541"	
-				"tilt_azimuth_542"	
-				"tilt_azimuth_543"	
-				"tilt_azimuth_544"	
-				"tilt_azimuth_545"	
-				"tilt_azimuth_546"	
-				"tilt_azimuth_547"	
-				"tilt_azimuth_548"	
-				"tilt_azimuth_549"	
-				"tilt_azimuth_550"	
-				"tilt_azimuth_551"	
-				"tilt_azimuth_552"	
-				"tilt_azimuth_553"	
-				"tilt_azimuth_554"	
-				"tilt_azimuth_555"	
-				"tilt_azimuth_556"	
-				"tilt_azimuth_557"	
-				"tilt_azimuth_558"	
-				"tilt_azimuth_559"	
-				"tilt_azimuth_560"	
-				"tilt_azimuth_561"	
-				"tilt_azimuth_562"	
-				"tilt_azimuth_563"	
-				"tilt_azimuth_564"	
-				"tilt_azimuth_565"	
-				"tilt_azimuth_566"	
-				"tilt_azimuth_567"	
-				"tilt_azimuth_568"	
-				"tilt_azimuth_569"	
-				"tilt_azimuth_570"	
-				"tilt_azimuth_571"	
-				"tilt_azimuth_572"	
-				"tilt_azimuth_573"	
-				"tilt_azimuth_574"	
-				"tilt_azimuth_575"	
-				"tilt_azimuth_576"	
-"insolation_incident_yearly_5"			"Sanata Maria"	"tilt_azimuth_577"	
-				"tilt_azimuth_578"	
-				"tilt_azimuth_579"	
-				"tilt_azimuth_580"	
-				"tilt_azimuth_581"	
-				"tilt_azimuth_582"	
-				"tilt_azimuth_583"	
-				"tilt_azimuth_584"	
-				"tilt_azimuth_585"	
-				"tilt_azimuth_586"	
-				"tilt_azimuth_587"	
-				"tilt_azimuth_588"	
-				"tilt_azimuth_589"	
-				"tilt_azimuth_590"	
-				"tilt_azimuth_591"	
-				"tilt_azimuth_592"	
-				"tilt_azimuth_593"	
-				"tilt_azimuth_594"	
-				"tilt_azimuth_595"	
-				"tilt_azimuth_596"	
-				"tilt_azimuth_597"	
-				"tilt_azimuth_598"	
-				"tilt_azimuth_599"	
-				"tilt_azimuth_600"	
-				"tilt_azimuth_601"	
-				"tilt_azimuth_602"	
-				"tilt_azimuth_603"	
-				"tilt_azimuth_604"	
-				"tilt_azimuth_605"	
-				"tilt_azimuth_606"	
-				"tilt_azimuth_607"	
-				"tilt_azimuth_608"	
-				"tilt_azimuth_609"	
-				"tilt_azimuth_610"	
-				"tilt_azimuth_611"	
-				"tilt_azimuth_612"	
-				"tilt_azimuth_613"	
-				"tilt_azimuth_614"	
-				"tilt_azimuth_615"	
-				"tilt_azimuth_616"	
-				"tilt_azimuth_617"	
-				"tilt_azimuth_618"	
-				"tilt_azimuth_619"	
-				"tilt_azimuth_620"	
-				"tilt_azimuth_621"	
-				"tilt_azimuth_622"	
-				"tilt_azimuth_623"	
-				"tilt_azimuth_624"	
-				"tilt_azimuth_625"	
-				"tilt_azimuth_626"	
-				"tilt_azimuth_627"	
-				"tilt_azimuth_628"	
-				"tilt_azimuth_629"	
-				"tilt_azimuth_630"	
-				"tilt_azimuth_631"	
-				"tilt_azimuth_632"	
-				"tilt_azimuth_633"	
-				"tilt_azimuth_634"	
-				"tilt_azimuth_635"	
-				"tilt_azimuth_636"	
-				"tilt_azimuth_637"	
-				"tilt_azimuth_638"	
-				"tilt_azimuth_639"	
-				"tilt_azimuth_640"	
-				"tilt_azimuth_641"	
-				"tilt_azimuth_642"	
-				"tilt_azimuth_643"	
-				"tilt_azimuth_644"	
-				"tilt_azimuth_645"	
-				"tilt_azimuth_646"	
-				"tilt_azimuth_647"	
-				"tilt_azimuth_648"	
-				"tilt_azimuth_649"	
-				"tilt_azimuth_650"	
-				"tilt_azimuth_651"	
-				"tilt_azimuth_652"	
-				"tilt_azimuth_653"	
-				"tilt_azimuth_654"	
-				"tilt_azimuth_655"	
-				"tilt_azimuth_656"	
-				"tilt_azimuth_657"	
-				"tilt_azimuth_658"	
-				"tilt_azimuth_659"	
-				"tilt_azimuth_660"	
-				"tilt_azimuth_661"	
-				"tilt_azimuth_662"	
-				"tilt_azimuth_663"	
-				"tilt_azimuth_664"	
-				"tilt_azimuth_665"	
-				"tilt_azimuth_666"	
-				"tilt_azimuth_667"	
-				"tilt_azimuth_668"	
-				"tilt_azimuth_669"	
-				"tilt_azimuth_670"	
-				"tilt_azimuth_671"	
-				"tilt_azimuth_672"	
-				"tilt_azimuth_673"	
-				"tilt_azimuth_674"	
-				"tilt_azimuth_675"	
-				"tilt_azimuth_676"	
-				"tilt_azimuth_677"	
-				"tilt_azimuth_678"	
-				"tilt_azimuth_679"	
-				"tilt_azimuth_680"	
-				"tilt_azimuth_681"	
-				"tilt_azimuth_682"	
-				"tilt_azimuth_683"	
-				"tilt_azimuth_684"	
-				"tilt_azimuth_685"	
-				"tilt_azimuth_686"	
-				"tilt_azimuth_687"	
-				"tilt_azimuth_688"	
-				"tilt_azimuth_689"	
-				"tilt_azimuth_690"	
-				"tilt_azimuth_691"	
-				"tilt_azimuth_692"	
-				"tilt_azimuth_693"	
-				"tilt_azimuth_694"	
-				"tilt_azimuth_695"	
-				"tilt_azimuth_696"	
-				"tilt_azimuth_697"	
-				"tilt_azimuth_698"	
-				"tilt_azimuth_699"	
-				"tilt_azimuth_700"	
-				"tilt_azimuth_701"	
-				"tilt_azimuth_702"	
-				"tilt_azimuth_703"	
-				"tilt_azimuth_704"	
-				"tilt_azimuth_705"	
-				"tilt_azimuth_706"	
-				"tilt_azimuth_707"	
-				"tilt_azimuth_708"	
-				"tilt_azimuth_709"	
-				"tilt_azimuth_710"	
-				"tilt_azimuth_711"	
-				"tilt_azimuth_712"	
-				"tilt_azimuth_713"	
-				"tilt_azimuth_714"	
-				"tilt_azimuth_715"	
-				"tilt_azimuth_716"	
-				"tilt_azimuth_717"	
-				"tilt_azimuth_718"	
-				"tilt_azimuth_719"	
-				"tilt_azimuth_720"	
-"insolation_incident_yearly_6"			"Bakersfield"	"tilt_azimuth_721"	
-				"tilt_azimuth_722"	
-				"tilt_azimuth_723"	
-				"tilt_azimuth_724"	
-				"tilt_azimuth_725"	
-				"tilt_azimuth_726"	
-				"tilt_azimuth_727"	
-				"tilt_azimuth_728"	
-				"tilt_azimuth_729"	
-				"tilt_azimuth_730"	
-				"tilt_azimuth_731"	
-				"tilt_azimuth_732"	
-				"tilt_azimuth_733"	
-				"tilt_azimuth_734"	
-				"tilt_azimuth_735"	
-				"tilt_azimuth_736"	
-				"tilt_azimuth_737"	
-				"tilt_azimuth_738"	
-				"tilt_azimuth_739"	
-				"tilt_azimuth_740"	
-				"tilt_azimuth_741"	
-				"tilt_azimuth_742"	
-				"tilt_azimuth_743"	
-				"tilt_azimuth_744"	
-				"tilt_azimuth_745"	
-				"tilt_azimuth_746"	
-				"tilt_azimuth_747"	
-				"tilt_azimuth_748"	
-				"tilt_azimuth_749"	
-				"tilt_azimuth_750"	
-				"tilt_azimuth_751"	
-				"tilt_azimuth_752"	
-				"tilt_azimuth_753"	
-				"tilt_azimuth_754"	
-				"tilt_azimuth_755"	
-				"tilt_azimuth_756"	
-				"tilt_azimuth_757"	
-				"tilt_azimuth_758"	
-				"tilt_azimuth_759"	
-				"tilt_azimuth_760"	
-				"tilt_azimuth_761"	
-				"tilt_azimuth_762"	
-				"tilt_azimuth_763"	
-				"tilt_azimuth_764"	
-				"tilt_azimuth_765"	
-				"tilt_azimuth_766"	
-				"tilt_azimuth_767"	
-				"tilt_azimuth_768"	
-				"tilt_azimuth_769"	
-				"tilt_azimuth_770"	
-				"tilt_azimuth_771"	
-				"tilt_azimuth_772"	
-				"tilt_azimuth_773"	
-				"tilt_azimuth_774"	
-				"tilt_azimuth_775"	
-				"tilt_azimuth_776"	
-				"tilt_azimuth_777"	
-				"tilt_azimuth_778"	
-				"tilt_azimuth_779"	
-				"tilt_azimuth_780"	
-				"tilt_azimuth_781"	
-				"tilt_azimuth_782"	
-				"tilt_azimuth_783"	
-				"tilt_azimuth_784"	
-				"tilt_azimuth_785"	
-				"tilt_azimuth_786"	
-				"tilt_azimuth_787"	
-				"tilt_azimuth_788"	
-				"tilt_azimuth_789"	
-				"tilt_azimuth_790"	
-				"tilt_azimuth_791"	
-				"tilt_azimuth_792"	
-				"tilt_azimuth_793"	
-				"tilt_azimuth_794"	
-				"tilt_azimuth_795"	
-				"tilt_azimuth_796"	
-				"tilt_azimuth_797"	
-				"tilt_azimuth_798"	
-				"tilt_azimuth_799"	
-				"tilt_azimuth_800"	
-				"tilt_azimuth_801"	
-				"tilt_azimuth_802"	
-				"tilt_azimuth_803"	
-				"tilt_azimuth_804"	
-				"tilt_azimuth_805"	
-				"tilt_azimuth_806"	
-				"tilt_azimuth_807"	
-				"tilt_azimuth_808"	
-				"tilt_azimuth_809"	
-				"tilt_azimuth_810"	
-				"tilt_azimuth_811"	
-				"tilt_azimuth_812"	
-				"tilt_azimuth_813"	
-				"tilt_azimuth_814"	
-				"tilt_azimuth_815"	
-				"tilt_azimuth_816"	
-				"tilt_azimuth_817"	
-				"tilt_azimuth_818"	
-				"tilt_azimuth_819"	
-				"tilt_azimuth_820"	
-				"tilt_azimuth_821"	
-				"tilt_azimuth_822"	
-				"tilt_azimuth_823"	
-				"tilt_azimuth_824"	
-				"tilt_azimuth_825"	
-				"tilt_azimuth_826"	
-				"tilt_azimuth_827"	
-				"tilt_azimuth_828"	
-				"tilt_azimuth_829"	
-				"tilt_azimuth_830"	
-				"tilt_azimuth_831"	
-				"tilt_azimuth_832"	
-				"tilt_azimuth_833"	
-				"tilt_azimuth_834"	
-				"tilt_azimuth_835"	
-				"tilt_azimuth_836"	
-				"tilt_azimuth_837"	
-				"tilt_azimuth_838"	
-				"tilt_azimuth_839"	
-				"tilt_azimuth_840"	
-				"tilt_azimuth_841"	
-				"tilt_azimuth_842"	
-				"tilt_azimuth_843"	
-				"tilt_azimuth_844"	
-				"tilt_azimuth_845"	
-				"tilt_azimuth_846"	
-				"tilt_azimuth_847"	
-				"tilt_azimuth_848"	
-				"tilt_azimuth_849"	
-				"tilt_azimuth_850"	
-				"tilt_azimuth_851"	
-				"tilt_azimuth_852"	
-				"tilt_azimuth_853"	
-				"tilt_azimuth_854"	
-				"tilt_azimuth_855"	
-				"tilt_azimuth_856"	
-				"tilt_azimuth_857"	
-				"tilt_azimuth_858"	
-				"tilt_azimuth_859"	
-				"tilt_azimuth_860"	
-				"tilt_azimuth_861"	
-				"tilt_azimuth_862"	
-				"tilt_azimuth_863"	
-				"tilt_azimuth_864"	
-"insolation_incident_yearly_7"			"Fresno"	"tilt_azimuth_865"	
-				"tilt_azimuth_866"	
-				"tilt_azimuth_867"	
-				"tilt_azimuth_868"	
-				"tilt_azimuth_869"	
-				"tilt_azimuth_870"	
-				"tilt_azimuth_871"	
-				"tilt_azimuth_872"	
-				"tilt_azimuth_873"	
-				"tilt_azimuth_874"	
-				"tilt_azimuth_875"	
-				"tilt_azimuth_876"	
-				"tilt_azimuth_877"	
-				"tilt_azimuth_878"	
-				"tilt_azimuth_879"	
-				"tilt_azimuth_880"	
-				"tilt_azimuth_881"	
-				"tilt_azimuth_882"	
-				"tilt_azimuth_883"	
-				"tilt_azimuth_884"	
-				"tilt_azimuth_885"	
-				"tilt_azimuth_886"	
-				"tilt_azimuth_887"	
-				"tilt_azimuth_888"	
-				"tilt_azimuth_889"	
-				"tilt_azimuth_890"	
-				"tilt_azimuth_891"	
-				"tilt_azimuth_892"	
-				"tilt_azimuth_893"	
-				"tilt_azimuth_894"	
-				"tilt_azimuth_895"	
-				"tilt_azimuth_896"	
-				"tilt_azimuth_897"	
-				"tilt_azimuth_898"	
-				"tilt_azimuth_899"	
-				"tilt_azimuth_900"	
-				"tilt_azimuth_901"	
-				"tilt_azimuth_902"	
-				"tilt_azimuth_903"	
-				"tilt_azimuth_904"	
-				"tilt_azimuth_905"	
-				"tilt_azimuth_906"	
-				"tilt_azimuth_907"	
-				"tilt_azimuth_908"	
-				"tilt_azimuth_909"	
-				"tilt_azimuth_910"	
-				"tilt_azimuth_911"	
-				"tilt_azimuth_912"	
-				"tilt_azimuth_913"	
-				"tilt_azimuth_914"	
-				"tilt_azimuth_915"	
-				"tilt_azimuth_916"	
-				"tilt_azimuth_917"	
-				"tilt_azimuth_918"	
-				"tilt_azimuth_919"	
-				"tilt_azimuth_920"	
-				"tilt_azimuth_921"	
-				"tilt_azimuth_922"	
-				"tilt_azimuth_923"	
-				"tilt_azimuth_924"	
-				"tilt_azimuth_925"	
-				"tilt_azimuth_926"	
-				"tilt_azimuth_927"	
-				"tilt_azimuth_928"	
-				"tilt_azimuth_929"	
-				"tilt_azimuth_930"	
-				"tilt_azimuth_931"	
-				"tilt_azimuth_932"	
-				"tilt_azimuth_933"	
-				"tilt_azimuth_934"	
-				"tilt_azimuth_935"	
-				"tilt_azimuth_936"	
-				"tilt_azimuth_937"	
-				"tilt_azimuth_938"	
-				"tilt_azimuth_939"	
-				"tilt_azimuth_940"	
-				"tilt_azimuth_941"	
-				"tilt_azimuth_942"	
-				"tilt_azimuth_943"	
-				"tilt_azimuth_944"	
-				"tilt_azimuth_945"	
-				"tilt_azimuth_946"	
-				"tilt_azimuth_947"	
-				"tilt_azimuth_948"	
-				"tilt_azimuth_949"	
-				"tilt_azimuth_950"	
-				"tilt_azimuth_951"	
-				"tilt_azimuth_952"	
-				"tilt_azimuth_953"	
-				"tilt_azimuth_954"	
-				"tilt_azimuth_955"	
-				"tilt_azimuth_956"	
-				"tilt_azimuth_957"	
-				"tilt_azimuth_958"	
-				"tilt_azimuth_959"	
-				"tilt_azimuth_960"	
-				"tilt_azimuth_961"	
-				"tilt_azimuth_962"	
-				"tilt_azimuth_963"	
-				"tilt_azimuth_964"	
-				"tilt_azimuth_965"	
-				"tilt_azimuth_966"	
-				"tilt_azimuth_967"	
-				"tilt_azimuth_968"	
-				"tilt_azimuth_969"	
-				"tilt_azimuth_970"	
-				"tilt_azimuth_971"	
-				"tilt_azimuth_972"	
-				"tilt_azimuth_973"	
-				"tilt_azimuth_974"	
-				"tilt_azimuth_975"	
-				"tilt_azimuth_976"	
-				"tilt_azimuth_977"	
-				"tilt_azimuth_978"	
-				"tilt_azimuth_979"	
-				"tilt_azimuth_980"	
-				"tilt_azimuth_981"	
-				"tilt_azimuth_982"	
-				"tilt_azimuth_983"	
-				"tilt_azimuth_984"	
-				"tilt_azimuth_985"	
-				"tilt_azimuth_986"	
-				"tilt_azimuth_987"	
-				"tilt_azimuth_988"	
-				"tilt_azimuth_989"	
-				"tilt_azimuth_990"	
-				"tilt_azimuth_991"	
-				"tilt_azimuth_992"	
-				"tilt_azimuth_993"	
-				"tilt_azimuth_994"	
-				"tilt_azimuth_995"	
-				"tilt_azimuth_996"	
-				"tilt_azimuth_997"	
-				"tilt_azimuth_998"	
-				"tilt_azimuth_999"	
-				"tilt_azimuth_1000"	
-				"tilt_azimuth_1001"	
-				"tilt_azimuth_1002"	
-				"tilt_azimuth_1003"	
-				"tilt_azimuth_1004"	
-				"tilt_azimuth_1005"	
-				"tilt_azimuth_1006"	
-				"tilt_azimuth_1007"	
-				"tilt_azimuth_1008"	
-"insolation_incident_yearly_8"			"San Francisco"	"tilt_azimuth_1009"	
-				"tilt_azimuth_1010"	
-				"tilt_azimuth_1011"	
-				"tilt_azimuth_1012"	
-				"tilt_azimuth_1013"	
-				"tilt_azimuth_1014"	
-				"tilt_azimuth_1015"	
-				"tilt_azimuth_1016"	
-				"tilt_azimuth_1017"	
-				"tilt_azimuth_1018"	
-				"tilt_azimuth_1019"	
-				"tilt_azimuth_1020"	
-				"tilt_azimuth_1021"	
-				"tilt_azimuth_1022"	
-				"tilt_azimuth_1023"	
-				"tilt_azimuth_1024"	
-				"tilt_azimuth_1025"	
-				"tilt_azimuth_1026"	
-				"tilt_azimuth_1027"	
-				"tilt_azimuth_1028"	
-				"tilt_azimuth_1029"	
-				"tilt_azimuth_1030"	
-				"tilt_azimuth_1031"	
-				"tilt_azimuth_1032"	
-				"tilt_azimuth_1033"	
-				"tilt_azimuth_1034"	
-				"tilt_azimuth_1035"	
-				"tilt_azimuth_1036"	
-				"tilt_azimuth_1037"	
-				"tilt_azimuth_1038"	
-				"tilt_azimuth_1039"	
-				"tilt_azimuth_1040"	
-				"tilt_azimuth_1041"	
-				"tilt_azimuth_1042"	
-				"tilt_azimuth_1043"	
-				"tilt_azimuth_1044"	
-				"tilt_azimuth_1045"	
-				"tilt_azimuth_1046"	
-				"tilt_azimuth_1047"	
-				"tilt_azimuth_1048"	
-				"tilt_azimuth_1049"	
-				"tilt_azimuth_1050"	
-				"tilt_azimuth_1051"	
-				"tilt_azimuth_1052"	
-				"tilt_azimuth_1053"	
-				"tilt_azimuth_1054"	
-				"tilt_azimuth_1055"	
-				"tilt_azimuth_1056"	
-				"tilt_azimuth_1057"	
-				"tilt_azimuth_1058"	
-				"tilt_azimuth_1059"	
-				"tilt_azimuth_1060"	
-				"tilt_azimuth_1061"	
-				"tilt_azimuth_1062"	
-				"tilt_azimuth_1063"	
-				"tilt_azimuth_1064"	
-				"tilt_azimuth_1065"	
-				"tilt_azimuth_1066"	
-				"tilt_azimuth_1067"	
-				"tilt_azimuth_1068"	
-				"tilt_azimuth_1069"	
-				"tilt_azimuth_1070"	
-				"tilt_azimuth_1071"	
-				"tilt_azimuth_1072"	
-				"tilt_azimuth_1073"	
-				"tilt_azimuth_1074"	
-				"tilt_azimuth_1075"	
-				"tilt_azimuth_1076"	
-				"tilt_azimuth_1077"	
-				"tilt_azimuth_1078"	
-				"tilt_azimuth_1079"	
-				"tilt_azimuth_1080"	
-				"tilt_azimuth_1081"	
-				"tilt_azimuth_1082"	
-				"tilt_azimuth_1083"	
-				"tilt_azimuth_1084"	
-				"tilt_azimuth_1085"	
-				"tilt_azimuth_1086"	
-				"tilt_azimuth_1087"	
-				"tilt_azimuth_1088"	
-				"tilt_azimuth_1089"	
-				"tilt_azimuth_1090"	
-				"tilt_azimuth_1091"	
-				"tilt_azimuth_1092"	
-				"tilt_azimuth_1093"	
-				"tilt_azimuth_1094"	
-				"tilt_azimuth_1095"	
-				"tilt_azimuth_1096"	
-				"tilt_azimuth_1097"	
-				"tilt_azimuth_1098"	
-				"tilt_azimuth_1099"	
-				"tilt_azimuth_1100"	
-				"tilt_azimuth_1101"	
-				"tilt_azimuth_1102"	
-				"tilt_azimuth_1103"	
-				"tilt_azimuth_1104"	
-				"tilt_azimuth_1105"	
-				"tilt_azimuth_1106"	
-				"tilt_azimuth_1107"	
-				"tilt_azimuth_1108"	
-				"tilt_azimuth_1109"	
-				"tilt_azimuth_1110"	
-				"tilt_azimuth_1111"	
-				"tilt_azimuth_1112"	
-				"tilt_azimuth_1113"	
-				"tilt_azimuth_1114"	
-				"tilt_azimuth_1115"	
-				"tilt_azimuth_1116"	
-				"tilt_azimuth_1117"	
-				"tilt_azimuth_1118"	
-				"tilt_azimuth_1119"	
-				"tilt_azimuth_1120"	
-				"tilt_azimuth_1121"	
-				"tilt_azimuth_1122"	
-				"tilt_azimuth_1123"	
-				"tilt_azimuth_1124"	
-				"tilt_azimuth_1125"	
-				"tilt_azimuth_1126"	
-				"tilt_azimuth_1127"	
-				"tilt_azimuth_1128"	
-				"tilt_azimuth_1129"	
-				"tilt_azimuth_1130"	
-				"tilt_azimuth_1131"	
-				"tilt_azimuth_1132"	
-				"tilt_azimuth_1133"	
-				"tilt_azimuth_1134"	
-				"tilt_azimuth_1135"	
-				"tilt_azimuth_1136"	
-				"tilt_azimuth_1137"	
-				"tilt_azimuth_1138"	
-				"tilt_azimuth_1139"	
-				"tilt_azimuth_1140"	
-				"tilt_azimuth_1141"	
-				"tilt_azimuth_1142"	
-				"tilt_azimuth_1143"	
-				"tilt_azimuth_1144"	
-				"tilt_azimuth_1145"	
-				"tilt_azimuth_1146"	
-				"tilt_azimuth_1147"	
-				"tilt_azimuth_1148"	
-				"tilt_azimuth_1149"	
-				"tilt_azimuth_1150"	
-				"tilt_azimuth_1151"	
-				"tilt_azimuth_1152"	
-"insolation_incident_yearly_9"			"Sacramento"	"tilt_azimuth_1153"	
-				"tilt_azimuth_1154"	
-				"tilt_azimuth_1155"	
-				"tilt_azimuth_1156"	
-				"tilt_azimuth_1157"	
-				"tilt_azimuth_1158"	
-				"tilt_azimuth_1159"	
-				"tilt_azimuth_1160"	
-				"tilt_azimuth_1161"	
-				"tilt_azimuth_1162"	
-				"tilt_azimuth_1163"	
-				"tilt_azimuth_1164"	
-				"tilt_azimuth_1165"	
-				"tilt_azimuth_1166"	
-				"tilt_azimuth_1167"	
-				"tilt_azimuth_1168"	
-				"tilt_azimuth_1169"	
-				"tilt_azimuth_1170"	
-				"tilt_azimuth_1171"	
-				"tilt_azimuth_1172"	
-				"tilt_azimuth_1173"	
-				"tilt_azimuth_1174"	
-				"tilt_azimuth_1175"	
-				"tilt_azimuth_1176"	
-				"tilt_azimuth_1177"	
-				"tilt_azimuth_1178"	
-				"tilt_azimuth_1179"	
-				"tilt_azimuth_1180"	
-				"tilt_azimuth_1181"	
-				"tilt_azimuth_1182"	
-				"tilt_azimuth_1183"	
-				"tilt_azimuth_1184"	
-				"tilt_azimuth_1185"	
-				"tilt_azimuth_1186"	
-				"tilt_azimuth_1187"	
-				"tilt_azimuth_1188"	
-				"tilt_azimuth_1189"	
-				"tilt_azimuth_1190"	
-				"tilt_azimuth_1191"	
-				"tilt_azimuth_1192"	
-				"tilt_azimuth_1193"	
-				"tilt_azimuth_1194"	
-				"tilt_azimuth_1195"	
-				"tilt_azimuth_1196"	
-				"tilt_azimuth_1197"	
-				"tilt_azimuth_1198"	
-				"tilt_azimuth_1199"	
-				"tilt_azimuth_1200"	
-				"tilt_azimuth_1201"	
-				"tilt_azimuth_1202"	
-				"tilt_azimuth_1203"	
-				"tilt_azimuth_1204"	
-				"tilt_azimuth_1205"	
-				"tilt_azimuth_1206"	
-				"tilt_azimuth_1207"	
-				"tilt_azimuth_1208"	
-				"tilt_azimuth_1209"	
-				"tilt_azimuth_1210"	
-				"tilt_azimuth_1211"	
-				"tilt_azimuth_1212"	
-				"tilt_azimuth_1213"	
-				"tilt_azimuth_1214"	
-				"tilt_azimuth_1215"	
-				"tilt_azimuth_1216"	
-				"tilt_azimuth_1217"	
-				"tilt_azimuth_1218"	
-				"tilt_azimuth_1219"	
-				"tilt_azimuth_1220"	
-				"tilt_azimuth_1221"	
-				"tilt_azimuth_1222"	
-				"tilt_azimuth_1223"	
-				"tilt_azimuth_1224"	
-				"tilt_azimuth_1225"	
-				"tilt_azimuth_1226"	
-				"tilt_azimuth_1227"	
-				"tilt_azimuth_1228"	
-				"tilt_azimuth_1229"	
-				"tilt_azimuth_1230"	
-				"tilt_azimuth_1231"	
-				"tilt_azimuth_1232"	
-				"tilt_azimuth_1233"	
-				"tilt_azimuth_1234"	
-				"tilt_azimuth_1235"	
-				"tilt_azimuth_1236"	
-				"tilt_azimuth_1237"	
-				"tilt_azimuth_1238"	
-				"tilt_azimuth_1239"	
-				"tilt_azimuth_1240"	
-				"tilt_azimuth_1241"	
-				"tilt_azimuth_1242"	
-				"tilt_azimuth_1243"	
-				"tilt_azimuth_1244"	
-				"tilt_azimuth_1245"	
-				"tilt_azimuth_1246"	
-				"tilt_azimuth_1247"	
-				"tilt_azimuth_1248"	
-				"tilt_azimuth_1249"	
-				"tilt_azimuth_1250"	
-				"tilt_azimuth_1251"	
-				"tilt_azimuth_1252"	
-				"tilt_azimuth_1253"	
-				"tilt_azimuth_1254"	
-				"tilt_azimuth_1255"	
-				"tilt_azimuth_1256"	
-				"tilt_azimuth_1257"	
-				"tilt_azimuth_1258"	
-				"tilt_azimuth_1259"	
-				"tilt_azimuth_1260"	
-				"tilt_azimuth_1261"	
-				"tilt_azimuth_1262"	
-				"tilt_azimuth_1263"	
-				"tilt_azimuth_1264"	
-				"tilt_azimuth_1265"	
-				"tilt_azimuth_1266"	
-				"tilt_azimuth_1267"	
-				"tilt_azimuth_1268"	
-				"tilt_azimuth_1269"	
-				"tilt_azimuth_1270"	
-				"tilt_azimuth_1271"	
-				"tilt_azimuth_1272"	
-				"tilt_azimuth_1273"	
-				"tilt_azimuth_1274"	
-				"tilt_azimuth_1275"	
-				"tilt_azimuth_1276"	
-				"tilt_azimuth_1277"	
-				"tilt_azimuth_1278"	
-				"tilt_azimuth_1279"	
-				"tilt_azimuth_1280"	
-				"tilt_azimuth_1281"	
-				"tilt_azimuth_1282"	
-				"tilt_azimuth_1283"	
-				"tilt_azimuth_1284"	
-				"tilt_azimuth_1285"	
-				"tilt_azimuth_1286"	
-				"tilt_azimuth_1287"	
-				"tilt_azimuth_1288"	
-				"tilt_azimuth_1289"	
-				"tilt_azimuth_1290"	
-				"tilt_azimuth_1291"	
-				"tilt_azimuth_1292"	
-				"tilt_azimuth_1293"	
-				"tilt_azimuth_1294"	
-				"tilt_azimuth_1295"	
-				"tilt_azimuth_1296"	
-"insolation_incident_yearly_10"			"Arcata"	"tilt_azimuth_1297"	
-				"tilt_azimuth_1298"	
-				"tilt_azimuth_1299"	
-				"tilt_azimuth_1300"	
-				"tilt_azimuth_1301"	
-				"tilt_azimuth_1302"	
-				"tilt_azimuth_1303"	
-				"tilt_azimuth_1304"	
-				"tilt_azimuth_1305"	
-				"tilt_azimuth_1306"	
-				"tilt_azimuth_1307"	
-				"tilt_azimuth_1308"	
-				"tilt_azimuth_1309"	
-				"tilt_azimuth_1310"	
-				"tilt_azimuth_1311"	
-				"tilt_azimuth_1312"	
-				"tilt_azimuth_1313"	
-				"tilt_azimuth_1314"	
-				"tilt_azimuth_1315"	
-				"tilt_azimuth_1316"	
-				"tilt_azimuth_1317"	
-				"tilt_azimuth_1318"	
-				"tilt_azimuth_1319"	
-				"tilt_azimuth_1320"	
-				"tilt_azimuth_1321"	
-				"tilt_azimuth_1322"	
-				"tilt_azimuth_1323"	
-				"tilt_azimuth_1324"	
-				"tilt_azimuth_1325"	
-				"tilt_azimuth_1326"	
-				"tilt_azimuth_1327"	
-				"tilt_azimuth_1328"	
-				"tilt_azimuth_1329"	
-				"tilt_azimuth_1330"	
-				"tilt_azimuth_1331"	
-				"tilt_azimuth_1332"	
-				"tilt_azimuth_1333"	
-				"tilt_azimuth_1334"	
-				"tilt_azimuth_1335"	
-				"tilt_azimuth_1336"	
-				"tilt_azimuth_1337"	
-				"tilt_azimuth_1338"	
-				"tilt_azimuth_1339"	
-				"tilt_azimuth_1340"	
-				"tilt_azimuth_1341"	
-				"tilt_azimuth_1342"	
-				"tilt_azimuth_1343"	
-				"tilt_azimuth_1344"	
-				"tilt_azimuth_1345"	
-				"tilt_azimuth_1346"	
-				"tilt_azimuth_1347"	
-				"tilt_azimuth_1348"	
-				"tilt_azimuth_1349"	
-				"tilt_azimuth_1350"	
-				"tilt_azimuth_1351"	
-				"tilt_azimuth_1352"	
-				"tilt_azimuth_1353"	
-				"tilt_azimuth_1354"	
-				"tilt_azimuth_1355"	
-				"tilt_azimuth_1356"	
-				"tilt_azimuth_1357"	
-				"tilt_azimuth_1358"	
-				"tilt_azimuth_1359"	
-				"tilt_azimuth_1360"	
-				"tilt_azimuth_1361"	
-				"tilt_azimuth_1362"	
-				"tilt_azimuth_1363"	
-				"tilt_azimuth_1364"	
-				"tilt_azimuth_1365"	
-				"tilt_azimuth_1366"	
-				"tilt_azimuth_1367"	
-				"tilt_azimuth_1368"	
-				"tilt_azimuth_1369"	
-				"tilt_azimuth_1370"	
-				"tilt_azimuth_1371"	
-				"tilt_azimuth_1372"	
-				"tilt_azimuth_1373"	
-				"tilt_azimuth_1374"	
-				"tilt_azimuth_1375"	
-				"tilt_azimuth_1376"	
-				"tilt_azimuth_1377"	
-				"tilt_azimuth_1378"	
-				"tilt_azimuth_1379"	
-				"tilt_azimuth_1380"	
-				"tilt_azimuth_1381"	
-				"tilt_azimuth_1382"	
-				"tilt_azimuth_1383"	
-				"tilt_azimuth_1384"	
-				"tilt_azimuth_1385"	
-				"tilt_azimuth_1386"	
-				"tilt_azimuth_1387"	
-				"tilt_azimuth_1388"	
-				"tilt_azimuth_1389"	
-				"tilt_azimuth_1390"	
-				"tilt_azimuth_1391"	
-				"tilt_azimuth_1392"	
-				"tilt_azimuth_1393"	
-				"tilt_azimuth_1394"	
-				"tilt_azimuth_1395"	
-				"tilt_azimuth_1396"	
-				"tilt_azimuth_1397"	
-				"tilt_azimuth_1398"	
-				"tilt_azimuth_1399"	
-				"tilt_azimuth_1400"	
-				"tilt_azimuth_1401"	
-				"tilt_azimuth_1402"	
-				"tilt_azimuth_1403"	
-				"tilt_azimuth_1404"	
-				"tilt_azimuth_1405"	
-				"tilt_azimuth_1406"	
-				"tilt_azimuth_1407"	
-				"tilt_azimuth_1408"	
-				"tilt_azimuth_1409"	
-				"tilt_azimuth_1410"	
-				"tilt_azimuth_1411"	
-				"tilt_azimuth_1412"	
-				"tilt_azimuth_1413"	
-				"tilt_azimuth_1414"	
-				"tilt_azimuth_1415"	
-				"tilt_azimuth_1416"	
-				"tilt_azimuth_1417"	
-				"tilt_azimuth_1418"	
-				"tilt_azimuth_1419"	
-				"tilt_azimuth_1420"	
-				"tilt_azimuth_1421"	
-				"tilt_azimuth_1422"	
-				"tilt_azimuth_1423"	
-				"tilt_azimuth_1424"	
-				"tilt_azimuth_1425"	
-				"tilt_azimuth_1426"	
-				"tilt_azimuth_1427"	
-				"tilt_azimuth_1428"	
-				"tilt_azimuth_1429"	
-				"tilt_azimuth_1430"	
-				"tilt_azimuth_1431"	
-				"tilt_azimuth_1432"	
-				"tilt_azimuth_1433"	
-				"tilt_azimuth_1434"	
-				"tilt_azimuth_1435"	
-				"tilt_azimuth_1436"	
-				"tilt_azimuth_1437"	
-				"tilt_azimuth_1438"	
-				"tilt_azimuth_1439"	
-				"tilt_azimuth_1440"	
+id,parent_id/id,parent_persentage,name,tilt_azimuth_ids/id,zip_id/id
+insolation_incident_yearly_1,,,DAGGETT,tilt_azimuth_1,
+,,,,tilt_azimuth_2,
+,,,,tilt_azimuth_3,
+,,,,tilt_azimuth_4,
+,,,,tilt_azimuth_5,
+,,,,tilt_azimuth_6,
+,,,,tilt_azimuth_7,
+,,,,tilt_azimuth_8,
+,,,,tilt_azimuth_9,
+,,,,tilt_azimuth_10,
+,,,,tilt_azimuth_11,
+,,,,tilt_azimuth_12,
+,,,,tilt_azimuth_13,
+,,,,tilt_azimuth_14,
+,,,,tilt_azimuth_15,
+,,,,tilt_azimuth_16,
+,,,,tilt_azimuth_17,
+,,,,tilt_azimuth_18,
+,,,,tilt_azimuth_19,
+,,,,tilt_azimuth_20,
+,,,,tilt_azimuth_21,
+,,,,tilt_azimuth_22,
+,,,,tilt_azimuth_23,
+,,,,tilt_azimuth_24,
+,,,,tilt_azimuth_25,
+,,,,tilt_azimuth_26,
+,,,,tilt_azimuth_27,
+,,,,tilt_azimuth_28,
+,,,,tilt_azimuth_29,
+,,,,tilt_azimuth_30,
+,,,,tilt_azimuth_31,
+,,,,tilt_azimuth_32,
+,,,,tilt_azimuth_33,
+,,,,tilt_azimuth_34,
+,,,,tilt_azimuth_35,
+,,,,tilt_azimuth_36,
+,,,,tilt_azimuth_37,
+,,,,tilt_azimuth_38,
+,,,,tilt_azimuth_39,
+,,,,tilt_azimuth_40,
+,,,,tilt_azimuth_41,
+,,,,tilt_azimuth_42,
+,,,,tilt_azimuth_43,
+,,,,tilt_azimuth_44,
+,,,,tilt_azimuth_45,
+,,,,tilt_azimuth_46,
+,,,,tilt_azimuth_47,
+,,,,tilt_azimuth_48,
+,,,,tilt_azimuth_49,
+,,,,tilt_azimuth_50,
+,,,,tilt_azimuth_51,
+,,,,tilt_azimuth_52,
+,,,,tilt_azimuth_53,
+,,,,tilt_azimuth_54,
+,,,,tilt_azimuth_55,
+,,,,tilt_azimuth_56,
+,,,,tilt_azimuth_57,
+,,,,tilt_azimuth_58,
+,,,,tilt_azimuth_59,
+,,,,tilt_azimuth_60,
+,,,,tilt_azimuth_61,
+,,,,tilt_azimuth_62,
+,,,,tilt_azimuth_63,
+,,,,tilt_azimuth_64,
+,,,,tilt_azimuth_65,
+,,,,tilt_azimuth_66,
+,,,,tilt_azimuth_67,
+,,,,tilt_azimuth_68,
+,,,,tilt_azimuth_69,
+,,,,tilt_azimuth_70,
+,,,,tilt_azimuth_71,
+,,,,tilt_azimuth_72,
+,,,,tilt_azimuth_73,
+,,,,tilt_azimuth_74,
+,,,,tilt_azimuth_75,
+,,,,tilt_azimuth_76,
+,,,,tilt_azimuth_77,
+,,,,tilt_azimuth_78,
+,,,,tilt_azimuth_79,
+,,,,tilt_azimuth_80,
+,,,,tilt_azimuth_81,
+,,,,tilt_azimuth_82,
+,,,,tilt_azimuth_83,
+,,,,tilt_azimuth_84,
+,,,,tilt_azimuth_85,
+,,,,tilt_azimuth_86,
+,,,,tilt_azimuth_87,
+,,,,tilt_azimuth_88,
+,,,,tilt_azimuth_89,
+,,,,tilt_azimuth_90,
+,,,,tilt_azimuth_91,
+,,,,tilt_azimuth_92,
+,,,,tilt_azimuth_93,
+,,,,tilt_azimuth_94,
+,,,,tilt_azimuth_95,
+,,,,tilt_azimuth_96,
+,,,,tilt_azimuth_97,
+,,,,tilt_azimuth_98,
+,,,,tilt_azimuth_99,
+,,,,tilt_azimuth_100,
+,,,,tilt_azimuth_101,
+,,,,tilt_azimuth_102,
+,,,,tilt_azimuth_103,
+,,,,tilt_azimuth_104,
+,,,,tilt_azimuth_105,
+,,,,tilt_azimuth_106,
+,,,,tilt_azimuth_107,
+,,,,tilt_azimuth_108,
+,,,,tilt_azimuth_109,
+,,,,tilt_azimuth_110,
+,,,,tilt_azimuth_111,
+,,,,tilt_azimuth_112,
+,,,,tilt_azimuth_113,
+,,,,tilt_azimuth_114,
+,,,,tilt_azimuth_115,
+,,,,tilt_azimuth_116,
+,,,,tilt_azimuth_117,
+,,,,tilt_azimuth_118,
+,,,,tilt_azimuth_119,
+,,,,tilt_azimuth_120,
+,,,,tilt_azimuth_121,
+,,,,tilt_azimuth_122,
+,,,,tilt_azimuth_123,
+,,,,tilt_azimuth_124,
+,,,,tilt_azimuth_125,
+,,,,tilt_azimuth_126,
+,,,,tilt_azimuth_127,
+,,,,tilt_azimuth_128,
+,,,,tilt_azimuth_129,
+,,,,tilt_azimuth_130,
+,,,,tilt_azimuth_131,
+,,,,tilt_azimuth_132,
+,,,,tilt_azimuth_133,
+,,,,tilt_azimuth_134,
+,,,,tilt_azimuth_135,
+,,,,tilt_azimuth_136,
+,,,,tilt_azimuth_137,
+,,,,tilt_azimuth_138,
+,,,,tilt_azimuth_139,
+,,,,tilt_azimuth_140,
+,,,,tilt_azimuth_141,
+,,,,tilt_azimuth_142,
+,,,,tilt_azimuth_143,
+,,,,tilt_azimuth_144,
+insolation_incident_yearly_2,,,Los Angeles,tilt_azimuth_145,
+,,,,tilt_azimuth_146,
+,,,,tilt_azimuth_147,
+,,,,tilt_azimuth_148,
+,,,,tilt_azimuth_149,
+,,,,tilt_azimuth_150,
+,,,,tilt_azimuth_151,
+,,,,tilt_azimuth_152,
+,,,,tilt_azimuth_153,
+,,,,tilt_azimuth_154,
+,,,,tilt_azimuth_155,
+,,,,tilt_azimuth_156,
+,,,,tilt_azimuth_157,
+,,,,tilt_azimuth_158,
+,,,,tilt_azimuth_159,
+,,,,tilt_azimuth_160,
+,,,,tilt_azimuth_161,
+,,,,tilt_azimuth_162,
+,,,,tilt_azimuth_163,
+,,,,tilt_azimuth_164,
+,,,,tilt_azimuth_165,
+,,,,tilt_azimuth_166,
+,,,,tilt_azimuth_167,
+,,,,tilt_azimuth_168,
+,,,,tilt_azimuth_169,
+,,,,tilt_azimuth_170,
+,,,,tilt_azimuth_171,
+,,,,tilt_azimuth_172,
+,,,,tilt_azimuth_173,
+,,,,tilt_azimuth_174,
+,,,,tilt_azimuth_175,
+,,,,tilt_azimuth_176,
+,,,,tilt_azimuth_177,
+,,,,tilt_azimuth_178,
+,,,,tilt_azimuth_179,
+,,,,tilt_azimuth_180,
+,,,,tilt_azimuth_181,
+,,,,tilt_azimuth_182,
+,,,,tilt_azimuth_183,
+,,,,tilt_azimuth_184,
+,,,,tilt_azimuth_185,
+,,,,tilt_azimuth_186,
+,,,,tilt_azimuth_187,
+,,,,tilt_azimuth_188,
+,,,,tilt_azimuth_189,
+,,,,tilt_azimuth_190,
+,,,,tilt_azimuth_191,
+,,,,tilt_azimuth_192,
+,,,,tilt_azimuth_193,
+,,,,tilt_azimuth_194,
+,,,,tilt_azimuth_195,
+,,,,tilt_azimuth_196,
+,,,,tilt_azimuth_197,
+,,,,tilt_azimuth_198,
+,,,,tilt_azimuth_199,
+,,,,tilt_azimuth_200,
+,,,,tilt_azimuth_201,
+,,,,tilt_azimuth_202,
+,,,,tilt_azimuth_203,
+,,,,tilt_azimuth_204,
+,,,,tilt_azimuth_205,
+,,,,tilt_azimuth_206,
+,,,,tilt_azimuth_207,
+,,,,tilt_azimuth_208,
+,,,,tilt_azimuth_209,
+,,,,tilt_azimuth_210,
+,,,,tilt_azimuth_211,
+,,,,tilt_azimuth_212,
+,,,,tilt_azimuth_213,
+,,,,tilt_azimuth_214,
+,,,,tilt_azimuth_215,
+,,,,tilt_azimuth_216,
+,,,,tilt_azimuth_217,
+,,,,tilt_azimuth_218,
+,,,,tilt_azimuth_219,
+,,,,tilt_azimuth_220,
+,,,,tilt_azimuth_221,
+,,,,tilt_azimuth_222,
+,,,,tilt_azimuth_223,
+,,,,tilt_azimuth_224,
+,,,,tilt_azimuth_225,
+,,,,tilt_azimuth_226,
+,,,,tilt_azimuth_227,
+,,,,tilt_azimuth_228,
+,,,,tilt_azimuth_229,
+,,,,tilt_azimuth_230,
+,,,,tilt_azimuth_231,
+,,,,tilt_azimuth_232,
+,,,,tilt_azimuth_233,
+,,,,tilt_azimuth_234,
+,,,,tilt_azimuth_235,
+,,,,tilt_azimuth_236,
+,,,,tilt_azimuth_237,
+,,,,tilt_azimuth_238,
+,,,,tilt_azimuth_239,
+,,,,tilt_azimuth_240,
+,,,,tilt_azimuth_241,
+,,,,tilt_azimuth_242,
+,,,,tilt_azimuth_243,
+,,,,tilt_azimuth_244,
+,,,,tilt_azimuth_245,
+,,,,tilt_azimuth_246,
+,,,,tilt_azimuth_247,
+,,,,tilt_azimuth_248,
+,,,,tilt_azimuth_249,
+,,,,tilt_azimuth_250,
+,,,,tilt_azimuth_251,
+,,,,tilt_azimuth_252,
+,,,,tilt_azimuth_253,
+,,,,tilt_azimuth_254,
+,,,,tilt_azimuth_255,
+,,,,tilt_azimuth_256,
+,,,,tilt_azimuth_257,
+,,,,tilt_azimuth_258,
+,,,,tilt_azimuth_259,
+,,,,tilt_azimuth_260,
+,,,,tilt_azimuth_261,
+,,,,tilt_azimuth_262,
+,,,,tilt_azimuth_263,
+,,,,tilt_azimuth_264,
+,,,,tilt_azimuth_265,
+,,,,tilt_azimuth_266,
+,,,,tilt_azimuth_267,
+,,,,tilt_azimuth_268,
+,,,,tilt_azimuth_269,
+,,,,tilt_azimuth_270,
+,,,,tilt_azimuth_271,
+,,,,tilt_azimuth_272,
+,,,,tilt_azimuth_273,
+,,,,tilt_azimuth_274,
+,,,,tilt_azimuth_275,
+,,,,tilt_azimuth_276,
+,,,,tilt_azimuth_277,
+,,,,tilt_azimuth_278,
+,,,,tilt_azimuth_279,
+,,,,tilt_azimuth_280,
+,,,,tilt_azimuth_281,
+,,,,tilt_azimuth_282,
+,,,,tilt_azimuth_283,
+,,,,tilt_azimuth_284,
+,,,,tilt_azimuth_285,
+,,,,tilt_azimuth_286,
+,,,,tilt_azimuth_287,
+,,,,tilt_azimuth_288,
+insolation_incident_yearly_3,,,Long Beach,tilt_azimuth_289,
+,,,,tilt_azimuth_290,
+,,,,tilt_azimuth_291,
+,,,,tilt_azimuth_292,
+,,,,tilt_azimuth_293,
+,,,,tilt_azimuth_294,
+,,,,tilt_azimuth_295,
+,,,,tilt_azimuth_296,
+,,,,tilt_azimuth_297,
+,,,,tilt_azimuth_298,
+,,,,tilt_azimuth_299,
+,,,,tilt_azimuth_300,
+,,,,tilt_azimuth_301,
+,,,,tilt_azimuth_302,
+,,,,tilt_azimuth_303,
+,,,,tilt_azimuth_304,
+,,,,tilt_azimuth_305,
+,,,,tilt_azimuth_306,
+,,,,tilt_azimuth_307,
+,,,,tilt_azimuth_308,
+,,,,tilt_azimuth_309,
+,,,,tilt_azimuth_310,
+,,,,tilt_azimuth_311,
+,,,,tilt_azimuth_312,
+,,,,tilt_azimuth_313,
+,,,,tilt_azimuth_314,
+,,,,tilt_azimuth_315,
+,,,,tilt_azimuth_316,
+,,,,tilt_azimuth_317,
+,,,,tilt_azimuth_318,
+,,,,tilt_azimuth_319,
+,,,,tilt_azimuth_320,
+,,,,tilt_azimuth_321,
+,,,,tilt_azimuth_322,
+,,,,tilt_azimuth_323,
+,,,,tilt_azimuth_324,
+,,,,tilt_azimuth_325,
+,,,,tilt_azimuth_326,
+,,,,tilt_azimuth_327,
+,,,,tilt_azimuth_328,
+,,,,tilt_azimuth_329,
+,,,,tilt_azimuth_330,
+,,,,tilt_azimuth_331,
+,,,,tilt_azimuth_332,
+,,,,tilt_azimuth_333,
+,,,,tilt_azimuth_334,
+,,,,tilt_azimuth_335,
+,,,,tilt_azimuth_336,
+,,,,tilt_azimuth_337,
+,,,,tilt_azimuth_338,
+,,,,tilt_azimuth_339,
+,,,,tilt_azimuth_340,
+,,,,tilt_azimuth_341,
+,,,,tilt_azimuth_342,
+,,,,tilt_azimuth_343,
+,,,,tilt_azimuth_344,
+,,,,tilt_azimuth_345,
+,,,,tilt_azimuth_346,
+,,,,tilt_azimuth_347,
+,,,,tilt_azimuth_348,
+,,,,tilt_azimuth_349,
+,,,,tilt_azimuth_350,
+,,,,tilt_azimuth_351,
+,,,,tilt_azimuth_352,
+,,,,tilt_azimuth_353,
+,,,,tilt_azimuth_354,
+,,,,tilt_azimuth_355,
+,,,,tilt_azimuth_356,
+,,,,tilt_azimuth_357,
+,,,,tilt_azimuth_358,
+,,,,tilt_azimuth_359,
+,,,,tilt_azimuth_360,
+,,,,tilt_azimuth_361,
+,,,,tilt_azimuth_362,
+,,,,tilt_azimuth_363,
+,,,,tilt_azimuth_364,
+,,,,tilt_azimuth_365,
+,,,,tilt_azimuth_366,
+,,,,tilt_azimuth_367,
+,,,,tilt_azimuth_368,
+,,,,tilt_azimuth_369,
+,,,,tilt_azimuth_370,
+,,,,tilt_azimuth_371,
+,,,,tilt_azimuth_372,
+,,,,tilt_azimuth_373,
+,,,,tilt_azimuth_374,
+,,,,tilt_azimuth_375,
+,,,,tilt_azimuth_376,
+,,,,tilt_azimuth_377,
+,,,,tilt_azimuth_378,
+,,,,tilt_azimuth_379,
+,,,,tilt_azimuth_380,
+,,,,tilt_azimuth_381,
+,,,,tilt_azimuth_382,
+,,,,tilt_azimuth_383,
+,,,,tilt_azimuth_384,
+,,,,tilt_azimuth_385,
+,,,,tilt_azimuth_386,
+,,,,tilt_azimuth_387,
+,,,,tilt_azimuth_388,
+,,,,tilt_azimuth_389,
+,,,,tilt_azimuth_390,
+,,,,tilt_azimuth_391,
+,,,,tilt_azimuth_392,
+,,,,tilt_azimuth_393,
+,,,,tilt_azimuth_394,
+,,,,tilt_azimuth_395,
+,,,,tilt_azimuth_396,
+,,,,tilt_azimuth_397,
+,,,,tilt_azimuth_398,
+,,,,tilt_azimuth_399,
+,,,,tilt_azimuth_400,
+,,,,tilt_azimuth_401,
+,,,,tilt_azimuth_402,
+,,,,tilt_azimuth_403,
+,,,,tilt_azimuth_404,
+,,,,tilt_azimuth_405,
+,,,,tilt_azimuth_406,
+,,,,tilt_azimuth_407,
+,,,,tilt_azimuth_408,
+,,,,tilt_azimuth_409,
+,,,,tilt_azimuth_410,
+,,,,tilt_azimuth_411,
+,,,,tilt_azimuth_412,
+,,,,tilt_azimuth_413,
+,,,,tilt_azimuth_414,
+,,,,tilt_azimuth_415,
+,,,,tilt_azimuth_416,
+,,,,tilt_azimuth_417,
+,,,,tilt_azimuth_418,
+,,,,tilt_azimuth_419,
+,,,,tilt_azimuth_420,
+,,,,tilt_azimuth_421,
+,,,,tilt_azimuth_422,
+,,,,tilt_azimuth_423,
+,,,,tilt_azimuth_424,
+,,,,tilt_azimuth_425,
+,,,,tilt_azimuth_426,
+,,,,tilt_azimuth_427,
+,,,,tilt_azimuth_428,
+,,,,tilt_azimuth_429,
+,,,,tilt_azimuth_430,
+,,,,tilt_azimuth_431,
+,,,,tilt_azimuth_432,
+insolation_incident_yearly_4,,,San Diego,tilt_azimuth_433,
+,,,,tilt_azimuth_434,
+,,,,tilt_azimuth_435,
+,,,,tilt_azimuth_436,
+,,,,tilt_azimuth_437,
+,,,,tilt_azimuth_438,
+,,,,tilt_azimuth_439,
+,,,,tilt_azimuth_440,
+,,,,tilt_azimuth_441,
+,,,,tilt_azimuth_442,
+,,,,tilt_azimuth_443,
+,,,,tilt_azimuth_444,
+,,,,tilt_azimuth_445,
+,,,,tilt_azimuth_446,
+,,,,tilt_azimuth_447,
+,,,,tilt_azimuth_448,
+,,,,tilt_azimuth_449,
+,,,,tilt_azimuth_450,
+,,,,tilt_azimuth_451,
+,,,,tilt_azimuth_452,
+,,,,tilt_azimuth_453,
+,,,,tilt_azimuth_454,
+,,,,tilt_azimuth_455,
+,,,,tilt_azimuth_456,
+,,,,tilt_azimuth_457,
+,,,,tilt_azimuth_458,
+,,,,tilt_azimuth_459,
+,,,,tilt_azimuth_460,
+,,,,tilt_azimuth_461,
+,,,,tilt_azimuth_462,
+,,,,tilt_azimuth_463,
+,,,,tilt_azimuth_464,
+,,,,tilt_azimuth_465,
+,,,,tilt_azimuth_466,
+,,,,tilt_azimuth_467,
+,,,,tilt_azimuth_468,
+,,,,tilt_azimuth_469,
+,,,,tilt_azimuth_470,
+,,,,tilt_azimuth_471,
+,,,,tilt_azimuth_472,
+,,,,tilt_azimuth_473,
+,,,,tilt_azimuth_474,
+,,,,tilt_azimuth_475,
+,,,,tilt_azimuth_476,
+,,,,tilt_azimuth_477,
+,,,,tilt_azimuth_478,
+,,,,tilt_azimuth_479,
+,,,,tilt_azimuth_480,
+,,,,tilt_azimuth_481,
+,,,,tilt_azimuth_482,
+,,,,tilt_azimuth_483,
+,,,,tilt_azimuth_484,
+,,,,tilt_azimuth_485,
+,,,,tilt_azimuth_486,
+,,,,tilt_azimuth_487,
+,,,,tilt_azimuth_488,
+,,,,tilt_azimuth_489,
+,,,,tilt_azimuth_490,
+,,,,tilt_azimuth_491,
+,,,,tilt_azimuth_492,
+,,,,tilt_azimuth_493,
+,,,,tilt_azimuth_494,
+,,,,tilt_azimuth_495,
+,,,,tilt_azimuth_496,
+,,,,tilt_azimuth_497,
+,,,,tilt_azimuth_498,
+,,,,tilt_azimuth_499,
+,,,,tilt_azimuth_500,
+,,,,tilt_azimuth_501,
+,,,,tilt_azimuth_502,
+,,,,tilt_azimuth_503,
+,,,,tilt_azimuth_504,
+,,,,tilt_azimuth_505,
+,,,,tilt_azimuth_506,
+,,,,tilt_azimuth_507,
+,,,,tilt_azimuth_508,
+,,,,tilt_azimuth_509,
+,,,,tilt_azimuth_510,
+,,,,tilt_azimuth_511,
+,,,,tilt_azimuth_512,
+,,,,tilt_azimuth_513,
+,,,,tilt_azimuth_514,
+,,,,tilt_azimuth_515,
+,,,,tilt_azimuth_516,
+,,,,tilt_azimuth_517,
+,,,,tilt_azimuth_518,
+,,,,tilt_azimuth_519,
+,,,,tilt_azimuth_520,
+,,,,tilt_azimuth_521,
+,,,,tilt_azimuth_522,
+,,,,tilt_azimuth_523,
+,,,,tilt_azimuth_524,
+,,,,tilt_azimuth_525,
+,,,,tilt_azimuth_526,
+,,,,tilt_azimuth_527,
+,,,,tilt_azimuth_528,
+,,,,tilt_azimuth_529,
+,,,,tilt_azimuth_530,
+,,,,tilt_azimuth_531,
+,,,,tilt_azimuth_532,
+,,,,tilt_azimuth_533,
+,,,,tilt_azimuth_534,
+,,,,tilt_azimuth_535,
+,,,,tilt_azimuth_536,
+,,,,tilt_azimuth_537,
+,,,,tilt_azimuth_538,
+,,,,tilt_azimuth_539,
+,,,,tilt_azimuth_540,
+,,,,tilt_azimuth_541,
+,,,,tilt_azimuth_542,
+,,,,tilt_azimuth_543,
+,,,,tilt_azimuth_544,
+,,,,tilt_azimuth_545,
+,,,,tilt_azimuth_546,
+,,,,tilt_azimuth_547,
+,,,,tilt_azimuth_548,
+,,,,tilt_azimuth_549,
+,,,,tilt_azimuth_550,
+,,,,tilt_azimuth_551,
+,,,,tilt_azimuth_552,
+,,,,tilt_azimuth_553,
+,,,,tilt_azimuth_554,
+,,,,tilt_azimuth_555,
+,,,,tilt_azimuth_556,
+,,,,tilt_azimuth_557,
+,,,,tilt_azimuth_558,
+,,,,tilt_azimuth_559,
+,,,,tilt_azimuth_560,
+,,,,tilt_azimuth_561,
+,,,,tilt_azimuth_562,
+,,,,tilt_azimuth_563,
+,,,,tilt_azimuth_564,
+,,,,tilt_azimuth_565,
+,,,,tilt_azimuth_566,
+,,,,tilt_azimuth_567,
+,,,,tilt_azimuth_568,
+,,,,tilt_azimuth_569,
+,,,,tilt_azimuth_570,
+,,,,tilt_azimuth_571,
+,,,,tilt_azimuth_572,
+,,,,tilt_azimuth_573,
+,,,,tilt_azimuth_574,
+,,,,tilt_azimuth_575,
+,,,,tilt_azimuth_576,
+insolation_incident_yearly_5,,,Sanata Maria,tilt_azimuth_577,
+,,,,tilt_azimuth_578,
+,,,,tilt_azimuth_579,
+,,,,tilt_azimuth_580,
+,,,,tilt_azimuth_581,
+,,,,tilt_azimuth_582,
+,,,,tilt_azimuth_583,
+,,,,tilt_azimuth_584,
+,,,,tilt_azimuth_585,
+,,,,tilt_azimuth_586,
+,,,,tilt_azimuth_587,
+,,,,tilt_azimuth_588,
+,,,,tilt_azimuth_589,
+,,,,tilt_azimuth_590,
+,,,,tilt_azimuth_591,
+,,,,tilt_azimuth_592,
+,,,,tilt_azimuth_593,
+,,,,tilt_azimuth_594,
+,,,,tilt_azimuth_595,
+,,,,tilt_azimuth_596,
+,,,,tilt_azimuth_597,
+,,,,tilt_azimuth_598,
+,,,,tilt_azimuth_599,
+,,,,tilt_azimuth_600,
+,,,,tilt_azimuth_601,
+,,,,tilt_azimuth_602,
+,,,,tilt_azimuth_603,
+,,,,tilt_azimuth_604,
+,,,,tilt_azimuth_605,
+,,,,tilt_azimuth_606,
+,,,,tilt_azimuth_607,
+,,,,tilt_azimuth_608,
+,,,,tilt_azimuth_609,
+,,,,tilt_azimuth_610,
+,,,,tilt_azimuth_611,
+,,,,tilt_azimuth_612,
+,,,,tilt_azimuth_613,
+,,,,tilt_azimuth_614,
+,,,,tilt_azimuth_615,
+,,,,tilt_azimuth_616,
+,,,,tilt_azimuth_617,
+,,,,tilt_azimuth_618,
+,,,,tilt_azimuth_619,
+,,,,tilt_azimuth_620,
+,,,,tilt_azimuth_621,
+,,,,tilt_azimuth_622,
+,,,,tilt_azimuth_623,
+,,,,tilt_azimuth_624,
+,,,,tilt_azimuth_625,
+,,,,tilt_azimuth_626,
+,,,,tilt_azimuth_627,
+,,,,tilt_azimuth_628,
+,,,,tilt_azimuth_629,
+,,,,tilt_azimuth_630,
+,,,,tilt_azimuth_631,
+,,,,tilt_azimuth_632,
+,,,,tilt_azimuth_633,
+,,,,tilt_azimuth_634,
+,,,,tilt_azimuth_635,
+,,,,tilt_azimuth_636,
+,,,,tilt_azimuth_637,
+,,,,tilt_azimuth_638,
+,,,,tilt_azimuth_639,
+,,,,tilt_azimuth_640,
+,,,,tilt_azimuth_641,
+,,,,tilt_azimuth_642,
+,,,,tilt_azimuth_643,
+,,,,tilt_azimuth_644,
+,,,,tilt_azimuth_645,
+,,,,tilt_azimuth_646,
+,,,,tilt_azimuth_647,
+,,,,tilt_azimuth_648,
+,,,,tilt_azimuth_649,
+,,,,tilt_azimuth_650,
+,,,,tilt_azimuth_651,
+,,,,tilt_azimuth_652,
+,,,,tilt_azimuth_653,
+,,,,tilt_azimuth_654,
+,,,,tilt_azimuth_655,
+,,,,tilt_azimuth_656,
+,,,,tilt_azimuth_657,
+,,,,tilt_azimuth_658,
+,,,,tilt_azimuth_659,
+,,,,tilt_azimuth_660,
+,,,,tilt_azimuth_661,
+,,,,tilt_azimuth_662,
+,,,,tilt_azimuth_663,
+,,,,tilt_azimuth_664,
+,,,,tilt_azimuth_665,
+,,,,tilt_azimuth_666,
+,,,,tilt_azimuth_667,
+,,,,tilt_azimuth_668,
+,,,,tilt_azimuth_669,
+,,,,tilt_azimuth_670,
+,,,,tilt_azimuth_671,
+,,,,tilt_azimuth_672,
+,,,,tilt_azimuth_673,
+,,,,tilt_azimuth_674,
+,,,,tilt_azimuth_675,
+,,,,tilt_azimuth_676,
+,,,,tilt_azimuth_677,
+,,,,tilt_azimuth_678,
+,,,,tilt_azimuth_679,
+,,,,tilt_azimuth_680,
+,,,,tilt_azimuth_681,
+,,,,tilt_azimuth_682,
+,,,,tilt_azimuth_683,
+,,,,tilt_azimuth_684,
+,,,,tilt_azimuth_685,
+,,,,tilt_azimuth_686,
+,,,,tilt_azimuth_687,
+,,,,tilt_azimuth_688,
+,,,,tilt_azimuth_689,
+,,,,tilt_azimuth_690,
+,,,,tilt_azimuth_691,
+,,,,tilt_azimuth_692,
+,,,,tilt_azimuth_693,
+,,,,tilt_azimuth_694,
+,,,,tilt_azimuth_695,
+,,,,tilt_azimuth_696,
+,,,,tilt_azimuth_697,
+,,,,tilt_azimuth_698,
+,,,,tilt_azimuth_699,
+,,,,tilt_azimuth_700,
+,,,,tilt_azimuth_701,
+,,,,tilt_azimuth_702,
+,,,,tilt_azimuth_703,
+,,,,tilt_azimuth_704,
+,,,,tilt_azimuth_705,
+,,,,tilt_azimuth_706,
+,,,,tilt_azimuth_707,
+,,,,tilt_azimuth_708,
+,,,,tilt_azimuth_709,
+,,,,tilt_azimuth_710,
+,,,,tilt_azimuth_711,
+,,,,tilt_azimuth_712,
+,,,,tilt_azimuth_713,
+,,,,tilt_azimuth_714,
+,,,,tilt_azimuth_715,
+,,,,tilt_azimuth_716,
+,,,,tilt_azimuth_717,
+,,,,tilt_azimuth_718,
+,,,,tilt_azimuth_719,
+,,,,tilt_azimuth_720,
+insolation_incident_yearly_6,,,Bakersfield,tilt_azimuth_721,
+,,,,tilt_azimuth_722,
+,,,,tilt_azimuth_723,
+,,,,tilt_azimuth_724,
+,,,,tilt_azimuth_725,
+,,,,tilt_azimuth_726,
+,,,,tilt_azimuth_727,
+,,,,tilt_azimuth_728,
+,,,,tilt_azimuth_729,
+,,,,tilt_azimuth_730,
+,,,,tilt_azimuth_731,
+,,,,tilt_azimuth_732,
+,,,,tilt_azimuth_733,
+,,,,tilt_azimuth_734,
+,,,,tilt_azimuth_735,
+,,,,tilt_azimuth_736,
+,,,,tilt_azimuth_737,
+,,,,tilt_azimuth_738,
+,,,,tilt_azimuth_739,
+,,,,tilt_azimuth_740,
+,,,,tilt_azimuth_741,
+,,,,tilt_azimuth_742,
+,,,,tilt_azimuth_743,
+,,,,tilt_azimuth_744,
+,,,,tilt_azimuth_745,
+,,,,tilt_azimuth_746,
+,,,,tilt_azimuth_747,
+,,,,tilt_azimuth_748,
+,,,,tilt_azimuth_749,
+,,,,tilt_azimuth_750,
+,,,,tilt_azimuth_751,
+,,,,tilt_azimuth_752,
+,,,,tilt_azimuth_753,
+,,,,tilt_azimuth_754,
+,,,,tilt_azimuth_755,
+,,,,tilt_azimuth_756,
+,,,,tilt_azimuth_757,
+,,,,tilt_azimuth_758,
+,,,,tilt_azimuth_759,
+,,,,tilt_azimuth_760,
+,,,,tilt_azimuth_761,
+,,,,tilt_azimuth_762,
+,,,,tilt_azimuth_763,
+,,,,tilt_azimuth_764,
+,,,,tilt_azimuth_765,
+,,,,tilt_azimuth_766,
+,,,,tilt_azimuth_767,
+,,,,tilt_azimuth_768,
+,,,,tilt_azimuth_769,
+,,,,tilt_azimuth_770,
+,,,,tilt_azimuth_771,
+,,,,tilt_azimuth_772,
+,,,,tilt_azimuth_773,
+,,,,tilt_azimuth_774,
+,,,,tilt_azimuth_775,
+,,,,tilt_azimuth_776,
+,,,,tilt_azimuth_777,
+,,,,tilt_azimuth_778,
+,,,,tilt_azimuth_779,
+,,,,tilt_azimuth_780,
+,,,,tilt_azimuth_781,
+,,,,tilt_azimuth_782,
+,,,,tilt_azimuth_783,
+,,,,tilt_azimuth_784,
+,,,,tilt_azimuth_785,
+,,,,tilt_azimuth_786,
+,,,,tilt_azimuth_787,
+,,,,tilt_azimuth_788,
+,,,,tilt_azimuth_789,
+,,,,tilt_azimuth_790,
+,,,,tilt_azimuth_791,
+,,,,tilt_azimuth_792,
+,,,,tilt_azimuth_793,
+,,,,tilt_azimuth_794,
+,,,,tilt_azimuth_795,
+,,,,tilt_azimuth_796,
+,,,,tilt_azimuth_797,
+,,,,tilt_azimuth_798,
+,,,,tilt_azimuth_799,
+,,,,tilt_azimuth_800,
+,,,,tilt_azimuth_801,
+,,,,tilt_azimuth_802,
+,,,,tilt_azimuth_803,
+,,,,tilt_azimuth_804,
+,,,,tilt_azimuth_805,
+,,,,tilt_azimuth_806,
+,,,,tilt_azimuth_807,
+,,,,tilt_azimuth_808,
+,,,,tilt_azimuth_809,
+,,,,tilt_azimuth_810,
+,,,,tilt_azimuth_811,
+,,,,tilt_azimuth_812,
+,,,,tilt_azimuth_813,
+,,,,tilt_azimuth_814,
+,,,,tilt_azimuth_815,
+,,,,tilt_azimuth_816,
+,,,,tilt_azimuth_817,
+,,,,tilt_azimuth_818,
+,,,,tilt_azimuth_819,
+,,,,tilt_azimuth_820,
+,,,,tilt_azimuth_821,
+,,,,tilt_azimuth_822,
+,,,,tilt_azimuth_823,
+,,,,tilt_azimuth_824,
+,,,,tilt_azimuth_825,
+,,,,tilt_azimuth_826,
+,,,,tilt_azimuth_827,
+,,,,tilt_azimuth_828,
+,,,,tilt_azimuth_829,
+,,,,tilt_azimuth_830,
+,,,,tilt_azimuth_831,
+,,,,tilt_azimuth_832,
+,,,,tilt_azimuth_833,
+,,,,tilt_azimuth_834,
+,,,,tilt_azimuth_835,
+,,,,tilt_azimuth_836,
+,,,,tilt_azimuth_837,
+,,,,tilt_azimuth_838,
+,,,,tilt_azimuth_839,
+,,,,tilt_azimuth_840,
+,,,,tilt_azimuth_841,
+,,,,tilt_azimuth_842,
+,,,,tilt_azimuth_843,
+,,,,tilt_azimuth_844,
+,,,,tilt_azimuth_845,
+,,,,tilt_azimuth_846,
+,,,,tilt_azimuth_847,
+,,,,tilt_azimuth_848,
+,,,,tilt_azimuth_849,
+,,,,tilt_azimuth_850,
+,,,,tilt_azimuth_851,
+,,,,tilt_azimuth_852,
+,,,,tilt_azimuth_853,
+,,,,tilt_azimuth_854,
+,,,,tilt_azimuth_855,
+,,,,tilt_azimuth_856,
+,,,,tilt_azimuth_857,
+,,,,tilt_azimuth_858,
+,,,,tilt_azimuth_859,
+,,,,tilt_azimuth_860,
+,,,,tilt_azimuth_861,
+,,,,tilt_azimuth_862,
+,,,,tilt_azimuth_863,
+,,,,tilt_azimuth_864,
+insolation_incident_yearly_7,,,Fresno,tilt_azimuth_865,
+,,,,tilt_azimuth_866,
+,,,,tilt_azimuth_867,
+,,,,tilt_azimuth_868,
+,,,,tilt_azimuth_869,
+,,,,tilt_azimuth_870,
+,,,,tilt_azimuth_871,
+,,,,tilt_azimuth_872,
+,,,,tilt_azimuth_873,
+,,,,tilt_azimuth_874,
+,,,,tilt_azimuth_875,
+,,,,tilt_azimuth_876,
+,,,,tilt_azimuth_877,
+,,,,tilt_azimuth_878,
+,,,,tilt_azimuth_879,
+,,,,tilt_azimuth_880,
+,,,,tilt_azimuth_881,
+,,,,tilt_azimuth_882,
+,,,,tilt_azimuth_883,
+,,,,tilt_azimuth_884,
+,,,,tilt_azimuth_885,
+,,,,tilt_azimuth_886,
+,,,,tilt_azimuth_887,
+,,,,tilt_azimuth_888,
+,,,,tilt_azimuth_889,
+,,,,tilt_azimuth_890,
+,,,,tilt_azimuth_891,
+,,,,tilt_azimuth_892,
+,,,,tilt_azimuth_893,
+,,,,tilt_azimuth_894,
+,,,,tilt_azimuth_895,
+,,,,tilt_azimuth_896,
+,,,,tilt_azimuth_897,
+,,,,tilt_azimuth_898,
+,,,,tilt_azimuth_899,
+,,,,tilt_azimuth_900,
+,,,,tilt_azimuth_901,
+,,,,tilt_azimuth_902,
+,,,,tilt_azimuth_903,
+,,,,tilt_azimuth_904,
+,,,,tilt_azimuth_905,
+,,,,tilt_azimuth_906,
+,,,,tilt_azimuth_907,
+,,,,tilt_azimuth_908,
+,,,,tilt_azimuth_909,
+,,,,tilt_azimuth_910,
+,,,,tilt_azimuth_911,
+,,,,tilt_azimuth_912,
+,,,,tilt_azimuth_913,
+,,,,tilt_azimuth_914,
+,,,,tilt_azimuth_915,
+,,,,tilt_azimuth_916,
+,,,,tilt_azimuth_917,
+,,,,tilt_azimuth_918,
+,,,,tilt_azimuth_919,
+,,,,tilt_azimuth_920,
+,,,,tilt_azimuth_921,
+,,,,tilt_azimuth_922,
+,,,,tilt_azimuth_923,
+,,,,tilt_azimuth_924,
+,,,,tilt_azimuth_925,
+,,,,tilt_azimuth_926,
+,,,,tilt_azimuth_927,
+,,,,tilt_azimuth_928,
+,,,,tilt_azimuth_929,
+,,,,tilt_azimuth_930,
+,,,,tilt_azimuth_931,
+,,,,tilt_azimuth_932,
+,,,,tilt_azimuth_933,
+,,,,tilt_azimuth_934,
+,,,,tilt_azimuth_935,
+,,,,tilt_azimuth_936,
+,,,,tilt_azimuth_937,
+,,,,tilt_azimuth_938,
+,,,,tilt_azimuth_939,
+,,,,tilt_azimuth_940,
+,,,,tilt_azimuth_941,
+,,,,tilt_azimuth_942,
+,,,,tilt_azimuth_943,
+,,,,tilt_azimuth_944,
+,,,,tilt_azimuth_945,
+,,,,tilt_azimuth_946,
+,,,,tilt_azimuth_947,
+,,,,tilt_azimuth_948,
+,,,,tilt_azimuth_949,
+,,,,tilt_azimuth_950,
+,,,,tilt_azimuth_951,
+,,,,tilt_azimuth_952,
+,,,,tilt_azimuth_953,
+,,,,tilt_azimuth_954,
+,,,,tilt_azimuth_955,
+,,,,tilt_azimuth_956,
+,,,,tilt_azimuth_957,
+,,,,tilt_azimuth_958,
+,,,,tilt_azimuth_959,
+,,,,tilt_azimuth_960,
+,,,,tilt_azimuth_961,
+,,,,tilt_azimuth_962,
+,,,,tilt_azimuth_963,
+,,,,tilt_azimuth_964,
+,,,,tilt_azimuth_965,
+,,,,tilt_azimuth_966,
+,,,,tilt_azimuth_967,
+,,,,tilt_azimuth_968,
+,,,,tilt_azimuth_969,
+,,,,tilt_azimuth_970,
+,,,,tilt_azimuth_971,
+,,,,tilt_azimuth_972,
+,,,,tilt_azimuth_973,
+,,,,tilt_azimuth_974,
+,,,,tilt_azimuth_975,
+,,,,tilt_azimuth_976,
+,,,,tilt_azimuth_977,
+,,,,tilt_azimuth_978,
+,,,,tilt_azimuth_979,
+,,,,tilt_azimuth_980,
+,,,,tilt_azimuth_981,
+,,,,tilt_azimuth_982,
+,,,,tilt_azimuth_983,
+,,,,tilt_azimuth_984,
+,,,,tilt_azimuth_985,
+,,,,tilt_azimuth_986,
+,,,,tilt_azimuth_987,
+,,,,tilt_azimuth_988,
+,,,,tilt_azimuth_989,
+,,,,tilt_azimuth_990,
+,,,,tilt_azimuth_991,
+,,,,tilt_azimuth_992,
+,,,,tilt_azimuth_993,
+,,,,tilt_azimuth_994,
+,,,,tilt_azimuth_995,
+,,,,tilt_azimuth_996,
+,,,,tilt_azimuth_997,
+,,,,tilt_azimuth_998,
+,,,,tilt_azimuth_999,
+,,,,tilt_azimuth_1000,
+,,,,tilt_azimuth_1001,
+,,,,tilt_azimuth_1002,
+,,,,tilt_azimuth_1003,
+,,,,tilt_azimuth_1004,
+,,,,tilt_azimuth_1005,
+,,,,tilt_azimuth_1006,
+,,,,tilt_azimuth_1007,
+,,,,tilt_azimuth_1008,
+insolation_incident_yearly_8,,,San Francisco,tilt_azimuth_1009,
+,,,,tilt_azimuth_1010,
+,,,,tilt_azimuth_1011,
+,,,,tilt_azimuth_1012,
+,,,,tilt_azimuth_1013,
+,,,,tilt_azimuth_1014,
+,,,,tilt_azimuth_1015,
+,,,,tilt_azimuth_1016,
+,,,,tilt_azimuth_1017,
+,,,,tilt_azimuth_1018,
+,,,,tilt_azimuth_1019,
+,,,,tilt_azimuth_1020,
+,,,,tilt_azimuth_1021,
+,,,,tilt_azimuth_1022,
+,,,,tilt_azimuth_1023,
+,,,,tilt_azimuth_1024,
+,,,,tilt_azimuth_1025,
+,,,,tilt_azimuth_1026,
+,,,,tilt_azimuth_1027,
+,,,,tilt_azimuth_1028,
+,,,,tilt_azimuth_1029,
+,,,,tilt_azimuth_1030,
+,,,,tilt_azimuth_1031,
+,,,,tilt_azimuth_1032,
+,,,,tilt_azimuth_1033,
+,,,,tilt_azimuth_1034,
+,,,,tilt_azimuth_1035,
+,,,,tilt_azimuth_1036,
+,,,,tilt_azimuth_1037,
+,,,,tilt_azimuth_1038,
+,,,,tilt_azimuth_1039,
+,,,,tilt_azimuth_1040,
+,,,,tilt_azimuth_1041,
+,,,,tilt_azimuth_1042,
+,,,,tilt_azimuth_1043,
+,,,,tilt_azimuth_1044,
+,,,,tilt_azimuth_1045,
+,,,,tilt_azimuth_1046,
+,,,,tilt_azimuth_1047,
+,,,,tilt_azimuth_1048,
+,,,,tilt_azimuth_1049,
+,,,,tilt_azimuth_1050,
+,,,,tilt_azimuth_1051,
+,,,,tilt_azimuth_1052,
+,,,,tilt_azimuth_1053,
+,,,,tilt_azimuth_1054,
+,,,,tilt_azimuth_1055,
+,,,,tilt_azimuth_1056,
+,,,,tilt_azimuth_1057,
+,,,,tilt_azimuth_1058,
+,,,,tilt_azimuth_1059,
+,,,,tilt_azimuth_1060,
+,,,,tilt_azimuth_1061,
+,,,,tilt_azimuth_1062,
+,,,,tilt_azimuth_1063,
+,,,,tilt_azimuth_1064,
+,,,,tilt_azimuth_1065,
+,,,,tilt_azimuth_1066,
+,,,,tilt_azimuth_1067,
+,,,,tilt_azimuth_1068,
+,,,,tilt_azimuth_1069,
+,,,,tilt_azimuth_1070,
+,,,,tilt_azimuth_1071,
+,,,,tilt_azimuth_1072,
+,,,,tilt_azimuth_1073,
+,,,,tilt_azimuth_1074,
+,,,,tilt_azimuth_1075,
+,,,,tilt_azimuth_1076,
+,,,,tilt_azimuth_1077,
+,,,,tilt_azimuth_1078,
+,,,,tilt_azimuth_1079,
+,,,,tilt_azimuth_1080,
+,,,,tilt_azimuth_1081,
+,,,,tilt_azimuth_1082,
+,,,,tilt_azimuth_1083,
+,,,,tilt_azimuth_1084,
+,,,,tilt_azimuth_1085,
+,,,,tilt_azimuth_1086,
+,,,,tilt_azimuth_1087,
+,,,,tilt_azimuth_1088,
+,,,,tilt_azimuth_1089,
+,,,,tilt_azimuth_1090,
+,,,,tilt_azimuth_1091,
+,,,,tilt_azimuth_1092,
+,,,,tilt_azimuth_1093,
+,,,,tilt_azimuth_1094,
+,,,,tilt_azimuth_1095,
+,,,,tilt_azimuth_1096,
+,,,,tilt_azimuth_1097,
+,,,,tilt_azimuth_1098,
+,,,,tilt_azimuth_1099,
+,,,,tilt_azimuth_1100,
+,,,,tilt_azimuth_1101,
+,,,,tilt_azimuth_1102,
+,,,,tilt_azimuth_1103,
+,,,,tilt_azimuth_1104,
+,,,,tilt_azimuth_1105,
+,,,,tilt_azimuth_1106,
+,,,,tilt_azimuth_1107,
+,,,,tilt_azimuth_1108,
+,,,,tilt_azimuth_1109,
+,,,,tilt_azimuth_1110,
+,,,,tilt_azimuth_1111,
+,,,,tilt_azimuth_1112,
+,,,,tilt_azimuth_1113,
+,,,,tilt_azimuth_1114,
+,,,,tilt_azimuth_1115,
+,,,,tilt_azimuth_1116,
+,,,,tilt_azimuth_1117,
+,,,,tilt_azimuth_1118,
+,,,,tilt_azimuth_1119,
+,,,,tilt_azimuth_1120,
+,,,,tilt_azimuth_1121,
+,,,,tilt_azimuth_1122,
+,,,,tilt_azimuth_1123,
+,,,,tilt_azimuth_1124,
+,,,,tilt_azimuth_1125,
+,,,,tilt_azimuth_1126,
+,,,,tilt_azimuth_1127,
+,,,,tilt_azimuth_1128,
+,,,,tilt_azimuth_1129,
+,,,,tilt_azimuth_1130,
+,,,,tilt_azimuth_1131,
+,,,,tilt_azimuth_1132,
+,,,,tilt_azimuth_1133,
+,,,,tilt_azimuth_1134,
+,,,,tilt_azimuth_1135,
+,,,,tilt_azimuth_1136,
+,,,,tilt_azimuth_1137,
+,,,,tilt_azimuth_1138,
+,,,,tilt_azimuth_1139,
+,,,,tilt_azimuth_1140,
+,,,,tilt_azimuth_1141,
+,,,,tilt_azimuth_1142,
+,,,,tilt_azimuth_1143,
+,,,,tilt_azimuth_1144,
+,,,,tilt_azimuth_1145,
+,,,,tilt_azimuth_1146,
+,,,,tilt_azimuth_1147,
+,,,,tilt_azimuth_1148,
+,,,,tilt_azimuth_1149,
+,,,,tilt_azimuth_1150,
+,,,,tilt_azimuth_1151,
+,,,,tilt_azimuth_1152,
+insolation_incident_yearly_9,,,Sacramento,tilt_azimuth_1153,
+,,,,tilt_azimuth_1154,
+,,,,tilt_azimuth_1155,
+,,,,tilt_azimuth_1156,
+,,,,tilt_azimuth_1157,
+,,,,tilt_azimuth_1158,
+,,,,tilt_azimuth_1159,
+,,,,tilt_azimuth_1160,
+,,,,tilt_azimuth_1161,
+,,,,tilt_azimuth_1162,
+,,,,tilt_azimuth_1163,
+,,,,tilt_azimuth_1164,
+,,,,tilt_azimuth_1165,
+,,,,tilt_azimuth_1166,
+,,,,tilt_azimuth_1167,
+,,,,tilt_azimuth_1168,
+,,,,tilt_azimuth_1169,
+,,,,tilt_azimuth_1170,
+,,,,tilt_azimuth_1171,
+,,,,tilt_azimuth_1172,
+,,,,tilt_azimuth_1173,
+,,,,tilt_azimuth_1174,
+,,,,tilt_azimuth_1175,
+,,,,tilt_azimuth_1176,
+,,,,tilt_azimuth_1177,
+,,,,tilt_azimuth_1178,
+,,,,tilt_azimuth_1179,
+,,,,tilt_azimuth_1180,
+,,,,tilt_azimuth_1181,
+,,,,tilt_azimuth_1182,
+,,,,tilt_azimuth_1183,
+,,,,tilt_azimuth_1184,
+,,,,tilt_azimuth_1185,
+,,,,tilt_azimuth_1186,
+,,,,tilt_azimuth_1187,
+,,,,tilt_azimuth_1188,
+,,,,tilt_azimuth_1189,
+,,,,tilt_azimuth_1190,
+,,,,tilt_azimuth_1191,
+,,,,tilt_azimuth_1192,
+,,,,tilt_azimuth_1193,
+,,,,tilt_azimuth_1194,
+,,,,tilt_azimuth_1195,
+,,,,tilt_azimuth_1196,
+,,,,tilt_azimuth_1197,
+,,,,tilt_azimuth_1198,
+,,,,tilt_azimuth_1199,
+,,,,tilt_azimuth_1200,
+,,,,tilt_azimuth_1201,
+,,,,tilt_azimuth_1202,
+,,,,tilt_azimuth_1203,
+,,,,tilt_azimuth_1204,
+,,,,tilt_azimuth_1205,
+,,,,tilt_azimuth_1206,
+,,,,tilt_azimuth_1207,
+,,,,tilt_azimuth_1208,
+,,,,tilt_azimuth_1209,
+,,,,tilt_azimuth_1210,
+,,,,tilt_azimuth_1211,
+,,,,tilt_azimuth_1212,
+,,,,tilt_azimuth_1213,
+,,,,tilt_azimuth_1214,
+,,,,tilt_azimuth_1215,
+,,,,tilt_azimuth_1216,
+,,,,tilt_azimuth_1217,
+,,,,tilt_azimuth_1218,
+,,,,tilt_azimuth_1219,
+,,,,tilt_azimuth_1220,
+,,,,tilt_azimuth_1221,
+,,,,tilt_azimuth_1222,
+,,,,tilt_azimuth_1223,
+,,,,tilt_azimuth_1224,
+,,,,tilt_azimuth_1225,
+,,,,tilt_azimuth_1226,
+,,,,tilt_azimuth_1227,
+,,,,tilt_azimuth_1228,
+,,,,tilt_azimuth_1229,
+,,,,tilt_azimuth_1230,
+,,,,tilt_azimuth_1231,
+,,,,tilt_azimuth_1232,
+,,,,tilt_azimuth_1233,
+,,,,tilt_azimuth_1234,
+,,,,tilt_azimuth_1235,
+,,,,tilt_azimuth_1236,
+,,,,tilt_azimuth_1237,
+,,,,tilt_azimuth_1238,
+,,,,tilt_azimuth_1239,
+,,,,tilt_azimuth_1240,
+,,,,tilt_azimuth_1241,
+,,,,tilt_azimuth_1242,
+,,,,tilt_azimuth_1243,
+,,,,tilt_azimuth_1244,
+,,,,tilt_azimuth_1245,
+,,,,tilt_azimuth_1246,
+,,,,tilt_azimuth_1247,
+,,,,tilt_azimuth_1248,
+,,,,tilt_azimuth_1249,
+,,,,tilt_azimuth_1250,
+,,,,tilt_azimuth_1251,
+,,,,tilt_azimuth_1252,
+,,,,tilt_azimuth_1253,
+,,,,tilt_azimuth_1254,
+,,,,tilt_azimuth_1255,
+,,,,tilt_azimuth_1256,
+,,,,tilt_azimuth_1257,
+,,,,tilt_azimuth_1258,
+,,,,tilt_azimuth_1259,
+,,,,tilt_azimuth_1260,
+,,,,tilt_azimuth_1261,
+,,,,tilt_azimuth_1262,
+,,,,tilt_azimuth_1263,
+,,,,tilt_azimuth_1264,
+,,,,tilt_azimuth_1265,
+,,,,tilt_azimuth_1266,
+,,,,tilt_azimuth_1267,
+,,,,tilt_azimuth_1268,
+,,,,tilt_azimuth_1269,
+,,,,tilt_azimuth_1270,
+,,,,tilt_azimuth_1271,
+,,,,tilt_azimuth_1272,
+,,,,tilt_azimuth_1273,
+,,,,tilt_azimuth_1274,
+,,,,tilt_azimuth_1275,
+,,,,tilt_azimuth_1276,
+,,,,tilt_azimuth_1277,
+,,,,tilt_azimuth_1278,
+,,,,tilt_azimuth_1279,
+,,,,tilt_azimuth_1280,
+,,,,tilt_azimuth_1281,
+,,,,tilt_azimuth_1282,
+,,,,tilt_azimuth_1283,
+,,,,tilt_azimuth_1284,
+,,,,tilt_azimuth_1285,
+,,,,tilt_azimuth_1286,
+,,,,tilt_azimuth_1287,
+,,,,tilt_azimuth_1288,
+,,,,tilt_azimuth_1289,
+,,,,tilt_azimuth_1290,
+,,,,tilt_azimuth_1291,
+,,,,tilt_azimuth_1292,
+,,,,tilt_azimuth_1293,
+,,,,tilt_azimuth_1294,
+,,,,tilt_azimuth_1295,
+,,,,tilt_azimuth_1296,
+insolation_incident_yearly_10,,,Arcata,tilt_azimuth_1297,
+,,,,tilt_azimuth_1298,
+,,,,tilt_azimuth_1299,
+,,,,tilt_azimuth_1300,
+,,,,tilt_azimuth_1301,
+,,,,tilt_azimuth_1302,
+,,,,tilt_azimuth_1303,
+,,,,tilt_azimuth_1304,
+,,,,tilt_azimuth_1305,
+,,,,tilt_azimuth_1306,
+,,,,tilt_azimuth_1307,
+,,,,tilt_azimuth_1308,
+,,,,tilt_azimuth_1309,
+,,,,tilt_azimuth_1310,
+,,,,tilt_azimuth_1311,
+,,,,tilt_azimuth_1312,
+,,,,tilt_azimuth_1313,
+,,,,tilt_azimuth_1314,
+,,,,tilt_azimuth_1315,
+,,,,tilt_azimuth_1316,
+,,,,tilt_azimuth_1317,
+,,,,tilt_azimuth_1318,
+,,,,tilt_azimuth_1319,
+,,,,tilt_azimuth_1320,
+,,,,tilt_azimuth_1321,
+,,,,tilt_azimuth_1322,
+,,,,tilt_azimuth_1323,
+,,,,tilt_azimuth_1324,
+,,,,tilt_azimuth_1325,
+,,,,tilt_azimuth_1326,
+,,,,tilt_azimuth_1327,
+,,,,tilt_azimuth_1328,
+,,,,tilt_azimuth_1329,
+,,,,tilt_azimuth_1330,
+,,,,tilt_azimuth_1331,
+,,,,tilt_azimuth_1332,
+,,,,tilt_azimuth_1333,
+,,,,tilt_azimuth_1334,
+,,,,tilt_azimuth_1335,
+,,,,tilt_azimuth_1336,
+,,,,tilt_azimuth_1337,
+,,,,tilt_azimuth_1338,
+,,,,tilt_azimuth_1339,
+,,,,tilt_azimuth_1340,
+,,,,tilt_azimuth_1341,
+,,,,tilt_azimuth_1342,
+,,,,tilt_azimuth_1343,
+,,,,tilt_azimuth_1344,
+,,,,tilt_azimuth_1345,
+,,,,tilt_azimuth_1346,
+,,,,tilt_azimuth_1347,
+,,,,tilt_azimuth_1348,
+,,,,tilt_azimuth_1349,
+,,,,tilt_azimuth_1350,
+,,,,tilt_azimuth_1351,
+,,,,tilt_azimuth_1352,
+,,,,tilt_azimuth_1353,
+,,,,tilt_azimuth_1354,
+,,,,tilt_azimuth_1355,
+,,,,tilt_azimuth_1356,
+,,,,tilt_azimuth_1357,
+,,,,tilt_azimuth_1358,
+,,,,tilt_azimuth_1359,
+,,,,tilt_azimuth_1360,
+,,,,tilt_azimuth_1361,
+,,,,tilt_azimuth_1362,
+,,,,tilt_azimuth_1363,
+,,,,tilt_azimuth_1364,
+,,,,tilt_azimuth_1365,
+,,,,tilt_azimuth_1366,
+,,,,tilt_azimuth_1367,
+,,,,tilt_azimuth_1368,
+,,,,tilt_azimuth_1369,
+,,,,tilt_azimuth_1370,
+,,,,tilt_azimuth_1371,
+,,,,tilt_azimuth_1372,
+,,,,tilt_azimuth_1373,
+,,,,tilt_azimuth_1374,
+,,,,tilt_azimuth_1375,
+,,,,tilt_azimuth_1376,
+,,,,tilt_azimuth_1377,
+,,,,tilt_azimuth_1378,
+,,,,tilt_azimuth_1379,
+,,,,tilt_azimuth_1380,
+,,,,tilt_azimuth_1381,
+,,,,tilt_azimuth_1382,
+,,,,tilt_azimuth_1383,
+,,,,tilt_azimuth_1384,
+,,,,tilt_azimuth_1385,
+,,,,tilt_azimuth_1386,
+,,,,tilt_azimuth_1387,
+,,,,tilt_azimuth_1388,
+,,,,tilt_azimuth_1389,
+,,,,tilt_azimuth_1390,
+,,,,tilt_azimuth_1391,
+,,,,tilt_azimuth_1392,
+,,,,tilt_azimuth_1393,
+,,,,tilt_azimuth_1394,
+,,,,tilt_azimuth_1395,
+,,,,tilt_azimuth_1396,
+,,,,tilt_azimuth_1397,
+,,,,tilt_azimuth_1398,
+,,,,tilt_azimuth_1399,
+,,,,tilt_azimuth_1400,
+,,,,tilt_azimuth_1401,
+,,,,tilt_azimuth_1402,
+,,,,tilt_azimuth_1403,
+,,,,tilt_azimuth_1404,
+,,,,tilt_azimuth_1405,
+,,,,tilt_azimuth_1406,
+,,,,tilt_azimuth_1407,
+,,,,tilt_azimuth_1408,
+,,,,tilt_azimuth_1409,
+,,,,tilt_azimuth_1410,
+,,,,tilt_azimuth_1411,
+,,,,tilt_azimuth_1412,
+,,,,tilt_azimuth_1413,
+,,,,tilt_azimuth_1414,
+,,,,tilt_azimuth_1415,
+,,,,tilt_azimuth_1416,
+,,,,tilt_azimuth_1417,
+,,,,tilt_azimuth_1418,
+,,,,tilt_azimuth_1419,
+,,,,tilt_azimuth_1420,
+,,,,tilt_azimuth_1421,
+,,,,tilt_azimuth_1422,
+,,,,tilt_azimuth_1423,
+,,,,tilt_azimuth_1424,
+,,,,tilt_azimuth_1425,
+,,,,tilt_azimuth_1426,
+,,,,tilt_azimuth_1427,
+,,,,tilt_azimuth_1428,
+,,,,tilt_azimuth_1429,
+,,,,tilt_azimuth_1430,
+,,,,tilt_azimuth_1431,
+,,,,tilt_azimuth_1432,
+,,,,tilt_azimuth_1433,
+,,,,tilt_azimuth_1434,
+,,,,tilt_azimuth_1435,
+,,,,tilt_azimuth_1436,
+,,,,tilt_azimuth_1437,
+,,,,tilt_azimuth_1438,
+,,,,tilt_azimuth_1439,
+,,,,tilt_azimuth_1440,
