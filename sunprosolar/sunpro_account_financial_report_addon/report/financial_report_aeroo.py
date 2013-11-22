@@ -69,6 +69,12 @@ class Parser(account_balance):
         self.bal4 = 0.00
         self.bal5 = 0.00
         
+        self.tot_other_income1 = 0.00
+        self.tot_other_income2 = 0.00
+        self.tot_other_income3 = 0.00
+        self.tot_other_income4 = 0.00
+        self.tot_other_income5 = 0.00
+        
         self.gross_profit1 = 0.00
         self.gross_profit2 = 0.00
         self.gross_profit3 = 0.00
@@ -81,59 +87,23 @@ class Parser(account_balance):
         self.total_exp4 = 0.00
         self.total_exp5 = 0.00
         
-        self.exp_credit1 = 0.00
-        self.exp_credit2 = 0.00
-        self.exp_credit3 = 0.00
-        self.exp_credit4 = 0.00
-        self.exp_credit5 = 0.00
-        
-        self.exp_debit1 = 0.00
-        self.exp_debit2 = 0.00
-        self.exp_debit3 = 0.00
-        self.exp_debit4 = 0.00
-        self.exp_debit5 = 0.00
-        
-        self.taxes_credit1 = 0.00
-        self.taxes_credit2 = 0.00
-        self.taxes_credit3 = 0.00
-        self.taxes_credit4 = 0.00
-        self.taxes_credit5 = 0.00
-        
-        self.taxes_debit1 = 0.00
-        self.taxes_debit2 = 0.00
-        self.taxes_debit3 = 0.00
-        self.taxes_debit4 = 0.00
-        self.taxes_debit5 = 0.00
-        
-        self.other_exp_credit1 = 0.00
-        self.other_exp_credit2 = 0.00
-        self.other_exp_credit3 = 0.00
-        self.other_exp_credit4 = 0.00
-        self.other_exp_credit5 = 0.00
-        
-        self.other_exp_debit1 = 0.00
-        self.other_exp_debit2 = 0.00
-        self.other_exp_debit3 = 0.00
-        self.other_exp_debit4 = 0.00
-        self.other_exp_debit5 = 0.00
-        
-        self.other_income_credit1 = 0.00
-        self.other_income_credit2 = 0.00
-        self.other_income_credit3 = 0.00
-        self.other_income_credit4 = 0.00
-        self.other_income_credit5 = 0.00
-        
-        self.other_income_debit1 = 0.00
-        self.other_income_debit2 = 0.00
-        self.other_income_debit3 = 0.00
-        self.other_income_debit4 = 0.00
-        self.other_income_debit5 = 0.00
-        
         self.net_profit1 = 0.00
         self.net_profit2 = 0.00
         self.net_profit3 = 0.00
         self.net_profit4 = 0.00
         self.net_profit5 = 0.00
+        
+        self.othexp1 = 0.00
+        self.othexp2 = 0.00
+        self.othexp3 = 0.00
+        self.othexp4 = 0.00
+        self.othexp5 = 0.00
+        
+        self.exp1 = 0.00
+        self.exp2 = 0.00
+        self.exp3 = 0.00
+        self.exp4 = 0.00
+        self.exp5 = 0.00
         
         self.total_balance_sheet_balance1 = 0.00
         self.total_balance_sheet_balance2 = 0.00
@@ -175,6 +145,20 @@ class Parser(account_balance):
         self.gross_profit_mon12 = 0.00
         self.gross_profit_mon13 = 0.00
         
+        self.exp_mon1 = 0.00
+        self.exp_mon2 = 0.00
+        self.exp_mon3 = 0.00
+        self.exp_mon4 = 0.00
+        self.exp_mon5 = 0.00
+        self.exp_mon6 = 0.00
+        self.exp_mon7 = 0.00
+        self.exp_mon8 = 0.00
+        self.exp_mon9 = 0.00
+        self.exp_mon10 = 0.00
+        self.exp_mon11 = 0.00
+        self.exp_mon12 = 0.00
+        self.exp_mon13 = 0.00
+        
         self.total_exp_mon1 = 0.00
         self.total_exp_mon2 = 0.00
         self.total_exp_mon3 = 0.00
@@ -189,117 +173,47 @@ class Parser(account_balance):
         self.total_exp_mon12 = 0.00
         self.total_exp_mon13 = 0.00
         
-        self.exp_credit_mon1 = 0.00
-        self.exp_credit_mon2 = 0.00
-        self.exp_credit_mon3 = 0.00
-        self.exp_credit_mon4 = 0.00
-        self.exp_credit_mon5 = 0.00
-        self.exp_credit_mon6 = 0.00
-        self.exp_credit_mon7 = 0.00
-        self.exp_credit_mon8 = 0.00
-        self.exp_credit_mon9 = 0.00
-        self.exp_credit_mon10 = 0.00
-        self.exp_credit_mon11 = 0.00
-        self.exp_credit_mon12 = 0.00
-        self.exp_credit_mon13 = 0.00
+        self.tot_taxes1 = 0.00
+        self.tot_taxes2 = 0.00
+        self.tot_taxes3 = 0.00
+        self.tot_taxes4 = 0.00
+        self.tot_taxes5 = 0.00
+        self.tot_taxes6 = 0.00
+        self.tot_taxes7 = 0.00
+        self.tot_taxes8 = 0.00
+        self.tot_taxes9 = 0.00
+        self.tot_taxes10 = 0.00
+        self.tot_taxes11 = 0.00
+        self.tot_taxes12 = 0.00
+        self.tot_taxes13 = 0.00
         
-        self.exp_debit_mon1 = 0.00
-        self.exp_debit_mon2 = 0.00
-        self.exp_debit_mon3 = 0.00
-        self.exp_debit_mon4 = 0.00
-        self.exp_debit_mon5 = 0.00
-        self.exp_debit_mon6 = 0.00
-        self.exp_debit_mon7 = 0.00
-        self.exp_debit_mon8 = 0.00
-        self.exp_debit_mon9 = 0.00
-        self.exp_debit_mon10 = 0.00
-        self.exp_debit_mon11 = 0.00
-        self.exp_debit_mon12 = 0.00
-        self.exp_debit_mon13 = 0.00
+        self.tot_other_exp1 = 0.00
+        self.tot_other_exp2 = 0.00
+        self.tot_other_exp3 = 0.00
+        self.tot_other_exp4 = 0.00
+        self.tot_other_exp5 = 0.00
+        self.tot_other_exp6 = 0.00
+        self.tot_other_exp7 = 0.00
+        self.tot_other_exp8 = 0.00
+        self.tot_other_exp9 = 0.00
+        self.tot_other_exp10 = 0.00
+        self.tot_other_exp11 = 0.00
+        self.tot_other_exp12 = 0.00
+        self.tot_other_exp13 = 0.00
         
-        self.taxes_credit_mon1 = 0.00
-        self.taxes_credit_mon2 = 0.00
-        self.taxes_credit_mon3 = 0.00
-        self.taxes_credit_mon4 = 0.00
-        self.taxes_credit_mon5 = 0.00
-        self.taxes_credit_mon6 = 0.00
-        self.taxes_credit_mon7 = 0.00
-        self.taxes_credit_mon8 = 0.00
-        self.taxes_credit_mon9 = 0.00
-        self.taxes_credit_mon10 = 0.00
-        self.taxes_credit_mon11 = 0.00
-        self.taxes_credit_mon12 = 0.00
-        self.taxes_credit_mon13 = 0.00
-        
-        self.taxes_debit_mon1 = 0.00
-        self.taxes_debit_mon2 = 0.00
-        self.taxes_debit_mon3 = 0.00
-        self.taxes_debit_mon4 = 0.00
-        self.taxes_debit_mon5 = 0.00
-        self.taxes_debit_mon6 = 0.00
-        self.taxes_debit_mon7 = 0.00
-        self.taxes_debit_mon8 = 0.00
-        self.taxes_debit_mon9 = 0.00
-        self.taxes_debit_mon10 = 0.00
-        self.taxes_debit_mon11 = 0.00
-        self.taxes_debit_mon12 = 0.00
-        self.taxes_debit_mon13 = 0.00
-        
-        self.other_exp_credit_mon1 = 0.00
-        self.other_exp_credit_mon2 = 0.00
-        self.other_exp_credit_mon3 = 0.00
-        self.other_exp_credit_mon4 = 0.00
-        self.other_exp_credit_mon5 = 0.00
-        self.other_exp_credit_mon6 = 0.00
-        self.other_exp_credit_mon7 = 0.00
-        self.other_exp_credit_mon8 = 0.00
-        self.other_exp_credit_mon9 = 0.00
-        self.other_exp_credit_mon10 = 0.00
-        self.other_exp_credit_mon11 = 0.00
-        self.other_exp_credit_mon11 = 0.00
-        self.other_exp_credit_mon13 = 0.00
-        
-        self.other_exp_debit_mon1 = 0.00
-        self.other_exp_debit_mon2 = 0.00
-        self.other_exp_debit_mon3 = 0.00
-        self.other_exp_debit_mon4 = 0.00
-        self.other_exp_debit_mon5 = 0.00
-        self.other_exp_debit_mon6 = 0.00
-        self.other_exp_debit_mon7 = 0.00
-        self.other_exp_debit_mon8 = 0.00
-        self.other_exp_debit_mon9 = 0.00
-        self.other_exp_debit_mon10 = 0.00
-        self.other_exp_debit_mon11 = 0.00
-        self.other_exp_debit_mon11 = 0.00
-        self.other_exp_debit_mon13 = 0.00
-        
-        self.other_income_credit_mon1 = 0.00
-        self.other_income_credit_mon2 = 0.00
-        self.other_income_credit_mon3 = 0.00
-        self.other_income_credit_mon4 = 0.00
-        self.other_income_credit_mon5 = 0.00
-        self.other_income_credit_mon6 = 0.00
-        self.other_income_credit_mon7 = 0.00
-        self.other_income_credit_mon8 = 0.00
-        self.other_income_credit_mon9 = 0.00
-        self.other_income_credit_mon10 = 0.00
-        self.other_income_credit_mon11 = 0.00
-        self.other_income_credit_mon12 = 0.00
-        self.other_income_credit_mon13 = 0.00
-        
-        self.other_income_debit_mon1 = 0.00
-        self.other_income_debit_mon2 = 0.00
-        self.other_income_debit_mon3 = 0.00
-        self.other_income_debit_mon4 = 0.00
-        self.other_income_debit_mon5 = 0.00
-        self.other_income_debit_mon6 = 0.00
-        self.other_income_debit_mon7 = 0.00
-        self.other_income_debit_mon8 = 0.00
-        self.other_income_debit_mon9 = 0.00
-        self.other_income_debit_mon10 = 0.00
-        self.other_income_debit_mon11 = 0.00
-        self.other_income_debit_mon12 = 0.00
-        self.other_income_debit_mon13 = 0.00
+        self.tot_oth_income1 = 0.00
+        self.tot_oth_income2 = 0.00
+        self.tot_oth_income3 = 0.00
+        self.tot_oth_income4 = 0.00
+        self.tot_oth_income5 = 0.00
+        self.tot_oth_income6 = 0.00
+        self.tot_oth_income7 = 0.00
+        self.tot_oth_income8 = 0.00
+        self.tot_oth_income9 = 0.00
+        self.tot_oth_income10 = 0.00
+        self.tot_oth_income11 = 0.00
+        self.tot_oth_income12 = 0.00
+        self.tot_oth_income13 = 0.00
         
         self.net_profit_mon1 = 0.00
         self.net_profit_mon2 = 0.00
@@ -329,6 +243,21 @@ class Parser(account_balance):
         self.total_balance_sheet_balance_mon12 = 0.00
         self.total_balance_sheet_balance_mon13 = 0.00
         
+        self.equity_mon1 = 0.00
+        self.equity_mon2 = 0.00
+        self.equity_mon3 = 0.00
+        self.equity_mon4 = 0.00
+        self.equity_mon5 = 0.00
+        self.equity_mon6 = 0.00
+        self.equity_mon7 = 0.00
+        self.equity_mon8 = 0.00
+        self.equity_mon9 = 0.00
+        self.equity_mon10 = 0.00
+        self.equity_mon11 = 0.00
+        self.equity_mon12 = 0.00
+        self.equity_mon13 = 0.00
+        
+        
         self.total_liabilities_equity_mon1 = 0.00
         self.total_liabilities_equity_mon2 = 0.00
         self.total_liabilities_equity_mon3 = 0.00
@@ -342,6 +271,24 @@ class Parser(account_balance):
         self.total_liabilities_equity_mon11 = 0.00
         self.total_liabilities_equity_mon12 = 0.00
         self.total_liabilities_equity_mon13 = 0.00
+        
+        self.exp1 = 0.00
+        self.exp2 = 0.00
+        self.exp3 = 0.00
+        self.exp4 = 0.00
+        self.exp5 = 0.00
+        
+        self.taxes1 = 0.00
+        self.taxes2 = 0.00
+        self.taxes3 = 0.00
+        self.taxes4 = 0.00
+        self.taxes5 = 0.00
+        
+        self.othexp1 = 0.00
+        self.othexp2 = 0.00
+        self.othexp3 = 0.00
+        self.othexp4 = 0.00
+        self.othexp5 = 0.00
         
 #        
 #        self.context = context
@@ -692,17 +639,45 @@ class Parser(account_balance):
                                         if res.get('name').lower() == 'total cost of sales':
                                             result_acc.append({'id': False, 'name': ''})
                                     
-                                    if acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
-                                        self.total_exp1 = (self.exp_credit1 + self.exp_debit1) + (self.other_exp_credit1 + self.other_exp_debit1)
-                                        self.total_exp2 = (self.exp_credit2 + self.exp_debit2) + (self.other_exp_credit2 + self.other_exp_debit2)
-                                        self.total_exp3 = (self.exp_credit3 + self.exp_debit3) + (self.other_exp_credit3 + self.other_exp_debit3)
-                                        self.total_exp4 = (self.exp_credit4 + self.exp_debit4) + (self.other_exp_credit4 + self.other_exp_debit4)
-                                        self.total_exp5 = (self.exp_credit5 + self.exp_debit5) + (self.other_exp_credit5 + self.other_exp_debit5)
-                                    self.net_profit1 = self.gross_profit1 - ((self.other_income_credit1 + self.other_income_debit1) + self.total_exp1)
-                                    self.net_profit2 = self.gross_profit2 - ((self.other_income_credit2 + self.other_income_debit2) + self.total_exp2)
-                                    self.net_profit3 = self.gross_profit3 - ((self.other_income_credit3 + self.other_income_debit3) + self.total_exp3)
-                                    self.net_profit4 = self.gross_profit4 - ((self.other_income_credit4 + self.other_income_debit4) + self.total_exp4)
-                                    self.net_profit5 = self.gross_profit5 - ((self.other_income_credit5 + self.other_income_debit5) + self.total_exp5)
+                                    if acc.name == 'Expense' or acc.name.lower() == 'expense' and acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.exp1 = res.get('bal1')
+                                        self.exp2 = res.get('bal2')
+                                        self.exp3 = res.get('bal3')
+                                        self.exp4 = res.get('bal4')
+                                        self.exp5 = res.get('bal5')
+                                    
+                                    if acc.name == 'Taxes' or acc.name.lower() == 'taxes' and acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.taxes1 = res.get('bal1')
+                                        self.taxes2 = res.get('bal2')
+                                        self.taxes3 = res.get('bal3')
+                                        self.taxes4 = res.get('bal4')
+                                        self.taxes5 = res.get('bal5')
+                                        
+                                    if acc.name == 'Other Expense' or acc.name.lower() == 'other expense' and acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.othexp1 = res.get('bal1')
+                                        self.othexp2 = res.get('bal2')
+                                        self.othexp3 = res.get('bal3')
+                                        self.othexp4 = res.get('bal4')
+                                        self.othexp5 = res.get('bal5')
+                                        
+                                    if acc.name == 'Other Income' or acc.name.lower() == 'other income' and acc.user_type.name == 'Income' or acc.user_type.name == 'Income View':
+                                        self.tot_other_income1 = res.get('bal1')
+                                        self.tot_other_income2 = res.get('bal2')
+                                        self.tot_other_income3 = res.get('bal3')
+                                        self.tot_other_income4 = res.get('bal4')
+                                        self.tot_other_income5 = res.get('bal5')
+                                        
+                                self.total_exp1 = self.exp1 + self.taxes1 + self.othexp1
+                                self.total_exp2 = self.exp2 + self.taxes2 + self.othexp2
+                                self.total_exp3 = self.exp3 + self.taxes3 + self.othexp3
+                                self.total_exp4 = self.exp4 + self.taxes4 + self.othexp4
+                                self.total_exp5 = self.exp5 + self.taxes5 + self.othexp5
+                                
+                                self.net_profit1 = self.gross_profit1 - (self.tot_other_income1 + self.total_exp1)
+                                self.net_profit2 = self.gross_profit2 - (self.tot_other_income2 + self.total_exp2)
+                                self.net_profit3 = self.gross_profit3 - (self.tot_other_income3 + self.total_exp3)
+                                self.net_profit4 = self.gross_profit4 - (self.tot_other_income4 + self.total_exp4)
+                                self.net_profit5 = self.gross_profit5 - (self.tot_other_income5 + self.total_exp5)
 
                     else:
                         i, d, c = map(z, [aa_brw_init.balance, aa_brw_end.debit, aa_brw_end.credit])
@@ -885,34 +860,93 @@ class Parser(account_balance):
                                         if res.get('name').lower() == 'total cost of sales':
                                             result_acc.append({'id': False, 'name': ''})
                                     
-                                    if acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
-                                        self.total_exp_mon1 = (self.exp_credit_mon1 + self.exp_debit_mon1) + (self.other_exp_credit_mon1 + self.other_exp_debit_mon1)
-                                        self.total_exp_mon2 = (self.exp_credit_mon2 + self.exp_debit_mon2) + (self.other_exp_credit_mon2 + self.other_exp_debit_mon2)
-                                        self.total_exp_mon3 = (self.exp_credit_mon3 + self.exp_debit_mon3) + (self.other_exp_credit_mon3 + self.other_exp_debit_mon3)
-                                        self.total_exp_mon4 = (self.exp_credit_mon4 + self.exp_debit_mon4) + (self.other_exp_credit_mon4 + self.other_exp_debit_mon4)
-                                        self.total_exp_mon5 = (self.exp_credit_mon5 + self.exp_debit_mon5) + (self.other_exp_credit_mon5 + self.other_exp_debit_mon5)
-                                        self.total_exp_mon6 = (self.exp_credit_mon6 + self.exp_debit_mon6) + (self.other_exp_credit_mon6 + self.other_exp_debit_mon6)
-                                        self.total_exp_mon7 = (self.exp_credit_mon7 + self.exp_debit_mon7) + (self.other_exp_credit_mon7 + self.other_exp_debit_mon7)
-                                        self.total_exp_mon8 = (self.exp_credit_mon8 + self.exp_debit_mon8) + (self.other_exp_credit_mon8 + self.other_exp_debit_mon8)
-                                        self.total_exp_mon9 = (self.exp_credit_mon9 + self.exp_debit_mon9) + (self.other_exp_credit_mon9 + self.other_exp_debit_mon9)
-                                        self.total_exp_mon10 = (self.exp_credit_mon10 + self.exp_debit_mon10) + (self.other_exp_credit_mon10 + self.other_exp_debit_mon10)
-                                        self.total_exp_mon11 = (self.exp_credit_mon11 + self.exp_debit_mon11) + (self.other_exp_credit_mon11 + self.other_exp_debit_mon11)
-                                        self.total_exp_mon12 = (self.exp_credit_mon12 + self.exp_debit_mon12) + (self.other_exp_credit_mon12 + self.other_exp_debit_mon12)
-                                        self.total_exp_mon13 = (self.exp_credit_mon13 + self.exp_debit_mon13) + (self.other_exp_credit_mon13 + self.other_exp_debit_mon13)
+                                    if acc.name == 'Expense' or acc.name.lower() == 'expense' and acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.exp_mon1 = res.get('bal1')
+                                        self.exp_mon2 = res.get('bal2')
+                                        self.exp_mon3 = res.get('bal3')
+                                        self.exp_mon4 = res.get('bal4')
+                                        self.exp_mon5 = res.get('bal5')
+                                        self.exp_mon6 = res.get('bal6')
+                                        self.exp_mon7 = res.get('bal7')
+                                        self.exp_mon8 = res.get('bal8')
+                                        self.exp_mon9 = res.get('bal9')
+                                        self.exp_mon10 = res.get('bal10')
+                                        self.exp_mon11 = res.get('bal11')
+                                        self.exp_mon12 = res.get('bal12')
+                                        self.exp_mon13 = res.get('bal13')
                                         
-                                    self.net_profit_mon1 = self.gross_profit_mon1 - ((self.other_income_credit_mon1 + self.other_income_debit_mon1) + self.total_exp_mon1)
-                                    self.net_profit_mon2 = self.gross_profit_mon2 - ((self.other_income_credit_mon2 + self.other_income_debit_mon2) + self.total_exp_mon2)
-                                    self.net_profit_mon3 = self.gross_profit_mon3 - ((self.other_income_credit_mon3 + self.other_income_debit_mon3) + self.total_exp_mon3)
-                                    self.net_profit_mon4 = self.gross_profit_mon4 - ((self.other_income_credit_mon4 + self.other_income_debit_mon4) + self.total_exp_mon4)
-                                    self.net_profit_mon5 = self.gross_profit_mon5 - ((self.other_income_credit_mon5 + self.other_income_debit_mon5) + self.total_exp_mon5)
-                                    self.net_profit_mon6 = self.gross_profit_mon6 - ((self.other_income_credit_mon6 + self.other_income_debit_mon6) + self.total_exp_mon6)
-                                    self.net_profit_mon7 = self.gross_profit_mon7 - ((self.other_income_credit_mon7 + self.other_income_debit_mon7) + self.total_exp_mon7)
-                                    self.net_profit_mon8 = self.gross_profit_mon8 - ((self.other_income_credit_mon8 + self.other_income_debit_mon8) + self.total_exp_mon8)
-                                    self.net_profit_mon9 = self.gross_profit_mon9 - ((self.other_income_credit_mon9 + self.other_income_debit_mon9) + self.total_exp_mon9)
-                                    self.net_profit_mon10 = self.gross_profit_mon10 - ((self.other_income_credit_mon10 + self.other_income_debit_mon10) + self.total_exp_mon10)
-                                    self.net_profit_mon11 = self.gross_profit_mon11 - ((self.other_income_credit_mon11 + self.other_income_debit_mon11) + self.total_exp_mon11)
-                                    self.net_profit_mon12 = self.gross_profit_mon12 - ((self.other_income_credit_mon12 + self.other_income_debit_mon12) + self.total_exp_mon12)
-                                    self.net_profit_mon13 = self.gross_profit_mon13 - ((self.other_income_credit_mon13 + self.other_income_debit_mon13) + self.total_exp_mon13)
+                                    if acc.name == 'Taxes' or acc.name.lower() == 'taxes' and acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.tot_taxes1 = res.get('bal1')
+                                        self.tot_taxes2 = res.get('bal2')
+                                        self.tot_taxes3 = res.get('bal3')
+                                        self.tot_taxes4 = res.get('bal4')
+                                        self.tot_taxes5 = res.get('bal5')
+                                        self.tot_taxes6 = res.get('bal6')
+                                        self.tot_taxes7 = res.get('bal7')
+                                        self.tot_taxes8 = res.get('bal8')
+                                        self.tot_taxes9 = res.get('bal9')
+                                        self.tot_taxes10 = res.get('bal10')
+                                        self.tot_taxes11 = res.get('bal11')
+                                        self.tot_taxes12 = res.get('bal12')
+                                        self.tot_taxes13 = res.get('bal13')
+                                        
+                                    if acc.name == 'Other Expense' or acc.name.lower() == 'other expense' and acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.tot_other_exp1 = res.get('bal1')
+                                        self.tot_other_exp2 = res.get('bal2')
+                                        self.tot_other_exp3 = res.get('bal3')
+                                        self.tot_other_exp4 = res.get('bal4')
+                                        self.tot_other_exp5 = res.get('bal5')
+                                        self.tot_other_exp6 = res.get('bal6')
+                                        self.tot_other_exp7 = res.get('bal7')
+                                        self.tot_other_exp8 = res.get('bal8')
+                                        self.tot_other_exp9 = res.get('bal9')
+                                        self.tot_other_exp10 = res.get('bal10')
+                                        self.tot_other_exp11 = res.get('bal11')
+                                        self.tot_other_exp12 = res.get('bal12')
+                                        self.tot_other_exp13 = res.get('bal13')
+                                        
+                                    if acc.name == 'Other Income' or acc.name.lower() == 'other income' and acc.user_type.name == 'Income' or acc.user_type.name == 'Income View':
+                                        self.tot_oth_income1 = res.get('bal1')
+                                        self.tot_oth_income2 = res.get('bal2')
+                                        self.tot_oth_income3 = res.get('bal3')
+                                        self.tot_oth_income4 = res.get('bal4')
+                                        self.tot_oth_income5 = res.get('bal5')
+                                        self.tot_oth_income6 = res.get('bal6')
+                                        self.tot_oth_income7 = res.get('bal7')
+                                        self.tot_oth_income8 = res.get('bal8')
+                                        self.tot_oth_income9 = res.get('bal9')
+                                        self.tot_oth_income10 = res.get('bal10')
+                                        self.tot_oth_income11 = res.get('bal11')
+                                        self.tot_oth_income12 = res.get('bal12')
+                                        self.tot_oth_income13 = res.get('bal13')
+                                        
+                                self.total_exp_mon1 = self.exp_mon1 + self.tot_taxes1 + self.tot_other_exp1
+                                self.total_exp_mon2 = self.exp_mon2 + self.tot_taxes2 + self.tot_other_exp2
+                                self.total_exp_mon3 = self.exp_mon3 + self.tot_taxes3 + self.tot_other_exp3
+                                self.total_exp_mon4 = self.exp_mon4 + self.tot_taxes4 + self.tot_other_exp4
+                                self.total_exp_mon5 = self.exp_mon5 + self.tot_taxes5 + self.tot_other_exp5
+                                self.total_exp_mon6 = self.exp_mon6 + self.tot_taxes6 + self.tot_other_exp6
+                                self.total_exp_mon7 = self.exp_mon7 + self.tot_taxes7 + self.tot_other_exp7
+                                self.total_exp_mon8 = self.exp_mon8 + self.tot_taxes8 + self.tot_other_exp8
+                                self.total_exp_mon9 = self.exp_mon9 + self.tot_taxes9 + self.tot_other_exp9
+                                self.total_exp_mon10 = self.exp_mon10 + self.tot_taxes10 + self.tot_other_exp10
+                                self.total_exp_mon11 = self.exp_mon11 + self.tot_taxes11 + self.tot_other_exp11
+                                self.total_exp_mon12 = self.exp_mon12 + self.tot_taxes12 + self.tot_other_exp12
+                                self.total_exp_mon13 = self.exp_mon13 + self.tot_taxes13 + self.tot_other_exp13
+                                            
+                                self.net_profit_mon1 = self.gross_profit_mon1 - (self.tot_oth_income1 + self.total_exp_mon1)
+                                self.net_profit_mon2 = self.gross_profit_mon2 - (self.tot_oth_income2 + self.total_exp_mon2)
+                                self.net_profit_mon3 = self.gross_profit_mon3 - (self.tot_oth_income3 + self.total_exp_mon3)
+                                self.net_profit_mon4 = self.gross_profit_mon4 - (self.tot_oth_income4 + self.total_exp_mon4)
+                                self.net_profit_mon5 = self.gross_profit_mon5 - (self.tot_oth_income5 + self.total_exp_mon5)
+                                self.net_profit_mon6 = self.gross_profit_mon6 - (self.tot_oth_income6 + self.total_exp_mon6)
+                                self.net_profit_mon7 = self.gross_profit_mon7 - (self.tot_oth_income7 + self.total_exp_mon7)
+                                self.net_profit_mon8 = self.gross_profit_mon8 - (self.tot_oth_income8 + self.total_exp_mon8)
+                                self.net_profit_mon9 = self.gross_profit_mon9 - (self.tot_oth_income9 + self.total_exp_mon9)
+                                self.net_profit_mon10 = self.gross_profit_mon10 - (self.tot_oth_income10 + self.total_exp_mon10)
+                                self.net_profit_mon11 = self.gross_profit_mon11 - (self.tot_oth_income11 + self.total_exp_mon11)
+                                self.net_profit_mon12 = self.gross_profit_mon12 - (self.tot_oth_income12 + self.total_exp_mon12)
+                                self.net_profit_mon13 = self.gross_profit_mon13 - (self.tot_oth_income13 + self.total_exp_mon13)
                                     
                     else:
                         i, d, c = map(z, [aa_brw_init.balance, aa_brw_end.debit, aa_brw_end.credit])
@@ -936,34 +970,50 @@ class Parser(account_balance):
                         for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
                             if parent_id == acc_data.id:
                                 acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
-                                if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
-                                    self.total_balance_sheet_balance_mon1 = self.total_balance_sheet_balance_mon1 + res.get('bal1')
-                                    self.total_balance_sheet_balance_mon2 = self.total_balance_sheet_balance_mon2 + res.get('bal2')
-                                    self.total_balance_sheet_balance_mon3 = self.total_balance_sheet_balance_mon3 + res.get('bal3')
-                                    self.total_balance_sheet_balance_mon4 = self.total_balance_sheet_balance_mon4 + res.get('bal4')
-                                    self.total_balance_sheet_balance_mon5 = self.total_balance_sheet_balance_mon5 + res.get('bal5')
-                                    self.total_balance_sheet_balance_mon6 = self.total_balance_sheet_balance_mon6 + res.get('bal6')
-                                    self.total_balance_sheet_balance_mon7 = self.total_balance_sheet_balance_mon7 + res.get('bal7')
-                                    self.total_balance_sheet_balance_mon8 = self.total_balance_sheet_balance_mon8 + res.get('bal8')
-                                    self.total_balance_sheet_balance_mon9 = self.total_balance_sheet_balance_mon9 + res.get('bal9')
-                                    self.total_balance_sheet_balance_mon10 = self.total_balance_sheet_balance_mon10 + res.get('bal10')
-                                    self.total_balance_sheet_balance_mon11 = self.total_balance_sheet_balance_mon11 + res.get('bal11')
-                                    self.total_balance_sheet_balance_mon12 = self.total_balance_sheet_balance_mon12 + res.get('bal12')
-                                    self.total_balance_sheet_balance_mon13 = self.total_balance_sheet_balance_mon13 + res.get('bal13')
-                                    
-                                self.total_liabilities_equity_mon1 = self.total_balance_sheet_balance_mon1
-                                self.total_liabilities_equity_mon2 = self.total_balance_sheet_balance_mon2
-                                self.total_liabilities_equity_mon3 = self.total_balance_sheet_balance_mon3
-                                self.total_liabilities_equity_mon4 = self.total_balance_sheet_balance_mon4
-                                self.total_liabilities_equity_mon5 = self.total_balance_sheet_balance_mon5
-                                self.total_liabilities_equity_mon6 = self.total_balance_sheet_balance_mon6
-                                self.total_liabilities_equity_mon7 = self.total_balance_sheet_balance_mon7
-                                self.total_liabilities_equity_mon8 = self.total_balance_sheet_balance_mon8
-                                self.total_liabilities_equity_mon9 = self.total_balance_sheet_balance_mon9
-                                self.total_liabilities_equity_mon10 = self.total_balance_sheet_balance_mon10
-                                self.total_liabilities_equity_mon11 = self.total_balance_sheet_balance_mon11
-                                self.total_liabilities_equity_mon12 = self.total_balance_sheet_balance_mon12
-                                self.total_liabilities_equity_mon13 = self.total_balance_sheet_balance_mon13
+                                if acc_data.user_type.name == 'Liability' and acc_data.type == 'view':
+                                    if res.get('total') == True and res.get('type') == 'view':
+                                        if res.get('name').lower() == 'total liabilities':
+                                            self.total_balance_sheet_balance_mon1 = res.get('bal1')
+                                            self.total_balance_sheet_balance_mon2 = res.get('bal2')
+                                            self.total_balance_sheet_balance_mon3 = res.get('bal3')
+                                            self.total_balance_sheet_balance_mon4 = res.get('bal4')
+                                            self.total_balance_sheet_balance_mon5 = res.get('bal5')
+                                            self.total_balance_sheet_balance_mon6 = res.get('bal6')
+                                            self.total_balance_sheet_balance_mon7 = res.get('bal7')
+                                            self.total_balance_sheet_balance_mon8 = res.get('bal8')
+                                            self.total_balance_sheet_balance_mon9 = res.get('bal9')
+                                            self.total_balance_sheet_balance_mon10 = res.get('bal10')
+                                            self.total_balance_sheet_balance_mon11 = res.get('bal11')
+                                            self.total_balance_sheet_balance_mon12 = res.get('bal12')
+                                            self.total_balance_sheet_balance_mon13 = res.get('bal13')
+                                            
+                                        if res.get('name').lower() == 'total equity':
+                                            self.equity_mon1 = res.get('bal1')
+                                            self.equity_mon1 = res.get('bal2')
+                                            self.equity_mon1 = res.get('bal3')
+                                            self.equity_mon1 = res.get('bal4')
+                                            self.equity_mon1 = res.get('bal5')
+                                            self.equity_mon1 = res.get('bal6')
+                                            self.equity_mon1 = res.get('bal7')
+                                            self.equity_mon1 = res.get('bal8')
+                                            self.equity_mon1 = res.get('bal9')
+                                            self.equity_mon1 = res.get('bal10')
+                                            self.equity_mon1 = res.get('bal11')
+                                            self.equity_mon1 = res.get('bal12')
+                                            self.equity_mon1 = res.get('bal13')
+                                self.total_liabilities_equity_mon1 = self.total_balance_sheet_balance_mon1 + self.equity_mon1
+                                self.total_liabilities_equity_mon2 = self.total_balance_sheet_balance_mon2 + self.equity_mon2
+                                self.total_liabilities_equity_mon3 = self.total_balance_sheet_balance_mon3 + self.equity_mon3
+                                self.total_liabilities_equity_mon4 = self.total_balance_sheet_balance_mon4 + self.equity_mon4
+                                self.total_liabilities_equity_mon5 = self.total_balance_sheet_balance_mon5 + self.equity_mon5
+                                self.total_liabilities_equity_mon6 = self.total_balance_sheet_balance_mon6 + self.equity_mon6
+                                self.total_liabilities_equity_mon7 = self.total_balance_sheet_balance_mon7 + self.equity_mon7
+                                self.total_liabilities_equity_mon8 = self.total_balance_sheet_balance_mon8 + self.equity_mon8
+                                self.total_liabilities_equity_mon9 = self.total_balance_sheet_balance_mon9 + self.equity_mon9
+                                self.total_liabilities_equity_mon10 = self.total_balance_sheet_balance_mon10 + self.equity_mon10
+                                self.total_liabilities_equity_mon11 = self.total_balance_sheet_balance_mon11 + self.equity_mon11
+                                self.total_liabilities_equity_mon12 = self.total_balance_sheet_balance_mon12 + self.equity_mon12
+                                self.total_liabilities_equity_mon13 = self.total_balance_sheet_balance_mon13 + self.equity_mon13
                                 
                 else:
 
@@ -1153,128 +1203,126 @@ class Parser(account_balance):
                     'bal13' : self.net_profit_mon13,
                 })
             result_acc.append(self.total_profit_loss)
-            a = []
-            for res_acc in result_acc:
-                if res_acc.get('name')=='Total Liabilities and Equity':
-                    index_1 = result_acc.index(res_acc)
-                    a.append(index_1)
-            for ele in a:
-                result_acc.insert(ele,self.total_profit_loss)
-                result_acc.pop(ele+2)
+#            a = []
+#            for res_acc in result_acc:
+#                if res_acc.get('name')=='Total Liabilities and Equity':
+#                    index_1 = result_acc.index(res_acc)
+#                    a.append(index_1)
+#            for ele in a:
+#                result_acc.insert(ele,self.total_profit_loss)
+#                result_acc.pop(ele+2)
             
-            total_liabilities_equity = self.total_liabilities_equity + self.net_profit
-            self.total_liabilities_equity = {
-                'balance' : total_liabilities_equity, 
-                'id'        : False, 
-                'type' : 'view', 
-                'code' : '', 
-                'name' : 'Total Liabilities & Owners Equity', 
-                'parent_id' : False, 
-                'level' : 1, 
-                'credit' : 0.0, 
-                'debit' : 0.0, 
-                'label' : False, 
-                'mayor' : [], 
-                'total' :True, 
-                'change_sign' : 1, 
-                'balanceinit' : 0.0, 
-                'ytd' : total_liabilities_equity 
-            }
+#            total_liabilities_equity = self.total_liabilities_equity + self.net_profit
+#            self.total_liabilities_equity = {
+#                'balance' : total_liabilities_equity, 
+#                'id'        : False, 
+#                'type' : 'view', 
+#                'code' : '', 
+#                'name' : 'Total Liabilities & Owners Equity', 
+#                'parent_id' : False, 
+#                'level' : 1, 
+#                'credit' : 0.0, 
+#                'debit' : 0.0, 
+#                'label' : False, 
+#                'mayor' : [], 
+#                'total' :True, 
+#                'change_sign' : 1, 
+#                'balanceinit' : 0.0, 
+#                'ytd' : total_liabilities_equity 
+#            }
         else:
-            if not form['afr_id'][1] == 'General Ledger':
-                if not form['afr_id'][1] == 'Trial Balance':
-                    if not form['afr_id'][1] == 'Balance Sheet':
+            if not form['afr_id'][1] == 'Balance Sheet':
 #                        if {'id': False, 'name': ''} not in result_acc:
 #                            raise osv.except_osv(_('Configuration Error'), _('Please configure all type of Revenue, Cost Of Goods Sold, Expense, Income and Taxes accounts for Income Statement !'))
 #                        index = result_acc.index({'id': False, 'name': ''})
-                        for res_acc in result_acc:
-                            if res_acc.get('name')=='Total Net Ordinary Income':
-                                index = result_acc.index(res_acc)
-                                result_acc.insert(index+11,res_acc)
-                                result_acc.pop(index)
-                        total_gross_profit = self.gross_profit
+                for res_acc in result_acc:
+                    if res_acc.get('name')=='Total Net Ordinary Income':
+                        index = result_acc.index(res_acc)
+                        result_acc.insert(index+11,res_acc)
+                        result_acc.pop(index)
+#                total_gross_profit = self.gross_profit
 #                        dbr3 = self.gross_profit_dbr3
-                        self.gross_profit_dict = {
-                            'balance' : total_gross_profit, 
-                            'id'        : False, 
-                            'type' : 'view', 
-                            'code' : '', 
-                            'name' : 'Gross Profit', 
-                            'parent_id' : False, 
-                            'level' : 1, 
-                            'credit' : 0.0, 
-                            'debit' : 0.0, 
-                            'label' : False, 
-                            'mayor' : [], 
-                            'total' :True, 
-                            'change_sign' : 1, 
-                            'balanceinit' : 0.0, 
-                            'ytd' : total_gross_profit, 
-                        }
-                        if form['columns'] =='qtr':
-                            self.gross_profit_dict.update({
-                                'bal1': self.gross_profit1,
-                                'bal2': self.gross_profit2,
-                                'bal3': self.gross_profit3,
-                                'bal4': self.gross_profit4,
-                                'bal5': self.gross_profit5,
-                            })
-#                            
-                        if form['columns'] =='thirteen':
-                            self.gross_profit_dict.update({
-                                'bal1': self.gross_profit_mon1,
-                                'bal2': self.gross_profit_mon2,
-                                'bal3': self.gross_profit_mon3,
-                                'bal4': self.gross_profit_mon4,
-                                'bal5': self.gross_profit_mon5,
-                                'bal6': self.gross_profit_mon6,
-                                'bal7': self.gross_profit_mon7,
-                                'bal8': self.gross_profit_mon8,
-                                'bal9': self.gross_profit_mon9,
-                                'bal10': self.gross_profit_mon10,
-                                'bal11': self.gross_profit_mon11,
-                                'bal12': self.gross_profit_mon12,
-                                'bal13': self.gross_profit_mon13,
-                            })
-#                
-                    tot_expense = self.total_exp
-#                    expdbr3 = self.total_expense_dbr3
-                    self.tot_exp = {
-                        'balance' : tot_expense, 
-                        'id'        : False, 
-                        'type' : 'view', 
-                        'code' : '', 
-                        'name' : 'Total Expense', 
-                        'parent_id' : False, 
-                        'level' : 1, 
-                        'credit' : 0.0, 
-                        'debit' : 0.0, 
-                        'label' : False, 
-                        'mayor' : [], 
-                        'total' :True, 
-                        'change_sign' : 1, 
-                        'balanceinit' : 0.0, 
-                        'ytd' : tot_expense 
-                    }
-                    net_profit = self.net_profit
-#                    net_profit_dbr3 = self.net_profit_dbr3
-                    self.tot_net_prodict = {
-                        'balance' : net_profit, 
-                        'id'        : False, 
-                        'type' : 'view', 
-                        'code' : '', 
-                        'name' : 'Net Profit', 
-                        'parent_id' : False, 
-                        'level' : 1, 
-                        'credit' : 0.0, 
-                        'debit' : 0.0, 
-                        'label' : False, 
-                        'mayor' : [], 
-                        'total' :True, 
-                        'change_sign' : 1, 
-                        'balanceinit' : 0.0, 
-                        'ytd' : net_profit 
-                    }
+#                self.gross_profit_dict = {
+#                    'balance' : total_gross_profit, 
+#                    'id'        : False, 
+#                    'type' : 'view', 
+#                    'code' : '', 
+#                    'name' : 'Gross Profit', 
+#                    'parent_id' : False, 
+#                    'level' : 1, 
+#                    'credit' : 0.0, 
+#                    'debit' : 0.0, 
+#                    'label' : False, 
+#                    'mayor' : [], 
+#                    'total' :True, 
+#                    'change_sign' : 1, 
+#                    'balanceinit' : 0.0, 
+#                    'ytd' : total_gross_profit, 
+#                }
+#                if form['columns'] =='qtr':
+#                    self.gross_profit_dict.update({
+#                        'bal1': self.gross_profit1,
+#                        'bal2': self.gross_profit2,
+#                        'bal3': self.gross_profit3,
+#                        'bal4': self.gross_profit4,
+#                        'bal5': self.gross_profit5,
+#                    })
+##                            
+#                if form['columns'] =='thirteen':
+#                    self.gross_profit_dict.update({
+#                        'bal1': self.gross_profit_mon1,
+#                        'bal2': self.gross_profit_mon2,
+#                        'bal3': self.gross_profit_mon3,
+#                        'bal4': self.gross_profit_mon4,
+#                        'bal5': self.gross_profit_mon5,
+#                        'bal6': self.gross_profit_mon6,
+#                        'bal7': self.gross_profit_mon7,
+#                        'bal8': self.gross_profit_mon8,
+#                        'bal9': self.gross_profit_mon9,
+#                        'bal10': self.gross_profit_mon10,
+#                        'bal11': self.gross_profit_mon11,
+#                        'bal12': self.gross_profit_mon12,
+#                        'bal13': self.gross_profit_mon13,
+#                    })
+##                
+#            tot_expense = self.total_exp
+##                    expdbr3 = self.total_expense_dbr3
+#            self.tot_exp = {
+#                'balance' : tot_expense, 
+#                'id'        : False, 
+#                'type' : 'view', 
+#                'code' : '', 
+#                'name' : 'Total Expense', 
+#                'parent_id' : False, 
+#                'level' : 1, 
+#                'credit' : 0.0, 
+#                'debit' : 0.0, 
+#                'label' : False, 
+#                'mayor' : [], 
+#                'total' :True, 
+#                'change_sign' : 1, 
+#                'balanceinit' : 0.0, 
+#                'ytd' : tot_expense 
+#            }
+#            net_profit = self.net_profit
+##                    net_profit_dbr3 = self.net_profit_dbr3
+#            self.tot_net_prodict = {
+#                'balance' : net_profit, 
+#                'id'        : False, 
+#                'type' : 'view', 
+#                'code' : '', 
+#                'name' : 'Net Profit', 
+#                'parent_id' : False, 
+#                'level' : 1, 
+#                'credit' : 0.0, 
+#                'debit' : 0.0, 
+#                'label' : False, 
+#                'mayor' : [], 
+#                'total' :True, 
+#                'change_sign' : 1, 
+#                'balanceinit' : 0.0, 
+#                'ytd' : net_profit 
+#            }
         return result_acc
     
     def get_profit(self, bal):
@@ -1694,6 +1742,33 @@ class Parser(account_balance):
                         res.update({
                             'compr0_balance': self.exchange(compr0_d-compr0_c), 
                         })
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view':
+                                    self.bal = self.bal + res.get('compr0_balance')
+                                bal = []
+                                for res_acc in result_acc:
+                                    if res_acc.get('name')=='Total Net Ordinary Income':
+                                        balance_res = res_acc.get('compr0_balance')
+                                        bal.append(balance_res)
+                                if len(bal) > 0 :
+                                    self.gross_profit = bal[0]
+#                                self.gross_profit = self.bal
+                                for acc in account_obj.browse(self.cr, self.uid, acc_ids):
+                                    if acc.name == 'Cost Of Goods Sold' or acc.name == 'Cost of Sales' and acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
+                                        if res.get('name').lower() == 'total cost of sales':
+                                            result_acc.append({'id': False, 'name': ''})
+                                    
+                                    if acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.total_exp = (self.exp_credit + self.exp_debit) + (self.other_exp_credit + self.other_exp_debit)
+                                    self.comp0_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
 #                        if res.get('name').lower() == 'total revenue':
 #                            self.comp0_tot_revenue = compr0_b
 #                        if res.get('name').lower() == 'cost of goods sold':
@@ -1716,6 +1791,18 @@ class Parser(account_balance):
                         res.update({
                             'compr0_balance': self.exchange(compr0_b), 
                         })
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
+                                    self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('compr0_balance')
+                                self.total_liabilities_equity = self.total_balance_sheet_balance
 #                        if res.get('name').lower() == 'total liabilities':
 #                            self.comp0_tot_liabilities = res.get('compr0_balance')
 #                        if res.get('name').lower() == 'total equity':
@@ -1738,6 +1825,33 @@ class Parser(account_balance):
                         res.update({
                             'compr1_balance': self.exchange(compr1_d-compr1_c), 
                         })
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view':
+                                    self.bal = self.bal + res.get('compr1_balance')
+                                bal = []
+                                for res_acc in result_acc:
+                                    if res_acc.get('name')=='Total Net Ordinary Income':
+                                        balance_res = res_acc.get('compr1_balance')
+                                        bal.append(balance_res)
+                                if len(bal) > 0 :
+                                    self.gross_profit = bal[0]
+#                                self.gross_profit = self.bal
+                                for acc in account_obj.browse(self.cr, self.uid, acc_ids):
+                                    if acc.name == 'Cost Of Goods Sold' or acc.name == 'Cost of Sales' and acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
+                                        if res.get('name').lower() == 'total cost of sales':
+                                            result_acc.append({'id': False, 'name': ''})
+                                    
+                                    if acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.total_exp = (self.exp_credit + self.exp_debit) + (self.other_exp_credit + self.other_exp_debit)
+                                    self.comp1_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
 #                        if res.get('name').lower() == 'total revenue':
 #                            self.comp1_tot_revenue = compr1_b
 #                        if res.get('name').lower() == 'cost of goods sold':
@@ -1760,6 +1874,18 @@ class Parser(account_balance):
                         res.update({
                             'compr1_balance': self.exchange(compr1_b), 
                         })
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
+                                    self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('compr1_balance')
+                                self.total_liabilities_equity = self.total_balance_sheet_balance
 #                        if res.get('name').lower() == 'total liabilities':
 #                            self.comp1_tot_liabilities = res.get('compr1_balance')
 #                        if res.get('name').lower() == 'total equity':
@@ -2025,8 +2151,6 @@ class Parser(account_balance):
 #            
 #            total_profit_loss = abs(form_copy.get('periodic_net_profit_one'))
             total_profit_loss = self.net_profit
-#            total_comp0_profit_loss = self.comp0_net_profit
-#            total_comp1_profit_loss = self.comp1_net_profit
             self.total_profit_loss = {
                 'balance' : total_profit_loss, 
                 'id' : False, 
@@ -2045,23 +2169,25 @@ class Parser(account_balance):
                 'ytd' : total_profit_loss, 
             }
 #            
-#            if form['compr0_fiscalyear_id']:
-#                self.total_profit_loss.update({
-#                    'compr0_balance' : total_comp0_profit_loss,
-#                    'compr0_balanceinit' : 0.00,
-#                    'compr0_debit' : 0.00,
-#                    'compr0_credit' : 0.00,
-#                    'compr0_ytd' : self.comp0_net_profit,
-#                })
+            if form['compr0_fiscalyear_id']:
+                total_comp0_profit_loss = self.comp0_net_profit
+                self.total_profit_loss.update({
+                    'compr0_balance' : total_comp0_profit_loss,
+                    'compr0_balanceinit' : 0.00,
+                    'compr0_debit' : 0.00,
+                    'compr0_credit' : 0.00,
+                    'compr0_ytd' : self.comp0_net_profit,
+                })
 #            
-#            if form['compr1_fiscalyear_id']:
-#                self.total_profit_loss.update({
-#                    'compr1_balance' : total_comp1_profit_loss,
-#                    'compr1_balanceinit' : 0.00,
-#                    'compr1_debit' : 0.00,
-#                    'compr1_credit' : 0.00,
-#                    'compr1_ytd' : self.comp1_net_profit,
-#                })
+            if form['compr1_fiscalyear_id']:
+                total_comp1_profit_loss = self.comp1_net_profit
+                self.total_profit_loss.update({
+                    'compr1_balance' : total_comp1_profit_loss,
+                    'compr1_balanceinit' : 0.00,
+                    'compr1_debit' : 0.00,
+                    'compr1_credit' : 0.00,
+                    'compr1_ytd' : self.comp1_net_profit,
+                })
             result_acc.append(self.total_profit_loss)
             a = []
             for res_acc in result_acc:
