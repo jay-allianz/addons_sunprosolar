@@ -1,0 +1,17 @@
+===============================================================================
+ Version Change Log (sps_crm)
+===============================================================================
+
+6.3.01 ---> Nov 21,2013 : Hardik
+    * Added Zip range from and to field in station
+    * Changed menu in sales from "Insolation Incedent to "Stations"
+    * Added a field collected for each documents and made it check when user upload a doc.
+    * Removed Calculation Fields from one2many Solar Info
+    * Added default value 1 to "no. of array" field.
+    * Made calculation field sum in Solar Info
+    * Moved "Main Electrical Service Panel Information" field from System Data
+    * Removed fields module and inverter from System Data.
+    * Added "Equivalencies and Value Factors" fields in company level configurations
+    * Added "fedral tax" and "sale tax" at company level
+    * Added field for duration type in "Annual Electricity Usage" which is monthly or yearly
+    * Added google map link in opportunity after phone number

@@ -37,10 +37,36 @@ import urllib
 import webbrowser
 WEB_LINK_URL = "db=%s&uid=%s&pwd=%s&id=%s&state=%s&action_id=%s"
 
+class type_of_sale(osv.Model):
+
+    _name = "type.of.sale"
+    _columns = {
+            'name': fields.selection([('cash', 'Cash'), ('sun_power_lease', 'Sun Power Lease'), ('cpf', 'CPF'), ('wells_fargo', 'Wells Fargo'), ('admirals_bank', 'Admirals Bank'), ('hero', 'Hero'), ('others', 'Others')], 'Type Of Sale'),
+            'number_of_days': fields.integer('Number Of Days'),
+        }
+    
 class crm_lead(osv.Model):
     """ Model for CRM Lead. """
     _inherit = "crm.lead"
+    
+    def on_change_partner(self, cr, uid, ids, partner_id, context=None):
+        res = super(crm_lead,self).on_change_partner(cr, uid, ids, partner_id, context=context)
+        values = {}
+        if partner_id:
+            partner = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
+            res['value'].update({'partner_is_company':partner.is_company,
+                                 'spouse' : partner.spouse and partner.spouse.id or False
+                                 })
+        return res
 
+    def _get_deadline(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for data in self.browse(cr, uid, ids, context=context):
+            date_today = datetime.datetime.strptime(str(datetime.date.today()), "%Y-%m-%d")
+            deadline = date_today + datetime.timedelta(days=data and data.type_of_sale_id and data.type_of_sale_id.number_of_days or 0)
+            res[data.id] = str(deadline.date())
+            return res
+        
     def _reponsible_user(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for u in self.browse(cr, uid, ids, context=context):
@@ -253,6 +279,7 @@ class crm_lead(osv.Model):
 #         'roof_type':fields.selection([('s_family', 'Single Family'),('Mobil','Mobil'),('manufactured','Manufactured')], 'Type Of Roof',),
          'roof_type': fields.many2one('roof.type', 'Type Of Roof'),
          'time_own_year': fields.integer('Owned Home Time', help="How long have you owned your home?"),
+         'partner_is_company' : fields.boolean('Partner is Company'),
          'time_own_month': fields.integer('Owned home Time month'),
          'pool': fields.boolean('Is Pool?', help="Have a pool or not? Checked if Yes."),
          'spent_money': fields.float('Money spent to Heat Home', help='How much spent to heat home?'),
@@ -282,8 +309,8 @@ class crm_lead(osv.Model):
         'credit_source': fields.float('Credit Source'),
         'property_tax': fields.float('Property Tax'),
         'appointment_ids': fields.one2many('crm.meeting', 'crm_id', 'Appointments'),
-        'type_of_sale': fields.selection([('cash', 'Cash'), ('sun_power_lease', 'Sun Power Lease'), ('cpf', 'CPF'), ('wells_fargo', 'Wells Fargo'), ('admirals_bank', 'Admirals Bank'), ('hero', 'Hero'), ('others', 'Others')], 'Type Of Sale'),
-        'deadline': fields.date('Deadline'),
+        'type_of_sale_id': fields.many2one('type.of.sale', 'Type Of Sale'),
+        'deadline': fields.function(_get_deadline, method=True, type='date', string="Deadline",),
         'deposit': fields.float('Deposit'),
         'federal_tax': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Federal Tax Advantage?'),
         'property_tax': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Property Tax Paid?', help="Have your property tax paid on time for the last 3 years?"),
@@ -293,7 +320,7 @@ class crm_lead(osv.Model):
         'attachment_ids': fields.many2many('ir.attachment', 'email_template_attachment_sps_rel', 'mail_template_id', 'attach_id', 'Attachments'),
 #         'type_of_module': fields.char('Type Of Modules', size=36),
 #         'inverter': fields.char('Inverter', size=32),
-        'main_ele_serviece_panel': fields.char('Main Electrical Service Panel information', size=32),
+#        'main_ele_serviece_panel': fields.char('Main Electrical Service Panel information', size=32),
         'see_lead_home_note': fields.boolean('See Lead Home Note'),
         'crm_lead_home_note_ids': fields.one2many('crm.lead.home.description', 'home_id', 'Notes'),
         'anual_electricity_usage_ids' : fields.one2many('electricity.usage', 'lead_id', 'Anual Electricity Usage'),
@@ -500,7 +527,7 @@ class crm_lead(osv.Model):
         if utility_company_id:
             utility_company = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
             for document in utility_company.document_ids:
-                document_list.append(document.id)
+                document_list.append({'doc_id':document.id})
             values = {'doc_req_ids' : document_list or False}
         return {'value' : values}
     
@@ -1160,7 +1187,7 @@ class res_partner(osv.Model):
         'spouse': fields.many2one('res.partner', string='Secondary Customer', help="Secondary Customer (spouse) in case he/she exist."),
         'last_name': fields.char('Last Name'),
         'middle_name' : fields.char('Middle Name'),
-        'document_ids': fields. one2many('document.required', 'partner_id', 'Required Documents'),
+        'document_ids': fields.many2many('documents.all', 'company_document_rel', 'partner_id','document_id', 'Required Documents'),
     }
     
 res_partner()

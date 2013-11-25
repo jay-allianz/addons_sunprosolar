@@ -166,6 +166,32 @@ class electricity_usage(osv.Model):
         avg = jan + feb + mar + apr + may + jun + jul + aug + sep + oct + nov + dec
         return {'value':{'usage_kwh':avg}}
     
+    def create(self, cr, uid, vals, context=None):
+        months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
+        usage = 0
+        usage_month = vals['usage_kwh']
+        for month in months:
+            if month in vals.keys():
+                usage += vals[month]
+        if vals['type'] == 'yearly':
+            vals.update({'usage_kwh':usage_month})
+        else:
+            vals.update({'usage_kwh':usage})
+        res = super(electricity_usage, self).create(cr, uid, vals, context=context)
+        return res
+    
+    def write(self, cr, uid, ids, vals, context=None):
+        months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
+        usage = 0
+        for month in months:
+            if month in vals.keys():
+                usage += vals[month]
+        if usage:
+            rec = self.read(cr,uid,ids[0],['usage_kwh'])
+            vals.update({'usage_kwh':rec['usage_kwh']+usage})
+        res = super(electricity_usage, self).write(cr, uid, ids, vals, context=context)
+        return res
+    
     _columns = {
         'name' : fields.integer("Year"),
         'jan' : fields.integer("January"),
