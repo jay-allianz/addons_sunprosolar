@@ -60,6 +60,9 @@ class Parser(account_balance):
         self.other_income_credit = 0.00
         self.other_income_debit = 0.00
         
+        self.debit_total = 0.00
+        self.credit_total = 0.00
+        
         self.comp_debit_total = 0.00
         self.comp_credit_total = 0.00
         
@@ -305,15 +308,17 @@ class Parser(account_balance):
             'get_total_comp_credit' : self.get_total_comp_credit
         })
         
-    def get_debit(self, debit):
-        self.debit_total += debit
+    def get_debit(self, debit, level):
+        if level == 1:
+            self.debit_total += debit
         return debit
     
     def get_total_debit(self):
         return self.debit_total
     
-    def get_credit(self, credit):
-        self.credit_total += credit
+    def get_credit(self, credit, level):
+        if level == 1:
+            self.credit_total += credit
         return credit
     
     def get_total_credit(self):
@@ -1328,15 +1333,17 @@ class Parser(account_balance):
     def get_profit(self, bal):
         return bal
     
-    def get_comp_debit(self, comp_debit):
-        self.comp_debit_total += comp_debit
+    def get_comp_debit(self, comp_debit, level):
+        if level == 1: 
+            self.comp_debit_total += comp_debit
         return comp_debit
     
     def get_total_comp_debit(self):
         return self.comp_debit_total
     
-    def get_comp_credit(self, comp_credit):
-        self.comp_credit_total += comp_credit
+    def get_comp_credit(self, comp_credit, level):
+        if level == 1: 
+            self.comp_credit_total += comp_credit
         return comp_credit
     
     def get_total_comp_credit(self):
