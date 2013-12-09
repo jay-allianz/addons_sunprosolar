@@ -199,7 +199,7 @@
             <field name="name">Analytic Ledger Report Excel</field>
             <field name="type">ir.actions.report.xml</field>
             <field name="model">wizard.report</field>
-            <field name="report_name">analytic.ledger.aeroo</field>
+            <field name="report_name">aeroo.analytic</field>
             <field name="report_type">aeroo</field>
             <field name="in_format">oo-ods</field>
             <field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>

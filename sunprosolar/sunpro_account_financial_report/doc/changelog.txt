@@ -1,6 +1,9 @@
 ==================================================================================
  Version ChangeLog (sunpro_account_financial_report)
 ==================================================================================
+0.3  --> 10 october  2013 : 
+	* Improved the code of the print_report and periodic_print_report method. 
+
 0.2  --> 10 october  2013 : 
     *Improvements in Report wizard view.
 

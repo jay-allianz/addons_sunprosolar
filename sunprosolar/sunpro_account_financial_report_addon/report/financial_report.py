@@ -873,18 +873,18 @@ class account_balance_inherit(account_balance):
                         res.update({
                             'balance': self.exchange(b), 
                         })
-                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
-                        for ytd_acc_data in report_data.account_list:
-                            if ytd_acc_data.type == 'view':
-                                parent_id = ytd_acc_data.parent_id.id
-                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
-                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
-                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
-                            if parent_id == acc_data.id:
-                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
-                                if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
-                                    self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('balance')
-                                self.total_liabilities_equity = self.total_balance_sheet_balance
+#                         report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+#                         for ytd_acc_data in report_data.account_list:
+#                             if ytd_acc_data.type == 'view':
+#                                 parent_id = ytd_acc_data.parent_id.id
+#                         parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+#                         child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+#                         for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+#                             if parent_id == acc_data.id:
+#                                 acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+#                                 if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
+#                                     self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('balance')
+#                                 self.total_liabilities_equity = self.total_balance_sheet_balance
 #                                for acc in account_obj.browse(self.cr, self.uid, acc_ids):
 #                                    if acc.user_type.name == 'Assets' or acc.user_type.name == 'Asset' or acc.user_type.name == 'Asset View':
 #                                        self.total_assets = res.get('balance')
@@ -1985,18 +1985,18 @@ class account_balance_inherit(account_balance):
                     res.update({
                         'balance': self.exchange(b), 
                     })
-                    report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
-                    for ytd_acc_data in report_data.account_list:
-                        if ytd_acc_data.type == 'view':
-                            parent_id = ytd_acc_data.parent_id.id
-                    parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
-                    child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
-                    for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
-                        if parent_id == acc_data.id:
-                            acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
-                            if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
-                                self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('balance')
-                            self.total_liabilities_equity = self.total_balance_sheet_balance
+#                     report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+#                     for ytd_acc_data in report_data.account_list:
+#                         if ytd_acc_data.type == 'view':
+#                             parent_id = ytd_acc_data.parent_id.id
+#                     parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+#                     child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+#                     for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+#                         if parent_id == acc_data.id:
+#                             acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+#                             if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
+#                                 self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('balance')
+#                             self.total_liabilities_equity = self.total_balance_sheet_balance
 #                    if res.get('name').lower() == 'total liabilities':
 #                        self.tot_liabilities = res.get('balance')
 #                    if res.get('name').lower() == 'total equity':

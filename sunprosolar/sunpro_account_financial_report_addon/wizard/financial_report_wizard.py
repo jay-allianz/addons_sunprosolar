@@ -64,7 +64,7 @@ class wizard_report(osv.TransientModel):
         if res['report_name'] == 'afr.2cols':
             res['report_name'] = 'balance.full.two.aeroo'
         if res['report_name'] == 'afr.analytic.ledger':
-            res['report_name'] = 'analytic.ledger.aeroo'
+            res['report_name'] = 'aeroo.analytic'
         if res['report_name'] == 'afr.4cols':
             res['report_name'] = 'afr.4cols.inherit'
         if res['report_name'] == 'afr.5cols':
@@ -115,7 +115,7 @@ class wizard_report(osv.TransientModel):
         if res['report_name'] == 'periodic2.2cols':
             res['report_name'] = 'periodic2.2cols.inherit'
         if res['report_name'] == 'afr.analytic.ledger':
-            res['report_name'] = 'analytic.ledger.aeroo'
+            res['report_name'] = 'aeroo.analytic'
         if res['report_name'] == 'periodic.4cols':
             res['report_name'] = 'periodic.4cols.inherit'
         if res['report_name'] == 'periodic2.4cols':

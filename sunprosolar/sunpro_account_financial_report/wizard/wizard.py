@@ -154,7 +154,6 @@ class wizard_report(osv.TransientModel):
                 period_from = period.id
             if period_date[-1] == period.date_stop:
                 period_to = period.id
-
         res['value'].update({'currency_id':afr_brw.currency_id and afr_brw.currency_id.id or afr_brw.company_id.currency_id.id})
         res['value'].update({'inf_type':afr_brw.inf_type or 'BS'})
         res['value'].update({'columns':afr_brw.columns or 'five'})
@@ -517,7 +516,7 @@ class wizard_report(osv.TransientModel):
         if data['form']['compr1_fiscalyear_id'] and data['form']['periodic_columns'] == 'two':
             name = 'periodic2.2cols'
         if data['form']['periodic_columns'] == 'four':
-            if data['form']['analytic_ledger'] and data['form']['inf_type'] == 'BS':
+            if data['form']['inf_type'] == 'GL':
                 name = 'afr.analytic.ledger'
             else:
                 name = 'periodic.4cols'
@@ -564,7 +563,7 @@ class wizard_report(osv.TransientModel):
         if data['form']['columns'] == 'two':
             name = 'afr.2cols'
         if data['form']['columns'] == 'four':
-            if data['form']['analytic_ledger'] and data['form']['inf_type'] == 'BS':
+            if data['form']['inf_type'] == 'GL':
                 name = 'afr.analytic.ledger'
             else:
                 name = 'afr.4cols'
