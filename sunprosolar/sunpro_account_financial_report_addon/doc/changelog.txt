@@ -1,7 +1,10 @@
 ==================================================================================
  Version ChangeLog (sunpro_account_financial_report_addon)
 ==================================================================================
-0.5  --> 28 November 2013 :
+0.6  --> 10 December 2013 : Serpent Consulting Services
+		* Improved the Trail Balance and General Ledger report.
+
+0.5  --> 9 December 2013 :
 		* Improved the code of the Balance Sheet and General Ledger report.
 
 0.4  --> 28 November 2013 : 

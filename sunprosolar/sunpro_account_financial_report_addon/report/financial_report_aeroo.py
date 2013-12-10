@@ -1342,51 +1342,52 @@ class Parser(account_balance):
 #                         index = result_acc.index(res_acc)
 #                         result_acc.insert(index+11,res_acc)
 #                         result_acc.pop(index)
-                total_net_profit = self.net_income_loss
-#                        dbr3 = self.gross_profit_dbr3
-                self.net_profit_dict = {
-                    'balance' : total_net_profit, 
-                    'id': False, 
-                    'type' : 'view', 
-                    'code' : '', 
-                    'name' : 'Net Income(Loss)', 
-                    'parent_id' : False, 
-                    'level' : 1, 
-                    'credit' : 0.0, 
-                    'debit' : 0.0, 
-                    'label' : False, 
-                    'mayor' : [], 
-                    'total' :True, 
-                    'change_sign' : 1, 
-                    'balanceinit' : 0.0, 
-                    'ytd' : total_net_profit, 
-                }
-                if form['columns'] =='qtr':
-                    self.net_profit_dict.update({
-                        'bal1' : self.net_profit1,
-                        'bal2' : self.net_profit2,
-                        'bal3' : self.net_profit3,
-                        'bal4' : self.net_profit4,
-                        'bal5' : self.net_profit5,
-                    })
-##                            
-                if form['columns'] =='thirteen':
-                     self.net_profit_dict.update({
-                        'bal1' : self.net_profit_mon1,
-                        'bal2' : self.net_profit_mon2,
-                        'bal3' : self.net_profit_mon3,
-                        'bal4' : self.net_profit_mon4,
-                        'bal5' : self.net_profit_mon5,
-                        'bal6' : self.net_profit_mon6,
-                        'bal7' : self.net_profit_mon7,
-                        'bal8' : self.net_profit_mon8,
-                        'bal9' : self.net_profit_mon9,
-                        'bal10' : self.net_profit_mon10,
-                        'bal11' : self.net_profit_mon11,
-                        'bal12' : self.net_profit_mon12,
-                        'bal13' : self.net_profit_mon13,
-                    })
-                result_acc.append(self.net_profit_dict)
+                if not form['inf_type'] == 'TB':
+                    total_net_profit = self.net_income_loss
+    #                        dbr3 = self.gross_profit_dbr3
+                    self.net_profit_dict = {
+                        'balance' : total_net_profit, 
+                        'id': False, 
+                        'type' : 'view', 
+                        'code' : '', 
+                        'name' : 'Net Income(Loss)', 
+                        'parent_id' : False, 
+                        'level' : 1, 
+                        'credit' : 0.0, 
+                        'debit' : 0.0, 
+                        'label' : False, 
+                        'mayor' : [], 
+                        'total' :True, 
+                        'change_sign' : 1, 
+                        'balanceinit' : 0.0, 
+                        'ytd' : total_net_profit, 
+                    }
+                    if form['columns'] =='qtr':
+                        self.net_profit_dict.update({
+                            'bal1' : self.net_profit1,
+                            'bal2' : self.net_profit2,
+                            'bal3' : self.net_profit3,
+                            'bal4' : self.net_profit4,
+                            'bal5' : self.net_profit5,
+                        })
+    ##                            
+                    if form['columns'] =='thirteen':
+                         self.net_profit_dict.update({
+                            'bal1' : self.net_profit_mon1,
+                            'bal2' : self.net_profit_mon2,
+                            'bal3' : self.net_profit_mon3,
+                            'bal4' : self.net_profit_mon4,
+                            'bal5' : self.net_profit_mon5,
+                            'bal6' : self.net_profit_mon6,
+                            'bal7' : self.net_profit_mon7,
+                            'bal8' : self.net_profit_mon8,
+                            'bal9' : self.net_profit_mon9,
+                            'bal10' : self.net_profit_mon10,
+                            'bal11' : self.net_profit_mon11,
+                            'bal12' : self.net_profit_mon12,
+                            'bal13' : self.net_profit_mon13,
+                        })
+                    result_acc.append(self.net_profit_dict)
 ##                
 #            tot_expense = self.total_exp
 ##                    expdbr3 = self.total_expense_dbr3
@@ -2427,46 +2428,47 @@ class Parser(account_balance):
 #                                 index = result_acc.index(res_acc)
 #                                 result_acc.insert(index+11,res_acc)
 #                                 result_acc.pop(index)
-                        
-                        total_gross_profit = self.net_profit_loss_periodic
-#                        total_comp0_gross_profit = self.comp0_gross_profit
-#                        total_comp1_gross_profit = self.comp1_gross_profit
-                        self.net_profit_dict = {
-                            'balance' : total_gross_profit, 
-                            'id'        : False, 
-                            'type' : 'view', 
-                            'code' : '', 
-                            'name' : 'Net Profit(Loss)', 
-                            'parent_id' : False, 
-                            'level' : 1, 
-                            'credit' : 0.0, 
-                            'debit' : 0.0, 
-                            'label' : False, 
-                            'mayor' : [], 
-                            'total' :True, 
-                            'change_sign' : 1, 
-                            'balanceinit' : 0.0, 
-                            'ytd' : total_gross_profit, 
-                        }
-                        
-                        result_acc.append(self.net_profit_dict)
-#                        
-#                        if form['compr0_fiscalyear_id']:
-#                            self.gross_profit_dict.update({
-#                                'compr0_balance' : total_comp0_gross_profit,
-#                                'compr0_balanceinit' : 0.00,
-#                                'compr0_debit' : 0.00,
-#                                'compr0_credit' : 0.00,
-#                                'compr0_ytd' : abs(self.comp0_tot_revenue - self.comp0_tot_cogs),
-#                            })
-#                        if form['compr1_fiscalyear_id']:
-#                            self.gross_profit_dict.update({
-#                                'compr1_balance' : total_comp1_gross_profit,
-#                                'compr1_balanceinit' : 0.00,
-#                                'compr1_debit' : 0.00,
-#                                'compr1_credit' : 0.00,
-#                                'compr1_ytd' : abs(self.comp1_tot_revenue - self.comp1_tot_cogs),
-#                            })
+                        if not form['inf_type'] == 'TB':
+                            total_gross_profit = self.net_profit_loss_periodic
+    #                        total_comp0_gross_profit = self.comp0_gross_profit
+    #                        total_comp1_gross_profit = self.comp1_gross_profit
+                            self.net_profit_dict = {
+                                'balance' : total_gross_profit, 
+                                'id'        : False, 
+                                'type' : 'view', 
+                                'code' : '', 
+                                'name' : 'Net Profit(Loss)', 
+                                'parent_id' : False, 
+                                'level' : 1, 
+                                'credit' : 0.0, 
+                                'debit' : 0.0, 
+                                'label' : False, 
+                                'mayor' : [], 
+                                'total' :True, 
+                                'change_sign' : 1, 
+                                'balanceinit' : 0.0, 
+                                'ytd' : total_gross_profit, 
+                            }
+                            
+                            
+                            if form['compr0_fiscalyear_id']:
+                                self.net_profit_dict.update({
+                                    'compr0_balance' : self.profit_loss_comp0,
+                                    'compr0_balanceinit' : 0.00,
+                                    'compr0_debit' : 0.00,
+                                    'compr0_credit' : 0.00,
+                                    'compr0_ytd' : self.profit_loss_comp0,
+                                })
+                            if form['compr1_fiscalyear_id']:
+                                self.net_profit_dict.update({
+                                    'compr1_balance' : self.profit_loss_comp1,
+                                    'compr1_balanceinit' : 0.00,
+                                    'compr1_debit' : 0.00,
+                                    'compr1_credit' : 0.00,
+                                    'compr1_ytd' : self.profit_loss_comp1,
+                                })
+                            
+                            result_acc.append(self.net_profit_dict)
 #                        result_acc.insert(index+2, self.gross_profit_dict)
 #                        result_acc.append(self.gross_profit_dict)
 #                        result_acc.pop(index)

@@ -22,6 +22,9 @@
                 <xpath expr="//field[@name='analytic_ledger']" position="attributes">
                     <attribute name="string">General Ledger</attribute>
                 </xpath>
+                <xpath expr="//field[@name='analytic_ledger']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="//group[@col='2']" position="replace">
 <!--                    <group colspan="4" col="4"-->
                         <button type='special' special='cancel' string='_Cancel' icon='gtk-cancel'/>
@@ -46,6 +49,10 @@
 <!--                    <field name="show_earning" invisible="1"/>-->
 <!--                    <field name="earning_account" domain="[('type', '!=', 'view')]" invisible="1"/>-->
                 </xpath>
+                <xpath expr="//field[@name='analytic_ledger']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
                 <separator string="Ending Total" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </separator>

@@ -172,6 +172,21 @@ class account_balance(report_sxw.rml_parse):
             sorted(aux)
             to_date = datetime.strptime(aux[-1], "%Y-%m-%d")
             return 'As Of '+ to_date.strftime("%B %d, %Y")
+        elif form['inf_type'] in ['GL'] and form['filter'] in ['bydate', 'all']:
+            from_date = datetime.strptime(form['date_from'], "%Y-%m-%d")
+            to_date = datetime.strptime(form['date_to'], "%Y-%m-%d") 
+            date = _('From ')+from_date.strftime("%B %d, %Y") +_(' To ')+ to_date.strftime("%B %d, %Y")
+            return date
+        elif form['inf_type'] in ['GL'] and form['filter'] in ['byperiod', 'all']:
+            aux=[]
+            for period in period_obj.browse(self.cr, self.uid, form['periods']):
+                aux.append(period.date_start)
+                aux.append(period.date_stop)
+            sorted(aux)
+            from_date = datetime.strptime(aux[0], "%Y-%m-%d")
+            to_date = datetime.strptime(aux[-1], "%Y-%m-%d")
+            date = _('From ')+from_date.strftime("%B %d, %Y") +_(' To ')+ to_date.strftime("%B %d, %Y")
+            return date
 
     def get_periods_and_date_text(self, form):
         """
