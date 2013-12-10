@@ -27,6 +27,7 @@
 							<field name="parent_id" />
 							<field name="from_zip" required="1" />
 							<field name="to_zip" required="1" />
+							<field name="utility_company_id" required="1" domain="[('is_company','=',True)]"/>
 							<label for="parent_persentage" />
 							<div>
 								<field name="parent_persentage" />

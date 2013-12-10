@@ -1,6 +1,42 @@
 ===============================================================================
  Version Change Log (sps_crm)
 ===============================================================================
+6.3.08 ---> Dec 10,2013 : Hardik
+    * Added company logo to proposal header (from company data) right alignment,company name in the proposal footer ( © Company name ) from company data,
+    * Removed and / or on Grid Solar same alignment,
+    * Added company telephone in the proposal footer left alignment (from company data).
+    * Add company email in the proposal footer right alignment (from company data).
+    * Improved Cleaner and Greener Enviourments data.
+    * Improved Solar PV Economics and Returns data.
+    * Improved Annual bills, Savings & Payback Schedule data.
+
+6.3.07 ---> Dec 06,2013 : Hardik
+    * Added fields named number_of_years, cars_off_roads, tree_planting_equi, first_year_savings to the Proposal Report.
+    * Improveds the designing of the report.
+    
+6.3.06 ---> Dec 05,2013 : Hardik
+    * Added Pie Chart to the graph
+    * Improved Bar chart like size and color
+    * Imporved the logic of the report
+    * Added values of array like module name, inverter name, size of module and inverter, tilt degreen faceing and etc.
+
+6.3.05 ---> Dec 04,2013 : Hardik
+    * Added Bar Chart on the report.
+    * Added total of the cost and rebate at the end of table.
+    
+6.3.04 ---> Dec 03,2013 : Hardik
+    * Calculated field cost_rebate_ids
+    * Added model cost.rebate
+    * Added values of cost_rebate_ids field to the report of proposal
+
+6.3.03 ---> Dec 02,2013 : Hardik
+    * Added 4 functional field named cost,down payment, rebate amount, loan amount and also calculated value of those field.
+    * Added Data Table for calculating the values.
+    * Improved the UI as mentioned in the excel sheet 
+
+6.3.02 ---> Nov 26,2013 : Hardik
+    * Improved "site_avg_sun_hour" field. changed function code for calculating the functional field.
+    * Added 3 fields to solar.solar module for referencing the value.
 
 6.3.01 ---> Nov 21,2013 : Hardik
     * Added Zip range from and to field in station
@@ -15,3 +51,4 @@
     * Added "fedral tax" and "sale tax" at company level
     * Added field for duration type in "Annual Electricity Usage" which is monthly or yearly
     * Added google map link in opportunity after phone number
+

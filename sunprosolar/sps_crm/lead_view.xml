@@ -1,10 +1,85 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
+		<record id="base.view_res_partner_filter" model="ir.ui.view">
+			<field name="name">res.partner.select</field>
+			<field name="model">res.partner</field>
+			<field name="arch" type="xml">
+				<search string="Search Partner">
+					<field name="name"
+						filter_domain="['|','|',('name','ilike',self),('parent_id','ilike',self),('ref','=',self)]" />
+					<filter help="My Partners" icon="terp-personal+" domain="[('user_id','=',uid)]" />
+					<separator />
+					<filter string="Persons" name="type_person" domain="[('is_company','=',0)]" />
+					<filter string="Companies" name="type_company" domain="[('is_company','=',1)]" />
+					<separator />
+					<filter string="Customers" name="customer" domain="[('customer','=',1)]"
+						help="Customer Partners" />
+					<filter string="Suppliers" name="supplier" domain="[('supplier','=',1)]"
+						help="Supplier Partners" />
+					<filter string="Is a Company" name="is_company"
+						domain="[('is_company','=',1),('customer','=',0),('supplier','=',0)]" />
+					<separator />
+					<field name="category_id" string="Tag"
+						filter_domain="[('category_id','ilike', self)]" />
+					<field name="user_id" />
+					<field name="parent_id" domain="[('is_company','=',1)]"
+						filter_domain="[('parent_id','child_of',[self])]" />
+					<group expand="0" string="Group By...">
+						<filter string="Salesperson" icon="terp-personal" domain="[]"
+							context="{'group_by' : 'user_id'}" />
+						<filter string="Company" context="{'group_by': 'parent_id'}" />
+						<filter string="Country" context="{'group_by': 'country_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="utility_company_action_partner_form" model="ir.actions.act_window">
+			<field name="name">Utility Company</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form</field>
+			<field name="context">{"search_default_is_company":1}</field>
+			<field name="search_view_id" ref="base.view_res_partner_filter" />
+		</record>
+		<record id="utility_company_action_partner_form_view1" model="ir.actions.act_window.view">
+			<field eval="0" name="sequence" />
+			<field name="view_mode">kanban</field>
+			<field name="view_id" ref="base.res_partner_kanban_view" />
+			<field name="act_window_id" ref="utility_company_action_partner_form" />
+		</record>
+		<record id="utility_company_action_partner_form_view2" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="base.view_partner_form" />
+			<field name="act_window_id" ref="utility_company_action_partner_form" />
+		</record>
+		<record id="utility_company_action_partner_tree_view1" model="ir.actions.act_window.view">
+			<field name="sequence" eval="1" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="base.view_partner_tree" />
+			<field name="act_window_id" ref="utility_company_action_partner_form" />
+		</record>
+
+		<menuitem id="utility_company_menu_partner_form" parent="base.menu_sales"
+			action="utility_company_action_partner_form" sequence="13"
+			string="Utility Company" />
+
+		<!-- <record id="multi_company_action_partner_form" model="ir.actions.act_window"> -->
+		<!-- <field name="name">Utility Company</field> -->
+		<!-- <field name="type">ir.actions.act_window</field> -->
+		<!-- <field name="res_model">res.partner</field> -->
+		<!-- <field name="view_type">form</field> -->
+		<!-- <field name="view_mode">kanban,tree,form</field> -->
+		<!-- <field name="context">{"search_default_is_company":1}</field> -->
+		<!-- <field name="search_view_id" ref="base.view_res_partner_filter" /> -->
+		<!-- </record> -->
 
 		<menuitem id="base.menu_partner_form" parent="base.menu_sales"
 			action="base.action_partner_form" sequence="1" string="Contacts" />
-		
+
 		<record id="type_of_sale_form" model="ir.ui.view">
 			<field name="name">type_of_sale_form</field>
 			<field name="model">type.of.sale</field>
@@ -13,7 +88,7 @@
 					<sheet>
 						<group col="4" colspan="4">
 							<field name="name" />
-							<field name="number_of_days"/>
+							<field name="number_of_days" />
 						</group>
 					</sheet>
 				</form>
@@ -40,7 +115,6 @@
 			</field>
 		</record>
 
-
 		<!-- CRM Lead Form View -->
 
 		<!-- <record id="view_sun_opportunity_form" model="ir.ui.view"> -->
@@ -54,6 +128,28 @@
 		<!-- </xpath> -->
 		<!-- </field> -->
 		<!-- </record> -->
+
+		<!-- <record forcecreate="True" id="ir_cron_scheduler_lead_days" model="ir.cron"> 
+			<field name="name">Run Lead days</field> <field eval="True" name="active" 
+			/> <field name="user_id" ref="base.user_root" /> <field name="interval_number">1</field> 
+			<field name="interval_type">minutes</field> <field name="numbercall">-1</field> 
+			<field eval="'crm.lead'" name="model" /> <field eval="'run_lead_days'" name="function" 
+			/> <field eval="'(False,)'" name="args" /> </record> -->
+
+
+		
+		<record forcecreate="True" id="ir_cron_scheduler_lead_days" model="ir.cron">
+			<field name="name">Run Lead days</field>
+			<field eval="True" name="active" />
+			<field name="user_id" ref="base.user_root" />
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field eval="'crm.lead'" name="model" />
+			<field eval="'run_lead_days'" name="function" />
+			<field eval="'(False,)'" name="args" />
+		</record>
+        
 
 		<record id="view_sun_crm_lead_form" model="ir.ui.view">
 			<field name="name">crm.lead.form</field>
@@ -69,11 +165,17 @@
 					<attribute name="required">True</attribute>
 				</xpath>
 				<field name="contact_name" position="attributes">
-				    <attribute name="attrs">{'required':[('partner_is_company','!=',False)],'invisible':[('partner_is_company','=',True)]}</attribute>
+					<attribute name="attrs">{'required':[('partner_is_company','!=',False)],'invisible':[('partner_is_company','=',True)]}
+					</attribute>
+				</field>
+				<field name="fax" position="after">
+					<field name="lead_date" />
+					<field name="lead_days" />
 				</field>
 				<field name="contact_name" position="after">
-				    <field name="partner_is_company" invisible="1"/>
-					<field name="last_name" placeholder="Last Name" attrs="{'required':[('partner_is_company','=',False)],'invisible':[('partner_is_company','=',True)]}" />
+					<field name="partner_is_company" invisible="1" />
+					<field name="last_name" placeholder="Last Name"
+						attrs="{'required':[('partner_is_company','=',False)],'invisible':[('partner_is_company','=',True)]}" />
 				</field>
 				<xpath expr="//field[@name='phone']" position="attributes">
 					<attribute name="required">1</attribute>
@@ -102,6 +204,10 @@
 					position="after">
 					<field name="spouse" />
 				</xpath>
+				<field name="city" position="after">
+					<button name="openMap" string="Google Map" type="object"
+						help="It will open google map for the above address." />
+				</field>
 				<xpath expr="//form/sheet/notebook/page[@string='Internal Notes']"
 					position="before">
 					<page string="Viewing All Notes">
@@ -200,9 +306,9 @@
 					<page string="Electricity Info">
 						<group col="4" colspan="4">
 							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)"
-								domain="[('is_company','=',True)]"
-								context = "{'view_id': 'view_utility_customer_form'}" required="1" />
-<!--							<field name="main_ele_serviece_panel" /-->
+								domain="[('is_company','=',True)]" context="{'view_id': 'view_utility_customer_form'}"
+								required="1" />
+							<!-- <field name="main_ele_serviece_panel" / -->
 							<newline />
 							<separator string="Required Documents" colspan="4" />
 							<field name='doc_req_ids' colspan="4" nolabel="1">
@@ -241,8 +347,13 @@
 								<span class="oe_grey"> of </span>
 								<field name="bill_month" nolabel="1" />
 							</div>
-							<field name="bill_total"
+							<label for="bill_total"
 								attrs="{'invisible':[('required_document','=',False)]}" />
+							<div attrs="{'invisible':[('required_document','=',False)]}">
+								<field name="bill_total" />
+								<span class="oe_grey"> of </span>
+								<field name="bill_month1" nolabel="1" />
+							</div>
 						</group>
 						<field name="see_lead_electricity_note" invisible="1" />
 						<label for="electricity_note" />
@@ -411,26 +522,25 @@
 			<field name="model">crm.lead</field>
 			<field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
 			<field name="arch" type="xml">
-			    <field name="phone" position="after">
-			        <button name="openMap" string="Google Map" type="object" help="It will open google map for the above address."/>
-			    </field>
-			    <field name="partner_id" position="attributes"> 
-					<attribute name="on_change">on_change_partner(partner_id)</attribute>
-					<attribute name="context">{'default_name': contact_name, 'default_street': street, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_fax': fax, 'default_email': email_from, 'default_user_id': user_id, 'default_section_id': section_id}</attribute>
+				<field name="phone" position="after">
+					<button name="openMap" string="Google Map" type="object"
+						help="It will open google map for the above address." />
 				</field>
-			    <field name="partner_id" position="after">
-			    	<label for="street" string="Address"/>
-                        <div>
-                            <field name="street" placeholder="Street..."/>
-                            <field name="street2"/>
-                            <div class="address_format">
-                                <field name="city" placeholder="City" style="width: 40%%"/>
-                                <field name="state_id" on_change="onchange_state(state_id)" options='{"no_open": True}' placeholder="State" style="width: 24%%"/>
-                                <field name="zip" placeholder="ZIP" style="width: 34%%"/>
-                            </div>
-                            <field name="country_id" placeholder="Country" options='{"no_open": True}'/>
-                        </div>
-                </field>
+				<!-- <field name="partner_id" position="attributes"> <attribute name="on_change">onchange_partner_id(partner_id, 
+					email_from)</attribute> <attribute name="context">{'default_name': contact_name, 
+					'default_street': street, 'default_city': city, 'default_state_id': state_id, 
+					'default_zip': zip, 'default_country_id': country_id, 'default_function': 
+					function, 'default_phone': phone, 'default_mobile': mobile, 'default_fax': 
+					fax, 'default_email': email_from, 'default_user_id': user_id, 'default_section_id': 
+					section_id}</attribut </field> -->
+				<field name="partner_id" position="after">
+					<label for="street" string="Address" />
+					<div>
+						<field name="street" placeholder="Street..." />
+						<field name="street2" />
+						<field name="city_id" on_change="on_change_station_and_utility(city_id)"/>
+					</div>
+				</field>
 				<xpath expr="//page[@string='Internal Notes']" position="attributes">
 					<attribute name="invisible">1</attribute>
 				</xpath>
@@ -466,6 +576,37 @@
 				<xpath expr="//notebook/page/group/group/field[@name='fax']"
 					position="after">
 					<field name="property" />
+					<field name="insentive_type" />
+					<field name="sci_step" />
+				</xpath>
+				<xpath
+					expr="//notebook/page[@string='Lead']/group/group/div/div[@class='address_format']"
+					position="replace">
+					<field name="city_id" />
+				</xpath>
+				<xpath
+					expr="//notebook/page[@string='Lead']/group/group/div/field[@name='country_id']"
+					position="replace">
+				</xpath>
+				<xpath expr="//notebook/page[@string='Lead']" position="before">
+					<page string="Viewing All Notes">
+						<field name="crm_lead_all_tabs_note_ids" readonly="1">
+							<tree>
+								<field name="all_tab_user_id" />
+								<field name="date" />
+								<field name="notes" />
+							</tree>
+							<form>
+								<group>
+									<field name="all_tab_user_id" />
+									<field name="date" />
+									<field name="notes" />
+								</group>
+							</form>
+						</field>
+						<button name="exit_notes" string="Exit Notes" type="object"
+							class="oe_link" />
+					</page>
 				</xpath>
 				<xpath expr="//notebook/page[@string='Lead']" position="after">
 					<page string="Home Info">
@@ -536,8 +677,9 @@
 					<page string="Electricity Info">
 						<group col="4" colspan="4">
 							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)"
-								context = "{'view_id': 'view_utility_customer_form'}" required="1" />
-<!--							<field name="main_ele_serviece_panel" /-->
+								domain="[('is_company','=',True)]" context="{'view_id': 'view_utility_customer_form'}"
+								required="1" />
+							<!-- <field name="main_ele_serviece_panel" / -->
 							<newline />
 							<separator string="Required Documents" colspan="4" />
 							<field name='doc_req_ids' colspan="4" nolabel="1">
@@ -576,8 +718,13 @@
 								<span class="oe_grey"> of </span>
 								<field name="bill_month" nolabel="1" />
 							</div>
-							<field name="bill_total"
+							<label for="bill_total"
 								attrs="{'invisible':[('required_document','=',False)]}" />
+							<div attrs="{'invisible':[('required_document','=',False)]}">
+								<field name="bill_total" />
+								<span class="oe_grey"> of </span>
+								<field name="bill_month1" nolabel="1" />
+							</div>
 						</group>
 						<field name="see_lead_electricity_note" invisible="1" />
 						<label for="electricity_note" />
@@ -621,7 +768,10 @@
 					<page string="Solar">
 						<separator string="Solar Information" />
 						<field name="solar_ids" colspan="4" nolabel="1">
-							<tree string="Solar Tree" editable="top">
+							<tree string="Solar Tree">
+								<field name="loc_station_id" required="1" />
+								<field name="tilt_degree" required="1" />
+								<field name="faceing" required="1" />
 								<field name="module_product_id" />
 								<field name="inverter_product_id" />
 								<field name="num_of_module" />
@@ -645,7 +795,9 @@
 							</tree>
 						</field>
 
+
 						<group col="4" colspan="4">
+
 							<group col="2" colspan="2" string="Calculation Field">
 								<field name="stc_dc_rating" />
 								<field name="ptc_dc_rating" />
@@ -654,9 +806,13 @@
 								<field name="annual_solar_prod" />
 								<field name="annual_ele_usage" />
 								<field name="site_avg_sun_hour" />
+
 							</group>
 
+
 							<group col="2" colspan="2" string="Cleaner and Greener Environment">
+								<!-- <field name="yearly_output_per_kw" /> <field name="solar_array_output" 
+									/> -->
 								<field name="co2_offset_tons" />
 								<field name="co2_offset_pounds" />
 								<field name="cars_off_roads" />
@@ -668,38 +824,81 @@
 							</group>
 						</group>
 					</page>
-<!-- 					<page string="Cleaner and Greener Environment"> -->
-<!-- 						<group col="2" colspan="4"> -->
-<!-- 							<separator colspan="4" string="Equivalencies and Value Factors" /> -->
-<!-- 							<field name="avg_co2_ele" /> -->
-<!-- 							<field name="annual_equvi_tree" /> -->
-<!-- 							<field name="years_40_offset_tree" /> -->
-<!-- 							<field name="medium_pollusion" /> -->
-<!-- 							<field name="avg_yearly_miles" /> -->
-<!-- 							<field name="annnual_co2_car" /> -->
-<!-- 							<field name="annual_home_ele" /> -->
-<!-- 							<field name="avg_light_bulb" /> -->
-<!-- 							<field name="avg_comp" /> -->
-<!-- 							<field name="emmision_gas" /> -->
-<!-- 						</group> -->
-<!-- 					</page> -->
+					<!-- <page string="Cleaner and Greener Environment"> -->
+					<!-- <group col="2" colspan="4"> -->
+					<!-- <separator colspan="4" string="Equivalencies and Value Factors" 
+						/> -->
+					<!-- <field name="avg_co2_ele" /> -->
+					<!-- <field name="annual_equvi_tree" /> -->
+					<!-- <field name="years_40_offset_tree" /> -->
+					<!-- <field name="medium_pollusion" /> -->
+					<!-- <field name="avg_yearly_miles" /> -->
+					<!-- <field name="annnual_co2_car" /> -->
+					<!-- <field name="annual_home_ele" /> -->
+					<!-- <field name="avg_light_bulb" /> -->
+					<!-- <field name="avg_comp" /> -->
+					<!-- <field name="emmision_gas" /> -->
+					<!-- </group> -->
+					<!-- </page> -->
 
 					<page string="Solar PV Economics">
 						<group col="4" colspan="4">
 							<separator colspan="4" string="Economics Details" />
-							<field name="loan_interest_rate" />
 							<field name="loan_period" />
 							<field name="down_payment" />
-							<field name="number_of_years" />
+							<field name="loan_interest_rate" />
+							<field name="cost_peack_kw" />
 							<field name="pv_kw_decline" />
-							<field name="replace_inverter_every" />
+							<field name="kw_factor" />
 							<field name="grid_energy_rate" />
 							<field name="grid_rate_increase_by" />
 							<field name="rebate" />
-							<field name="pbi - epbb_incentives" />
-<!-- 							<field name="fedral_tax" /> -->
 							<field name="srec" />
-<!-- 							<field name="sales_tax" /> -->
+							<field name="number_of_years" />
+							<field name="replace_inverter_over_loan_period" />
+							<field name="inverter_cost" />
+							<field name="replace_inverter_every" />
+							<field name="peak_kw_stc" readonly="1" />
+							<field name="sun_hour_per_day" readonly="1" />
+							<field name="pbi_epbb_incentive" />
+							<newline />
+							<field name="cost" readonly="1" />
+							<field name="down_payment_amt" readonly="1" />
+							<!-- <field name="rebate" readonly="1"/> -->
+							<field name="loan_amt" readonly="1" />
+							<field name="rebate_amt" readonly="1" />
+							<newline />
+							<separator string="Cost and Rebate"/>
+							<group col="4" colspan="4">
+								<field name="cost_rebate_ids" nolabel="1" readonly='1'>
+									<tree>
+										<field name="year" />
+										<field name="old_bill" />
+										<field name="new_bill" />
+										<field name="pv_energy" />
+										<field name="elec_bill_savings" />
+										<field name="loan_installment" />
+										<field name="srecs" />
+										<field name="incentives" />
+										<field name="depriciation" />
+										<field name="depriciation_savings" />
+										<field name="yearly_payout" />
+									</tree>
+									<form>
+										<field name="year" />
+										<field name="old_bill" />
+										<field name="new_bill" />
+										<field name="pv_energy" />
+										<field name="elec_bill_savings" />
+										<field name="loan_installment" />
+										<field name="srecs" />
+										<field name="incentives" />
+										<field name="depriciation" />
+										<field name="depriciation_savings" />
+										<field name="yearly_payout" />
+									</form>
+								</field>
+							</group>
 						</group>
 					</page>
 					<page string="Annual Electricity Usage">
@@ -709,31 +908,32 @@
 								<form>
 									<field name="name" />
 									<field name="type" />
-									<field name="jan" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="jan" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="feb" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="feb" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="mar" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="mar" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name='apr' attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name='apr' attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="may" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="may" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="jun" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="jun" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="jul" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="jul" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="aug" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="aug" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="sep" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="sep" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="oct" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="oct" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="nov" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="nov" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="dec" attrs = "{'invisible':[('type','=','yearly')]}"
+									<field name="dec" attrs="{'invisible':[('type','=','yearly')]}"
 										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
-									<field name="usage_kwh" attrs = "{'readonly':[('type','=','monthly')]}" required="1"/>
+									<field name="usage_kwh" attrs="{'readonly':[('type','=','monthly')]}"
+										required="1" />
 								</form>
 								<tree>
 									<field name="name" />
@@ -780,6 +980,43 @@
 						</group>
 					</page>
 				</xpath>
+				
+				<xpath expr="//page[@string='Lead']" position="replace">
+				    <page string="Lead">
+					    <group>
+	                        <group>
+	                            <field name="partner_name"/>
+	                        </group>
+	
+	                        <group>
+	                            <label for="contact_name"/>
+	                            <div>
+	                                <field name="contact_name" class="oe_inline"/>
+	                                <field name="title" placeholder="Title" domain="[('domain', '=', 'contact')]" options='{"no_open": True}' class="oe_inline"/>
+	                            </div>
+	                            <field name="function"/>
+	                            <field name="mobile"/>
+	                            <field name="fax"/>
+	                        </group>
+	                        <group string="Mailings" name="mailings">
+	                            <field name="opt_out"/>
+	                        </group>
+	                        <group string="Misc">
+	                            <field name="active"/>
+	                            <field name="day_open" groups="base.group_no_one"/>
+	                            <field name="day_close" groups="base.group_no_one"/>
+	                            <field name="referred"/>
+	                            <field name="state" invisible="1"/>
+	                            <field name="type" invisible="1"/>
+	                        </group>
+	                        <group string="References">
+	                            <field name="ref"/>
+	                            <field name="ref2"/>
+	                        </group>
+	                    </group>
+	                </page>
+				</xpath>
+				
 			</field>
 		</record>
 
@@ -789,6 +1026,9 @@
 			<field name="model">solar.solar</field>
 			<field name="arch" type="xml">
 				<search string="Solar Search">
+					<field name="loc_station_id" />
+					<field name="tilt_degree" />
+					<field name="faceing" />
 					<field name="module_product_id" />
 					<field name="inverter_product_id" />
 					<field name="num_of_invertor" />
@@ -815,16 +1055,31 @@
 						<group col="4" colspan="4">
 							<field name="module_product_id" />
 							<field name="inverter_product_id" />
+							<field name="num_of_module" />
 							<field name="num_of_invertor" />
-							<field name="num_of_arrays" />
-							<field name="co2_offset_tons" />
-							<field name="co2_offset_pounds" />
-							<field name="cars_off_roads" />
-							<field name="gasoline_equi" />
-							<field name="tree_equi" />
-							<field name="tree_planting_equi" />
-							<field name="ave_home_powered" />
-							<field name="ave_light_bulb_powered" />
+							<field name="loc_station_id" required="1" />
+							<field name="tilt_degree" required="1" />
+							<field name="faceing" required="1" />
+							<newline />
+							<group string="Calculatoin field" colspan="2">
+								<field name="stc_dc_rating" />
+								<field name="ptc_dc_rating" />
+								<field name="cec_ac_rating" />
+								<field name="ptc_stc_ratio" />
+								<field name="site_avg_sun_hour" />
+								<field name="annual_solar_prod" />
+								<field name="annual_ele_usage" />
+							</group>
+							<group string="Cleaner and Greener Enviourment" colspan="2">
+								<field name="co2_offset_tons" />
+								<field name="co2_offset_pounds" />
+								<field name="cars_off_roads" />
+								<field name="gasoline_equi" />
+								<field name="tree_equi" />
+								<field name="tree_planting_equi" />
+								<field name="ave_home_powered" />
+								<field name="ave_light_bulb_powered" />
+							</group>
 						</group>
 					</sheet>
 				</form>
@@ -837,6 +1092,9 @@
 			<field name="model">solar.solar</field>
 			<field name="arch" type="xml">
 				<tree string="Solar Tree">
+					<field name="loc_station_id" required="1" />
+					<field name="tilt_degree" required="1" />
+					<field name="faceing" required="1" />
 					<field name="module_product_id" />
 					<field name="inverter_product_id" />
 					<field name="num_of_invertor" />
@@ -1001,6 +1259,8 @@
 							<newline />
 							<field name="inform_customer" />
 							<newline />
+							<field name="prevent" />
+							<newline />
 							<field name="inform_users" />
 							<newline />
 						</group>
@@ -1092,12 +1352,18 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form" />
 			<field name="arch" type="xml">
+				<field name="website" position="after">
+					<button name="openMap" string="Google Map" type="object"
+						help="It will open google map for the above address." />
+				</field>
 				<xpath expr="/form/sheet/div/h1/field[@name='name']" position="attributes">
 					<attribute name="placeholder">First Name</attribute>
 				</xpath>
 				<xpath expr="//form/sheet/div[1]/h1" position="after">
-					<field name="middle_name" placeholder="Middle Name" attrs="{'invisible':[('is_company','=',True)]}"/>
-					<field name="last_name" placeholder="Last Name" attrs="{'invisible':[('is_company','=',True)]}"/>
+					<field name="middle_name" placeholder="Middle Name"
+						attrs="{'invisible':[('is_company','=',True)]}" />
+					<field name="last_name" placeholder="Last Name"
+						attrs="{'invisible':[('is_company','=',True)]}" />
 				</xpath>
 				<xpath expr="//label[@string='Address']" position="before">
 					<field name="spouse" />
@@ -1107,12 +1373,15 @@
 				</xpath>
 				<xpath expr="/form/sheet/group" position="after">
 					<label for="document_ids" />
-					<field name="document_ids" colspan="4"/>
+					<field name="document_ids" colspan="4" />
+				</xpath>
+				<xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+				    <attribute name="string">Rates Tier</attribute>
 				</xpath>
 			</field>
 		</record>
 
-		<!--Utility Company view-->
+		<!--Utility Company view -->
 		<record model="ir.ui.view" id="view_utility_customer_form">
 			<field name="name">res.partner.utility.form</field>
 			<field name="model">res.partner</field>
@@ -1187,7 +1456,7 @@
 				<xpath expr="//notebook/page[@string='Configuration']"
 					position="after">
 					<page string="Equivalencies and Value Factors">
-					    <group col="2" colspan="4">
+						<group col="2" colspan="4">
 							<field name="avg_co2_ele" />
 							<field name="annual_equvi_tree" />
 							<field name="years_40_offset_tree" />
@@ -1201,10 +1470,10 @@
 						</group>
 					</page>
 					<page string="Taxes">
-					    <group col="2" colspan="4">
-					        <field name="fedral_tax"/>
-					        <field name="sales_tax"/>
-					    </group>
+						<group col="2" colspan="4">
+							<field name="fedral_tax" />
+							<field name="sales_tax" />
+						</group>
 					</page>
 				</xpath>
 			</field>

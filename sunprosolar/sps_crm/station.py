@@ -45,6 +45,7 @@ class insolation_incident(osv.Model):
         'to_zip' : fields.char('Zip (To)'),
         'zip_ids' : fields.many2many('city.city','city_inso_rel',"city_id","inso_id","Zip"),
         'tilt_azimuth_ids': fields.one2many('tilt.azimuth','tilt_azimuth_id','Tilt & Azimuth Reading'),
+        'utility_company_id': fields.many2one('res.partner', 'Utility Company'),
     }
     
     _constraints = [
@@ -100,22 +101,6 @@ class tilt_azimuth(osv.Model):
                         ('w','[W]West'),
                         ('nw','[NW]North-West')
                     ],'Azimuth'),
-#        'month' : fields.selection(
-#                    [
-#                        (1,'January'),
-#                        (2,'February'), 
-#                        (3,'March'), 
-#                        (4,'April'),
-#                        (5,'May'), 
-#                        (6,'June'), 
-#                        (7,'July'), 
-#                        (8,'August'),
-#                        (9,'September'),
-#                        (10,'October'),
-#                        (11,'November'),
-#                        (12,'December'),
-#                        (13,'Production'),
-#                    ],'Month'),
         'jan': fields.float('Jan'),
         'feb': fields.float('Feb'),
         'mar': fields.float('Mar'),
@@ -169,14 +154,13 @@ class electricity_usage(osv.Model):
     def create(self, cr, uid, vals, context=None):
         months = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
         usage = 0
-        usage_month = vals['usage_kwh']
-        for month in months:
-            if month in vals.keys():
-                usage += vals[month]
-        if vals['type'] == 'yearly':
-            vals.update({'usage_kwh':usage_month})
-        else:
-            vals.update({'usage_kwh':usage})
+        if vals.get('type') == 'monthly':
+            for month in months:
+                if month in vals.keys():
+                    usage += vals[month]
+        if vals.get('type') == 'yearly':
+            usage = vals.get('usage_kwh')
+        vals.update({'usage_kwh':usage})
         res = super(electricity_usage, self).create(cr, uid, vals, context=context)
         return res
     
@@ -185,7 +169,8 @@ class electricity_usage(osv.Model):
         usage = 0
         for month in months:
             if month in vals.keys():
-                usage += vals[month]
+                mon_rec = self.read(cr,uid,ids[0],[month])
+                usage += vals[month] - mon_rec.get(month,0)
         if usage:
             rec = self.read(cr,uid,ids[0],['usage_kwh'])
             vals.update({'usage_kwh':rec['usage_kwh']+usage})
@@ -227,4 +212,23 @@ class electricity_usage(osv.Model):
         'dec' : 0,
         'type' : 'yearly',
     }
+    
+class cost_rebate(osv.TransientModel):
+    _name = "cost.rebate"
+    
+    _columns = {
+        'old_bill' : fields.float('Old Electricity Bill'),
+        'new_bill' : fields.float('New Electricity Bill'),
+        'pv_energy' : fields.float('PV Energy KWH'),
+        'elec_bill_savings' : fields.float('Electric Bill Savings'),
+        'loan_installment' : fields.float("Loan Installment"),
+        'srecs' : fields.float('SRECs'),
+        'incentives' : fields.float("Incentives"),
+        'depriciation' : fields.float("Depriciation"),
+        'depriciation_savings' : fields.float("Depriciation Savings"),
+        'yearly_payout' : fields.float("Yearly Payout"),
+        'year' : fields.integer("Year"),
+        'crm_lead_id' : fields.many2one("crm.lead","Lead"),
+    }
+    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

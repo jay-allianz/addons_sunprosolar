@@ -47,6 +47,20 @@ class crm_lead2opportunity_partner(osv.osv_memory):
                 res.update({'msg': ""})
             else:
                 res.update({'msg': "Customer is not qualified !"})
+            
+        return res
+
+    def action_apply(self, cr, uid, ids, context=None):
+        res = super(crm_lead2opportunity_partner,self).action_apply(cr, uid, ids, context=context)
+        if context is None:
+            context = {}
+        if context.get('active_id'):
+            lead_obj = self.pool.get('crm.lead')
+            lead_rec = lead_obj.browse(cr, uid, context['active_id'], context=context)
+            for data in lead_rec.doc_req_ids:
+                if data:
+                    if data.doc_id.prevent == True and data.collected == False:
+                        raise osv.except_osv(_("Warning!"), _("Please Upload required documents !"))
         return res
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
