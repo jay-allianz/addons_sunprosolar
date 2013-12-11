@@ -327,16 +327,16 @@ class Parser(account_balance):
             'get_total_comp_credit' : self.get_total_comp_credit
         })
         
-    def get_debit(self, debit, level):
-        if level == 1:
+    def get_debit(self, debit, level, type, name):
+        if type in ['other', 'liquidity', 'receivable', 'payable']: 
             self.debit_total += debit
         return debit
     
     def get_total_debit(self):
         return self.debit_total
     
-    def get_credit(self, credit, level):
-        if level == 1:
+    def get_credit(self, credit, level, type, name):
+        if type in ['other', 'liquidity', 'receivable', 'payable']: 
             self.credit_total += credit
         return credit
     
@@ -697,11 +697,6 @@ class Parser(account_balance):
                                 self.total_exp4 = self.exp4 + self.taxes4 + self.othexp4
                                 self.total_exp5 = self.exp5 + self.taxes5 + self.othexp5
                                 
-#                                 self.net_profit1 = self.gross_profit1 - (self.tot_other_income1 + self.total_exp1)
-#                                 self.net_profit2 = self.gross_profit2 - (self.tot_other_income2 + self.total_exp2)
-#                                 self.net_profit3 = self.gross_profit3 - (self.tot_other_income3 + self.total_exp3)
-#                                 self.net_profit4 = self.gross_profit4 - (self.tot_other_income4 + self.total_exp4)
-#                                 self.net_profit5 = self.gross_profit5 - (self.tot_other_income5 + self.total_exp5)
                                 if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
                                     self.net_profit1 += res.get('bal1')
                                     self.net_profit1 += res.get('bal2')
@@ -965,20 +960,6 @@ class Parser(account_balance):
                                 self.total_exp_mon12 = self.exp_mon12 + self.tot_taxes12 + self.tot_other_exp12
                                 self.total_exp_mon13 = self.exp_mon13 + self.tot_taxes13 + self.tot_other_exp13
                                             
-#                                 self.net_profit_mon1 = self.gross_profit_mon1 - (self.tot_oth_income1 + self.total_exp_mon1)
-#                                 self.net_profit_mon2 = self.gross_profit_mon2 - (self.tot_oth_income2 + self.total_exp_mon2)
-#                                 self.net_profit_mon3 = self.gross_profit_mon3 - (self.tot_oth_income3 + self.total_exp_mon3)
-#                                 self.net_profit_mon4 = self.gross_profit_mon4 - (self.tot_oth_income4 + self.total_exp_mon4)
-#                                 self.net_profit_mon5 = self.gross_profit_mon5 - (self.tot_oth_income5 + self.total_exp_mon5)
-#                                 self.net_profit_mon6 = self.gross_profit_mon6 - (self.tot_oth_income6 + self.total_exp_mon6)
-#                                 self.net_profit_mon7 = self.gross_profit_mon7 - (self.tot_oth_income7 + self.total_exp_mon7)
-#                                 self.net_profit_mon8 = self.gross_profit_mon8 - (self.tot_oth_income8 + self.total_exp_mon8)
-#                                 self.net_profit_mon9 = self.gross_profit_mon9 - (self.tot_oth_income9 + self.total_exp_mon9)
-#                                 self.net_profit_mon10 = self.gross_profit_mon10 - (self.tot_oth_income10 + self.total_exp_mon10)
-#                                 self.net_profit_mon11 = self.gross_profit_mon11 - (self.tot_oth_income11 + self.total_exp_mon11)
-#                                 self.net_profit_mon12 = self.gross_profit_mon12 - (self.tot_oth_income12 + self.total_exp_mon12)
-#                                 self.net_profit_mon13 = self.gross_profit_mon13 - (self.tot_oth_income13 + self.total_exp_mon13)
-                                
                         if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
                             self.net_profit_mon1 += res.get('bal1')
                             self.net_profit_mon2 += res.get('bal2')
@@ -1194,13 +1175,12 @@ class Parser(account_balance):
                         to_include = True
                 #~ ANALYTIC LEDGER
 #                form['columns'] = 'four'
-                if to_include and form['analytic_ledger'] and form['columns']=='four' and form['inf_type'] == 'BS' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
+                if to_include and form['columns']=='four' and form['inf_type'] == 'GL' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
                     res['mayor'] = self._get_analytic_ledger(res, ctx=ctx_end)
-                elif to_include and form['analytic_ledger'] and form['periodic_columns']=='four' and form['inf_type'] == 'BS' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
+                elif to_include and form['periodic_columns']=='four' and form['inf_type'] == 'GL' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
                     res['mayor'] = self._get_analytic_ledger(res, ctx=ctx_end)
                 else:
                     res['mayor'] = []
-                
                 if to_include:
                     #result_acc.append(res)
                     if not ((res['id'] in [x['id'] for x in result_acc]) and (res['name'] in [x['name'] for x in result_acc])):
@@ -1286,62 +1266,8 @@ class Parser(account_balance):
             }
             result_acc.append(self.total_liab_equ)
             
-#             total_balance_of_bs = self.total_balance_of_bs + self.net_income_loss
-#             self.total_balance_bs = {
-#                 'balance' : total_balance_of_bs, 
-#                 'id' : False, 
-#                 'type' : 'view', 
-#                 'code' : '', 
-#                 'name' : 'Total Balance Sheet Balance', 
-#                 'parent_id' : False, 
-#                 'level' : 1, 
-#                 'credit' : 0.0, 
-#                 'debit' : 0.0, 
-#                 'label' : False, 
-#                 'mayor' : [], 
-#                 'total' :True, 
-#                 'change_sign' : 1, 
-#                 'balanceinit' : 0.0, 
-#                 'ytd' : total_balance_of_bs, 
-#             }
-#             result_acc.append(self.total_balance_bs)
-#            a = []
-#            for res_acc in result_acc:
-#                if res_acc.get('name')=='Total Liabilities and Equity':
-#                    index_1 = result_acc.index(res_acc)
-#                    a.append(index_1)
-#            for ele in a:
-#                result_acc.insert(ele,self.total_profit_loss)
-#                result_acc.pop(ele+2)
-            
-#            total_liabilities_equity = self.total_liabilities_equity + self.net_profit
-#            self.total_liabilities_equity = {
-#                'balance' : total_liabilities_equity, 
-#                'id'        : False, 
-#                'type' : 'view', 
-#                'code' : '', 
-#                'name' : 'Total Liabilities & Owners Equity', 
-#                'parent_id' : False, 
-#                'level' : 1, 
-#                'credit' : 0.0, 
-#                'debit' : 0.0, 
-#                'label' : False, 
-#                'mayor' : [], 
-#                'total' :True, 
-#                'change_sign' : 1, 
-#                'balanceinit' : 0.0, 
-#                'ytd' : total_liabilities_equity 
-#            }
         else:
             if not form['afr_id'][1] == 'Balance Sheet':
-#                        if {'id': False, 'name': ''} not in result_acc:
-#                            raise osv.except_osv(_('Configuration Error'), _('Please configure all type of Revenue, Cost Of Goods Sold, Expense, Income and Taxes accounts for Income Statement !'))
-#                        index = result_acc.index({'id': False, 'name': ''})
-#                 for res_acc in result_acc:
-#                     if res_acc.get('name')=='Total Net Ordinary Income':
-#                         index = result_acc.index(res_acc)
-#                         result_acc.insert(index+11,res_acc)
-#                         result_acc.pop(index)
                 if not form['inf_type'] == 'TB':
                     total_net_profit = self.net_income_loss
     #                        dbr3 = self.gross_profit_dbr3
@@ -1370,7 +1296,6 @@ class Parser(account_balance):
                             'bal4' : self.net_profit4,
                             'bal5' : self.net_profit5,
                         })
-    ##                            
                     if form['columns'] =='thirteen':
                          self.net_profit_dict.update({
                             'bal1' : self.net_profit_mon1,
@@ -1388,60 +1313,21 @@ class Parser(account_balance):
                             'bal13' : self.net_profit_mon13,
                         })
                     result_acc.append(self.net_profit_dict)
-##                
-#            tot_expense = self.total_exp
-##                    expdbr3 = self.total_expense_dbr3
-#            self.tot_exp = {
-#                'balance' : tot_expense, 
-#                'id'        : False, 
-#                'type' : 'view', 
-#                'code' : '', 
-#                'name' : 'Total Expense', 
-#                'parent_id' : False, 
-#                'level' : 1, 
-#                'credit' : 0.0, 
-#                'debit' : 0.0, 
-#                'label' : False, 
-#                'mayor' : [], 
-#                'total' :True, 
-#                'change_sign' : 1, 
-#                'balanceinit' : 0.0, 
-#                'ytd' : tot_expense 
-#            }
-#            net_profit = self.net_profit
-##                    net_profit_dbr3 = self.net_profit_dbr3
-#            self.tot_net_prodict = {
-#                'balance' : net_profit, 
-#                'id'        : False, 
-#                'type' : 'view', 
-#                'code' : '', 
-#                'name' : 'Net Profit', 
-#                'parent_id' : False, 
-#                'level' : 1, 
-#                'credit' : 0.0, 
-#                'debit' : 0.0, 
-#                'label' : False, 
-#                'mayor' : [], 
-#                'total' :True, 
-#                'change_sign' : 1, 
-#                'balanceinit' : 0.0, 
-#                'ytd' : net_profit 
-#            }
         return result_acc
     
     def get_profit(self, bal):
         return bal
     
-    def get_comp_debit(self, comp_debit, level):
-        if level == 1: 
+    def get_comp_debit(self, comp_debit, level, type, name):
+        if type in ['other', 'liquidity', 'receivable', 'payable']: 
             self.comp_debit_total += comp_debit
         return comp_debit
     
     def get_total_comp_debit(self):
         return self.comp_debit_total
     
-    def get_comp_credit(self, comp_credit, level):
-        if level == 1: 
+    def get_comp_credit(self, comp_credit, level, type, name):
+        if type in ['other', 'liquidity', 'receivable', 'payable']: 
             self.comp_credit_total += comp_credit
         return comp_credit
     
@@ -1466,36 +1352,6 @@ class Parser(account_balance):
         def _get_children_and_consol(cr, uid, ids, level, context={}, change_sign=False):
             aa_obj = self.pool.get('account.account')
             ids2=[]
-#            ctx_bal =_ctx_end(self.context.copy())
-#            ctx_in =_ctx_init(self.context.copy())
-#            net_bal = 0.00
-#            user_type = ['Revenue', 'Cost Of Goods Sold', 'Expense', 'Other Income', 'Other Expense']
-#            acc_ids = aa_obj.search(self.cr, self.uid, [('type', '=', 'view'), ('level', '=', 1), ('user_type', 'in', user_type)])
-#            for acc in acc_ids:
-#                acc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_bal)
-#                Aacc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_in)
-#                periodic_bal = acc_data_browse.balance 
-#                net_bal += periodic_bal
-#            acc_ids = aa_obj.search(self.cr, self.uid, [('type', '=', 'view'), ('level', '=', 1)])
-#            for acc in acc_ids:
-#                acc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_bal)
-#                Aacc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_in)
-#                bal = acc_data_browse.balance + Aacc_data_browse.balance
-#                if acc_data_browse.name.lower() == 'revenue':
-#                    rev = bal
-#                if acc_data_browse.name.lower() == 'cost of goods sold':
-#                    cogs = bal
-#                if acc_data_browse.name.lower() == 'operating expenses':
-#                    opexp = bal
-#                if acc_data_browse.name.lower() == 'taxes':
-#                    tax = bal
-#                if acc_data_browse.name.lower() == 'other income':
-#                    other_income = bal
-#                if acc_data_browse.name.lower() == 'other expense':
-#                    other_expense = bal
-#            tot_balance = rev + cogs + opexp + tax + other_income + other_expense
-#            if form['inf_type'] == 'BS':
-#                self.bal = net_bal
             for aa_brw in aa_obj.browse(cr, uid, ids, context):
                 if aa_brw.child_id and aa_brw.level < level and aa_brw.type !='consolidation':
                     if not change_sign:
@@ -1766,49 +1622,6 @@ class Parser(account_balance):
         temp_earning = {}  
         net_bal_temp = {}
         earning_data = {}
-#        if form['show_earning']:
-#            
-#            net_bal_temp[0]={
-#                    'ctx_init': ctx_init, 
-#                    'ctx_end': ctx_end, 
-#                    'balanceinit': 0.0, 
-#                    'debit': 0.0, 
-#                    'credit': 0.0, 
-#                    'ytd': 0.0, 
-#                    'balance':0.0
-#                }
-#            earning_data[0]={
-#                    'balanceinit': 0.0, 
-#                    'debit': 0.0, 
-#                    'credit': 0.0, 
-#                    'ytd': 0.0, 
-#                    'balance':0.0}
-#            for par_id in selected_accounts:
-#                
-#                aa_brw_init = account_obj.browse(self.cr, self.uid, par_id, ctx_init)
-#                aa_brw_end  = account_obj.browse(self.cr, self.uid, par_id, ctx_end)
-#                
-#                i, d, c = map(z, [aa_brw_init.balance, aa_brw_end.debit, aa_brw_end.credit])
-#                b = z(i+d-c)
-#                net_bal_temp[0].update({
-#                    'balanceinit': self.exchange(i) + net_bal_temp[0]['balanceinit'], 
-#                    'debit': self.exchange(d) + net_bal_temp[0]['debit'], 
-#                    'credit': self.exchange(c) + net_bal_temp[0]['credit'], 
-#                    'ytd': self.exchange(d-c) + net_bal_temp[0]['ytd'], 
-#                    'balance':self.exchange(b) + net_bal_temp[0]['balance'], 
-#                })
-#                earning_init = account_obj.browse(self.cr, self.uid, form['earning_account'], ctx_init)
-#                earning_end  = account_obj.browse(self.cr, self.uid, form['earning_account'], ctx_end)
-#                
-#            ei, ed, ec = map(z, [earning_init.balance, earning_end.debit, earning_end.credit])
-#            eb = z(ei+ed-ec)
-#            earning_data[0].update({
-#                'balanceinit': self.exchange(ei) + net_bal_temp[0]['balanceinit'], 
-#                'debit': self.exchange(ed) + net_bal_temp[0]['debit'], 
-#                'credit': self.exchange(ec) + net_bal_temp[0]['credit'], 
-#                'ytd': self.exchange(ed-ec) + net_bal_temp[0]['ytd'], 
-#                'balance':self.exchange(eb) + net_bal_temp[0]['balance'], 
-#            })
         
         for aa_id in account_ids:
             id = aa_id[0]
@@ -1844,6 +1657,9 @@ class Parser(account_balance):
                     'compr0_ytd': self.exchange(compr0_d-compr0_c), 
                     })
 #                    if form['inf_type'] == 'IS' and  form['columns'] == 'one':
+
+                    # Check the condition for the Comparision 1
+                    
                     if form['inf_type'] == 'IS':# and  form['periodic_columns'] == 'one':
                         res.update({
                             'compr0_balance': self.exchange(compr0_d-compr0_c), 
@@ -1877,24 +1693,6 @@ class Parser(account_balance):
                                     self.comp0_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
                         if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
                             self.profit_loss_comp0 = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total revenue':
-#                            self.comp0_tot_revenue = compr0_b
-#                        if res.get('name').lower() == 'cost of goods sold':
-#                            self.comp0_tot_cogs = res.get('compr0_balance')
-#                        self.comp0_gross_profit = abs(self.comp0_tot_revenue) - abs(self.comp0_tot_cogs)
-#                        if res.get('name').lower() == 'total cost of goods sold':
-#                            result_acc.append({'id': False, 'name': '', 'total' : False, 'type' : False, 'label' : False})
-#                        if res.get('name').lower() == 'total operating expenses':
-#                            self.comp0_operating_expense = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total taxes':
-#                            self.comp0_taxes = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total other expense':
-#                            self.comp0_other_expense = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total other income':
-#                            self.comp0_other_income = res.get('compr0_balance')
-#                        self.comp0_total_expense = self.comp0_operating_expense + self.comp0_taxes + self.comp0_other_expense
-#                        self.comp0_net_profit = abs(self.comp0_gross_profit - abs(self.comp0_other_income + self.comp0_total_expense))
-#                        form['comp0_net_profit'] = self.comp0_net_profit
                     else:
                         res.update({
                             'compr0_balance': self.exchange(compr0_b), 
@@ -1918,11 +1716,8 @@ class Parser(account_balance):
                             self.total_equ_comp0 = res.get('compr0_balance')
                     
                       	self.total_liab_equ_comp0 = self.total_liab_comp0 + self.total_equ_comp0
-#                        if res.get('name').lower() == 'total liabilities':
-#                            self.comp0_tot_liabilities = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total equity':
-#                            self.comp0_tot_equity = res.get('compr0_balance')
-#                        self.comp0_tot_liabilities_equity = self.comp0_tot_liabilities + self.comp0_tot_equity
+                
+                # Check the condition for the Comparision 2
                 
                 if form['compr1_fiscalyear_id']:
                     compr1_aa_brw_init = account_obj.browse(self.cr, self.uid, id, compr1_ctx_init)
@@ -1969,24 +1764,6 @@ class Parser(account_balance):
                                     self.comp1_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
                         if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
                             self.profit_loss_comp1 = res.get('compr1_balance')           
-#                        if res.get('name').lower() == 'total revenue':
-#                            self.comp1_tot_revenue = compr1_b
-#                        if res.get('name').lower() == 'cost of goods sold':
-#                            self.comp1_tot_cogs = res.get('compr1_balance')
-#                        self.comp1_gross_profit = abs(self.comp1_tot_revenue) - abs(self.comp1_tot_cogs)
-#                        if res.get('name').lower() == 'total cost of goods sold':
-#                            result_acc.append({'id': False, 'name': '', 'total' : False, 'type' : False, 'label' : False})
-#                        if res.get('name').lower() == 'total operating expenses':
-#                            self.comp1_operating_expense = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total taxes':
-#                            self.comp1_taxes = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total other expense':
-#                            self.comp1_other_expense = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total other income':
-#                            self.comp1_other_income = res.get('compr1_balance')
-#                        self.comp1_total_expense = self.comp1_operating_expense + self.comp1_taxes + self.comp1_other_expense
-#                        self.comp1_net_profit = abs(self.comp1_gross_profit - abs(self.comp1_other_income + self.comp1_total_expense))
-#                        form['comp1_net_profit'] = self.comp1_net_profit
                     else:
                         res.update({
                             'compr1_balance': self.exchange(compr1_b), 
@@ -2010,11 +1787,6 @@ class Parser(account_balance):
                             self.total_equ_comp1 = res.get('compr1_balance')
                     
                       	self.total_liab_equ_comp1 = self.total_liab_comp1 + self.total_equ_comp1
-#                        if res.get('name').lower() == 'total liabilities':
-#                            self.comp1_tot_liabilities = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total equity':
-#                            self.comp1_tot_equity = res.get('compr1_balance')
-#                        self.comp1_tot_liabilities_equity = self.comp1_tot_liabilities + self.comp1_tot_equity
                         
                 if (not form['compr0_fiscalyear_id']) == True and (not form['compr1_fiscalyear_id']==True) :
                     i, d, c = map(z, [0.00, aa_brw_end.debit, aa_brw_end.credit])
@@ -2027,8 +1799,9 @@ class Parser(account_balance):
                     'credit': self.exchange(c), 
                     'ytd': self.exchange(d-c), 
                 })
+                
+                # Check condition for Single Columns
             
-#                if form['inf_type'] == 'IS' and  form['columns'] == 'one':
                 if form['inf_type'] == 'IS' and  form['periodic_columns'] == 'one':
                     res.update({
                         'balance': self.exchange(d-c), 
@@ -2051,7 +1824,6 @@ class Parser(account_balance):
                                     bal.append(balance_res)
                             if len(bal) > 0 :
                                 self.gross_profit = bal[0]
-#                            self.gross_profit = self.bal
                             for acc in account_obj.browse(self.cr, self.uid, acc_ids):
                                 if acc.name == 'Cost Of Goods Sold' or acc.name == 'Cost of Sales' and acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
                                     if res.get('name').lower() == 'total cost of sales':
@@ -2061,50 +1833,6 @@ class Parser(account_balance):
                                 self.net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
                     if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
                             self.net_profit_loss_periodic += res.get('balance')
-#                    if res.get('name').lower() == 'total revenue':
-#                            self.tot_revenue = b
-#                    if res.get('name').lower() == 'cost of goods sold':
-#                        self.tot_cogs = res.get('balance')
-#                    self.gross_profit = abs(self.tot_revenue) - abs(self.tot_cogs)
-#                    if res.get('name').lower() == 'total cost of goods sold':
-#                        result_acc.append({'id': False, 'name': '', 'total' : False, 'type' : False, 'label' : False})
-#                    if res.get('name').lower() == 'total operating expenses':
-#                        self.operating_expense = res.get('balance')
-#                    if res.get('name').lower() == 'total taxes':
-#                        self.taxes = res.get('balance')
-#                    if res.get('name').lower() == 'total other expense':
-#                        self.other_expense = res.get('balance')
-#                    if res.get('name').lower() == 'total other income':
-#                        self.other_income = res.get('balance')
-#                    self.total_expense = self.operating_expense + self.taxes + self.other_expense
-#                    self.net_profit = abs(self.gross_profit - abs(self.other_income + self.total_expense))
-#                    form['periodic_net_profit_one'] = self.net_profit
-                
-#                elif form['inf_type'] == 'BS' and form['show_earning'] and form['earning_account'] == id:
-#                        self.show_earnings = True
-#                        res.update({
-#                            'balanceinit': self.exchange(earning_data[0]['balanceinit'])+ \
-#                                        2 * res['change_sign'] * self.exchange(i), 
-#                            'debit': self.exchange(earning_data[0]['debit']) + \
-#                                        2 * res['change_sign'] * self.exchange(d), 
-#                            'credit': self.exchange(earning_data[0]['credit'])+ \
-#                                        2 * res['change_sign'] * self.exchange(c), 
-#                            'ytd': self.exchange(earning_data[0]['ytd']) + \
-#                                        2 * res['change_sign'] * self.exchange(d-c), 
-#                            'balance': self.exchange(earning_data[0]['balance']) + \
-#                                        2 * res['change_sign'] * self.exchange(b)
-#                        })
-#                        temp_earning.update({
-#                                'change_sign': res['change_sign'], 
-#                                'earning': self.exchange(b), 
-#                                'bal_init_diff': res['balanceinit'] - (self.exchange(i)* res['change_sign']), 
-#                                'dbr_diff': res['debit'] - (self.exchange(d)), #* res['change_sign']),
-#                                'cdr_diff': res['credit'] - (self.exchange(c)), #* res['change_sign']),
-#                                'ytd_diff':  res['ytd'] - (self.exchange(d-c)* res['change_sign']), 
-#                                'net_bal': res['balance'], 
-#                                'bal_diff': res['balance'] - (self.exchange(b) * res['change_sign']), 
-#                                'parent_id': aa_brw_init.parent_id and aa_brw_init.parent_id.id or False, 
-#                        })
                 else:
                     res.update({
                         'balance': self.exchange(b), 
@@ -2112,6 +1840,8 @@ class Parser(account_balance):
                     report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                     for ytd_acc_data in report_data.account_list:
                         if ytd_acc_data.type == 'view':
+                            parent_id = ytd_acc_data.parent_id.id
+                        else:
                             parent_id = ytd_acc_data.parent_id.id
                     parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
                     child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
@@ -2121,8 +1851,6 @@ class Parser(account_balance):
                             if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
                                 self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('balance')
                             self.total_liabilities_equity = self.total_balance_sheet_balance
-#                     if res.get('total') == True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Liabilities and Equity':
-#                             self.total_balance_of_bs_periodic = res.get('balance')
                             
                     if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Liabilities':
                             self.total_liab_periodic = res.get('balance')
@@ -2131,48 +1859,10 @@ class Parser(account_balance):
                     
                     self.total_liab_equ_periodic = self.total_liab_periodic + self.total_equ_periodic
 
-#                    if res.get('name').lower() == 'total liabilities':
-#                        self.tot_liabilities = res.get('balance')
-#                    if res.get('name').lower() == 'total equity':
-#                        self.tot_equity = res.get('balance')
-#                    self.tot_liabilities_equity = self.tot_liabilities + self.tot_equity
-                    
                 if form['inf_type'] == 'TB' and form['periodic_columns'] == 'two':
                         res.update({
                             'balance': self.exchange(b), 
                         })
-#                        if res.get('name').lower() == 'total revenue':
-#                            self.comp_rev_debit = res.get('debit')
-#                            self.comp_rev_credit = res.get('credit')
-#                        if res.get('name').lower() == 'cost of goods sold':
-#                            self.comp_cogs_debit = res.get('debit')
-#                            self.comp_cogs_credit = res.get('credit')
-#                        if res.get('name').lower() == 'total operating expenses':
-#                            self.comp_opex_debit = res.get('debit')
-#                            self.comp_opex_credit = res.get('credit')
-#                        if res.get('name').lower() == 'total taxes':
-#                            self.comp_taxes_debit = res.get('debit')
-#                            self.comp_taxes_credit = res.get('credit')
-#                        if res.get('name').lower() == 'total other expense':
-#                            self.comp_other_expense_debit = res.get('debit')
-#                            self.comp_other_expense_credit = res.get('credit')
-#                        if res.get('name').lower() == 'total other income':
-#                            self.comp_other_income_debit = res.get('debit')
-#                            self.comp_other_income_credit = res.get('credit')
-#                        if res.get('name').lower() == 'total assets':
-#                            self.comp_ass_debit = res.get('debit')
-#                            self.comp_ass_credit = res.get('credit')
-#                        if res.get('name').lower() == 'total liabilities':
-#                            self.comp_liab_debit = res.get('debit')
-#                            self.comp_liab_credit = res.get('credit')
-#                        if res.get('name').lower() == 'total equity':
-#                            self.comp_equity_debit = res.get('debit')
-#                            self.comp_equity_credit = res.get('credit')
-#                        self.comp_tot_debit_bal = (self.comp_ass_debit + self.comp_liab_debit + self.comp_equity_debit + self.comp_rev_debit + self.comp_cogs_debit + self.comp_opex_debit + self.comp_taxes_debit + 
-#                                             self.comp_other_income_debit + self.comp_other_expense_debit)
-#                        self.comp_tot_credit_bal = (self.comp_ass_credit + self.comp_liab_credit + self.comp_equity_credit + self.comp_rev_credit + self.comp_cogs_credit + 
-#                                               self.comp_opex_credit + self.comp_taxes_credit + self.comp_other_income_credit + self.comp_other_expense_credit)
-#                        self.comp_tot_bal =  self.comp_tot_debit_bal + self.comp_tot_credit_bal
 
                 #
                 # Check whether we must include this line in the report or not
@@ -2198,7 +1888,7 @@ class Parser(account_balance):
                 
                 #~ ANALYTIC LEDGER
 #                if to_include and form['analytic_ledger'] and form['columns']=='four' and form['inf_type'] == 'BS' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
-                if to_include and form['analytic_ledger'] and form['periodic_columns']=='four' and form['inf_type'] == 'BS' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
+                if to_include and form['periodic_columns']=='four' and form['inf_type'] == 'GL' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
                     res['mayor'] = self._get_analytic_ledger(res, ctx=ctx_end)
                 else:
                     res['mayor'] = []
@@ -2218,61 +1908,6 @@ class Parser(account_balance):
                         tot_ytd += res['ytd']
                         tot_eje += res['balance']
 
-#        if tot_check:
-#            str_label = form['lab_str']
-#            res2 = {
-#                    'id' : form['id'],
-#                    'type' : 'view', 
-#                    'name': (str_label), 
-#                    'label': False, 
-#                    'total': True, 
-#                    'balanceinit': tot_bin, 
-#                    'debit': tot_deb, 
-#                    'credit': tot_crd, 
-#                    'ytd': tot_ytd, 
-#                    'balance': tot_eje, 
-#            }
-#            aa_brw_init = account_obj.browse(self.cr, self.uid, id, ctx_init)
-#            aa_brw_end  = account_obj.browse(self.cr, self.uid, id, ctx_end)
-#
-#            i, d, c = map(z, [aa_brw_init.balance, aa_brw_end.debit, aa_brw_end.credit])
-#            b = z(i+d-c)
-#            res2.update({
-#                    
-#                    'balance': net_balance, 
-#            })
-#            result_acc.append(res2)
-#        if  form['inf_type'] == 'BS' and form['show_earning']:
-#            if not self.show_earnings:
-#                earning_obj = account_obj.browse(self.cr, self.uid, form['earning_account'])
-#                res = {
-#                    'id'        : earning_obj.id, 
-#                    'type'      : 'view', 
-#                    'code'      : earning_obj.code, 
-#                    'name'      : earning_obj.name, 
-#                    'parent_id' : earning_obj.parent_id and earning_obj.parent_id.id, 
-#                    'level'     : earning_obj.level, 
-#                    'label'     : False, 
-#                    'total'     : True, 
-#                    'change_sign' : 1
-#                }
-#                res.update(earning_data[0])
-#                result_acc.append(res)
-#            else:
-#                has_parent = temp_earning['parent_id'] or False
-#                while has_parent:
-#                    res_index_list = [(i, d) for i, d in enumerate(result_acc) if d['id'] == has_parent]
-#                    parent = False
-#                    for index in res_index_list:
-#                        result_acc[index[0]].update({
-#                            'balanceinit': abs(result_acc[index[0]]['balanceinit']) + temp_earning['bal_init_diff'], 
-#                            'debit': abs(result_acc[index[0]]['debit']) + temp_earning['dbr_diff'], 
-#                            'credit': abs(result_acc[index[0]]['credit']) + temp_earning['cdr_diff'], 
-#                            'ytd': abs(result_acc[index[0]]['ytd']) + temp_earning['ytd_diff'], 
-#                            'balance': abs(result_acc[index[0]]['balance']) + temp_earning['bal_diff'], 
-#                        })
-#                        parent = result_acc[index[0]]['parent_id']
-#                    has_parent = parent or False
         afr_list = []
         if form['inf_type'] == 'BS':
             afr_ids = afr_obj.search(self.cr, self.uid, [('name', '=', 'Income Statement')])
@@ -2284,8 +1919,6 @@ class Parser(account_balance):
             form_copy = form.copy()
             form_copy['inf_type'] = 'IS'
             self.comparison1_lines(form_copy, 0)
-#            
-#            total_profit_loss = abs(form_copy.get('periodic_net_profit_one'))
             total_profit_loss = self.net_profit_loss_periodic
             self.total_profit_loss = {
                 'balance' : total_profit_loss, 
@@ -2367,71 +2000,12 @@ class Parser(account_balance):
                 })
             
             result_acc.append(self.total_lbeq)
-#             a = []
-#             for res_acc in result_acc:
-#                 if res_acc.get('name')=='Total Liabilities and Equity':
-#                     index_1 = result_acc.index(res_acc)
-#                     a.append(index_1)
-#             for ele in a:
-#                 result_acc.insert(ele,self.total_profit_loss)
-#                 result_acc.pop(ele+2)
-# #            
-#             total_liabilities_equity = self.total_liabilities_equity + self.net_profit
-#            total_comp0_liabilities_equity = self.comp0_tot_liabilities_equity + abs(self.comp0_net_profit)
-#            total_comp1_liabilities_equity = self.comp1_tot_liabilities_equity + abs(self.comp1_net_profit)
-#             self.total_liabilities_equity = {
-#                 'balance' : total_liabilities_equity, 
-#                 'id'        : False, 
-#                 'type' : 'view', 
-#                 'code' : '', 
-#                 'name' : 'Total Liabilities & Owners Equity', 
-#                 'parent_id' : False, 
-#                 'level' : 1, 
-#                 'credit' : 0.0, 
-#                 'debit' : 0.0, 
-#                 'label' : False, 
-#                 'mayor' : [], 
-#                 'total' :True, 
-#                 'change_sign' : 1, 
-#                 'balanceinit' : 0.0, 
-#                 'ytd' : total_liabilities_equity
-#             }
-#            
-#            if form['compr0_fiscalyear_id']:
-#                self.total_liabilities_equity.update({
-#                    'compr0_balance' : total_comp0_liabilities_equity,
-#                    'compr0_balanceinit' : 0.00,
-#                    'compr0_debit' : 0.00,
-#                    'compr0_credit' : 0.00,
-#                    'compr0_ytd' : self.comp0_tot_liabilities + abs(self.comp0_net_profit)
-#                })
-#                
-#            if form['compr1_fiscalyear_id']:
-#                self.total_liabilities_equity.update({
-#                    'compr1_balance' : total_comp1_liabilities_equity,
-#                    'compr1_balanceinit' : 0.00,
-#                    'compr1_debit' : 0.00,
-#                    'compr1_credit' : 0.00,
-#                    'compr1_ytd' : self.comp1_tot_liabilities + abs(self.comp1_net_profit)
-#                })
-#            result_acc.append(self.total_liabilities_equity)
-#            
         else:
             if not form['afr_id'][1] == 'General Ledger':
                 if not form['afr_id'][1] == 'Trial Balance':
                     if not form['afr_id'][1] == 'Balance Sheet':
-#                        if {'id': False, 'name': '', 'total' : False, 'type' : False, 'label' : False} not in result_acc:
-#                                raise osv.except_osv(_('Configuration Error'), _('Please configure all type of Revenue, Cost Of Goods Sold, Expense, Income and Taxes accounts for Income Statement !'))
-#                        index = result_acc.index({'id': False, 'name': '', 'total' : False, 'type' : False, 'label' : False})
-#                         for res_acc in result_acc:
-#                             if res_acc.get('name')=='Total Net Ordinary Income':
-#                                 index = result_acc.index(res_acc)
-#                                 result_acc.insert(index+11,res_acc)
-#                                 result_acc.pop(index)
                         if not form['inf_type'] == 'TB':
                             total_gross_profit = self.net_profit_loss_periodic
-    #                        total_comp0_gross_profit = self.comp0_gross_profit
-    #                        total_comp1_gross_profit = self.comp1_gross_profit
                             self.net_profit_dict = {
                                 'balance' : total_gross_profit, 
                                 'id'        : False, 
@@ -2469,90 +2043,6 @@ class Parser(account_balance):
                                 })
                             
                             result_acc.append(self.net_profit_dict)
-#                        result_acc.insert(index+2, self.gross_profit_dict)
-#                        result_acc.append(self.gross_profit_dict)
-#                        result_acc.pop(index)
-#                        
-#                         tot_expense = self.total_exp
-#                        tot_comp0_expense = self.comp0_total_expense
-#                        tot_comp1_expense = self.comp1_total_expense
-#                         self.tot_exp = {
-#                             'balance' : tot_expense, 
-#                             'id'        : False, 
-#                             'type' : 'view', 
-#                             'code' : '', 
-#                             'name' : 'Total Expense', 
-#                             'parent_id' : False, 
-#                             'level' : 1, 
-#                             'credit' : 0.0, 
-#                             'debit' : 0.0, 
-#                             'label' : False, 
-#                             'mayor' : [], 
-#                             'total' :True, 
-#                             'change_sign' : 1, 
-#                             'balanceinit' : 0.0, 
-#                             'ytd' : tot_expense 
-#                         }
-#                        
-#                        if form['compr0_fiscalyear_id']:
-#                            self.tot_exp.update({
-#                                'compr0_balance' : tot_comp0_expense,
-#                                'compr0_balanceinit' : 0.00,
-#                                'compr0_debit' : 0.00,
-#                                'compr0_credit' : 0.00,
-#                                'compr0_ytd' : abs(self.comp0_operating_expense + self.comp0_taxes + self.comp0_other_expense),
-#                            })
-#                            
-#                        if form['compr1_fiscalyear_id']:
-#                            self.tot_exp.update({
-#                                'compr1_balance' : tot_comp1_expense,
-#                                'compr1_balanceinit' : 0.00,
-#                                'compr1_debit' : 0.00,
-#                                'compr1_credit' : 0.00,
-#                                'compr1_ytd' : abs(self.comp1_operating_expense + self.comp1_taxes + self.comp1_other_expense),
-#                            })
-#                            
-#                        result_acc.append(self.tot_exp)
-#                        
-#                         net_profit = self.net_profit
-#                        net_comp0_profit = self.comp0_net_profit
-#                        net_comp1_profit = self.comp1_net_profit
-#                         self.tot_net_prodict = {
-#                             'balance' : net_profit, 
-#                             'id'        : False, 
-#                             'type' : 'view', 
-#                             'code' : '', 
-#                             'name' : 'Net Profit', 
-#                             'parent_id' : False, 
-#                             'level' : 1, 
-#                             'credit' : 0.0, 
-#                             'debit' : 0.0, 
-#                             'label' : False, 
-#                             'mayor' : [], 
-#                             'total' :True, 
-#                             'change_sign' : 1, 
-#                             'balanceinit' : 0.0, 
-#                             'ytd' : net_profit 
-#                         }
-#                        if form['compr0_fiscalyear_id']:
-#                            self.tot_net_prodict.update({
-#                                'compr0_balance' : net_comp0_profit,
-#                                'compr0_balanceinit' : 0.00,
-#                                'compr0_debit' : 0.00,
-#                                'compr0_credit' : 0.00,
-#                                'compr0_ytd' : abs(self.comp0_gross_profit + self.comp0_other_income - self.comp0_total_expense),
-#                            })
-#                            
-#                        if form['compr1_fiscalyear_id']:
-#                            self.tot_net_prodict.update({
-#                                'compr1_balance' : net_comp1_profit,
-#                                'compr1_balanceinit' : 0.00,
-#                                'compr1_debit' : 0.00,
-#                                'compr1_credit' : 0.00,
-#                                'compr1_ytd' : abs(self.comp1_gross_profit + self.comp1_other_income - self.comp1_total_expense),
-#                            })
-#
-#                        result_acc.append(self.tot_net_prodict)
         return result_acc
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
