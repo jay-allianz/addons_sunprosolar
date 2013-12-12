@@ -317,7 +317,9 @@ class crm_lead(osv.Model):
             i = data.loan_interest_rate
             n = data.loan_period
             PV = data.loan_amt
-            loan_installment = PV / ((1- (1 / pow((1 + i),n) )) / i) 
+            loan_installment = 0
+            if i != 0:
+                loan_installment = PV / ((1- (1 / pow((1 + i),n) )) / i) 
             
             if data.loan_period != 0.0:
                 depriciation = data.cost/data.loan_period
