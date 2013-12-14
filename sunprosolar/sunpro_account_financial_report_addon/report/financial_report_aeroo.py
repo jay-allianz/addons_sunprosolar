@@ -20,8 +20,6 @@
 #
 ##############################################################################
 
-import time
-import datetime
 from openerp.report import report_sxw
 from openerp.tools import config
 from openerp.tools.translate import _
@@ -327,6 +325,8 @@ class Parser(account_balance):
             'get_total_comp_credit' : self.get_total_comp_credit
         })
         
+    # Calculate the Debit and Credit amount of each line items of the Trail Balance for YTD reports.
+        
     def get_debit(self, debit, level, type, name):
         if type in ['other', 'liquidity', 'receivable', 'payable']: 
             self.debit_total += debit
@@ -350,7 +350,6 @@ class Parser(account_balance):
         and the full year)
         """
         account_obj = self.pool.get('account.account')
-        account_type_obj = self.pool.get('account.account.type')
         period_obj = self.pool.get('account.period')
         fiscalyear_obj = self.pool.get('account.fiscalyear')
         wiz_rep = self.pool.get('wizard.report')
@@ -616,6 +615,8 @@ class Parser(account_balance):
                             'cdr5': self.exchange(c), 
                             'bal5': self.exchange(b), 
                         })
+                        
+                        # Checking the Values of the 4th QTR Income Statement YTD reports
                         report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                         for ytd_acc_data in report_data.account_list:
                             if ytd_acc_data.type == 'view':
@@ -706,6 +707,8 @@ class Parser(account_balance):
 
 
                     else:
+                        
+                        # Checking the Values of the 4th QTR Balance Sheet YTD reports
                         i, d, c = map(z, [aa_brw_init.balance, aa_brw_end.debit, aa_brw_end.credit])
                         b = z(i+d-c)
                         res.update({
@@ -788,6 +791,8 @@ class Parser(account_balance):
                             'cdr13': self.exchange(c), 
                             'bal13': self.exchange(b), 
                         })
+                        
+                        # Checking the Values of the Monthly Income Statement YTD reports
                         report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                         for ytd_acc_data in report_data.account_list:
                             if ytd_acc_data.type == 'view':
@@ -989,6 +994,7 @@ class Parser(account_balance):
                             'bal13': self.exchange(b), 
                         })
                         
+                        # Checking the Values of the Monthly Balance Sheet YTD reports
                         report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                         for ytd_acc_data in report_data.account_list:
                             if ytd_acc_data.type == 'view':
@@ -1059,6 +1065,8 @@ class Parser(account_balance):
                         res.update({
                             'balance': self.exchange(d-c), 
                         })
+                        
+                        # Checking the Values of the Single Column Income Statement YTD reports
                         report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                         for ytd_acc_data in report_data.account_list:
                             if ytd_acc_data.type == 'view':
@@ -1096,6 +1104,8 @@ class Parser(account_balance):
                         res.update({
                             'balance': self.exchange(b), 
                         })
+                        
+                        # Checking the Values of the Single Column Balance Sheet YTD reports
                         report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                         for ytd_acc_data in report_data.account_list:
                             if ytd_acc_data.type == 'view':
@@ -1118,6 +1128,8 @@ class Parser(account_balance):
                             self.equ = res.get('balance')
                             
                         self.total_liabilities_equity_new = self.liab + self.equ
+                        
+                    # Checking the Values of the Trail Balance YTD reports
                     if form['inf_type'] == 'TB' and form['columns'] == 'two':
                         res.update({
                             'balance': self.exchange(b), 
@@ -1173,6 +1185,7 @@ class Parser(account_balance):
                     else:
                         # Include all accounts
                         to_include = True
+                        
                 #~ ANALYTIC LEDGER
 #                form['columns'] = 'four'
                 if to_include and form['columns']=='four' and form['inf_type'] == 'GL' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
@@ -1188,6 +1201,8 @@ class Parser(account_balance):
                     #
                     # Check whether we must sumarize this line in the report or not
                     #
+                    
+        # Added the Net Income(Loss) and Total Liabilities & Equity lines in Balance Sheet and Income Statement reports of the YTD.
         afr_list = []
         if form['inf_type'] == 'BS':
             afr_ids = afr_obj.search(self.cr, self.uid, [('name', '=', 'Income Statement')])
@@ -1314,6 +1329,9 @@ class Parser(account_balance):
                         })
                     result_acc.append(self.net_profit_dict)
         return result_acc
+    
+    
+    # Calculate the amount Debit and Credit of the Trail Blanace of Periodic.  
     
     def get_profit(self, bal):
         return bal
@@ -1692,7 +1710,7 @@ class Parser(account_balance):
                                         self.total_exp = (self.exp_credit + self.exp_debit) + (self.other_exp_credit + self.other_exp_debit)
                                     self.comp0_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
                         if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
-                            self.profit_loss_comp0 = res.get('compr0_balance')
+                            self.profit_loss_comp0 += res.get('compr0_balance')
                     else:
                         res.update({
                             'compr0_balance': self.exchange(compr0_b), 
@@ -1763,7 +1781,7 @@ class Parser(account_balance):
                                         self.total_exp = (self.exp_credit + self.exp_debit) + (self.other_exp_credit + self.other_exp_debit)
                                     self.comp1_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
                         if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
-                            self.profit_loss_comp1 = res.get('compr1_balance')           
+                            self.profit_loss_comp1 += res.get('compr1_balance')           
                     else:
                         res.update({
                             'compr1_balance': self.exchange(compr1_b), 
@@ -1801,7 +1819,6 @@ class Parser(account_balance):
                 })
                 
                 # Check condition for Single Columns
-            
                 if form['inf_type'] == 'IS' and  form['periodic_columns'] == 'one':
                     res.update({
                         'balance': self.exchange(d-c), 
@@ -1835,7 +1852,7 @@ class Parser(account_balance):
                             self.net_profit_loss_periodic += res.get('balance')
                 else:
                     res.update({
-                        'balance': self.exchange(b), 
+                        'balance': self.exchange(d-c), 
                     })
                     report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
                     for ytd_acc_data in report_data.account_list:
@@ -2023,7 +2040,6 @@ class Parser(account_balance):
                                 'balanceinit' : 0.0, 
                                 'ytd' : total_gross_profit, 
                             }
-                            
                             
                             if form['compr0_fiscalyear_id']:
                                 self.net_profit_dict.update({
