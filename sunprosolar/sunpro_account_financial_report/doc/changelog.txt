@@ -1,6 +1,9 @@
 ==================================================================================
  Version ChangeLog (sunpro_account_financial_report)
 ==================================================================================
+0.5  --> 17 December 2013 : Serpent Consulting Services
+	* Improved the code of the periods of the YTD wizard. 
+
 0.4  --> 10 December 2013 : Serpent Consulting Services
 	* Improved the code that put the date header in General Ledger report.
 

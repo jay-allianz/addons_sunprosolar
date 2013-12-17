@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name" : "SunPro Financial Reports",
-    "version" : "0.4",
+    "version" : "0.5",
     "author" : "Serpent Consulting Services Pvt. Ltd.",
     "website" : "http://www.serpentcs.com",
     "depends" : ["base", "account"],

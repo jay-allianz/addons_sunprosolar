@@ -161,7 +161,7 @@ class wizard_report(osv.TransientModel):
         res['value'].update({'display_account_level':afr_brw.display_account_level or 0})
         res['value'].update({'fiscalyear':afr_brw.fiscalyear_id and afr_brw.fiscalyear_id.id})
         res['value'].update({'account_list':[acc.id for acc in afr_brw.account_ids]})
-#        res['value'].update({'periods':[p.id for p in afr_brw.period_ids]})
+#         res['value'].update({'periods':[p.id for p in afr_brw.period_ids]})
         res['value'].update({'org_periods_from':period_from})
         res['value'].update({'org_periods_to':period_to})
         res['value'].update({'analytic_ledger':afr_brw.analytic_ledger or False})
@@ -530,15 +530,17 @@ class wizard_report(osv.TransientModel):
     def print_report(self, cr, uid, ids, data, context=None):
         if context is None:
             context = {}
-
         data = {}
         data['ids'] = context.get('active_ids', [])
         data['model'] = context.get('active_model', 'ir.ui.menu')
         data['form'] = self.read(cr, uid, ids[0])
+        account_period_obj = self.pool.get('account.period')
+        account_period_ids = account_period_obj.search(cr, uid, [('fiscalyear_id','=',data['form']['fiscalyear'][0])])
         if data['form']['filter'] == 'byperiod':
             del data['form']['date_from']
             del data['form']['date_to']
-            data['form']['periods'] = self.period_span(cr, uid, data['form']['periods'], data['form']['fiscalyear'])
+#             data['form']['periods'] = self.period_span(cr, uid, data['form']['periods'], data['form']['fiscalyear'])
+            data['form']['periods'] = account_period_ids
         elif data['form']['filter'] == 'bydate':
             self._check_date(cr, uid, data)
             del data['form']['periods']
