@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+	<!--
+    Resource: product.price.type
+    -->
+        <record id="list_price01" model="product.price.type">
+            <field name="name">Public Price Sun Pro</field>
+            <field name="field">list_price</field>
+        </record>
+        <record id="standard_price01" model="product.price.type">
+            <field name="name">Cost Price Sun Pro</field>
+            <field name="field">standard_price</field>
+        </record>
+
+        <!--
+    Price list type
+    -->
+        <record id="pricelist_type_sale01" model="product.pricelist.type">
+            <field name="name">Sale Pricelist</field>
+            <field name="key">sale</field>
+        </record>
+
+        <!--
+    Price list
+    -->
+        <record id="list01" model="product.pricelist">
+            <field name="name">Sun Pro Solar Pricelist</field>
+            <field name="type">sale</field>
+        </record>
+        <record id="ver01" model="product.pricelist.version">
+            <field name="pricelist_id" ref="list01"/>
+            <field name="name"> Summer Season</field>
+            <field name = "date_start" eval="time.strftime('%Y')+'-03-01'" />
+            <field name = "date_end" eval="time.strftime('%Y')+'-06-30'" />
+        </record>
+        
+        <record id="item01" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver01"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier1</field>
+            <field name="min_quantity">0.10880</field>
+        </record>
+        <record id="item02" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver01"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier2</field>
+            <field name="min_quantity">0.16110</field>
+        </record>
+        <record id="item03" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver01"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier3</field>
+        </record>
+        <record id="item04" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver01"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier4</field>
+        </record>
+        <record id="item05" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver01"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier5</field>
+        </record>
+
+        <!--Winter -->
+	     <record id="ver02" model="product.pricelist.version">
+	        <field name="pricelist_id" ref="list01"/>
+	        <field name="name"> Winter Season</field>
+			<field name = "date_start" eval="time.strftime('%Y')+'-11-01'" />
+	        <field name = "date_end" eval="str(DateTime.now().year +1) +'-02-28'" />
+	    </record>
+	    
+	    <record id="item011" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver02"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier1</field>
+            <field name="min_quantity">0.10880</field>
+        </record>
+        <record id="item012" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver02"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier2</field>
+            <field name="min_quantity">0.16110</field>
+        </record>
+        <record id="item013" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver02"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier3</field>
+        </record>
+        <record id="item014" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver02"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier4</field>
+        </record>
+        <record id="item015" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver02"/>
+            <field name="base" ref="list_price01"/>
+            <field name="name">Tier5</field>
+        </record>
+    </data>
+</openerp>
