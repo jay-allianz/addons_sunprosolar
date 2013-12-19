@@ -13,19 +13,19 @@
                              <field name="pv_module_name" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="brand_module" attrs="{'invisible':[('product_group','!=','module')]}"/>
 	                         <field name="pv_module_power_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
-<!--                             <field name="no_module" attrs="{'invisible':[('product_group','!=','module')]}"/-->
+                             <field name="no_module" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="module_hieght" attrs="{'invisible':[('product_group','!=','module')]}"/>
-                             <field name="module_stc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
+<!--                             <field name="module_stc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>-->
                              <field name="module_width" attrs="{'invisible':[('product_group','!=','module')]}"/>
-                             <field name="module_ptc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
+<!--                             <field name="module_ptc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>-->
                              <field name="module_weight" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="cost_per_stc_watt" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="panel_area" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="labor_per_stc_watt" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="markup" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="materials_per_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
-                             <field name="invertor_name" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
+<!--                             <field name="invertor_name" attrs="{'invisible':[('product_group','!=','inverter')]}"/-->
                              <field name="brand_invertor" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                              <field name="meter" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                              <field name="cost_per_ac_capacity_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
@@ -35,6 +35,9 @@
                              <field name="materials_per_ac_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                              <field name="power_rating" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                       </group>
+                 </xpath>
+                 <xpath expr="//field[@name='list_price']" position="attributes">
+                       <attribute name="attrs">{'invisible':[('product_group','!=','others')]}</attribute>
                  </xpath>
             </field>
         </record>
@@ -191,6 +194,30 @@
 
         <menuitem action="action_product_invertor_brand" id="menu_product_invertor_brand" parent="product.prod_config_main" 
 					string="Product Invertor Brand" sequence="13"/>
+        
+        <menuitem id="product.menu_product_pricelist_main" name="Rates Tier" 
+            parent="base.menu_base_config" groups="product.group_sale_pricelist" sequence="70"/>
 
+		<record id="product_pricelist_item_tree_view_inherit" model="ir.ui.view">
+            <field name="name">product.pricelist.item.tree</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+            <field name="arch" type="xml"> 
+				<xpath expr="//field[@name='min_quantity']" position="replace">
+					<field name="min_quantity"/>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="product_pricelist_item_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.pricelist.item.form</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml"> 
+				<xpath expr="//field[@name='min_quantity']" position="replace">
+					<field name="min_quantity"/>
+				</xpath>
+			</field>
+		</record>
     </data>
 </openerp>

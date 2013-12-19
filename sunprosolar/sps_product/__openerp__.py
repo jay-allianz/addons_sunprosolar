@@ -30,6 +30,7 @@
     'depends': ['base','product'],
     'data': [
         'product_view.xml',
+        'product_data.xml',
     ],
     'installable': True,
     'application': True,

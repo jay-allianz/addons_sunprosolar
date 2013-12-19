@@ -53,9 +53,10 @@ class product_product(osv.Model):
     _inherit="product.product"
     
     _columns = {
-            'product_group' : fields.selection([('module', 'Module'),('inverter','Inverter')], 'Product Group',help="In which group the product belongs to?",required=True),
+            'product_group' : fields.selection([('module', 'Module'),('inverter','Inverter'),('others','Others')], 'Product Group',help="In which group the product belongs to?",required=True),
             'pv_module_name' : fields.many2one("module.master",'PV Module Name'),
 #            'no_module': fields.integer('No of Module'),
+            'no_module': fields.integer('No of Module'),
             'brand_module': fields.many2one("product.brand","Brand"),
             'pv_module_power_stc': fields.float("PV Module Power STC (KW)"),
             'module_ptc_rating':fields.float("Module PTC rating (KW)"),
@@ -63,7 +64,7 @@ class product_product(osv.Model):
             'module_width':fields.float("Module Width (CM)"),
             'module_weight':fields.float("Module Weight (LBS)"),
             'panel_area': fields.float("Solar Panel Area (Meter2)"),
-            'module_stc_dc_rating': fields.float("Module STC-DC Ratings (KW)"),
+#            'module_stc_dc_rating': fields.float("Module STC-DC Ratings (KW)"),
             'module_ptc_dc_rating': fields.float("Module PTC-DC Ratings (KW)"),
             'cost_per_stc_watt': fields.float("Cost Per STC Watt ($)"),
             'labor_per_stc_watt': fields.float("Labor Per STC Watt ($)"),
@@ -82,5 +83,13 @@ class product_product(osv.Model):
           }
     
     _defaults={
-        'product_group':'module'
+        'product_group':'others'
     }
+
+
+class product_pricelist_item(osv.osv):
+    _inherit= 'product.pricelist.item'
+    
+    _columns = {
+            'min_quantity': fields.float('Min. Quantity',digits=(16, 5), required=True, help="Specify the minimum quantity that needs to be bought/sold for the rule to apply."),
+       } 

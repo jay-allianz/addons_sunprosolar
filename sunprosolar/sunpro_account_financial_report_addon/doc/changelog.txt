@@ -1,6 +1,9 @@
 ==================================================================================
  Version ChangeLog (sunpro_account_financial_report_addon)
 ==================================================================================
+0.9  --> 19 December 2013 : Serpent Consulting Services
+		* Improved General Ledger YTD and PERIODIC report with removing Opening Period. 
+		
 0.8  --> 14 December 2013 : Serpent Consulting Services
 		* Improved the Comparison Balance Sheet and Income Statement reports. 
 

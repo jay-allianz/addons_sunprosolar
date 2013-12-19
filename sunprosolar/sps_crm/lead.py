@@ -811,8 +811,11 @@ class crm_lead(osv.Model):
             url += '+' + cur_rec.city_id.country_id.name.replace(' ', '+')
         if cur_rec.city_id.zip:
             url += '+' + cur_rec.city_id.zip.replace(' ', '+')
-        webbrowser.open(url)
-        return True
+        return {
+            'type': 'ir.actions.act_url',
+            'url':url,
+            'target': 'new'
+        }
     
     def type_change(self, cr, uid, ids, context=None):
         """
@@ -1482,8 +1485,11 @@ class res_partner(osv.Model):
             url += '+' + cur_rec.city_id.country_id.name.replace(' ', '+')
         if cur_rec.city_id.zip:
             url += '+' + cur_rec.city_id.zip.replace(' ', '+')
-        webbrowser.open(url)
-        return True
+        return {
+            'type': 'ir.actions.act_url',
+            'url':url,
+            'target': 'new'
+        }
     
 res_partner()
 

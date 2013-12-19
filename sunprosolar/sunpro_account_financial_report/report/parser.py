@@ -239,7 +239,6 @@ class account_balance(report_sxw.rml_parse):
 
     def _get_analytic_ledger(self, account, ctx={}):
         res = []
-
         if account['type'] in ('other','liquidity','receivable','payable'):
             #~ TODO: CUANDO EL PERIODO ESTE VACIO LLENARLO CON LOS PERIODOS DEL EJERCICIO
             #~ FISCAL, SIN LOS PERIODOS ESPECIALES
@@ -268,7 +267,7 @@ class account_balance(report_sxw.rml_parse):
             self.cr.execute(sql_detalle)
             resultat = self.cr.dictfetchall()
             balance = account['balanceinit']
-            for det in resultat:
+            for det in resultat[1:]:
                 balance += det['debit'] - det['credit']
                 res.append({
                     'id': det['id'],
