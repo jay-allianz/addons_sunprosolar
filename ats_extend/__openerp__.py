@@ -27,7 +27,7 @@
 Changes in ATS .
     """,
     'website': 'http://www.serpentcs.com',
-    'depends' : ['crm','sale','account','stock','OpenERPPLM'],
+    'depends' : ['sale','account','stock','OpenERPPLM','account_followup'],
     'data': [
         'security/plm_security.xml',
         'ats_extend_view.xml',

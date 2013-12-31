@@ -4,5 +4,117 @@
 		<menuitem id="OpenERPPLM.plm_menu" 
 		    name="PLM Module"
 			groups='group_hide_menu'/>
-    </data>
+
+		<menuitem action="account.action_view_bank_statement_tree" 
+				id="account.journal_cash_move_lines"
+            	parent="account.menu_finance_bank_and_cash" 
+				groups='group_hide_menu_cash_register'/>
+
+		<menuitem string="Bank Statements" 
+				action="account.action_bank_statement_tree" 
+				id="account.menu_bank_statement_tree" 
+				parent="account.menu_finance_periodical_processing" 
+				sequence="7"/>
+		
+		<record id="account_followup.menu_finance_followup" model="ir.ui.menu">
+    		<field name="groups_id" eval="[(3,ref('account.group_account_invoice'))]"/>
+		</record>
+		
+		<menuitem id="account_followup.menu_finance_followup" 
+			parent="account.menu_finance" 
+			name="Payment Follow-up" 
+			groups="group_account_payment_follow_up"/>
+	
+		<record id="base.menu_sales_followup" model="ir.ui.menu">
+    		<field name="groups_id" eval="[(3,ref('account.group_account_invoice'))]"/>
+		</record>
+		
+		<menuitem id="base.menu_sales_followup" 
+			parent="base.menu_base_partner" 
+			name="Payment Follow-up" 
+			groups="group_account_payment_follow_up" 
+			sequence="2"/>
+		
+		<menuitem action="account_followup.action_account_followup_definition_form" 
+			id="account_followup.account_followup_menu" 
+			parent="account.menu_finance_configuration" 
+			name="Follow-up Levels" 
+			groups="group_account_payment_follow_up"/>
+		    
+		<record id="account_followup.menu_action_followup_stat_follow" model="ir.ui.menu">
+    		<field name="groups_id" eval="[(3,ref('account.group_account_invoice'))]"/>
+		</record>
+		
+		<menuitem action="account_followup.action_followup_stat" 
+				id="account_followup.menu_action_followup_stat_follow" 
+				parent="account.menu_finance_reporting" 
+				groups="group_account_payment_follow_up" 
+				name="Follow-Ups Analysis" sequence="10"/>
+		
+		 <menuitem
+            icon="STOCK_PRINT"
+            name="General Ledger"
+            parent="account.menu_finance_legal_statement"
+            action="account.action_account_general_ledger_menu"
+            groups="account.group_account_manager,account.group_account_user"
+            id="account.menu_general_ledger"
+           />
+		<menuitem
+                icon="STOCK_PRINT"
+                name="Trial Balance"
+                parent="account.menu_finance_legal_statement"
+                action="account.action_account_balance_menu"
+                id="account.menu_general_Balance_report"
+               />
+		<menuitem icon="STOCK_PRINT" 
+				name="Balance Sheet" 
+				action="account.action_account_report_bs" 
+				id="account.menu_account_report_bs" 
+				parent="account.menu_finance_legal_statement"/>
+		
+		<menuitem icon="STOCK_PRINT"
+				 name="Profit And Loss" 
+				 action="account.action_account_report_pl"
+				 id="account.menu_account_report_pl"
+				 parent="account.menu_finance_legal_statement"/>
+		
+		<menuitem icon="STOCK_PRINT"
+				 name="Financial Report"
+				 action="account.action_account_report"
+				 id="account.menu_account_report"
+				 parent="account.menu_finance_legal_statement" sequence="100"/>
+
+		 <delete id="account.final_accounting_reports" model="ir.ui.menu"/>
+		 
+		<menuitem
+            name="Sale/Purchase Journals"
+            parent="account.menu_finance_legal_statement"
+            action="account.action_account_print_sale_purchase_journal"
+            id="account.menu_account_print_sale_purchase_journal"
+            icon="STOCK_PRINT"
+            sequence="1"/>
+		
+		<menuitem
+            name="Journals"
+            parent="account.menu_finance_legal_statement"
+            action="account.action_account_print_journal"
+            id="account.menu_account_print_journal"
+            icon="STOCK_PRINT"/>
+		
+		<menuitem
+            name="General Journals"
+            parent="account.menu_finance_legal_statement"
+            action="account.action_account_general_journal"
+            id="account.menu_account_general_journal"
+            icon="STOCK_PRINT"/>
+		
+	    <menuitem
+            name="Centralizing Journal"
+            parent="account.menu_finance_legal_statement"
+            action="account.action_account_central_journal"
+            id="account.menu_account_central_journal"
+            icon="STOCK_PRINT"/>
+	    
+	    <delete id="account.menu_journals_report" model="ir.ui.menu"/>
+</data>
 </openerp>
