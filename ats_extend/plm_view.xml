@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<menuitem id="OpenERPPLM.plm_menu" 
+		    name="PLM Module"
+			groups='group_hide_menu'/>
+    </data>
+</openerp>

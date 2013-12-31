@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+	    <record id="group_hide_menu" model="res.groups">
+	        <field name="name"> PLM Module</field>
+	    </record>
+	   <record id="group_hide_menu1" model="res.groups">
+	        <field name="name"> Deliver Products</field>
+	    </record>
+	</data>
+</openerp>
