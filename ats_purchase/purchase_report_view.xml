@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+        <data noupdate="0">
+        <record id="purchase_webkit_header" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+    </head>
+    <% import datetime %>
+    <body style="border:0; margin: 0;" onload="subst()">
+        <table style="border-top: 1px solid black; width: 1080px">
+            <tr style="border-collapse:collapse;">
+                <td style="text-align:left;font-size:10;width:350px;">${formatLang( str(datetime.datetime.today()), date_time=True)}</td>
+                <td style="text-align:center;font-size:10;width:350px;">${user.name}</td>
+                <td style="text-align:right;font-size:10;width:350px;">Page&nbsp;<span class="page"/></td>
+                <td style="text-align:left;font-size:10;width:30px">&nbsp;of&nbsp;<span class="topage"/></td>
+            </tr>
+        </table>
+    </body>
+</html>]]></field>
+            <field name="orientation">Portrait</field>
+            <field name="format">A4</field>
+            <field name="html"><![CDATA[
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+        <style type="text/css">
+            ${css}
+        </style>
+    </head>
+    <body style="border:0; margin-top:70;" onload="subst()">
+        <table class="header" style="border-bottom: 0px solid black; width: 100%">
+            <tr>
+                <td style="text-align:right;" width="20%">${ helper.embed_image('png',company.logo,150,50)|n }</td>
+                <td style="text-align:left; font-size:11px;"> <b>	${company.partner_id.name |entity}</b> </br>
+            														%if company and company.partner_id and company.partner_id.street: 
+                														${company.partner_id.street or ''|entity}</br>
+                													%endif
+            														%if company and company.partner_id and company.partner_id.street2:
+                														${company.partner_id.street2 or ''|entity}</br>
+            														%endif
+            														%if company and company.partner_id and company.partner_id.city :
+                														${company.partner_id.city or ''|entity}, ${company.partner_id.state_id.code or ''|entity} ${company.partner_id.zip or ''|entity}</br>
+            														%endif
+                													%if company and company.partner_id and company.partner_id.phone:
+                														${company.partner_id.phone or ''|entity}</br>
+                													%endif
+                													%if company and company.partner_id and company.partner_id.email:
+                														${company.partner_id.email or ''|entity}</br>
+                													%endif
+                											</td>
+				<td style="text-align:right;color:#003366;font-weight:900; font-size:35px; font-family:UnGungseo;" width="70%">
+            			<b>${'Purchase Order'}</b>
+	        		<table class="basic_table" style="color:#003366;background-color:#99CCCC; " align="right" width="65%">
+	        		          <tr>
+		        		           <td>
+		        		             	${'Purchase Order No._______________'}</br>
+		        		             	${'Order Date_______________'}</br>
+		        		             	${'Page No._______________'}</br></br> 
+		        		           </td>           		          
+	        		          </tr>
+	        		</table>
+	        	</td>
+			</tr>
+        </table> ${_debug or ''|n} </body>
+</html>]]>
+            </field>
+            <field eval="15.0" name="margin_top"/>
+            <field eval="5.0" name="margin_bottom"/>
+            <field name="css"><![CDATA[
+
+.dest_address {
+margin-right:60%;
+font-size:12;
+}
+.header {
+margin-left:0;
+text-align:right;
+width:100px;
+font-size:12;
+}
+
+.title {
+font-size:16;
+font-weight: bold;
+
+}
+
+
+.basic_table{
+margin-left:60;
+text-align:right;
+border-color:#003366;
+border-collapse: collapse;
+}
+.basic_table td {
+border:1px solid lightGrey;
+border-color:#003366;
+font-size:12;
+}
+
+.basic_table1{
+margin-left:10;
+text-align:right;
+border-collapse: collapse;
+}
+.basic_table td {
+font-size:12;
+}
+            
+.list_table {
+border-color:black;
+text-align:center;
+border-collapse: collapse;
+
+}
+.list_table td {
+border-color:gray;
+border-top:1px solid gray;
+text-align:right;
+font-size:12;
+padding-left:3px
+padding-right:3px
+padding-top:3px
+padding-bottom:3px
+}
+
+.list_table th {
+border-bottom:2px solid black;
+text-align:right;
+font-size:12;
+font-weight:bold;
+padding-left:3px
+padding-right:3px
+}
+
+.list_tabe thead {
+    display:table-header-group;
+}
+
+
+.total {
+width:100%;
+}
+.lib {
+width:10.3%;
+}
+.tot {
+text-align:left;
+width:15%;
+}
+.righttot {
+width:74%;
+}
+.tax {
+width:50%;
+} 
+
+]]>
+            </field>
+            <field name="name">Purchase Webkit Header</field>
+        </record>
+    </data>
+    <data>
+        <report auto="False"
+         		id="ats_report_purchase_order"
+        		model="purchase.order"
+                name="purchase.order.webkit"
+        	 	file="ats_purchase/report/order_report.mako"
+                usage="default" 
+        		string="Purchase Order1"
+        		report_type="webkit"
+        		webkit_header="purchase_webkit_header"/>
+    </data>
+</openerp>
