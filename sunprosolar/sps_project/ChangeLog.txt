@@ -1,0 +1,6 @@
+===============================================================================
+ Version Change Log (sps_project)
+===============================================================================
+
+6.3.01 ---> Jan 02,2014 : Hardik
+    * Added Module for Project Task, Added stages named "Installation","Final Inspection","Monitoring","Invoicing","Wrap Up" to Project Task.

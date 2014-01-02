@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+		<record id='document_01' model="document.document">
+			<field name="name">Lincense</field>
+		</record>
+		<record id="account.financing_type_01" model="financing.type">
+			<field name="name">Cash</field>
+			<field name="document_ids" eval="[(6,0,[document_01])]" />
+		</record>
+		<record id="account.financing_type_02" model="financing.type">
+            <field name="name">Sunpower Lease</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+        <record id="account.financing_type_03" model="financing.type">
+            <field name="name">CPF</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+        <record id="account.financing_type_04" model="financing.type">
+            <field name="name">Enerbank Loan</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+        <record id="account.financing_type_05" model="financing.type">
+            <field name="name">Wellas Fargo</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+        <record id="account.financing_type_06" model="financing.type">
+            <field name="name">Admiral Bank</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+        <record id="account.financing_type_07" model="financing.type">
+            <field name="name">Hero</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+        <record id="account.financing_type_08" model="financing.type">
+            <field name="name">SunRun</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+        <record id="account.financing_type_09" model="financing.type">
+            <field name="name">Others</field>
+            <field name="document_ids" eval="[(6,0,[document_01])]" />
+        </record>
+	</data>
+</openerp>

@@ -1,0 +1,6 @@
+===============================================================================
+ Version Change Log (sps_sale)
+===============================================================================
+
+6.3.01 ---> Jan 02,2014 : Hardik
+    * Added functionality that creates one Project and Task related to Contact when click on the "Generact Contract" from sale.order module.

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="financing_type_form">
+			<field name="name">financing.type.form</field>
+			<field name="model">financing.type</field>
+			<field name="arch" type="xml">
+				<form string='Financing Type' version='7.0'>
+					<field name="name" string="Name" required="1" />
+					<field name="document_ids" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="document_require_form_tree">
+			<field name="name">document.require.form_tree</field>
+			<field name="model">document.require</field>
+			<field name="arch" type="xml">
+				<form string='Required Document' version='7.0'>
+					<fiend name="name" />
+					<field name="document_id" />
+					<field name="document" />
+				</form>
+				<tree string='Required Document' version='7.0'>
+					<field name="document_id" />
+					<field name="document" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="invoice_supplier_form_inherited">
+			<field name="name">account.invoice.form.inherited</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/header/field[@name='state']" position="replace">
+					<field name="state" widget="statusbar"
+						statusbar_visible="draft,financing_type,assign_financing_incharge,open,paid"
+						statusbar_colors='{"proforma":"blue","proforma2":"blue"}' />
+				</xpath>
+				<xpath expr="/form/header/field[@name='state']" position="before">
+				    <button name="invoice_open" states="assign_financing_incharge" string="Validate" class="oe_highlight" groups="base.group_user"/>
+				</xpath>
+				<field name="date_invoice" position="after">
+					<field name="financing_type_id" on_change="onchange_financing_type(financing_type_id)" />
+					<field name="incharge_user_id" />
+				</field>
+				<xpath expr="/form/sheet/notebook/page[@string='Payments']"
+					position="after">
+					<page string="Required Document">
+						<field name="doc_req_ids">
+							<tree editable="top">
+								<field name="document_id" />
+								<field name="document" />
+							</tree>
+						</field>
+						<button string="Document Collected" type="object"
+							name="document_collected" />
+					</page>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>
