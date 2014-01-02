@@ -1,131 +1,248 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>
-        <record model="ir.ui.view" id="view_sale_order_form_inherited">
-            <field name="name">sale.order.form.inherited</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
-            <field name="arch" type="xml">
-                <button name="action_button_confirm" states="draft" position="attributes">
-                           <attribute name="states">sent,contract_generated,contract_signed,site_inspection,progress</attribute>
-                </button>
-                <button name="action_button_confirm" states="sent" position="attributes">
-                           <attribute name="invisible">1</attribute>
-                </button>
-                <button name="print_quotation" string="Print" type="object" states="draft" position="attributes">
-                           <attribute name="states">sent,contract_generated,contract_signed,site_inspection,progress</attribute>
-                </button>
-                <button name="print_quotation" string="Print" type="object" states="sent" position="attributes">
-                           <attribute name="invisible">1</attribute>
-                </button>
-				
-                <xpath expr="/form/header/field[@name='state']" position="replace">
-                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,contract_generated,contract_signed,site_inspection,progress" statusbar_colors='{"waiting_date":"blue"}'/>
-                </xpath>
-                <!-- 
-                <xpath expr="//form/sheet/group/group[2]/field[3][@name='client_order_ref']" position="after">
-                    <label for="contract_id" attrs="{'invisible':[('state','!=','sent')]}"/>
-                    <div attrs="{'invisible':[('state','!=','sent')]}">
-                        <field name="contract_id" colspan="2"/>
-                        <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" />
-                    </div>
-                 </xpath>
-                 -->
-                 <xpath expr="//page[@string='Other Information']" position="after">
-                     <page string="Contract Details"  attrs="{'invisible':[('state','!=','sent'),('state','!=','contract_generated'),('state','!=','contract_signed'),('state','!=','site_inspection')]}">
-							 <label for="contract_id"/>
-							<field name="contract_id" colspan="2"/>
-							 <group attrs="{'invisible': [('contract_id','=',False)]}">
-	                         	<button name="contract_generate" string="Generate Contract" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','sent')]}"  />
-	                         </group>
-	                         <group attrs="{'invisible': [('contract_id','=',False)]}">
-	                         <button name="contract_sign" string="Contract Sign" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_generated')]}"/>
-	                         </group>
-	                         <group attrs="{'invisible': [('contract_id','=',False)]}">
-	                         <button name="site_inspection_mail" string="Email Project Mgt Team - New Site Inspection" colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('state','!=','contract_signed')]}"/>
-	                         </group>
-                     </page>
-                     <page string="Permit Design Data"  attrs="{'invisible':[('state','!=','site_inspection')]}">
-                             <group col="4" colspan="4">
-							 	<field name="engineering"/>
-							 	<label for="confirm_original"/>
-							 	<div>
-								 	<field name="confirm_original"/>
-								 	<button name="change_sent_customer" string="Changes sent to the Customer" colspan="2" type="object" icon="gtk-execute" attrs="{'invisible':[('confirm_original','!=','change')]}"  />
-							 	</div>
-							 </group>
-                     </page>
-                 </xpath>
-             </field>
-         </record>
-         
-		<record id="sale.action_quotations" model="ir.actions.act_window">
-            <field name="name">Quotations</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">sale.order</field>
-            <field name="view_type">form</field>
-            <field name="view_id" ref="sale.view_quotation_tree"/>
-            <field name="view_mode">tree,form,calendar,graph</field>
-            <field name="context">{}</field>
-            <field name="domain">[('state','in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))]</field>
-            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Click to create a quotation, the first step of a new sale.
-              </p><p>
-                OpenERP will help you handle efficiently the complete sale flow:
-                from the quotation to the sales order, the
-                delivery, the invoicing and the payment collection.
-              </p><p>
-                The social feature helps you organize discussions on each sales
-                order, and allow your customers to keep track of the evolution
-                of the sales order.
-              </p>
-            </field>
-        </record>
-        
-		<record id="sale.action_orders" model="ir.actions.act_window">
-            <field name="name">Sales Orders</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">sale.order</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,graph</field>
-            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
-            <field name="context">{}</field>
-            <field name="domain">[('state','not in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))]</field>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Click to create a quotation that can be converted into a sales
-                order.
-              </p><p>
-                OpenERP will help you efficiently handle the complete sales flow:
-                quotation, sales order, delivery, invoicing and payment.
-              </p>
-            </field>
-        </record>
-        
-		<record model="ir.ui.view" id="account_analytic_form1">
-			<field name="name">account.analytic.form</field>
-			<field name="model">account.analytic.account</field>
-			<field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+	<data>
+
+		<record model="ir.ui.view" id="sale_order_kanban_view_leads">
+			<field name="name">Sale Order Kanban</field>
+			<field name="model">sale.order</field>
 			<field name="arch" type="xml">
-				<xpath expr="//form/sheet/notebook/page[@string='Contract Information']" position="after">
-                    <page string="User Contract Info">
-                        <group col="4" colspan="4">
-	                         <field name="contract_id" />
-	                         <field name="contract_date" />
-	                         <field name="type_of_finance" />
-	                         <field name="amount" />
-	                         <field name="deposit" />
-	                         <field name="planet" />
-	                         <field name="power" attrs="{'invisible':[('planet','!=','ppa')]}"/>
-                         </group>
-                    </page>
-					<page string="Project Team Members">
-					     <field name="members" />
+				<kanban default_group_by="state">
+					<field name="state" />
+					<field name="name" />
+					<field name="color" />
+					<field name="amount_total" />
+					<templates>
+						<t t-name="kanban-box">
+							<div
+								t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+								<div class="oe_dropdown_toggle oe_dropdown_kanban">
+									<span class="oe_e">í</span>
+									<ul class="oe_dropdown_menu">
+										<t t-if="widget.view.is_action_enabled('edit')">
+											<li>
+												<a type="edit">Edit...</a>
+											</li>
+										</t>
+										<t t-if="widget.view.is_action_enabled('delete')">
+											<li>
+												<a type="delete">Delete</a>
+											</li>
+										</t>
+										<li>
+											<ul class="oe_kanban_colorpicker" data-field="color" />
+										</li>
+									</ul>
+								</div>
+								<div class="oe_kanban_content">
+									<div>
+										<b>
+											<field name="name" />
+											<t t-if="record.amount_total.raw_value">
+												-
+												<b>
+													<t t-esc="record.amount_total.value" />
+													<field name="company_currency" />
+												</b>
+											</t>
+										</b>
+									</div>
+									<div>
+										<img
+											t-att-src="kanban_image('res.partner', 'image_small', record.partner_id.raw_value)"
+											t-att-title="record.partner_id.value" width="24" height="24"
+											class="oe_kanban_avatar" t-if="record.partner_id.value" />
+										<field name="partner_id" />
+									</div>
+								</div>
+							</div>
+							<div class="oe_clear"></div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+
+		<record id="sale.action_orders" model="ir.actions.act_window">
+			<field name="name">Sales Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form,calendar,graph</field>
+			<!-- <field name="search_view_id" ref="sale.view_sales_order_filter"/> -->
+			<field name="context">{}</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to create a quotation that can be converted into a
+					sales
+					order.
+				</p>
+				<p>
+					OpenERP will help you efficiently handle the complete sales flow:
+					quotation, sales order, delivery, invoicing and payment.
+				</p>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_sale_order_form_inherited">
+			<field name="name">sale.order.form.inherited</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<button name="action_button_confirm" position="attributes">
+					<attribute name="states">contract_generated,contract_signed,site_inspection,progress
+					</attribute>
+					<attribute name="class">oe_highlight</attribute>
+				</button>
+				<button name="print_quotation" string="Print" type="object"
+					position="attributes">
+					<attribute name="states">contract_generated,contract_signed,site_inspection,progress
+					</attribute>
+				</button>
+				<xpath expr="/form/header/field[@name='state']" position="replace">
+					<field name="state" widget="statusbar"
+						statusbar_visible="draft,sent,contract_generated,contract_signed,site_inspection,progress"
+						statusbar_colors='{"waiting_date":"blue"}' />
+				</xpath>
+
+				<!-- <xpath expr="//form/sheet/group/group[2]/field[3][@name='client_order_ref']" 
+					position="after"> -->
+				<!-- <label for="contract_id" attrs="{'invisible':[('state','!=','sent')]}"/> -->
+				<!-- <div attrs="{'invisible':[('state','!=','sent')]}"> -->
+				<!-- <field name="contract_id" colspan="2"/> -->
+				<!-- <button name="contract_sign" string="Contract Sign" colspan="2" 
+					type="object" icon="gtk-yes" /> -->
+				<!-- </div> -->
+				<!-- </xpath> -->
+				<field name="project_id" position="after">
+				    <group cols="1" colspan="4">
+                        <button name="contract_generate" string="Generate Contract"
+                            colspan="2" type="object" icon="gtk-yes"
+                            attrs="{'invisible':[('state','!=','sent')]}" />
+                    </group>
+                    <group cols="1" colspan="4">
+                        <button name="contract_sign" string="Contract Sign"
+                            colspan="2" type="object" icon="gtk-yes"
+                            attrs="{'invisible':[('state','!=','contract_generated')]}" />
+                    </group>
+                    <group cols="1" colspan="4">
+                        <button name="site_inspection_mail" string="Email Project Mgt Team - New Site Inspection"
+                            colspan="2" type="object" icon="gtk-yes"
+                            attrs="{'invisible':[('state','!=','contract_signed')]}" />
+                    </group>
+                    <newline/>
+					<field name="contract_signing_date" readonly="1" />
+					<field name="inspection_done_date" readonly="1" />
+					<group cols="2" colspan="4">
+						<field name="insp_after_72_hour" readonly="1" />
+					</group>
+				</field>
+				<xpath expr="//page[@string='Other Information']" position="after">
+					<page string="Permit Design Data"
+						attrs="{'invisible':[('state','!=','site_inspection')]}">
+						<group col="4" colspan="4">
+							<field name="engineering" />
+							<label for="confirm_original" />
+							<div>
+								<field name="confirm_original" />
+								<button name="change_sent_customer" string="Changes sent to the Customer"
+									colspan="2" type="object" icon="gtk-execute"
+									attrs="{'invisible':[('confirm_original','!=','change')]}" />
+							</div>
+						</group>
+						<button name="done_inspection" type="object" string="Done Site Inspection" />
 					</page>
 				</xpath>
 			</field>
 		</record>
-    </data>
+
+		<record id="sale.action_quotations" model="ir.actions.act_window">
+			<field name="name">Quotation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="sale.view_quotation_tree" />
+			<field name="view_mode">tree,form,calendar,graph</field>
+			<field name="context">{}</field>
+			<field name="domain">[('state','in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))]
+			</field>
+			<field name="search_view_id" ref="sale.view_sales_order_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to create a quotation, the first step of a new
+					sale.
+				</p>
+				<p>
+					OpenERP will help you handle efficiently the complete sale flow:
+					from the quotation to the sales order, the
+					delivery, the invoicing
+					and the payment collection.
+				</p>
+				<p>
+					The social feature helps you organize discussions on each sales
+					order, and allow your customers to keep track of the evolution
+					of
+					the sales order.
+				</p>
+			</field>
+		</record>
+
+		<!-- <record id="sale.action_orders" model="ir.actions.act_window"> -->
+		<!-- <field name="name">Sales Order</field> -->
+		<!-- <field name="type">ir.actions.act_window</field> -->
+		<!-- <field name="res_model">sale.order</field> -->
+		<!-- <field name="view_type">form</field> -->
+		<!-- <field name="view_mode">tree,form,calendar,graph,kanban</field> -->
+		<!-- <field name="search_view_id" ref="sale.view_sales_order_filter" /> -->
+		<!-- <field name="context">{}</field> -->
+		<!-- <field name="domain">[('state','not -->
+		<!-- in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))] -->
+		<!-- </field> -->
+		<!-- <field name="help" type="html"> -->
+		<!-- <p class="oe_view_nocontent_create"> -->
+		<!-- Click to create a quotation that can be converted into a sales -->
+		<!-- order. -->
+		<!-- </p> -->
+		<!-- <p> -->
+		<!-- OpenERP will help you efficiently handle the complete sales flow: -->
+		<!-- quotation, sales order, delivery, invoicing and payment. -->
+		<!-- </p> -->
+		<!-- </field> -->
+		<!-- </record> -->
+
+		<record model="ir.ui.view" id="account_analytic_form1">
+			<field name="name">account.analytic.form</field>
+			<field name="model">account.analytic.account</field>
+			<field name="inherit_id" ref="analytic.view_account_analytic_account_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/notebook/page[@string='Contract Information']"
+					position="after">
+					<page string="User Contract Info">
+						<group col="4" colspan="4">
+							<field name="contract_id" />
+							<field name="contract_date" />
+							<field name="type_of_finance" />
+							<field name="amount" />
+							<field name="deposit" />
+							<field name="planet" />
+							<field name="power" attrs="{'invisible':[('planet','!=','ppa')]}" />
+						</group>
+					</page>
+					<page string="Project Team Members">
+						<field name="members" />
+					</page>
+				</xpath>
+			</field>
+		</record>
+		
+		<record forcecreate="True" id="ir_cron_scheduler_site_inspection_in_72_hours" model="ir.cron">
+            <field name="name">Site Inspectino in 72 Hours</field>
+            <field eval="True" name="active" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="'sale.order'" name="model" />
+            <field eval="'is_inspection_done_in_72_hours'" name="function" />
+            <field eval="'(False,)'" name="args" />
+        </record>
+		
+	</data>
 </openerp>

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="1">
-
+    <data>
+    
 	<!-- Mail template is done in a NOUPDATE block
          so users can freely customize/delete them -->
 
@@ -19,7 +19,7 @@
 
         <!-- Crm stages -->
         <record model="crm.case.stage" id="crm.stage_lead1">
-            <field name="name">New Customer</field>
+            <field name="name">New Lead</field>
             <field eval="1" name="case_default"/>
             <field name="state">draft</field>
             <field eval="'10'" name="probability"/>
@@ -27,7 +27,7 @@
             <field name="type">lead</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead2">
-            <field name="name">Sales Notified</field>
+            <field name="name">Sales Assignment</field>
             <field eval="1" name="case_default"/>
             <field name="state">open</field>
             <field eval="'20'" name="probability"/>
@@ -52,7 +52,7 @@
             <field name="type">both</field>
         </record>
         <record model="crm.case.stage" id="crm.stage_lead4">
-            <field name="name">Appointment Set</field>
+            <field name="name">Appointment Setup</field>
             <field eval="1" name="case_default"/>
             <field name="state">open</field>
             <field eval="'40'" name="probability"/>
@@ -63,10 +63,10 @@
         
         <!--Level of Lead -->
 		<record model="level.lead" id="leavel1">
-            <field name="name">New Customer</field>
+            <field name="name">New Lead</field>
          </record>
          <record model="level.lead" id="leavel2">
-            <field name="name">Sales Notified</field>
+            <field name="name">Sales Assignment</field>
          </record>
          <record model="level.lead" id="leavel3">
             <field name="name">Initial Contact</field>

@@ -880,7 +880,7 @@ class crm_lead(osv.Model):
             headers=None)
         self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
         # schedule_mail_object.schedule_with_attach(cr, uid, email_from, email_to, subject_line, message_body, subtype="html", context=context)
-        stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Sales Notified')])
+        stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Sales Assignment')])
         self.write(cr, uid, ids, {'stage_id': stage_id[0]})
         return True
     
@@ -1512,12 +1512,11 @@ class crm_meeting(osv.Model):
     
     def create(self, cr, uid, ids, context=None):
         res = super(crm_meeting, self).create(cr, uid, ids, context=context)
-        if type == 'opportunity':
-            if context.get('default_opportunity_id'):
-                crm_case_stage_obj = self.pool.get('crm.case.stage')
-                opo_obj = self.pool.get('crm.lead')
-                stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Appointment Set')])
-                opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
+        if context.get('default_opportunity_id'):
+            crm_case_stage_obj = self.pool.get('crm.case.stage')
+            opo_obj = self.pool.get('crm.lead')
+            stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Appointment Setup')])
+            opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
         return res
 
 

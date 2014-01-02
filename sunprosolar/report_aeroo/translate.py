@@ -20,24 +20,18 @@
 #
 ##############################################################################
 
-import netsvc
 import os
 import logging
 import pooler
-import re
 import tools
-from tools.translate import trans_parse_rml, trans_parse_xsl
-try:
-    from tools.translate import trans_parse_view
-except ImportError, e:
-    from tools.translate import extract_translatable_view_strings as trans_parse_view # for workability with OE7.0 revision 4874
-import itertools
+from tools.translate import trans_parse_rml, trans_parse_xsl, trans_parse_view
 import fnmatch
 from os.path import join
 from lxml import etree
 from tools import misc
 from tools.misc import UpdateableStr
 from tools import osutil
+from babel.messages import extract
 
 _logger = logging.getLogger(__name__)
 

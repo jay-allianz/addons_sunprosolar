@@ -27,6 +27,7 @@ class crm_make_sale(osv.osv_memory):
     _inherit = 'crm.make.sale'
     
     def makeOrder(self, cr, uid, ids, context=None):
+        
         if context is None:
             context = {}
         
@@ -71,4 +72,13 @@ class crm_make_sale(osv.osv_memory):
             sale_order_line_obj.create(cr, uid, module_line, context=context)
             sale_order_line_obj.create(cr, uid, inv_line, context=context)
             
-        return {}
+        return {
+            'domain': str([('id', 'in', [order_id])]),
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+            'res_model': 'sale.order',
+            'view_id': False,
+            'res_id' : order_id,
+            'type': 'ir.actions.act_window',
+            'name' : _('Quotation'),
+        }
