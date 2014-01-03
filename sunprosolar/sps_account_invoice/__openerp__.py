@@ -27,11 +27,9 @@
     "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to generate Invoice for customer. 
     """,
-    'demo' : [
-        'demo/financing_type_data.xml',
-    ],
     'data' : [
         'account_invoice_view.xml',
+        'data/financing_type_data.xml',
     ],
     'depends': ['account'],
     'installable': True,
