@@ -471,7 +471,7 @@ class crm_lead(osv.Model):
                         (10,'Step 10')
                     ],'Current SCI Step'),
          'spouse': fields.many2one('res.partner', string='Secondary Customer', help="Secondary Customer (spouse) in case he/she exist."),
-         'utility_company_id': fields.many2one('res.partner', 'Utility Company'),
+         'utility_company_id': fields.many2one('res.partner', 'Utility Company', domain=[('is_company','=',True)]),
          'doc_req_ids' : fields.one2many('document.required', 'crm_lead_id', 'Required Documents'),
          'required_document':fields.function(_get_require_doc, method=True, type='boolean', string="Required Document Collected?", help="Checked if Yes."),
 #          'notify_customer':fields.boolean("Notify Customer?", help="Checked if Yes."),

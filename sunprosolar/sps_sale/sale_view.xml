@@ -151,6 +151,9 @@
 						<button name="done_inspection" type="object" string="Done Site Inspection" />
 					</page>
 				</xpath>
+                <label string="Quotation " position="attributes">
+                    <attribute name="string">Proposal</attribute>
+                </label>
 			</field>
 		</record>
 

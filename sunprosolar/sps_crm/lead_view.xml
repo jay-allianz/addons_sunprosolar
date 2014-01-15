@@ -516,6 +516,18 @@
 			</field>
 		</record>
 
+        <!-- Opportunities Form View Inherited -->
+        <record id="view_sale_crm_crm_case_form_view_oppor_inherited" model="ir.ui.view">
+            <field name="name">crm.opp.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor" />
+            <field name="arch" type="xml">
+                <button string="Convert to Quotation" position="attributes">
+                    <attribute name="string">Convert to Proposal</attribute>
+                </button>
+            </field>
+        </record>
+
 		<!-- Opportunities Form View -->
 		<record id="view_sun_crm_opp_form" model="ir.ui.view">
 			<field name="name">crm.opp.form</field>
@@ -1414,7 +1426,7 @@
 					<field name="schedule_appointment" />
 				</xpath>
 				<xpath expr="//field[@name='date']" position="attributes">
-					<attribute name="string">Actural Appointment Date</attribute>
+					<attribute name="string">Actual Appointment Date</attribute>
 				</xpath>
 				<xpath expr="//form/sheet/notebook/page[1]/group/group[2]"
 					position="after">

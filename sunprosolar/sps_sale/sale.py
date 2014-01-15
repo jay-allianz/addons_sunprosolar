@@ -78,6 +78,8 @@ class sale_order(osv.Model):
         task_obj = self.pool.get('project.task')
         project_obj = self.pool.get('project.project')
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
+        if not cur_rec.order_line:
+            raise osv.except_osv(_('Error'), _('To generate contract you have to define order line!'))
         vals = {
             'name' : cur_rec.partner_id.name,
             'partner_id' : cur_rec.partner_id.id,

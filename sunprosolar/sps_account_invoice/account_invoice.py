@@ -23,7 +23,7 @@ class account_invoice(osv.osv):
             \n* The \'Cancelled\' status is used when user cancel invoice.'),
         'financing_type_id' : fields.many2one('financing.type','Financing Type'),
         'doc_req_ids' : fields.one2many('document.require','invoice_id','Required Document'),
-        'incharge_user_id' : fields.many2one('res.partner','Financing In-Charge'),
+        'incharge_user_id' : fields.many2one('res.users','Financing In-Charge'),
     }
     
     def document_collected(self, cr, uid, ids, context=None):
@@ -43,6 +43,8 @@ class account_invoice(osv.osv):
     
     def onchange_financing_type(self, cr, uid, ids, financing_type_id, context=None):
         doc_req_obj = self.pool.get('document.require')
+        if not ids:
+            return {'value': {}}
         old_rec_len = len(self.browse(cr, uid,ids[0],context=context).doc_req_ids)
         if old_rec_len:
             doc_req_ids = doc_req_obj.search(cr, uid, [('invoice_id','=',ids[0])],context=context)

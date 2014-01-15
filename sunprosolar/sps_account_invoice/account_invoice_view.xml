@@ -8,7 +8,7 @@
 			<field name="arch" type="xml">
 				<form string='Financing Type' version='7.0'>
 					<field name="name" string="Name" required="1" />
-					<field name="document_ids" />
+					<field name="document_ids" required="1" />
 				</form>
 			</field>
 		</record>

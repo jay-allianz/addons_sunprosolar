@@ -143,18 +143,20 @@ class proposal_report(report_sxw.rml_parse):
         fd = file(self.file_name_pie, "w")
         can = canvas.init(fd, "png")
         tot = self.old_bill_total + self.new_bill_total
-        old_per = int(round((self.old_bill_total*100)/tot,0))
-        new_per = int(round((self.new_bill_total*100)/tot,0))
-        data = [("Old Bill " + str(old_per)+" %", old_per),("New Bill " + str(new_per)+" %", new_per)]
-        ar = area.T(size=(600,600), legend=legend.T(loc=(200,0)),
-                    x_grid_style = None, y_grid_style = None)
-        plot = pie_plot.T(data=data, arc_offsets=[0,0,0,0],
-                  fill_styles=[fill_style.aquamarine1,fill_style.yellow],
-                          label_offset = 0,
-                          arrow_style = arrow.fat1, radius=150)
-        ar.add_plot(plot)
-        ar.draw(can)
-        can.close()
+        old_per = new_per = 0
+        if tot:
+            old_per = int(round((self.old_bill_total*100)/tot,0))
+            new_per = int(round((self.new_bill_total*100)/tot,0))
+            data = [("Old Bill " + str(old_per)+" %", old_per),("New Bill " + str(new_per)+" %", new_per)]
+            ar = area.T(size=(600,600), legend=legend.T(loc=(200,0)),
+                        x_grid_style = None, y_grid_style = None)
+            plot = pie_plot.T(data=data, arc_offsets=[0,0,0,0],
+                      fill_styles=[fill_style.aquamarine1,fill_style.yellow],
+                              label_offset = 0,
+                              arrow_style = arrow.fat1, radius=150)
+            ar.add_plot(plot)
+            ar.draw(can)
+            can.close()
         
     def _get_old_bill_total(self):
         return self.old_bill_total
@@ -190,7 +192,7 @@ class proposal_report(report_sxw.rml_parse):
         return self.grand_total
     
     def _get_net_system_cost(self):
-        return self.net_system_cost
+        return self.net_system_cost or 0.1
     
     def _get_total_savings(self):
         return self.total_saving
@@ -204,7 +206,9 @@ class proposal_report(report_sxw.rml_parse):
         user_obj = self.pool.get('res.users')
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
         cur_user = user_obj.browse(self.cr, self.uid, self.uid)
-        lead_data = False
+        lead_data = []
+        crm_lead = False
+        self.number_of_years = self.cars_off_roads = self.tree_planting_equi = self.co2_emission = self.gas_equi = self.avg_home_powered = self.avg_light_bulb_powered = self.miles_driven = self.rebate_amt = 0
         if lead_id:
             crm_lead = lead_obj.browse(self.cr, self.uid, lead_id)[0]
             lead_data = crm_lead.cost_rebate_ids
@@ -217,29 +221,31 @@ class proposal_report(report_sxw.rml_parse):
             self.avg_home_powered = crm_lead.ave_home_powered * crm_lead.number_of_years
             self.avg_light_bulb_powered = crm_lead.ave_light_bulb_powered * crm_lead.number_of_years
             self.miles_driven = cur_user.company_id.avg_yearly_miles * crm_lead.number_of_years
+            self.rebate_amt = crm_lead.rebate_amt
         self.old_bill_total = 0
         self.new_bill_total = 0
         self.bill_saving_total = 0
-        self.rebate_amt = crm_lead.rebate_amt
         flag = True
         self.grand_total = 0
-        for solar in crm_lead.solar_ids:
-            total_amt = solar.module_product_id.cost_per_stc_watt + solar.module_product_id.labor_per_stc_watt + solar.module_product_id.materials_per_stc
-            self.grand_total += total_amt*solar.stc_dc_rating
+        if crm_lead:
+            for solar in crm_lead.solar_ids:
+                total_amt = solar.module_product_id.cost_per_stc_watt + solar.module_product_id.labor_per_stc_watt + solar.module_product_id.materials_per_stc
+                self.grand_total += total_amt*solar.stc_dc_rating
         self.srec_total = 0
         self.incentive_total = 0
         self.total_saving = 0
-        for cost_rebate in lead_data:
-            if flag:
-                self.first_year_saving = cost_rebate.elec_bill_savings
-                flag = False
-            self.old_bill_total += cost_rebate.old_bill
-            self.new_bill_total += cost_rebate.new_bill
-            self.bill_saving_total += cost_rebate.elec_bill_savings
-            self.pv_energy_total += cost_rebate.pv_energy
-            self.total_saving += cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings
-            self.srec_total += cost_rebate.srecs
-            self.incentive_total += cost_rebate.incentives
+        if lead_data:
+            for cost_rebate in lead_data:
+                if flag:
+                    self.first_year_saving = cost_rebate.elec_bill_savings
+                    flag = False
+                self.old_bill_total += cost_rebate.old_bill
+                self.new_bill_total += cost_rebate.new_bill
+                self.bill_saving_total += cost_rebate.elec_bill_savings
+                self.pv_energy_total += cost_rebate.pv_energy
+                self.total_saving += cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings
+                self.srec_total += cost_rebate.srecs
+                self.incentive_total += cost_rebate.incentives
         self.net_system_cost = self.grand_total - self.srec_total - self.incentive_total
         self.lead_cost_rebate_lines = lead_data
             
@@ -303,10 +309,11 @@ class proposal_report(report_sxw.rml_parse):
         lead_obj = self.pool.get("crm.lead")
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', self.customer_id)])
         solar_data = False
+        solar_info = []
         if lead_id:
             solar_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].solar_ids
         if not solar_data:
-            return
+            return solar_info
         tilt_degree_dict = {'n':'North',
                         'ne':'North-East',
                         'e':'East',
@@ -315,7 +322,6 @@ class proposal_report(report_sxw.rml_parse):
                         'sw':'South-West',
                         'w':'West',
                         'nw':'North-West'}
-        solar_info = []
         i = 1
         for solar in solar_data:
             info_dict = {}
