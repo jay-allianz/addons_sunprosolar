@@ -1102,7 +1102,7 @@ class Parser(account_balance):
                         
                     else:
                         res.update({
-                            'balance': self.exchange(b), 
+                            'balance': self.exchange(d-c), 
                         })
                         
                         # Checking the Values of the Single Column Balance Sheet YTD reports

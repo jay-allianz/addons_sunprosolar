@@ -266,8 +266,9 @@ class account_balance(report_sxw.rml_parse):
 
             self.cr.execute(sql_detalle)
             resultat = self.cr.dictfetchall()
-            balance = account['balanceinit']
-            for det in resultat[1:]:
+#             balance = account['balanceinit']
+            balance = 0.0
+            for det in resultat:
                 balance += det['debit'] - det['credit']
                 res.append({
                     'id': det['id'],
