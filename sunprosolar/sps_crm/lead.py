@@ -71,7 +71,9 @@ class crm_lead(osv.Model):
         if partner_id:
             partner = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
             res['value'].update({'partner_is_company':partner.is_company,
-                                 'spouse' : partner.spouse and partner.spouse.id or False
+                                 'spouse' : partner.spouse and partner.spouse.id or False,
+                                 'contact_name': partner.name or '',
+                                 'last_name': partner.last_name or ''
                                  })
         return res
 
@@ -1508,6 +1510,7 @@ class crm_meeting(osv.Model):
     _defaults = {
             'name': '/',
             'meeting_type': 'general_meeting',
+            'schedule_appointment': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
     
     def create(self, cr, uid, ids, context=None):
