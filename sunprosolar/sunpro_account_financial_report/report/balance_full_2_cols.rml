@@ -69,6 +69,14 @@
             alignment="RIGHT" 
             spaceBefore="0.0" 
             spaceAfter="0.0"/>
+         <paraStyle 
+            name="TITLE_RIGHT_ALIGN" 
+            fontName="Helvetica-Bold" 
+            fontSize="8.0" 
+            leading="10" 
+            alignment="RIGHT" 
+            spaceBefore="0.0" 
+            spaceAfter="0.0"/>
         <paraStyle name="TOP_TITLE" fontName="Helvetica-Bold" fontSize="9"  leftIndent="0.0" alignment="LEFT"/>
         <paraStyle name="TITLES" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT"  spaceBefore="0.0" spaceAfter="0.0"/>
         <paraStyle name="TITLE_CENTER" fontName="Helvetica-Bold" fontSize="9" leading="10" leftIndent="0.0" alignment="CENTER"/>
@@ -111,13 +119,36 @@
                 <td>
                     <para style="TITLE_LEFT_ALIGN">
                         <font>[[ a['type']&lt;&gt;'view' and setTag('para','para',{'fontName':"Helvetica"}) or removeParentNode('font') ]]</font>
-                        <font>[[ (a['total']==True) and formatLang(a['debit'], digits=2, grouping=True) or '']]</font>
+                        <font>[[ (a['total']==True) and formatLang(get_debit(a['debit'], a['level'],a['type'],a['name']), digits=2, grouping=True) or '']]</font>
                     </para>
                 </td>
                 <td>
                     <para style="TITLE_LEFT_ALIGN">
                         <font>[[ a['type']&lt;&gt;'view' and setTag('para','para',{'fontName':"Helvetica"}) or removeParentNode('font') ]]</font>
-                        <font>[[ (a['total']==True) and formatLang(a['credit'], digits=2, grouping=True) or '']]</font>
+                        <font>[[ (a['total']==True) and formatLang(get_credit(a['credit'], a['level'],a['type'],a['name']), digits=2, grouping=True) or '']]</font>
+                    </para>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <para style="TITLE_LEFT_ALIGN">
+
+                    </para>
+                </td>
+                <td>
+                    <para style="TITLE_RIGHT_ALIGN">
+						<b>Total</b>
+                    </para>
+                </td>
+                <td>
+                    <para style="TITLE_LEFT_ALIGN">
+						<font>[[ (a['total']==True) and formatLang(get_total_debit(), digits=2, grouping=True) or '']]</font>
+                    </para>
+                </td>
+                <td>
+                    <para style="TITLE_LEFT_ALIGN">
+                    	<font>[[ (a['total']==True) and formatLang(get_total_credit(), digits=2, grouping=True) or '']]</font>
                     </para>
                 </td>
 
