@@ -29,6 +29,10 @@ class module_master(osv.Model):
             'name' : fields.char('Name'),
             'description': fields.text('Description')
           }
+    
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', 'The name of the Product Module must be unique !')
+    ]
 
 class product_invertor_brand(osv.Model):
 
@@ -38,6 +42,10 @@ class product_invertor_brand(osv.Model):
             'name' : fields.char('Name'),
             'description': fields.text('Description')
           }
+    
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', 'The name of the Inverter Brand must be unique !')
+    ]
 
 class product_brand(osv.Model):
 
@@ -47,6 +55,10 @@ class product_brand(osv.Model):
             'name' : fields.char('Name'),
             'description': fields.text('Description')
           }
+    
+    _sql_constraints = [
+        ('name_uniq', 'unique(name)', 'The name of the Brand must be unique !')
+    ]
 
 class product_product(osv.Model):
 
@@ -56,7 +68,6 @@ class product_product(osv.Model):
             'product_group' : fields.selection([('module', 'Module'),('inverter','Inverter'),('others','Others')], 'Product Group',help="In which group the product belongs to?",required=True),
             'pv_module_name' : fields.many2one("module.master",'PV Module Name'),
 #            'no_module': fields.integer('No of Module'),
-            'no_module': fields.integer('No of Module'),
             'brand_module': fields.many2one("product.brand","Brand"),
             'pv_module_power_stc': fields.float("PV Module Power STC (KW)"),
             'module_ptc_rating':fields.float("Module PTC rating (KW)"),

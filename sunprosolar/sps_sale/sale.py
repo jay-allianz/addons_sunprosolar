@@ -232,6 +232,10 @@ class account_analytic_account(osv.Model):
 
 class sale_order_line(osv.Model):
     _inherit = 'sale.order.line'
+    
+    _columns = {
+            'no_module': fields.integer('No of Module'),
+        }
 
     def invoice_line_create(self, cr, uid, ids, context=None):
         if context is None:

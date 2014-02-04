@@ -102,6 +102,10 @@
 						statusbar_visible="draft,sent,contract_generated,contract_signed,site_inspection,progress"
 						statusbar_colors='{"waiting_date":"blue"}' />
 				</xpath>
+				<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="after">
+					<field name="no_module"/>
+				</xpath>
+
 
 				<!-- <xpath expr="//form/sheet/group/group[2]/field[3][@name='client_order_ref']" 
 					position="after"> -->

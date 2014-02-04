@@ -13,7 +13,7 @@
                              <field name="pv_module_name" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="brand_module" attrs="{'invisible':[('product_group','!=','module')]}"/>
 	                         <field name="pv_module_power_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
-                             <field name="no_module" attrs="{'invisible':[('product_group','!=','module')]}"/>
+<!--                             <field name="no_module" attrs="{'invisible':[('product_group','!=','module')]}"/-->
                              <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="module_hieght" attrs="{'invisible':[('product_group','!=','module')]}"/>
 <!--                             <field name="module_stc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>-->

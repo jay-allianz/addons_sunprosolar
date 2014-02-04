@@ -150,13 +150,19 @@ class crm_lead(osv.Model):
         return res
     
     def _get_ptc_stc_ratio(self, cr, uid, ids, name, args, context=None):
-        res = {}
-        for data in self.browse(cr, uid, ids, context):
-            rating = 0.0
-            for line in data.solar_ids:
-                rating += line.ptc_stc_ratio
-            res[data.id] = rating
-        return res
+         res={}
+         rating=0.0
+         line_number=0
+         for data in self.browse(cr, uid, ids, context):
+             for line in data.solar_ids:
+                 rating += line.ptc_stc_ratio
+                 line_number += 1
+             if line_number:
+                 res[data.id] = rating/line_number
+             else:
+                 res[data.id] = rating
+             
+         return res
     
     def _get_annual_solar_prod(self, cr, uid, ids, name, args, context=None):
         res = {}
