@@ -35,8 +35,8 @@ class proposal_report(report_sxw.rml_parse):
     srec_total = 0
     incentive_total = 0
     lead_cost_rebate_lines = []
-    file_name = "car.png"
-    file_name_pie = "tree.png"
+    file_name = "bar1.png"
+    file_name_pie = "pie.png"
     customer_id = 0
     estimated_shading = 0
     number_of_years = 0
@@ -135,6 +135,7 @@ class proposal_report(report_sxw.rml_parse):
                     line_plot.T(label="Production", data=data, ycol=1))
         ar.draw(can)
         can.close()
+        return True
         
     def _make_pie_chart(self):
         theme.use_color = True
@@ -157,6 +158,7 @@ class proposal_report(report_sxw.rml_parse):
             ar.add_plot(plot)
             ar.draw(can)
             can.close()
+            return True
         
     def _get_old_bill_total(self):
         return self.old_bill_total

@@ -108,12 +108,18 @@
             </td>
         </tr>
     </blockTable>
-     <para style="P3_bold" alignment="LEFT"><font color="#006699"> </font></para>
-     <para style="P3" alignment="CENTER">[[lead_make_bar_chart()]]</para>
-    <para style="P3" alignment="CENTER"><font color="#006699">Estimated Electric Usage and Solar Production</font></para>
-    <illustration height="380.0" width="0.0">
-        <image x="10" y="60" file="sps_crm/images/bar_chart.png" height="300.0" width="600.0"/>
-    </illustration>
+    <para style="P3_bold" alignment="LEFT"><font color="#006699"> </font></para>
+    <blockTable colWidths="540.0" style="Table2">
+        <tr>
+            <td>
+                <para style="P3" alignment="CENTER">[[lead_make_bar_chart() or removeParentNode('para') ]]</para>
+                <para style="P3" alignment="CENTER"><font color="#006699">Estimated Electric Usage and Solar Production</font></para>
+                <illustration height="380.0" width="0.0">
+                    <image x="10" y="60" file="bar1.png" height="300.0" width="600.0"/>
+                </illustration>
+            </td>
+        </tr>
+     </blockTable>
      
     <condPageBreak height="12in"/>
     <blockTable colWidths="250.0,290.0" style="Table1">
@@ -132,9 +138,9 @@
     <blockTable colWidths="250.0,290.0" style="Table1">
         <tr>
             <td>
-                <para style="P3" alignment="CENTER">[[lead_make_pie_chart()]]</para>
+                <para style="P3" alignment="CENTER">[[ lead_make_pie_chart() or removeParentNode('blockTable') ]]</para>
                 <illustration height="300.0" width="0.0">
-                    <image x="0" y="40" file="sps_crm/images/tree.png" height="250.0" width="250.0"/>
+                    <image x="0" y="40" file="pie.png" height="250.0" width="250.0"/>
                 </illustration>
             </td>
             <td>
