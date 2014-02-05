@@ -112,7 +112,7 @@
     <blockTable colWidths="540.0" style="Table2">
         <tr>
             <td>
-                <para style="P3" alignment="CENTER">[[lead_make_bar_chart() or removeParentNode('para') ]]</para>
+                <para style="P3" alignment="CENTER">[[lead_make_bar_chart() or removeParentNode('blockTable') ]]</para>
                 <para style="P3" alignment="CENTER"><font color="#006699">Estimated Electric Usage and Solar Production</font></para>
                 <illustration height="380.0" width="0.0">
                     <image x="10" y="60" file="bar1.png" height="300.0" width="600.0"/>
