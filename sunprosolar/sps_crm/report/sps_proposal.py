@@ -130,7 +130,7 @@ class proposal_report(report_sxw.rml_parse):
                     y_axis=axis.Y(label="KWHs"),
                     legend=legend.T(loc=(250,-80)),
                     y_range=(0, None))
-        
+#        ar.addBarLayer3(data, colors).setBorderColor(-1, 1)
         ar.add_plot(bar_plot.T(label="Usage", data=data,width=30,fill_style = fill_style.aquamarine1), 
                     line_plot.T(label="Production", data=data, ycol=1))
         ar.draw(can)
@@ -190,11 +190,24 @@ class proposal_report(report_sxw.rml_parse):
     def _get_miles_driven(self):
         return format(int(round(self.miles_driven,0)),',d')
     
-    def _get_gross_system_price(self):
-        return self.grand_total
+    def _get_gross_system_price(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        crm_lead = lead_obj.browse(self.cr, self.uid, lead_id)[0]
+        if lead_id:
+            return crm_lead.cost
+        else:
+            return 0.0
     
-    def _get_net_system_cost(self):
-        return self.net_system_cost or 0.1
+    def _get_net_system_cost(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        crm_lead = lead_obj.browse(self.cr, self.uid, lead_id)[0]
+        net_system_cost = crm_lead.inverter_cost - crm_lead.replace_inverter_every
+        if net_system_cost != 0:
+            return net_system_cost
+        else:
+            return 0.1
     
     def _get_total_savings(self):
         return self.total_saving

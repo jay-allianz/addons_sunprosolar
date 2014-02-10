@@ -52,6 +52,7 @@ class sale_order(osv.Model):
                 ('manual', 'Sale to Invoice'),
                 ('site_inspection', 'Site Inspection'),
                 ('progress', 'Sales Order'),
+                ('cancel', 'Cancelled'),
                 ], 'Status', readonly=True, track_visibility='onchange',
                 help="Gives the status of the quotation or sales order. \nThe exception status is automatically set when a cancel operation occurs in the processing of a document linked to the sales order. \nThe 'Waiting Schedule' status is set when the invoice is confirmed but waiting for the scheduler to run on the order date.", select=True),
          'engineering': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Engineering May be structural or Electrical'),
@@ -225,6 +226,11 @@ class account_analytic_account(osv.Model):
             'deposit' :fields. float('Deposit Collected'),
             'planet': fields.selection([('lease', 'Lease'), ('ppa', 'PPA')], 'Plant'),
             'power': fields.selection([('sun_power', 'Sun Power'), ('cpf', 'CPF')], 'Plant'),
+            'type': fields.selection([('view','Analytic View'), ('normal','Analytic Account'),('contract','Contract or Project'),('template','Template of Contract'),('opportunity','Opportunity')], 'Type of Account', required=True,
+                                 help="If you select the View Type, it means you won\'t allow to create journal entries using that account.\n"\
+                                  "The type 'Analytic account' stands for usual accounts that you only want to use in accounting.\n"\
+                                  "If you select Contract or Project, it offers you the possibility to manage the validity and the invoicing options for this account.\n"\
+                                  "The special type 'Template of Contract' allows you to define a template with default data that you can reuse easily."),
 #            'equipment_ids': fields.one2many('equipment.line','equipment_id','Equipments'),
 #            'product_ids' : fields.many2many('product.product', 'product_account_rel', 'product_id','prod_id','Products'),
             'members': fields.many2many('res.users', 'project_user_relation', 'project_id', 'uid', 'Project Members'),
@@ -235,6 +241,7 @@ class sale_order_line(osv.Model):
     
     _columns = {
             'no_module': fields.integer('No of Module'),
+            'no_inverter':fields.integer('No of Inverter')
         }
 
     def invoice_line_create(self, cr, uid, ids, context=None):

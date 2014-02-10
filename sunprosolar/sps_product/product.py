@@ -66,7 +66,7 @@ class product_product(osv.Model):
     
     _columns = {
             'product_group' : fields.selection([('module', 'Module'),('inverter','Inverter'),('others','Others')], 'Product Group',help="In which group the product belongs to?",required=True),
-            'pv_module_name' : fields.many2one("module.master",'PV Module Name'),
+#            'pv_module_name' : fields.many2one("module.master",'PV Module Name'),
 #            'no_module': fields.integer('No of Module'),
             'brand_module': fields.many2one("product.brand","Brand"),
             'pv_module_power_stc': fields.float("PV Module Power STC (KW)"),

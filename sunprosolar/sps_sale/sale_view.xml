@@ -104,6 +104,7 @@
 				</xpath>
 				<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="after">
 					<field name="no_module"/>
+					<field name="no_inverter"/>
 				</xpath>
 
 

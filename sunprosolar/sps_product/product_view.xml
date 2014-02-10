@@ -10,26 +10,21 @@
                  <xpath expr="//field[@name='description']" position="before">
                         <group col="4" colspan="2">
                              <field name="product_group" colspan="4" required="1"/>
-                             <field name="pv_module_name" attrs="{'invisible':[('product_group','!=','module')]}"/>
-                             <field name="brand_module" attrs="{'invisible':[('product_group','!=','module')]}"/>
-	                         <field name="pv_module_power_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
-<!--                             <field name="no_module" attrs="{'invisible':[('product_group','!=','module')]}"/-->
-                             <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
+<!--                             <field name="pv_module_name" attrs="{'invisible':[('product_group','!=','module')]}"/-->
+                             <field name="brand_module" attrs="{'invisible':[('product_group','!=','module')]}"/><newline/>
                              <field name="module_hieght" attrs="{'invisible':[('product_group','!=','module')]}"/>
-<!--                             <field name="module_stc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>-->
+                             <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="module_width" attrs="{'invisible':[('product_group','!=','module')]}"/>
-<!--                             <field name="module_ptc_dc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>-->
+                             <field name="pv_module_power_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="module_weight" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="cost_per_stc_watt" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="panel_area" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="labor_per_stc_watt" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="markup" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="materials_per_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
-<!--                             <field name="invertor_name" attrs="{'invisible':[('product_group','!=','inverter')]}"/-->
                              <field name="brand_invertor" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                              <field name="meter" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                              <field name="cost_per_ac_capacity_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
-<!--                             <field name="no_invertor" attrs="{'invisible':[('product_group','!=','inverter')]}"/-->
                              <field name="labor_per_ac_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                              <field name="cec_efficiency" attrs="{'invisible':[('product_group','!=','inverter')]}"/>
                              <field name="materials_per_ac_watt" attrs="{'invisible':[('product_group','!=','inverter')]}"/>

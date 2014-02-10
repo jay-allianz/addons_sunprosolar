@@ -12,7 +12,6 @@
             <drawCentredString x="2.8cm" y="0.8cm">Tel : [[company.phone]]</drawCentredString>
             <drawCentredString x="17.8cm" y="0.8cm">[[company.email]]</drawCentredString>
             <drawCentredString x="11.0cm" y="0.8cm">©[[company.name]]</drawCentredString> <br/>
-            <drawCentredString x="11.0cm" y="0.4cm">On Grid Solar</drawCentredString> <br/>
             <!--<drawCentredString x="3.0cm" y="0.4cm">1-951678-7733</drawCentredString>-->
         </pageGraphics>
     </pageTemplate>
@@ -206,7 +205,7 @@
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
             <td>
-                <para style="P4" alignment="RIGHT">[[formatLang(get_gross_system_price(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
+                <para style="P4" alignment="RIGHT">[[formatLang(get_gross_system_price(o.partner_id.id), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
         </tr>
         <tr>
@@ -215,7 +214,7 @@
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
             <td>
-                <para style="P4" alignment="RIGHT">[[formatLang(get_net_system_cost(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
+                <para style="P4" alignment="RIGHT">[[formatLang(get_net_system_cost(o.partner_id.id), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
         </tr>
         <tr>
@@ -243,7 +242,7 @@
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
             <td>
-                <para style="P4" alignment="RIGHT">[[ formatLang(get_total_savings()/get_net_system_cost(), digits=get_digits(dp='Account')) ]]x</para>
+                <para style="P4" alignment="RIGHT">[[ formatLang(get_total_savings()/get_net_system_cost(o.partner_id.id), digits=get_digits(dp='Account')) ]]x</para>
             </td>
         </tr>
     </blockTable>
@@ -283,7 +282,7 @@
                 <para style="P4_bold" alignment="CENTER">Incentives</para>
             </td>
             <td>
-                <para style="P4_bold" alignment="CENTER">Rebates</para>
+                <para style="P4_bold" alignment="CENTER">Rebates,PBI's, after tax, Tax credits and Depriciation</para>
             </td>
             <td>
                 <para style="P4_bold" alignment="CENTER">Cost / Payback (Cumulative cash Position)</para>

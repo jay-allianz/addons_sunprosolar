@@ -167,13 +167,13 @@ class crm_lead(osv.Model):
     def _get_annual_solar_prod(self, cr, uid, ids, name, args, context=None):
         res = {}
         for data in self.browse(cr, uid, ids, context):
-            annual_prod = 0.0
+            annual_prod = 0
             for line in data.solar_ids:
                 annual_prod += line.annual_solar_prod
-            if data.estimate_shade > 0:
-               res[data.id] = (annual_prod * data.estimate_shade) / 100
-            else:
-                res[data.id] = annual_prod
+                if line.estimate_shade > 0:
+                   res[data.id] = (annual_prod * data.estimate_shade) / 100
+                else:
+                    res[data.id] = annual_prod
         return res
     
     def _get_annual_ele_usage(self, cr, uid, ids, name, args, context=None):
@@ -217,7 +217,8 @@ class crm_lead(osv.Model):
             co2_offset_tons = 0.0
             for line in data.solar_ids:
                 co2_offset_tons += line.co2_offset_tons
-            res[data.id] = co2_offset_tons
+            co2_offset_tons_r = round(co2_offset_tons, 0)
+            res[data.id] = co2_offset_tons_r
         return res 
 
     def _get_co2_offset_pounds(self, cr, uid, ids, name, args, context=None):
@@ -226,7 +227,8 @@ class crm_lead(osv.Model):
             co2_offset_pounds = 0.0
             for line in data.solar_ids:
                 co2_offset_pounds += line.co2_offset_pounds
-            res[data.id] = co2_offset_pounds
+            co2_offset_pounds_r = round(co2_offset_pounds, 0)
+            res[data.id] = co2_offset_pounds_r
         return res
     
     def _get_cars_off_roads(self, cr, uid, ids, name, args, context=None):
@@ -235,7 +237,8 @@ class crm_lead(osv.Model):
             cars_off_roads = 0.0
             for line in data.solar_ids:
                 cars_off_roads += line.cars_off_roads
-            res[data.id] = cars_off_roads
+            cars_off_roads_r = round(cars_off_roads,0)
+            res[data.id] = cars_off_roads_r
         return res
     
     def _get_gasoline_equi(self, cr, uid, ids, name, args, context=None):
@@ -244,7 +247,8 @@ class crm_lead(osv.Model):
             gasoline_equi = 0.0
             for line in data.solar_ids:
                 gasoline_equi += line.gasoline_equi
-            res[data.id] = gasoline_equi
+            gasoline_equi_r = round(gasoline_equi, 0)
+            res[data.id] = gasoline_equi_r
         return res
     
     def _get_tree_equi(self, cr, uid, ids, name, args, context=None):
@@ -253,7 +257,8 @@ class crm_lead(osv.Model):
             tree_equi = 0.0
             for line in data.solar_ids:
                 tree_equi += line.tree_equi
-            res[data.id] = tree_equi
+            tree_equi_r = round(tree_equi, 0)
+            res[data.id] = tree_equi_r
         return res
     
     def _get_tree_planting_equi(self, cr, uid, ids, name, args, context=None):
@@ -262,7 +267,8 @@ class crm_lead(osv.Model):
             tree_planting_equi = 0.0
             for line in data.solar_ids:
                 tree_planting_equi += line.tree_planting_equi
-            res[data.id] = tree_planting_equi
+            tree_planting_equi_r = round(tree_planting_equi, 0)
+            res[data.id] = tree_planting_equi_r
         return res
     
     def _get_ave_home_powered(self, cr, uid, ids, name, args, context=None):
@@ -271,7 +277,8 @@ class crm_lead(osv.Model):
             ave_home_powered = 0.0
             for line in data.solar_ids:
                 ave_home_powered += line.ave_home_powered
-            res[data.id] = ave_home_powered
+            ave_home_powered_r = round(ave_home_powered ,0)
+            res[data.id] = ave_home_powered_r
         return res
     
     def _get_ave_light_bulb_powered(self, cr, uid, ids, name, args, context=None):
@@ -280,7 +287,8 @@ class crm_lead(osv.Model):
             ave_light_bulb_powered = 0.0
             for line in data.solar_ids:
                 ave_light_bulb_powered += line.ave_light_bulb_powered
-            res[data.id] = ave_light_bulb_powered
+            ave_light_bulb_powered_r = round(ave_light_bulb_powered, 0)
+            res[data.id] = ave_light_bulb_powered_r
         return res
     
     def _get_years_40_offset_tree(self, cr, uid, ids, name, args, context=None):
@@ -368,6 +376,7 @@ class crm_lead(osv.Model):
     
     def _get_cost_rebate(self, cr, uid, ids, name, args, context=None):
         result = {}
+        
         cost = 0.0
         for data in self.browse(cr, uid, ids, context=context):
             result[data.id] = {
@@ -377,10 +386,17 @@ class crm_lead(osv.Model):
                 'rebate_amt' : 0.0
             }
             cost = 0 
+            cost_per_array= 0.0
             down_payment_amt = 0
             rebate_amt = 0
-            if data.peak_kw_stc and data.cost_peack_kw:
-                cost = data.peak_kw_stc * data.cost_peack_kw
+            
+            if data.solar_ids:
+                for array_id in data.solar_ids:
+                    cost_per_array = (array_id.stc_dc_rating * array_id.module_product_id.cost_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.labor_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.materials_per_stc)+(1+ array_id.module_product_id.markup)+ array_id.num_of_invertor * (array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)
+                    cost += cost_per_array
+            
+#            if data.peak_kw_stc and data.cost_peack_kw:
+#                cost = data.peak_kw_stc * data.cost_peack_kw
             if cost and data.down_payment:
                 down_payment_amt = cost * data.down_payment
             if cost and data.rebate:
@@ -582,7 +598,7 @@ class crm_lead(osv.Model):
         'pv_kw_decline':fields.float('PV KW Decline (%)'),
         'grid_energy_rate':fields.float("Electricity Grid energy intial Rate Per KWh/$"),
         'grid_rate_increase_by':fields.float('Grid Rate Increase By'),
-        'kw_factor' : fields.float('KW Factor'),
+#        'kw_factor' : fields.float('KW Factor'),
         'rebate':fields.float("Rebate"),
 #         'pbi_epbb_incentives':fields.float('PBI-EPBB Incentives'),
         'srec':fields.float('SREC/kwh'),
@@ -613,23 +629,23 @@ class crm_lead(osv.Model):
 #         'avg_comp': fields.float("Average Yearly Computer((KWh))"),
 #         'emmision_gas': fields.float("Emissions from a Gallon of Gas(lbs)"),
         
-        'co2_offset_tons' : fields.function(_get_co2_offset_tons, string='CO2 Offset (Tons)', type='float', help="Tons of Carbon Annually"),
-        'co2_offset_pounds' : fields.function(_get_co2_offset_pounds, string='CO2 Offset (Pounds)', type="float", help="Pounds of Carbon annually Eliminated"),
-        'cars_off_roads' : fields.function(_get_cars_off_roads, string='Cars off the Road', type="float", help="Cars taken off the road for one year"),
-        'gasoline_equi' : fields.function(_get_gasoline_equi, string='Gasoline Equivalent (Gallons of Gas)', type='float'),
-        'tree_equi' : fields.function(_get_tree_equi, string='Tree Equivalent', type='float', help="Trees cleaning the Air for one year"),
-        'tree_planting_equi' : fields.function(_get_tree_planting_equi, string='Tree Planting Equivalent', type='float', help="Trees planted for life of tree"),
-        'ave_home_powered' : fields.function(_get_ave_home_powered, string='Average Homes Powered', type='float', help="Homes Powered for One Year"),
-        'ave_light_bulb_powered' : fields.function(_get_ave_light_bulb_powered, string='Average Light-bulbs Powered', type='float', help="Light-bulbs Powered for One Year"),
+        'co2_offset_tons' : fields.function(_get_co2_offset_tons, string='CO2 Offset (Tons)', type='integer', help="Tons of Carbon Annually"),
+        'co2_offset_pounds' : fields.function(_get_co2_offset_pounds, string='CO2 Offset (Pounds)', type="integer", help="Pounds of Carbon annually Eliminated"),
+        'cars_off_roads' : fields.function(_get_cars_off_roads, string='Cars off the Road', type="integer", help="Cars taken off the road for one year"),
+        'gasoline_equi' : fields.function(_get_gasoline_equi, string='Gasoline Equivalent (Gallons of Gas)', type='integer'),
+        'tree_equi' : fields.function(_get_tree_equi, string='Tree Equivalent', type='integer', help="Trees cleaning the Air for one year"),
+        'tree_planting_equi' : fields.function(_get_tree_planting_equi, string='Tree Planting Equivalent', type='integer', help="Trees planted for life of tree"),
+        'ave_home_powered' : fields.function(_get_ave_home_powered, string='Average Homes Powered', type='integer', help="Homes Powered for One Year"),
+        'ave_light_bulb_powered' : fields.function(_get_ave_light_bulb_powered, string='Average Light-bulbs Powered', type='integer', help="Light-bulbs Powered for One Year"),
          
         'stc_dc_rating': fields.function(_get_stc_dc_rating, string='STC-DC Rating', type='float'),
         'ptc_dc_rating': fields.function(_get_ptc_dc_rating, string='PTC-DC Rating', type='float'),
         'cec_ac_rating': fields.function(_get_cec_ac_rating, string='CEC-AC Rating', type='float'),
         'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float'),
          
-        'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='float'),
+        'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='integer'),
         'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float'),
-        'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Avarage Sun Hours', type='float'),
+        'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Average Sun Hours', type='float'),
         
         'project_photo_ids' : fields.one2many('project.photos', 'crm_lead_id', "Project Photos"),
         'project_review_ids' : fields.one2many('project.reviews', 'crm_lead_id', "Project Reviews"),
@@ -1107,7 +1123,7 @@ class solar_solar(osv.Model):
             if data and data.crm_lead_id and data.crm_lead_id.anual_electricity_usage_ids:
                 for line in data.crm_lead_id.anual_electricity_usage_ids:
                     if line and line.usage_kwh:
-                        res[data.id]['annual_ele_usage'] = line.usage_kwh / float(1000)
+                        res[data.id]['annual_ele_usage'] = line.usage_kwh
                     else:
                         res[data.id]['annual_ele_usage'] = 0.0
             production = None
@@ -1128,7 +1144,8 @@ class solar_solar(osv.Model):
                             tot_perfomance_ratio = (data.inverter_product_id.cec_efficiency / 100) * 0.84 * (ptc_stc_ratio_amount / 100)
                             annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                         if annual_solar_prod:
-                            res[data.id]['annual_solar_prod'] = annual_solar_prod
+                            annual_s_prod = round(annual_solar_prod)
+                            res[data.id]['annual_solar_prod'] = int(annual_s_prod)
                     if production:
                         user_obj = self.pool.get('res.users')
                         cur_user = user_obj.browse(cr, uid, uid, context=context)
@@ -1184,7 +1201,7 @@ class solar_solar(osv.Model):
                 'num_of_module': fields.integer('Number of modules', required=True),
                 'inverter_product_id':fields.many2one('product.product', 'Inverters Name', domain=[('product_group', '=', 'inverter')], type='inverter', required=True),
                 'num_of_invertor':fields.integer('Number of Inverters'),
-                'num_of_arrays':fields.char('Number of Arrays',size = 32, readonly=True,
+                'num_of_arrays':fields.char('Array Number',size = 32, readonly=True,
                                             help="This Number of Arrays is automatically created by OpenERP."),
                 'stc_dc_rating': fields.function(_get_system_rating_data, string='STC-DC Rating', type='float', multi='rating_all'),
                 'ptc_dc_rating': fields.function(_get_system_rating_data, string='PTC-DC Rating', type='float', multi='rating_all'),
@@ -1212,6 +1229,7 @@ class solar_solar(osv.Model):
                 'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='float', multi='rating_all'),
                 'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all'),
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
+                'estimate_shade': fields.integer('Estimated Shading'),
                 }
     _defaults = {
 #        'num_of_arrays': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'solar.array.size'),

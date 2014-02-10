@@ -264,8 +264,8 @@
 							<field name="equity" />
 							<field name="home_sq_foot" />
 							<newline />
-							<field name="roof_type" />
-							<field name="estimate_shade" />
+							<field name="roof_type" /><newlinw/>
+<!--							<field name="estimate_shade" /-->
 							<field name="loc_station_id" required="1" />
 							<newline />
 							<field name="tilt_degree" required="1" />
@@ -656,8 +656,8 @@
 							<newline />
 						</group>
 						<group col="4" colspan="4">
-							<field name="roof_type" />
-							<field name="estimate_shade" />
+							<field name="roof_type" /><newline/>
+<!--							<field name="estimate_shade" /-->
 							<field name="loc_station_id" required="1" />
 							<newline />
 							<field name="tilt_degree" required="1" />
@@ -788,28 +788,11 @@
 								<field name="inverter_product_id" />
 								<field name="num_of_module" />
 								<field name="num_of_invertor" />
+								<field name="estimate_shade" />
 								<field name="num_of_arrays" />
-								<!-- <field name="co2_offset_tons" /> -->
-								<!-- <field name="co2_offset_pounds" /> -->
-								<!-- <field name="cars_off_roads" /> -->
-								<!-- <field name="gasoline_equi" /> -->
-								<!-- <field name="tree_equi" /> -->
-								<!-- <field name="tree_planting_equi" /> -->
-								<!-- <field name="ave_home_powered" /> -->
-								<!-- <field name="ave_light_bulb_powered" /> -->
-								<!-- <field name="stc_dc_rating" /> -->
-								<!-- <field name="ptc_dc_rating" /> -->
-								<!-- <field name="cec_ac_rating" /> -->
-								<!-- <field name="ptc_stc_ratio" /> -->
-								<!-- <field name="annual_solar_prod" /> -->
-								<!-- <field name="annual_ele_usage" /> -->
-								<!-- <field name="site_avg_sun_hour" /> -->
 							</tree>
 						</field>
-
-
 						<group col="4" colspan="4">
-
 							<group col="2" colspan="2" string="Calculation Field">
 								<field name="stc_dc_rating" />
 								<field name="ptc_dc_rating" />
@@ -818,10 +801,7 @@
 								<field name="annual_solar_prod" />
 								<field name="annual_ele_usage" />
 								<field name="site_avg_sun_hour" />
-
 							</group>
-
-
 							<group col="2" colspan="2" string="Cleaner and Greener Environment">
 								<!-- <field name="yearly_output_per_kw" /> <field name="solar_array_output" 
 									/> -->
@@ -852,36 +832,48 @@
 					<!-- <field name="emmision_gas" /> -->
 					<!-- </group> -->
 					<!-- </page> -->
-
+					
 					<page string="Solar PV Economics">
 						<group col="4" colspan="4">
 							<separator colspan="4" string="Economics Details" />
-							<field name="loan_period" />
-							<field name="down_payment" />
-							<field name="loan_interest_rate" />
-							<field name="cost_peack_kw" />
-							<field name="pv_kw_decline" />
-							<field name="kw_factor" />
-							<field name="grid_energy_rate" />
-							<field name="grid_rate_increase_by" />
-							<field name="rebate" />
-							<field name="srec" />
-							<field name="number_of_years" />
-							<field name="replace_inverter_over_loan_period" />
-							<field name="inverter_cost" />
-							<field name="replace_inverter_every" />
-							<field name="peak_kw_stc" readonly="1" />
-							<field name="sun_hour_per_day" readonly="1" />
-							<field name="pbi_epbb_incentive" />
-							<newline />
-							<field name="cost" readonly="1" />
-							<field name="down_payment_amt" readonly="1" />
-							<!-- <field name="rebate" readonly="1"/> -->
-							<field name="loan_amt" readonly="1" />
-							<field name="rebate_amt" readonly="1" />
-							<newline />
-							<separator string="Cost and Rebate"/>
 							<group col="4" colspan="4">
+		                        <group string="PV" col="2" colspan="2">
+									<field name="cost" readonly="1" />
+								</group><newline/>
+	                            <group string="PV" col="2" colspan="2">
+	                                  <field name="peak_kw_stc" readonly="1" />
+	                                  <field name="sun_hour_per_day" readonly="1" />
+	                                  <field name="pv_kw_decline" />
+	                                  <field name="cost_peack_kw" />
+	                                  <field name="number_of_years" />
+	                            </group>
+	                            <group string="Loan" col="2" colspan="2">
+	                                  <field name="loan_period" />
+	                                  <field name="loan_interest_rate" />
+	                                  <field name="loan_amt" readonly="1" />
+	                                  <field name="down_payment" />
+	                                  <field name="down_payment_amt" readonly="1" />
+	                            </group>
+	                        </group>
+	                        <group col="4" colspan="4">
+	                            <group string="Grid" col="2" colspan="2">
+	                                  <field name="grid_energy_rate" />
+								      <field name="grid_rate_increase_by" />
+	                            </group>
+	                            <group string="Inverter" col="2" colspan="2">
+	                                  <field name="inverter_cost" />
+								      <field name="replace_inverter_every" />
+	                            </group>
+                            </group>
+                            <group string="Incentives" col="2" colspan="2">
+                                  <field name="pbi_epbb_incentive" />
+                                  <field name="rebate" />
+							      <field name="rebate_amt" readonly="1" />
+							      <field name="srec" />
+                            </group>
+						</group>
+						<newline />
+							<separator string="Cost and Rebate" colspan="4"/>
 								<field name="cost_rebate_ids" nolabel="1" readonly='1'>
 									<tree>
 										<field name="year" />
@@ -909,10 +901,9 @@
 										<field name="depriciation_savings" />
 										<field name="yearly_payout" />
 									</form>
-								</field>
-							</group>
-						</group>
+								</field>		
 					</page>
+					
 					<page string="Annual Electricity Usage">
 						<group col="4" colspan="4">
 							<separator colspan="4" string="Annual Electricity Usage" />
@@ -1044,6 +1035,7 @@
 					<field name="module_product_id" />
 					<field name="inverter_product_id" />
 					<field name="num_of_invertor" />
+					<field name="estimate_shade" />
 					<field name="num_of_arrays" />
 					<field name="co2_offset_tons" />
 					<field name="co2_offset_pounds" />
@@ -1110,6 +1102,7 @@
 					<field name="module_product_id" />
 					<field name="inverter_product_id" />
 					<field name="num_of_invertor" />
+					<field name="estimate_shade" />
 					<field name="num_of_arrays" />
 					<field name="co2_offset_tons" />
 					<field name="co2_offset_pounds" />
