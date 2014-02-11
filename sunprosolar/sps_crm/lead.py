@@ -168,12 +168,14 @@ class crm_lead(osv.Model):
         res = {}
         for data in self.browse(cr, uid, ids, context):
             annual_prod = 0
+            estimate_shade = 0.0
             for line in data.solar_ids:
                 annual_prod += line.annual_solar_prod
-                if line.estimate_shade > 0:
-                   res[data.id] = (annual_prod * data.estimate_shade) / 100
-                else:
-                    res[data.id] = annual_prod
+                estimate_shade += line.estimate_shade
+            if estimate_shade > 0:
+                res[data.id] = (annual_prod * data.estimate_shade) / 100
+            else:
+                res[data.id] = annual_prod
         return res
     
     def _get_annual_ele_usage(self, cr, uid, ids, name, args, context=None):
@@ -328,7 +330,9 @@ class crm_lead(osv.Model):
                         annual_ele_usage = line.usage_kwh
             res = []
             prev_old_bill = annual_ele_usage * data.grid_energy_rate
-            prev_pv_energy = data.annual_solar_prod
+            prev_pv_energy = data.annual_solar_prod or 0
+            print "prev_pv_energy:::::::::::",prev_pv_energy
+            print "data.grid_energy_rate::::::::::",data.grid_energy_rate
             elec_bill_savings = prev_pv_energy * data.grid_energy_rate
             i = data.loan_interest_rate
             n = data.loan_period
@@ -1162,21 +1166,21 @@ class solar_solar(osv.Model):
                             num_of_arrays = data.num_of_arrays
                         output = num_of_arrays * production
                         co2_offset_tons = (output * avg_co2_ele) / 2000
-                        res[data.id]['co2_offset_tons'] = co2_offset_tons
+                        res[data.id]['co2_offset_tons'] = round(co2_offset_tons,0)
                         co2_offset_pounds = co2_offset_tons * 2000
-                        res[data.id]['co2_offset_pounds'] = co2_offset_pounds
+                        res[data.id]['co2_offset_pounds'] = round(co2_offset_pounds,0)
                         cars_off_roads = co2_offset_pounds / annnual_co2_car
-                        res[data.id]['cars_off_roads'] = cars_off_roads
+                        res[data.id]['cars_off_roads'] = round(cars_off_roads,0)
                         gasoline_equi = co2_offset_pounds / emmision_gas
-                        res[data.id]['gasoline_equi'] = gasoline_equi
+                        res[data.id]['gasoline_equi'] = round(gasoline_equi,0)
                         tree_equi = output / annual_equvi_tree
-                        res[data.id]['tree_equi'] = tree_equi
+                        res[data.id]['tree_equi'] = round(tree_equi,0)
                         tree_planting_equi = output / years_40_offset_tree
-                        res[data.id]['tree_planting_equi'] = tree_planting_equi
+                        res[data.id]['tree_planting_equi'] = round(tree_planting_equi,0)
                         ave_home_powered = output / annual_home_ele
-                        res[data.id]['ave_home_powered'] = ave_home_powered
+                        res[data.id]['ave_home_powered'] = round(ave_home_powered,0)
                         ave_light_bulb_powered = output / avg_light_bulb
-                        res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
+                        res[data.id]['ave_light_bulb_powered'] = round(ave_light_bulb_powered,0)
                         
         #                 'annual_ele_usage' : 0,
         #                 'site_avg_sun_hour' : 0,
@@ -1217,16 +1221,16 @@ class solar_solar(osv.Model):
 #                'ave_home_powered' : fields.float('Average Homes Powered', help="Homes Powered for One Year"),
 #                'ave_light_bulb_powered' : fields.float('Average Light-bulbs Powered', help="Light-bulbs Powered for One Year"),
                 
-                'co2_offset_tons' : fields.function(_get_system_rating_data, string='CO2 Offset', type='float', multi='green_all', help="Tons of Carbon Annually"),
-                'co2_offset_pounds' : fields.function(_get_system_rating_data, string='CO2 Offset', type="float", multi='green_all', help="Pounds of Carbon annually Eliminated"),
-                'cars_off_roads' : fields.function(_get_system_rating_data, string='Cars off the Road', type="float", multi='green_all', help="Cars taken off the road for one year"),
-                'gasoline_equi' : fields.function(_get_system_rating_data, string='Gasoline Equivalent (Gallons of Gas)', type='float', multi="green_all"),
-                'tree_equi' : fields.function(_get_system_rating_data, string='Tree Equivalent', type='float', multi="green_all", help="Trees cleaning the Air for one year"),
-                'tree_planting_equi' : fields.function(_get_system_rating_data, string='Tree Planting Equivalent', type='float', multi="green_all", help="Trees planted for life of tree"),
-                'ave_home_powered' : fields.function(_get_system_rating_data, string='Average Homes Powered', type='float', multi="green_all", help="Homes Powered for One Year"),
-                'ave_light_bulb_powered' : fields.function(_get_system_rating_data, string='Average Light-bulbs Powered', type='float', multi="green_all", help="Light-bulbs Powered for One Year"),
+                'co2_offset_tons' : fields.function(_get_system_rating_data, string='CO2 Offset', type='integer', multi='green_all', help="Tons of Carbon Annually"),
+                'co2_offset_pounds' : fields.function(_get_system_rating_data, string='CO2 Offset', type="integer", multi='green_all', help="Pounds of Carbon annually Eliminated"),
+                'cars_off_roads' : fields.function(_get_system_rating_data, string='Cars off the Road', type="integer", multi='green_all', help="Cars taken off the road for one year"),
+                'gasoline_equi' : fields.function(_get_system_rating_data, string='Gasoline Equivalent (Gallons of Gas)', type='integer', multi="green_all"),
+                'tree_equi' : fields.function(_get_system_rating_data, string='Tree Equivalent', type='integer', multi="green_all", help="Trees cleaning the Air for one year"),
+                'tree_planting_equi' : fields.function(_get_system_rating_data, string='Tree Planting Equivalent', type='integer', multi="green_all", help="Trees planted for life of tree"),
+                'ave_home_powered' : fields.function(_get_system_rating_data, string='Average Homes Powered', type='integer', multi="green_all", help="Homes Powered for One Year"),
+                'ave_light_bulb_powered' : fields.function(_get_system_rating_data, string='Average Light-bulbs Powered', type='integer', multi="green_all", help="Light-bulbs Powered for One Year"),
                 
-                'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='float', multi='rating_all'),
+                'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='integer', multi='rating_all'),
                 'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all'),
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
                 'estimate_shade': fields.integer('Estimated Shading'),
