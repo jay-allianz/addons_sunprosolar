@@ -264,7 +264,7 @@
 							<field name="equity" />
 							<field name="home_sq_foot" />
 							<newline />
-							<field name="roof_type" /><newlinw/>
+							<field name="roof_type" /><newline/>
 <!--							<field name="estimate_shade" /-->
 							<field name="loc_station_id" required="1" />
 							<newline />

@@ -135,58 +135,75 @@
     </blockTable>
     
     <blockTable colWidths="250.0,290.0" style="Table1">
-        <tr>
+    	<tr>
             <td>
-                <para style="P3" alignment="CENTER">[[ lead_make_pie_chart() or removeParentNode('blockTable') ]]</para>
-                <illustration height="300.0" width="0.0">
-                    <image x="0" y="40" file="pie.png" height="250.0" width="250.0"/>
-                </illustration>
+               <blockTable colWidths="250.0,0.0" style="Table1">
+			    	<tr>
+			            <td>
+			               <para style="P3" alignment="CENTER">[[ lead_make_pie_chart() or removeParentNode('blockTable') ]]</para>
+			                <illustration height="300.0" width="0.0">
+			                    <image x="0" y="40" file="pie.png" height="250.0" width="250.0"/>
+			                </illustration>
+			            </td>
+			            <td>
+			               <para style="P3" alignment="CENTER"></para>
+			            </td>
+			        </tr>
+			    </blockTable>
             </td>
             <td>
-                <para style="P3" alignment="LEFT">Over [[get_number_of_years()]] years, the system is estimated to offset:-</para>
-                <para style="P3" alignment="LEFT">[[ get_estimated_offset() ]] kWH of electricity</para>
-                <para style="P3" alignment="LEFT">[[ get_estimate_shade() ]] % of the estimated future usage</para>
-                <blockTable colWidths="185.0,105.0" style="Table1">
+               <blockTable colWidths="0.0,290.0" style="Table1">
                     <tr>
                         <td>
-                            <para style="P3" alignment="LEFT">C02 emissions:</para>
-                            <para style="P3" alignment="LEFT">Gasoline Equivalent</para>
-                            <para style="P3" alignment="LEFT">Average Home Powered</para>
-                            <para style="P3" alignment="LEFT">Average Light Bulbs Powered</para>
-                        </td>
+                            <para style="P3" alignment="CENTER"></para>
+			            </td>
                         <td>
-                            <para style="P3" alignment="RIGHT">[[ get_co2_emission() ]] lbs</para>
-                            <para style="P3" alignment="RIGHT">[[ get_gasoline_equi() ]] lbs</para>
-                            <para style="P3" alignment="RIGHT">[[ get_avg_home_powered() ]] lbs</para>
-                            <para style="P3" alignment="RIGHT">[[ get_avg_light_bulb_powered() ]] lbs</para>
+							<para style="P3" alignment="LEFT">Over [[get_number_of_years()]] years, the system is estimated to offset:-</para>
+			                <para style="P3" alignment="LEFT">[[ get_estimated_offset() ]] kWH of electricity</para>
+			                <para style="P3" alignment="LEFT">[[ get_estimate_shade() ]] % of the estimated future usage</para>
+			                <blockTable colWidths="185.0,105.0" style="Table1">
+			                    <tr>
+			                        <td>
+			                            <para style="P3" alignment="LEFT">C02 emissions:</para>
+			                            <para style="P3" alignment="LEFT">Gasoline Equivalent</para>
+			                            <para style="P3" alignment="LEFT">Average Home Powered</para>
+			                            <para style="P3" alignment="LEFT">Average Light Bulbs Powered</para>
+			                        </td>
+			                        <td>
+			                            <para style="P3" alignment="RIGHT">[[ get_co2_emission() ]] lbs</para>
+			                            <para style="P3" alignment="RIGHT">[[ get_gasoline_equi() ]] lbs</para>
+			                            <para style="P3" alignment="RIGHT">[[ get_avg_home_powered() ]] lbs</para>
+			                            <para style="P3" alignment="RIGHT">[[ get_avg_light_bulb_powered() ]] lbs</para>
+			                        </td>
+			                    </tr>
+			                </blockTable>
+			                
+			                <blockTable colWidths="210.0,80.0" style="Table1">
+			                    <tr>
+			                        <td>
+			                            <para style="P3" alignment="LEFT">That's the environmental equivalent of:</para>
+			                            <para style="P3_bold" alignment="LEFT"><font color="#006699"> </font></para>
+			                            <para style="P3" alignment="LEFT">[[ get_miles_driven() ]] miles driven in an average car or taking [[formatLang(get_cars_off_roads(), digits=get_digits(dp='Account'))]] cars off the road for [[get_number_of_years()]] years</para>
+			                        </td>
+			                        <td>
+			                            <image file="sps_crm/images/car.png" height="70" width="84" />
+			                        </td>
+			                    </tr>
+			                </blockTable>
+			                <blockTable colWidths="210.0,80.0" style="Table1">
+			                    <tr>
+			                        <td>
+			                            <para style="P3" alignment="LEFT">or planting [[formatLang(get_tree_planting_equi(), digits=get_digits(dp='Account'))]] acers of trees</para>
+			                        </td>
+			                        <td>
+			                            <image file="sps_crm/images/tree.png" height="70" width="84" />
+			                        </td>
+			                    </tr>
+			                </blockTable>
                         </td>
                     </tr>
-                </blockTable>
-                
-                <blockTable colWidths="210.0,80.0" style="Table1">
-                    <tr>
-                        <td>
-                            <para style="P3" alignment="LEFT">That's the environmental equivalent of:</para>
-                            <para style="P3_bold" alignment="LEFT"><font color="#006699"> </font></para>
-                            <para style="P3" alignment="LEFT">[[ get_miles_driven() ]] miles driven in an average car or taking [[formatLang(get_cars_off_roads(), digits=get_digits(dp='Account'))]] cars off the road for [[get_number_of_years()]] years</para>
-                        </td>
-                        <td>
-                            <image file="sps_crm/images/car.png" height="70" width="84" />
-                        </td>
-                    </tr>
-                </blockTable>
-                <blockTable colWidths="210.0,80.0" style="Table1">
-                    <tr>
-                        <td>
-                            <para style="P3" alignment="LEFT">or planting [[formatLang(get_tree_planting_equi(), digits=get_digits(dp='Account'))]] acers of trees</para>
-                        </td>
-                        <td>
-                            <image file="sps_crm/images/tree.png" height="70" width="84" />
-                        </td>
-                    </tr>
-                </blockTable>
+			    </blockTable>
             </td>
-            
         </tr>
     </blockTable>
     
@@ -205,7 +222,7 @@
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
             <td>
-                <para style="P4" alignment="RIGHT">[[formatLang(get_gross_system_price(o.partner_id.id), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
+                <para style="P4" alignment="RIGHT">[[formatLang(get_gross_system_price(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
         </tr>
         <tr>
@@ -214,7 +231,7 @@
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
             <td>
-                <para style="P4" alignment="RIGHT">[[formatLang(get_net_system_cost(o.partner_id.id), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
+                <para style="P4" alignment="RIGHT">[[formatLang(get_net_system_cost(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
         </tr>
         <tr>
@@ -242,7 +259,7 @@
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
             <td>
-                <para style="P4" alignment="RIGHT">[[ formatLang(get_total_savings()/get_net_system_cost(o.partner_id.id), digits=get_digits(dp='Account')) ]]x</para>
+                <para style="P4" alignment="RIGHT">[[ formatLang(get_total_savings()/get_net_system_cost(), digits=get_digits(dp='Account')) ]]x</para>
             </td>
         </tr>
     </blockTable>

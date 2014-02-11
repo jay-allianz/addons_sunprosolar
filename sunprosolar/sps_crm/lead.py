@@ -331,8 +331,6 @@ class crm_lead(osv.Model):
             res = []
             prev_old_bill = annual_ele_usage * data.grid_energy_rate
             prev_pv_energy = data.annual_solar_prod or 0
-            print "prev_pv_energy:::::::::::",prev_pv_energy
-            print "data.grid_energy_rate::::::::::",data.grid_energy_rate
             elec_bill_savings = prev_pv_energy * data.grid_energy_rate
             i = data.loan_interest_rate
             n = data.loan_period
@@ -346,6 +344,7 @@ class crm_lead(osv.Model):
             else:
                 depriciation = data.cost
             depriciation_savings = depriciation * ((cur_user.company_id.fedral_tax + cur_user.company_id.sales_tax)/100)
+            
             for yr in range(data.number_of_years):
                 year = yr + 1
                 if year >= 15:
@@ -1166,21 +1165,21 @@ class solar_solar(osv.Model):
                             num_of_arrays = data.num_of_arrays
                         output = num_of_arrays * production
                         co2_offset_tons = (output * avg_co2_ele) / 2000
-                        res[data.id]['co2_offset_tons'] = round(co2_offset_tons,0)
+                        res[data.id]['co2_offset_tons'] = co2_offset_tons
                         co2_offset_pounds = co2_offset_tons * 2000
-                        res[data.id]['co2_offset_pounds'] = round(co2_offset_pounds,0)
+                        res[data.id]['co2_offset_pounds'] = co2_offset_pounds
                         cars_off_roads = co2_offset_pounds / annnual_co2_car
-                        res[data.id]['cars_off_roads'] = round(cars_off_roads,0)
+                        res[data.id]['cars_off_roads'] = cars_off_roads
                         gasoline_equi = co2_offset_pounds / emmision_gas
-                        res[data.id]['gasoline_equi'] = round(gasoline_equi,0)
+                        res[data.id]['gasoline_equi'] = gasoline_equi
                         tree_equi = output / annual_equvi_tree
-                        res[data.id]['tree_equi'] = round(tree_equi,0)
+                        res[data.id]['tree_equi'] = tree_equi
                         tree_planting_equi = output / years_40_offset_tree
-                        res[data.id]['tree_planting_equi'] = round(tree_planting_equi,0)
+                        res[data.id]['tree_planting_equi'] = tree_planting_equi
                         ave_home_powered = output / annual_home_ele
-                        res[data.id]['ave_home_powered'] = round(ave_home_powered,0)
+                        res[data.id]['ave_home_powered'] = ave_home_powered
                         ave_light_bulb_powered = output / avg_light_bulb
-                        res[data.id]['ave_light_bulb_powered'] = round(ave_light_bulb_powered,0)
+                        res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
                         
         #                 'annual_ele_usage' : 0,
         #                 'site_avg_sun_hour' : 0,
