@@ -131,6 +131,11 @@
                     <group cols="1" colspan="4">
                         <button name="site_inspection_mail" string="Email Project Mgt Team - New Site Inspection"
                             colspan="2" type="object" icon="gtk-yes"
+                            attrs="{'invisible':[('state','!=','financing_type')]}"/>
+                    </group>
+                    <group cols="1" colspan="4">
+                        <button name="document_collected" string="Document Collected"
+                            colspan="2" type="object" icon="gtk-yes"
                             attrs="{'invisible':[('state','!=','contract_signed')]}" />
                     </group>
                     <newline/>
@@ -238,6 +243,17 @@
 						<field name="members" />
 					</page>
 				</xpath>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_inherited_res_partner_view_button">
+			<field name="name">inherited.res.partner.view.buttons</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="sale.res_partner_view_buttons" />
+			<field name="arch" type="xml">
+				<xpath expr="//button[@string='Quotations and Sales']" position="attributes">
+				    <attribute name="invisible">1</attribute>
+				</xpath>	
 			</field>
 		</record>
 		

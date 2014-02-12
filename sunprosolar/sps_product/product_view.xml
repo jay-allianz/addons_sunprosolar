@@ -13,9 +13,9 @@
 <!--                             <field name="pv_module_name" attrs="{'invisible':[('product_group','!=','module')]}"/-->
                              <field name="brand_module" attrs="{'invisible':[('product_group','!=','module')]}"/><newline/>
                              <field name="module_hieght" attrs="{'invisible':[('product_group','!=','module')]}"/>
-                             <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}" required="1"/>
                              <field name="module_width" attrs="{'invisible':[('product_group','!=','module')]}"/>
-                             <field name="pv_module_power_stc" attrs="{'invisible':[('product_group','!=','module')]}"/>
+                             <field name="pv_module_power_stc" attrs="{'invisible':[('product_group','!=','module')]}" required="1"/>
                              <field name="module_weight" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="cost_per_stc_watt" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="panel_area" attrs="{'invisible':[('product_group','!=','module')]}"/>

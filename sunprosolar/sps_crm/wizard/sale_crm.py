@@ -56,7 +56,7 @@ class crm_make_sale(osv.osv_memory):
                 'product_id' : solar_line.module_product_id.id,
                 'name' : solar_line.module_product_id.name,
                 'product_uom_qty' : solar_line.num_of_module,
-                'price_unit' : solar_line.module_product_id.list_price,
+                'price_unit' : solar_line.module_product_id.standard_price,
                 'type' : solar_line.module_product_id.procure_method,
                 'order_id' : order_id
             }
@@ -65,7 +65,7 @@ class crm_make_sale(osv.osv_memory):
                 'product_id' : solar_line.inverter_product_id.id,
                 'name' : solar_line.inverter_product_id.name,
                 'product_uom_qty' : solar_line.num_of_invertor,
-                'price_unit' : solar_line.inverter_product_id.list_price,
+                'price_unit' : solar_line.inverter_product_id.standard_price,
                 'type' : solar_line.inverter_product_id.procure_method,
                 'order_id' : order_id
             }

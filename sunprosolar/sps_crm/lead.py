@@ -50,6 +50,31 @@ class crm_lead(osv.Model):
     """ Model for CRM Lead. """
     _inherit = "crm.lead"
     
+    def _lead_create_contact(self, cr, uid, lead, name, is_company, parent_id=False, context=None):
+        partner = self.pool.get('res.partner')
+        vals = {'name': name,
+            'user_id': lead.user_id.id,
+            'comment': lead.description,
+            'section_id': lead.section_id.id or False,
+            'parent_id': lead.utility_company_id.id or False,
+            'phone': lead.phone,
+            'mobile': lead.mobile,
+            'email': tools.email_split(lead.email_from) and tools.email_split(lead.email_from)[0] or False,
+            'fax': lead.fax,
+            'title': lead.title and lead.title.id or False,
+            'function': lead.function,
+            'street': lead.street,
+            'street2': lead.street2,
+            'zip': lead.zip,
+            'city': lead.city,
+            'country_id': lead.country_id and lead.country_id.id or False,
+            'state_id': lead.state_id and lead.state_id.id or False,
+            'is_company': is_company,
+            'type': 'contact'
+        }
+        partner = partner.create(cr, uid, vals, context=context)
+        return partner
+        
     def on_change_station_and_utility(self, cr, uid, ids, city_id, context=None):
         values ={'utility_company_id': False, 'loc_station_id': False}
         if city_id:
@@ -180,19 +205,16 @@ class crm_lead(osv.Model):
     
     def _get_annual_ele_usage(self, cr, uid, ids, name, args, context=None):
         res = {}
+        line_number=0
         for data in self.browse(cr, uid, ids, context):
             annual_ele_usage = 0.0
             for line in data.solar_ids:
+                line_number += 1
                 annual_ele_usage += line.annual_ele_usage
-            res[data.id] = annual_ele_usage
-#            result = 0.0
-#            for line in data.anual_electricity_usage_ids:
-#                line_tot = 0.0
-#                if line.name == datetime.datetime.now().year:
-#                    if line.usage_kwh:
-#                        line_tot = line.usage_kwh/float(1000)
-#                result += line_tot
-#            res[data.id] = result
+            if line_number:
+                 res[data.id] = annual_ele_usage/line_number
+            else:
+                 res[data.id] = annual_ele_usage
         return res
     
     def _get_site_avg_sun_hour(self, cr, uid, ids, name, args, context=None):
@@ -202,9 +224,6 @@ class crm_lead(osv.Model):
             no_of_arr = 0
             if data.solar_ids:
                 no_of_arr = len(data.solar_ids)
-#            for line in data.solar_ids:
-#                if line.num_of_arrays:
-#                    no_of_arr += line.num_of_arrays
             for line in data.solar_ids:
                 site_avg_hour += line.site_avg_sun_hour
             if no_of_arr != 0:
@@ -395,7 +414,8 @@ class crm_lead(osv.Model):
             
             if data.solar_ids:
                 for array_id in data.solar_ids:
-                    cost_per_array = (array_id.stc_dc_rating * array_id.module_product_id.cost_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.labor_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.materials_per_stc)+(1+ array_id.module_product_id.markup)+ array_id.num_of_invertor * (array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)
+#                    cost_per_array = (array_id.stc_dc_rating * array_id.module_product_id.cost_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.labor_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.materials_per_stc)+(1+ array_id.module_product_id.markup)+ array_id.num_of_invertor * (array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)
+                    cost_per_array = (array_id.module_product_id.standard_price * array_id.num_of_module) + (array_id.inverter_product_id.standard_price * array_id.num_of_invertor)
                     cost += cost_per_array
             
 #            if data.peak_kw_stc and data.cost_peack_kw:
@@ -1245,6 +1265,19 @@ class solar_solar(osv.Model):
             LenArray = len([x.id for x in crm_rec.solar_ids])
             vals.update({'num_of_arrays' : LenArray + 1})
         return super(solar_solar, self).create(cr, uid, vals, context=context)
+    
+    def unlink(self, cr, uid, ids, context=None):
+        line_no=0
+        crm_obj = self.pool.get('crm.lead')
+        solar_data = self.browse(cr, uid, ids, context=context)
+        for record in solar_data:
+            lead_id = record.crm_lead_id.id
+            crm_data = crm_obj.browse(cr, uid, lead_id, context=context)
+            for solar_line in crm_data.solar_ids:
+                if solar_line.id != ids[0]:
+                    line_no += 1
+                    self.write(cr, uid, solar_line.id,{'num_of_arrays':line_no})
+        return super(solar_solar, self).unlink(cr, uid, ids, context=context)
 
 class crm_lead_home_description(osv.Model):
 

@@ -1060,22 +1060,22 @@
 							<field name="module_product_id" />
 							<field name="inverter_product_id" />
 							<field name="num_of_module" />
-							<field name="num_of_invertor" />
+							<field name="num_of_invertor" required="1"/>
 							<field name="loc_station_id" required="1" />
 							<field name="tilt_degree" required="1" />
 							<field name="faceing" required="1" />
 							<newline />
-							<group string="Calculatoin field" colspan="2">
+							<group string="Calculatoin field" colspan="2" invisible="1">
 								<field name="stc_dc_rating" />
 								<field name="ptc_dc_rating" />
 								<field name="cec_ac_rating" />
 								<field name="ptc_stc_ratio" />
 								<field name="site_avg_sun_hour" />
 								<field name="annual_solar_prod" />
-								<field name="annual_ele_usage" />
+								<field name="annual_ele_usage"/>
 							</group>
-							<group string="Cleaner and Greener Enviourment" colspan="2">
-								<field name="co2_offset_tons" />
+							<group string="Cleaner and Greener Enviourment" invisible="1" colspan="2">
+								<field name="co2_offset_tons"/>
 								<field name="co2_offset_pounds" />
 								<field name="cars_off_roads" />
 								<field name="gasoline_equi" />
@@ -1390,6 +1390,17 @@
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='property_product_pricelist']" position="attributes">
 				    <attribute name="string">Rates Tier</attribute>
+				</xpath>	
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_inherited_res_partner_view_buttons">
+			<field name="name">inherited.res.partner.view.button</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="crm.res_partner_view_buttons" />
+			<field name="arch" type="xml">
+				<xpath expr="//button[@string='Opportunities']" position="attributes">
+				    <attribute name="invisible">1</attribute>
 				</xpath>	
 			</field>
 		</record>

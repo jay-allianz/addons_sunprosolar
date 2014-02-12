@@ -130,6 +130,7 @@
     <images/>
   </stylesheet>
   <story>
+    <para style="terp_default_8">[[ repeatIn(objects, 's')]] </para>
     <blockTable colWidths="540.0" style="Table1">
         <tr>
             <td>
@@ -355,35 +356,34 @@
     </blockTable>
     
     
-    
     <blockTable colWidths="540.0" style="Table1">
         <tr>
             <td>
                 <blockTable colWidths="270.0,270.0" style="Table2">
                     <tr>
-                        <td><para style="P2">NAME</para></td>
+                        <td><para style="P2">NAME : [[ s.partner_id.name or '' ]]</para></td>
                         <td><para style="P2">SUNPRO REPRESENTATIVE</para></td>
                     </tr>
                     <tr>
-                        <td><para style="P2">ADDRESS</para></td>
+                        <td><para style="P2">ADDRESS : [[ s.partner_id.street or '' ]] [[ s.partner_id.street2 or '' ]]</para></td>
                         <td><para style="P2">CUSTOMER NEEDS _______ DAYS NOTICE TO SHIP PRODUCT</para></td>
                     </tr>
                     <tr>
-                        <td><para style="P2">CITY</para></td>
-                        <td><para style="P2">EMAIL</para></td>
+                        <td><para style="P2">CITY : [[ s.partner_id.city_id.name or '' ]]</para></td>
+                        <td><para style="P2">EMAIL : [[ s.partner_id.email or '' ]]</para></td>
                     </tr>
                 </blockTable>
                 <blockTable colWidths="180.0,180.0,180.0" style="Table3">
                     <tr>
-                        <td><para style="P2">PHONE(H)</para></td>
-                        <td><para style="P2">PHONE(W)</para></td>
+                        <td><para style="P2">PHONE(H) : [[ s.partner_id.phone or '' ]]</para></td>
+                        <td><para style="P2">PHONE(W) : [[ s.partner_id.mobile or '' ]]</para></td>
                         <td><para style="P2">PHONE(C)</para></td>
                     </tr>
                 </blockTable>
                 <blockTable colWidths="270.0,270.0" style="Table2">
                     <tr>
                         <td><para style="P2">TYPE OF INSTALL</para></td>
-                        <td><para style="P2">EST. INSTALL DATE</para></td>
+                        <td><para style="P2">EST. INSTALL DATE : [[ get_install_date(s.partner_id.id) ]]</para></td>
                     </tr>
                 </blockTable>
                 <blockTable colWidths="25.0,50.0,70.0,40.0,45.0,40.0,270.0" style="Table4">
@@ -394,7 +394,7 @@
                         <td><para style="P2_bold">PRICE</para></td>
                         <td><para style="P2_bold">AMOUNT</para></td>
                         <td><para style="P2_bold"></para></td>
-                        <td><para style="P2">ROOF TYPE</para></td>
+                        <td><para style="P2">ROOF TYPE : [[ get_roof_type(s.partner_id.id) ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P2_bold"></para></td>
@@ -405,25 +405,21 @@
                         <td><para style="P2_bold"></para></td>
                         <td><para style="P2">SPECIAL INSTRUCTION</para></td>
                     </tr>
+                </blockTable>
+                <section>
+                <para style="terp_default_8">[[repeatIn(s.order_line,'line')]]</para>
+                <blockTable colWidths="25.0,50.0,70.0,40.0,45.0,40.0,270.0" style="Table4">
                     <tr>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
+                        <td><para style="P2">[[ round(line.product_uom_qty, 2) or '0.0' ]]</para></td>
+                        <td><para style="P2">[[ line.product_id.default_code or '' ]]</para></td>
+                        <td><para style="P2">[[ line.name or '' ]]</para></td>
+                        <td><para style="P2">[[ round(line.price_unit, 2) or '0.0' ]]</para></td>
+                        <td><para style="P2">[[ round(line.price_subtotal, 2) or '0.0' ]]</para></td>
                         <td><para style="P2"></para></td>
-                    </tr>
-                    <tr>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
-                        <td><para style="P2_bold"></para></td>
                         <td><para style="P2"></para></td>
                     </tr>
                 </blockTable>
+                </section>
                 <blockTable colWidths="145.0,40.0,45.0,40.0,270.0" style="Table4">
                     <tr>
                         <td><para style="P2">TOTAL SYSTEM VALUE</para></td>
@@ -441,7 +437,7 @@
                     </tr>
                     <tr>
                         <td><para style="P2">TOTAL CONTRACT PRICE</para></td>
-                        <td><para style="P2"></para></td>
+                        <td><para style="P2">[[ get_total_contract_price(s.partner_id.id) ]]</para></td>
                         <td><para style="P2"></para></td>
                         <td><para style="P2"></para></td>
                         <td><para style="P2"></para></td>
@@ -483,19 +479,19 @@
                 <blockTable colWidths="135.0,135.0,135.0,135.0" style="Table4">
                     <tr>
                         <td><para style="P2">Utility Company</para></td>
-                        <td><para style="P2"></para></td>
+                        <td><para style="P2">[[ get_utility_company(s.partner_id.id) ]]</para></td>
                         <td><para style="P2"># of Roof Vents To Be Moved</para></td>
                         <td><para style="P2"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P2">Meter No.</para></td>
-                        <td><para style="P2"></para></td>
+                        <td><para style="P2">[[ get_meter_no(s.partner_id.id) ]]</para></td>
                         <td><para style="P2"># of Dormers To Be Moved</para></td>
                         <td><para style="P2"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P2">Utility Acc. No.</para></td>
-                        <td><para style="P2"></para></td>
+                        <td><para style="P2">[[ get_account_no(s.partner_id.id) ]]</para></td>
                         <td><para style="P2">Service Upgrade Needed</para></td>
                         <td><para style="P2"></para></td>
                     </tr>
@@ -507,7 +503,7 @@
                     </tr>
                     <tr>
                         <td><para style="P2">Roof Type/Age</para></td>
-                        <td><para style="P2"></para></td>
+                        <td><para style="P2">[[ get_roof_type(s.partner_id.id) ]] / [[ get_roof_type_age(s.partner_id.id) or '0' ]]</para></td>
                         <td><para style="P2">Ground / Roof Mount</para></td>
                         <td><para style="P2"></para></td>
                     </tr>

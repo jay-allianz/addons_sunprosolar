@@ -50,6 +50,7 @@ class sale_order(osv.Model):
                 ('contract_generated', 'Contract Generated'),
                 ('contract_signed', 'Contract Signed'),
                 ('manual', 'Sale to Invoice'),
+                ('financing_type','Financing Type'),
                 ('site_inspection', 'Site Inspection'),
                 ('progress', 'Sales Order'),
                 ('cancel', 'Cancelled'),
@@ -102,6 +103,10 @@ class sale_order(osv.Model):
         proj_id = self.browse(cr, uid, ids, context=context)[0].project_id.id
         ana_acc_obj = self.pool.get('account.analytic.account')
         ana_acc_obj.write(cr, uid, [proj_id], {'contract_date' : cur_time})
+        return True
+    
+    def document_collected(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'state': 'financing_type'})
         return True
     
     def done_inspection(self, cr, uid, ids, context=None):

@@ -29,7 +29,71 @@ class contract(report_sxw.rml_parse):
         super(contract, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time, 
+            'get_utility_company': self.get_utility_company,
+            'get_meter_no': self.get_meter_no,
+            'get_account_no': self.get_account_no,
+            'get_roof_type': self.get_roof_type,
+            'get_roof_type_age': self.get_roof_type_age,
+            'get_install_date': self.get_install_date,
+            'get_total_contract_price': self.get_total_contract_price,
         })
+
+    def get_total_contract_price(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        analytic_data = False
+        if analytic_id:
+            analytic_data = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].amount
+        return analytic_data
+
+    def get_install_date(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        analytic_data = False
+        if analytic_id:
+            analytic_data = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].date_start
+        return analytic_data
+
+    def get_utility_company(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_data = False
+        if lead_id:
+            lead_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].utility_company_id.name
+        return lead_data
+
+    def get_meter_no(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_data = False
+        if lead_id:
+            lead_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].meter_no
+        return lead_data
+
+    def get_account_no(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_data = False
+        if lead_id:
+            lead_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].acc_no
+        return lead_data
+
+    def get_roof_type(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_data = False
+        if lead_id:
+            lead_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].roof_type.name
+        return lead_data
+
+    def get_roof_type_age(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_data = False
+        if lead_id:
+            lead_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].age_house_year
+        return lead_data
+
 
 report_sxw.report_sxw('report.crm.contract', 'sale.order', 'addons/sps_crm/report/sps_contract_report.rml', parser=contract, header=False)
 
