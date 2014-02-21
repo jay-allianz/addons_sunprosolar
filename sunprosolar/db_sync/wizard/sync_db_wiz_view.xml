@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="db_sync_form">
+			<field name="name">db.sync.form</field>
+			<field name="model">db.sync</field>
+			<field name="arch" type="xml">
+				<form string="DB Sync" version="7.0">
+					<group col="4" colspan="4">
+						<field name="host" required="1" />
+					</group>
+					<footer>
+						<button name="import_database" type="object" string="Import" />
+						<button name="Cancel" string="Cancel" special="cancel"	/>
+					</footer>
+				</form>	
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="db_sync_action">
+			<field name="name">DB Sync</field>
+			<field name="res_model">db.sync</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<menuitem id="db_sync_wiz_menu" parent="db_sync_menu" action="db_sync_action" />
+	</data>
+</openerp>

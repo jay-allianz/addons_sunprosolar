@@ -94,6 +94,7 @@ class sale_order(osv.Model):
             'name' : cur_rec.partner_id.name,
             'project_id':project_id,
         }
+        task_obj.create(cr, uid, task_vals, context=context)
         self.write(cr, uid, ids, {'state': 'contract_generated','project_id': proj_acc_analy_id})
         return True
     
@@ -274,3 +275,13 @@ class sale_order_line(osv.Model):
         for sale_id in sales:
             wf_service.trg_write(uid, 'sale.order', sale_id, cr)
         return create_ids
+
+class project_project(osv.Model):
+    
+    _inherit = "project.project"
+    
+    _columns = {
+                'project_task_stage': fields.related('tasks', 'state', type='related', string='Project Task Stage'),
+                 }
+project_project()
+

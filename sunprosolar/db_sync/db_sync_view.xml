@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="db_config_tree">
+			<field name="name">db.config.tree</field>
+			<field name="model">db.config</field>
+			<field name="arch" type="xml">
+				<tree string="DB Config">
+					<field name="name" />
+					<field name="port" />
+					<field name="db_name" />
+				</tree>	
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="db_config_form">
+			<field name="name">db.config.form</field>
+			<field name="model">db.config</field>
+			<field name="arch" type="xml">
+				<form string="DB Config" version="7.0">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="name" required="1" />
+							<field name="port" required="1" />
+							<field name="db_name" required="1" />
+							<field name="user" required="1" />
+							<field name="password" required="1" widget="password"/>
+						</group>
+					</sheet>
+				</form>	
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="db_config_action">
+			<field name="name">DB Config</field>
+			<field name="res_model">db.config</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="DB Sync" id="db_sync_menu" parent="base.menu_custom" string="DB Sync"/>
+		<menuitem id="db_config_menu" parent="db_sync_menu" action="db_config_action" />
+	</data>
+</openerp>

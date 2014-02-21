@@ -1205,8 +1205,28 @@ class solar_solar(osv.Model):
         #                 'site_avg_sun_hour' : 0,
         return res
     
+    def _get_tilt(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for solar_data in self.browse(cr, uid, ids, context=context):
+            tilt_lead = self.pool.get('crm.lead').browse(cr, uid, solar_data.crm_lead_id.id, context=context).tilt_degree
+            print "tilt_lead:::::::::",tilt_lead
+            res[solar_data.id] = tilt_lead
+        return res
+    
+    def _get_faceing(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for data in self.browse(cr, uid, ids, context):
+            faceing_lead_1 = self.pool.get('crm.lead').browse(cr, uid, data.crm_lead_id.id, context=context)
+            print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",faceing_lead_1
+            faceing_lead=faceing.id
+            res[data.id] = faceing_lead
+        return res
+    
     _columns = {
                 'loc_station_id' : fields.many2one('insolation.incident.yearly', 'Closest NERL Locations'),
+#                'tilt_degree'  : fields.function(_get_tilt, method= True, store=True, string='Tilt Degree', type='selection'),
+#                'faceing' : fields.function(_get_faceing, method= True, store=True, string='Faceing', type='many2one'),
+                
                 'tilt_degree' : fields.selection(
                             [
                                 ('n', '[N]North'),
@@ -1231,15 +1251,6 @@ class solar_solar(osv.Model):
                 'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all'),
                 'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all'),
                 
-#                'co2_offset_tons' : fields.float('CO2 Offset Tons',help="Tons of Carbon Annually"),
-#                'co2_offset_pounds' : fields.float('CO2 Offset Pounds', help="Pounds of Carbon annually Eliminated"),
-#                'cars_off_roads' : fields.float('Cars off the Road', help="Cars taken off the road for one year"),
-#                'gasoline_equi' : fields.float('Gasoline Equivalent', help="Gallons of Gas"),
-#                'tree_equi' : fields.float('Tree Equivalent', help="Trees cleaning the Air for one year"),
-#                'tree_planting_equi' : fields.float('Tree Planting Equivalent', help="Trees planted for life of tree"),
-#                'ave_home_powered' : fields.float('Average Homes Powered', help="Homes Powered for One Year"),
-#                'ave_light_bulb_powered' : fields.float('Average Light-bulbs Powered', help="Light-bulbs Powered for One Year"),
-                
                 'co2_offset_tons' : fields.function(_get_system_rating_data, string='CO2 Offset', type='integer', multi='green_all', help="Tons of Carbon Annually"),
                 'co2_offset_pounds' : fields.function(_get_system_rating_data, string='CO2 Offset', type="integer", multi='green_all', help="Pounds of Carbon annually Eliminated"),
                 'cars_off_roads' : fields.function(_get_system_rating_data, string='Cars off the Road', type="integer", multi='green_all', help="Cars taken off the road for one year"),
@@ -1263,7 +1274,7 @@ class solar_solar(osv.Model):
         if vals.get('crm_lead_id', False):
             crm_rec = crm_obj.browse(cr, uid, vals['crm_lead_id'], context=context)
             LenArray = len([x.id for x in crm_rec.solar_ids])
-            vals.update({'num_of_arrays' : LenArray + 1})
+            vals.update({'num_of_arrays' : LenArray + 1, 'loc_station_id': crm_rec.loc_station_id.id,'tilt_degree':crm_rec.tilt_degree , 'faceing': crm_rec.faceing.id})
         return super(solar_solar, self).create(cr, uid, vals, context=context)
     
     def unlink(self, cr, uid, ids, context=None):
@@ -1524,10 +1535,15 @@ class res_partner(osv.Model):
     _inherit = "res.partner"
     
     _columns = {
+        'is_utility_company' : fields.boolean("Is a Utility Company?"),
         'spouse': fields.many2one('res.partner', string='Secondary Customer', help="Secondary Customer (spouse) in case he/she exist."),
         'last_name': fields.char('Last Name'),
         'middle_name' : fields.char('Middle Name'),
         'document_ids': fields.many2many('documents.all', 'company_document_rel', 'partner_id', 'document_id', 'Required Documents'),
+        
+        'from_zip' : fields.char('Zip (From)'),
+        'to_zip' : fields.char('Zip (To)'),
+        'zip_ids' : fields.many2many('city.city','city_res_part_rel',"city_id","res_part_id","Zip"),
     }
     
     def openMap(self, cr, uid, ids, context=None):
@@ -1768,3 +1784,4 @@ class friend_reference(osv.Model):
         SUB_LINE = 'Notification For Friend Reference.'
         MSG_BODY = 'Hello Admin,<br/>' + user_rec.name + ' added friend reference.' + '<br/><br/>The reference is : <br/>' + fname + " " + lname + "<br/>Email : " + friend_email_id + '<br/> Thank You.'
         send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, auto_email_id, context=context)
+

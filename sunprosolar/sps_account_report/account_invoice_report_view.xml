@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+        <data noupdate="0">
+        <record id="invoice_webkit_header" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[]]></field>
+            <field name="orientation">Portrait</field>
+            <field name="format">A4</field>
+            <field name="html"><![CDATA[]]>
+            </field>
+            <field eval="05.0" name="margin_top"/>
+            <field eval="05.0" name="margin_bottom"/>
+            <field name="css"><![CDATA[
+.dest_address {
+margin-right:60%;
+font-size:12;
+}
+.header {
+margin-left:0;
+text-align:right;
+width:100px;
+font-size:12;
+}
+
+.title {
+font-size:16;
+font-weight: bold;
+}
+
+.basic_table{
+margin-left:60;
+text-align:right;
+border-color:#003366;
+border-collapse: collapse;
+}
+.basic_table td {
+border:1px solid lightGrey;
+border-color:#003366;
+font-size:12;
+}
+
+.basic_table1{
+margin-left:10;
+text-align:right;
+border-collapse: collapse;
+}
+.basic_table td {
+font-size:12;
+}
+            
+.list_table {
+border-color:black;
+text-align:center;
+border-collapse: collapse;
+
+}
+.list_table td {
+border-color:gray;
+border-top:1px solid gray;
+text-align:right;
+font-size:12;
+padding-left:3px
+padding-right:3px
+padding-top:3px
+padding-bottom:3px
+}
+
+.list_table th {
+border-bottom:2px solid black;
+text-align:right;
+font-size:12;
+font-weight:bold;
+padding-left:3px
+padding-right:3px
+}
+
+.list_tabe thead {
+    display:table-header-group;
+}
+
+.total {
+width:100%;
+}
+.lib {
+width:10.3%;
+}
+.tot {
+text-align:left;
+width:15%;
+}
+.righttot {
+width:74%;
+}
+.tax {
+width:50%;
+} 
+
+]]>
+            </field>
+            <field name="name">Invoice Webkit Header</field>
+        </record>
+    </data>
+    <data>
+        <report
+            auto="False"
+            id="account_invoice_webkit"
+            model="account.invoice"
+            name="account.invoice.webkit"
+            string="SPS Invoices"
+            report_type="webkit"
+            file="sps_account_report/report/account_print_invoice.mako"
+        	webkit_header="invoice_webkit_header"
+        />
+        
+	<report
+            auto="False"
+            id="account_invoice_detail_webkit"
+            model="account.invoice"
+            name="account.invoice.detail.webkit"
+            string="SPS Invoices Detail"
+            report_type="webkit"
+            file="sps_account_report/report/account_print_invoice_detail.mako" 
+        	webkit_header="invoice_webkit_header"
+        />
+    </data>
+</openerp>
+
+         

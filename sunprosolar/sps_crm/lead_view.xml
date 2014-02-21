@@ -306,7 +306,7 @@
 					<page string="Electricity Info">
 						<group col="4" colspan="4">
 							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)"
-								domain="[('is_company','=',True)]" context="{'view_id': 'view_utility_customer_form'}"
+								domain="[('is_utility_company','=','True')]" context="{'view_id': 'view_utility_customer_form'}"
 								required="1" />
 							<!-- <field name="main_ele_serviece_panel" / -->
 							<newline />
@@ -689,7 +689,7 @@
 					<page string="Electricity Info">
 						<group col="4" colspan="4">
 							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)"
-								domain="[('is_company','=',True)]" context="{'view_id': 'view_utility_customer_form'}"
+								domain="[('is_utility_company','=','True')]" context="{'view_id': 'view_utility_customer_form'}"
 								required="1" />
 							<!-- <field name="main_ele_serviece_panel" / -->
 							<newline />
@@ -1061,11 +1061,13 @@
 							<field name="inverter_product_id" />
 							<field name="num_of_module" />
 							<field name="num_of_invertor" required="1"/>
+						<!--
 							<field name="loc_station_id" required="1" />
 							<field name="tilt_degree" required="1" />
 							<field name="faceing" required="1" />
 							<newline />
-							<group string="Calculatoin field" colspan="2" invisible="1">
+
+						-->							<group string="Calculatoin field" colspan="2" invisible="1">
 								<field name="stc_dc_rating" />
 								<field name="ptc_dc_rating" />
 								<field name="cec_ac_rating" />
@@ -1376,10 +1378,21 @@
 				<xpath expr="//field[@name='mobile']" position="attributes">
 					<attribute name="string">Cell</attribute>
 				</xpath>
+				<xpath expr="//label[@string='Is a Company?']" position="after">
+                     <field name="is_utility_company" class="oe_inline"/> <label for="is_utility_company" string="Is a Utility Company?"/>
+				</xpath>
+				<field name="website" position="before">
+                     <field name="from_zip" attrs="{'invisible':[('is_utility_company','=',False)]}" />
+                     <field name="to_zip" attrs="{'invisible':[('is_utility_company','=',False)]}"/>
+				</field>
 				<xpath expr="/form/sheet/group" position="after">
-					<label for="document_ids" />
+				    <separator string="ZIP" attrs="{'invisible':[('is_utility_company','=',False)]}"/>
+					<field name="zip_ids" colspan="4" attrs="{'invisible':[('is_utility_company','=',False)]}"/><newline/>
+					<separator string="Required Documents"/>
 					<field name="document_ids" colspan="4" />
 				</xpath>
+				
+				
 			</field>
 		</record>
 		

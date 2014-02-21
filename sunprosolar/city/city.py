@@ -56,8 +56,7 @@ class city(osv.Model):
     _name = 'city.city'
     _description = 'City'
     _columns = {
-        'state_id': fields.many2one('res.country.state', 'State',
-            domain="[('country_id','=',country_id)]", select=1),
+        'state_id': fields.many2one('res.country.state', 'State',select=1),
         'name': fields.char('City', size=64, required=True, select=1),
         'zip': fields.char('ZIP', size=64, required=True, select=1),
         'country_id': fields.many2one('res.country', 'Country', select=1),

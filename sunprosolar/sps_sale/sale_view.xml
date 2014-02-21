@@ -166,7 +166,19 @@
                 </label>
 			</field>
 		</record>
-
+		
+		<record model="ir.ui.view" id="project_project_kanban_inherit">
+			<field name="name">project.project.kanban.inherit</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id" ref="project.view_project_kanban" />
+			<field name="arch" type="xml">
+				<xpath expr="/kanban/templates/t/div/div/h4/field[@name='name']" position="after">
+						<div>Stage : 
+						<field name="project_task_stage" /></div>
+				</xpath>
+			</field>
+		</record>
+		
 		<record id="sale.action_quotations" model="ir.actions.act_window">
 			<field name="name">Quotation</field>
 			<field name="type">ir.actions.act_window</field>

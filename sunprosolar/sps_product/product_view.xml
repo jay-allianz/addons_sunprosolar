@@ -37,6 +37,27 @@
             </field>
         </record>
         
+		<!-- Product Search View  -->
+        <record model="ir.ui.view" id="product_product_search">
+            <field name="name">product.search.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                   <xpath expr="//filter[@string='Can be Sold']" position="after">
+                       <newline/>
+                       <filter string="Product Module" name="filter_module" domain="[('product_group','=','module')]"/>
+                       <filter string="Product Inveter" name="filter_inverter" domain="[('product_group','=','inverter')]"/>
+	               </xpath>
+	               
+                   <xpath expr="//filter[@string='Company']" position="after">
+                       <newline/>
+	                   <filter string="Product Group" icon="terp-partner" domain="[]" context="{'group_by':'product_group'}"/>
+	               </xpath>
+            </field>
+        </record>
+        
+                  
+        
         <!-- PV Module Name Search View  -->
         <record model="ir.ui.view" id="module_master_search">
             <field name="name">module_master_Search</field>
