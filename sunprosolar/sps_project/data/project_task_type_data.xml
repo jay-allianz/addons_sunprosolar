@@ -5,6 +5,7 @@
             <field name="name">Installation</field>
             <field name="state">draft</field>
             <field name="case_default" eval="True"/>
+            <field name="color" eval="4" />
         </record>
         <delete id="project.project_tt_specification" model="project.task.type" />
         <record id="project.project_tt_design" model="project.task.type">
@@ -12,24 +13,28 @@
             <field name="name">Final Inspection</field>
             <field name="state">open</field>
             <field name="case_default" eval="True"/>
+            <field name="color" eval="2" />
         </record>
         <record id="project.project_tt_development" model="project.task.type">
             <field name="sequence">3</field>
             <field name="name">Monitoring</field>
             <field name="state">pending</field>
             <field name="case_default" eval="True"/>
+            <field name="color" eval="3" />
         </record>
         <record id="project.project_tt_testing" model="project.task.type">
             <field name="sequence">4</field>
             <field name="name">Invoicing</field>
             <field name="state">pending</field>
             <field name="case_default" eval="True"/>
+            <field name="color" eval="8" />
         </record>
         <record id="project.project_tt_merge" model="project.task.type">
             <field name="sequence">5</field>
             <field name="name">Wrap Up</field>
             <field name="state">done</field>
             <field name="case_default" eval="True"/>
+            <field name="color" eval="5" />
         </record>
         <delete id="project.project_tt_deployment" model="project.task.type" />
         <delete id="project.project_tt_cancel" model="project.task.type" />

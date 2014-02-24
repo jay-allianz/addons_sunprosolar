@@ -32,11 +32,14 @@
         'crm_lead_demo.xml',
     ],
     'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'lead_view.xml',
         'crm_data.xml',
         'crm_report_view.xml',
         'station_view.xml',
         'wizard/crm_lead_to_opportunity_view.xml',
+        
     ],
     'installable': True,
     'application': True,

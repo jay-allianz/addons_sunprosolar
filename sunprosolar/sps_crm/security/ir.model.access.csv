@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+access_crm_lead_all_tabs_description,crm.lead.all.tabs.description,model_crm_lead_all_tabs_description,sps_crm.customer,1,1,1,1
+access_solar_solar,solar.solar,model_solar_solar,sps_crm.customer,1,1,1,1
+access_document_required,document.required,model_document_required,sps_crm.customer,1,1,1,0
+access_electricity_usage,electricity.usage,model_electricity_usage,sps_crm.customer,1,1,1,1
+access_project_reviews,project.reviews,model_project_reviews,sps_crm.customer,1,1,1,1
+access_ friend_reference,friend.reference,model_friend_reference,sps_crm.customer,1,1,1,1
+access_project_photos,project.photos,model_project_photos,sps_crm.customer,1,1,1,1
+,documents.all,,,,,,
+access_documents_all,documents.all,model_documents_all,sps_crm.customer,1,1,1,1

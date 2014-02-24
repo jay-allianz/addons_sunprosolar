@@ -28,7 +28,8 @@
     "description": """This module provides the functionality to generate Invoice for customer. 
     """,
     'data' : [
-        'data/project_task_type_data.xml',
+              'project_view.xml',
+              'data/project_task_type_data.xml',
     ],
     'depends': ['project'],
     'installable': True,

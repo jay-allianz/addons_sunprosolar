@@ -276,12 +276,4 @@ class sale_order_line(osv.Model):
             wf_service.trg_write(uid, 'sale.order', sale_id, cr)
         return create_ids
 
-class project_project(osv.Model):
-    
-    _inherit = "project.project"
-    
-    _columns = {
-                'project_task_stage': fields.related('tasks', 'state', type='related', string='Project Task Stage'),
-                 }
-project_project()
 

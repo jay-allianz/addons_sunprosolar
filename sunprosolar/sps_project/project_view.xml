@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		
+		<record model="ir.ui.view" id="project_project_kanban_inherit">
+			<field name="name">project.project.kanban.inherit</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id" ref="project.view_project_kanban" />
+			<field name="arch" type="xml">
+				<xpath expr="/kanban/templates/t/div/div/h4/field[@name='name']" position="after">
+						<div>Stage : 
+						<field name="project_task_stage" /></div>
+				</xpath>
+			</field>
+		</record>
+		
+        <record model="ir.ui.view" id="view_inherited_task_type_edit">
+			<field name="name">inherited.task_type_edit</field>
+			<field name="model">project.task.type</field>
+			<field name="inherit_id" ref="project.task_type_edit" />
+			<field name="arch" type="xml">
+				<field name="fold" position="after">
+				    <field name="color"/>
+				</field>	
+			</field>
+		</record>
+	</data>
+</openerp>

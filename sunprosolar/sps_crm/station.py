@@ -25,15 +25,7 @@ from datetime import datetime
 
 class insolation_incident(osv.Model):
     
-#    def name_get(self, cr, user, ids, context=None):
-#        if not ids:
-#            return []
-#        cur_rec = self.browse(cr, user, ids, context = context)[0]
-#        return [(cur_rec.id,cur_rec.station_id.name)]
-    
     _name = "insolation.incident.yearly"
-    
-#    _rec_name = "station_id"
     
     _description = "Insolation Incident Manager (Yearly)"
     
@@ -54,7 +46,6 @@ class insolation_incident(osv.Model):
     
     
     def compute_percentage(self, cr, uid, ids, context=None):
-#        tilt_azimuth = self.pool.get("tilt.azimuth")
         for data in self.browse(cr, uid, ids, context=context):
             if data.parent_id:
                 for parent_line in data.parent_id.tilt_azimuth_ids:
