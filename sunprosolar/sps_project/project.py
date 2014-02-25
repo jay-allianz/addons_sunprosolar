@@ -39,7 +39,7 @@ class project_project(osv.Model):
     _inherit = "project.project"
     
     _columns = {
-                'project_task_stage': fields.related('tasks', 'state', type='related', string='Project Task Stage'),
+                'project_task_stage': fields.related('tasks', 'stage_id', type='many2one', store=True,relation='project.task.type', string='Project Task Stage'),
                  }
 project_project()
 
@@ -59,18 +59,23 @@ class project_task(osv.Model):
     
     def create(self, cr, uid, vals, context=None):
         stage_pool = self.pool.get('project.task.type')
+        project_obj = self.pool.get('project.project')
         if vals.get('stage_id', False):
             rec = stage_pool.browse(cr, uid, vals.get('stage_id'), context=context)
             if rec.color:
                 vals.update({'color' : rec.color})
+                project_obj.write(cr, uid, vals.get('project_id'), {'color':rec.color}, context=context)
         return super(project_task, self).create(cr, uid, vals, context=context)
     
     def write(self, cr, uid, ids, vals, context=None):
         stage_pool = self.pool.get('project.task.type')
+        project_obj = self.pool.get('project.project')
         if vals.get('stage_id', False):
-            rec = stage_pool.browse(cr, uid, vals.get('stage_id'), context=context)
-            if rec.color:
-                vals.update({'color' : rec.color})
+            for task_rec in self.browse(cr, uid, ids, context=context):
+                rec = stage_pool.browse(cr, uid, vals.get('stage_id'), context=context)
+                if rec.color:
+                    vals.update({'color' : rec.color})
+                    project_obj.write(cr, uid, [task_rec.project_id.id], {'color':rec.color}, context=context)
         return super(project_task, self).write(cr, uid, ids, vals, context=context)
             
 

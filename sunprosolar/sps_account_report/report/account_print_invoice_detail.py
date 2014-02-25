@@ -43,7 +43,6 @@ class sps_account_invoice_detail(report_sxw.rml_parse):
             return False
         sale_order_obj = self.pool.get('sale.order')
         sale_order_ids = sale_order_obj.search(self.cr, self.uid, [('name','=',origin)])
-        print "sale_order_ids::::::::::::::::::",sale_order_ids
         if sale_order_ids:
             order_line = sale_order_obj.browse(self.cr, self.uid, sale_order_ids[0]).order_line
             return order_line

@@ -74,20 +74,26 @@ class crm_lead(osv.Model):
         }
         partner = partner.create(cr, uid, vals, context=context)
         return partner
-        
+    
     def on_change_station_and_utility(self, cr, uid, ids, city_id, context=None):
         values ={'utility_company_id': False, 'loc_station_id': False}
         if city_id:
             station_obj = self.pool.get('insolation.incident.yearly')
+            utility_company_obj = self.pool.get('res.partner')
             city = self.pool.get('city.city').browse(cr, uid, city_id, context=context)
+            
+            utility_ids = utility_company_obj.search(cr, uid, [('is_utility_company','=',1),('from_zip','<=',int(city.zip)),('to_zip','>=',int(city.zip))], context=context)
             station_ids = station_obj.search(cr, uid, [], context=context)
             if not station_ids:
                 raise osv.except_osv(_('Warning'), _('Station is not defined!'))
             station_data = station_obj.browse(cr, uid, station_ids, context=context)
-            for data in station_data:
-                if int(city.zip) >= int(data.from_zip) and int(city.zip) <= int(data.to_zip):
-                    values = {'utility_company_id' : data.utility_company_id.id or False,
-                              'loc_station_id' : data.id or False }
+            if utility_ids:
+                u_company = utility_ids[0]
+                utility_company_data = utility_company_obj.browse(cr, uid, utility_ids, context=context)
+                for u_data in utility_company_data:
+                    for data in station_data:
+                        values = {'utility_company_id' : u_data.id or False,
+                                   'loc_station_id' : data.id or False}
         return {'value' : values}
 
     def on_change_partner(self, cr, uid, ids, partner_id, context=None):
@@ -141,10 +147,11 @@ class crm_lead(osv.Model):
         res = {}
         for data in self.browse(cr, uid, ids, context=context):
             for doc in data.doc_req_ids:
-                if doc.doc == False:
-                    res[data.id] = False
-                else:
-                    res[data.id] = True
+                for datas in doc.doc_ids:
+                    if datas.datas == False:
+                        res[data.id] = False
+                    else:
+                        res[data.id] = True
         return res
     
     def _get_stc_dc_rating(self, cr, uid, ids, name, args, context=None):
@@ -1209,7 +1216,6 @@ class solar_solar(osv.Model):
         res = {}
         for solar_data in self.browse(cr, uid, ids, context=context):
             tilt_lead = self.pool.get('crm.lead').browse(cr, uid, solar_data.crm_lead_id.id, context=context).tilt_degree
-            print "tilt_lead:::::::::",tilt_lead
             res[solar_data.id] = tilt_lead
         return res
     
@@ -1217,7 +1223,6 @@ class solar_solar(osv.Model):
         res = {}
         for data in self.browse(cr, uid, ids, context):
             faceing_lead_1 = self.pool.get('crm.lead').browse(cr, uid, data.crm_lead_id.id, context=context)
-            print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",faceing_lead_1
             faceing_lead=faceing.id
             res[data.id] = faceing_lead
         return res
@@ -1470,6 +1475,14 @@ class project_project(osv.Model):
                     member_list.append((4, member.id))
                     self.write(cr, uid, [project_id], {'members': member_list})
         return project_id
+
+class ir_attachment(osv.Model):
+    
+    _inherit = "ir.attachment"
+    
+    _columns ={
+            'doc_id': fields.many2one("document.required","Document")
+    }
     
 class document_required(osv.Model):
     
@@ -1477,19 +1490,17 @@ class document_required(osv.Model):
     
     _columns = {
         'doc_id': fields.many2one('documents.all', 'Document Name'),
-        'doc' : fields.binary("Document"),
+        'doc_ids': fields.one2many('ir.attachment','doc_id',"Document" ),
         'collected' : fields.boolean("Collected"),
         'crm_lead_id' : fields.many2one('crm.lead', 'Lead'),
         'partner_id' : fields.many2one('res.partner', 'Customer'),
     }
     
     def write(self, cr, uid, ids, vals, context=None):
-        if not vals.get('doc', None):
+        if not vals.get('doc_ids', None):
             return super(document_required, self).write(cr, uid, ids, vals, context=context)
         vals.update({'collected' : True})
         res = super(document_required, self).write(cr, uid, ids, vals, context=context)
-#         if not vals.get('doc',None):
-#             return res
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
         
         user_obj = self.pool.get('res.users')
@@ -1540,8 +1551,7 @@ class res_partner(osv.Model):
         'last_name': fields.char('Last Name'),
         'middle_name' : fields.char('Middle Name'),
         'document_ids': fields.many2many('documents.all', 'company_document_rel', 'partner_id', 'document_id', 'Required Documents'),
-        
-        'from_zip' : fields.char('Zip (From)'),
+        'from_zip': fields.char('Zip (From)'),
         'to_zip' : fields.char('Zip (To)'),
         'zip_ids' : fields.many2many('city.city','city_res_part_rel',"city_id","res_part_id","Zip"),
     }
