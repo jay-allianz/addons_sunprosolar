@@ -20,27 +20,16 @@
 #
 ##############################################################################
 {
-    "name" : "SPS - CRM",
+    "name" : "SPS - Dashboard",
     "version" : "6.3",
     "author" : "Allianz Technology",
     "category" : "Tools",
     "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to generate Leads of customer. 
-    """,
-    'depends': ['base','sps_product','crm','city','document','account','analytic','project', 'sale'],
-    'demo': [
-        'crm_lead_demo.xml',
+    "description": """This module will generate All in one view for the stages""",
+    'data' : [
+              'dashboard_view.xml',
     ],
-    'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv',
-        'lead_view.xml',
-        'crm_data.xml',
-        'crm_report_view.xml',
-        'station_view.xml',
-        'wizard/crm_lead_to_opportunity_view.xml',
-        
-    ],
+    'depends': ['sps_crm','sps_project','sps_account_invoice','sps_sale','sps_stock'],
     'installable': True,
     'application': True,
     'auto_install': False,

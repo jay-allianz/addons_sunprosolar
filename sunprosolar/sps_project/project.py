@@ -49,8 +49,8 @@ class product_task_type(osv.Model):
     _inherit = 'project.task.type'
     
     _columns = {
-        'color' : fields.selection([(0,'0'),(1,'1'),(2,'2'),(3,'3'),(4,'4'),
-                                    (5,'5'),(6,'6'),(7,'7'),(8,'8'),(9,'9')], 'Stage Color')
+        'color' : fields.selection([(0,'White'),(1,'Gray'),(2,'Coral '),(3,'Yellow'),(4,'LimeGreen '),
+                                    (5,'Aquamarine'),(6,'Sky Blue'),(7,'CornflowerBlue'),(8,'Orchid'),(9,'Pink')], 'Stage Color')
     }
 
 class project_task(osv.Model):

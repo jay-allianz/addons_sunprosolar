@@ -521,7 +521,7 @@
 			</field>
 		</record>
 
-        <!-- Opportunities Form View Inherited -->
+        <!-- Opportunities Form View Inherited 
         <record id="view_sale_crm_crm_case_form_view_oppor_inherited" model="ir.ui.view">
             <field name="name">crm.opp.form</field>
             <field name="model">crm.lead</field>
@@ -532,7 +532,7 @@
                 </button>
             </field>
         </record>
-
+-->
 		<!-- Opportunities Form View -->
 		<record id="view_sun_crm_opp_form" model="ir.ui.view">
 			<field name="name">crm.opp.form</field>
@@ -793,13 +793,19 @@
 								<field name="loc_station_id" required="1" />
 								<field name="tilt_degree" required="1" />
 								<field name="faceing" required="1" />
-								<field name="module_product_id" />
-								<field name="inverter_product_id" />
-								<field name="num_of_module" />
+								<field name="module_product_id" required="1"/>
+								<field name="inverter_product_id" required="1"/>
+								<field name="num_of_module" required="1"/>
 								<field name="num_of_invertor" />
 								<field name="estimate_shade" />
 								<field name="num_of_arrays" />
 							</tree>
+							<form>
+								<field name="module_product_id" required="1"/>
+								<field name="inverter_product_id" required="1"/>
+								<field name="num_of_module" required="1"/>
+								<field name="num_of_invertor" required="1"/>
+							</form>
 						</field>
 						<group col="4" colspan="4">
 							<group col="2" colspan="2" string="Calculation Field">
@@ -1032,6 +1038,18 @@
 			</field>
 		</record>
 
+		<!--Inherit City form view -->
+		<record model="ir.ui.view" id="view_crm_lead_form_inherit">
+            <field name="name">crm.lead.inherit.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="city.view_lead_form_city"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='city_id']" position="attributes">
+					<attribute name="on_change">on_change_station_and_utility(city_id)</attribute>
+                </xpath>
+            </field>
+        </record>
+
 		<!-- Solar Search View -->
 		<record model="ir.ui.view" id="solar_search">
 			<field name="name">solar_Search</field>
@@ -1041,8 +1059,8 @@
 					<field name="loc_station_id" />
 					<field name="tilt_degree" />
 					<field name="faceing" />
-					<field name="module_product_id" />
-					<field name="inverter_product_id" />
+					<field name="module_product_id" required="1"/>
+					<field name="inverter_product_id" required="1"/>
 					<field name="num_of_invertor" />
 					<field name="estimate_shade" />
 					<field name="num_of_arrays" />
@@ -1066,17 +1084,15 @@
 				<form string="Solar Form" version="7.0">
 					<sheet>
 						<group col="4" colspan="4">
-							<field name="module_product_id" />
-							<field name="inverter_product_id" />
-							<field name="num_of_module" />
+							<field name="module_product_id" required="1"/>
+							<field name="inverter_product_id" required="1"/>
+							<field name="num_of_module" required="1"/>
 							<field name="num_of_invertor" required="1"/>
-						<!--
 							<field name="loc_station_id" required="1" />
 							<field name="tilt_degree" required="1" />
 							<field name="faceing" required="1" />
 							<newline />
-
-						-->							<group string="Calculatoin field" colspan="2" invisible="1">
+							<group string="Calculatoin field" colspan="2">
 								<field name="stc_dc_rating" />
 								<field name="ptc_dc_rating" />
 								<field name="cec_ac_rating" />
@@ -1085,7 +1101,7 @@
 								<field name="annual_solar_prod" />
 								<field name="annual_ele_usage"/>
 							</group>
-							<group string="Cleaner and Greener Enviourment" invisible="1" colspan="2">
+							<group string="Cleaner and Greener Enviourment" colspan="2">
 								<field name="co2_offset_tons"/>
 								<field name="co2_offset_pounds" />
 								<field name="cars_off_roads" />

@@ -19,31 +19,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "SPS - CRM",
-    "version" : "6.3",
-    "author" : "Allianz Technology",
-    "category" : "Tools",
-    "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to generate Leads of customer. 
-    """,
-    'depends': ['base','sps_product','crm','city','document','account','analytic','project', 'sale'],
-    'demo': [
-        'crm_lead_demo.xml',
-    ],
-    'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv',
-        'lead_view.xml',
-        'crm_data.xml',
-        'crm_report_view.xml',
-        'station_view.xml',
-        'wizard/crm_lead_to_opportunity_view.xml',
-        
-    ],
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-}
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import dashboard
