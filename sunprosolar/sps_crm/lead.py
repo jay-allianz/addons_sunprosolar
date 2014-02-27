@@ -24,6 +24,7 @@ import datetime
 from tools.translate import _
 import math
 import time
+import tools
 
 class type_of_sale(osv.Model):
 
@@ -172,12 +173,12 @@ class crm_lead(osv.Model):
             annual_prod = 0
             estimate_shade = 0.0
             for line in data.solar_ids:
-                annual_prod += line.annual_solar_prod
+                annual_prod += line.annual_solar_prod or 0
 #                estimate_shade += line.estimate_shade
 #            if estimate_shade > 0:
 #                res[data.id] = (annual_prod * data.estimate_shade) / 100
 #            else:
-                res[data.id] = annual_prod
+            res[data.id] = annual_prod
         return res
     
     def _get_annual_ele_usage(self, cr, uid, ids, name, args, context=None):
