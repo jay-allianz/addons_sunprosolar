@@ -2,6 +2,476 @@
 <openerp>
 	<data>
 
+		<!-- Opportunities Form View -->
+        <record model="ir.ui.view" id="crm_case_form_view_oppor_portal">
+            <field name="name">Opportunities</field>
+            <field name="model">crm.lead</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <form string="Opportunities" version="7.0">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" readonly="1"
+                                    on_change="onchange_partner_id(partner_id, email_from)"
+                                    string="Customer"
+                                    context="{'default_name': partner_name, 'default_email': email_from, 'default_phone': phone}"/>
+                					<label for="street" string="Address" />
+									<div>
+										<field name="street" placeholder="Street..." readonly="1"/>
+										<field name="street2" readonly="1"/>
+										<field name="city_id" on_change="on_change_station_and_utility(city_id)" readonly="1"/>
+									</div>    
+                                <field name="email_from" string="Email" widget="email" readonly="1"/>
+                                <field name="phone" readonly="1"/>
+                            </group>
+
+                            <group>
+                                <label for="title_action"/>
+                                <div>
+                                    <field name="date_action" nolabel="1"/> <label string="-" attrs="{'invisible': ['|', ('date_action', '=', False), ('title_action', '=', False)]}" readonly="1"/>
+                                    <field name="title_action" class="oe_inline" nolabel="1" placeholder="e.g. Call for proposal" readonly="1"/>
+                                </div>
+                                <field name="date_deadline" readonly="1"/>
+                                <field name="priority" readonly="1"/>
+                            </group>
+
+                            <group>
+                                <field name="user_id" on_change="on_change_user(user_id, context)" readonly="1"/>
+                                <label for="section_id"/>
+                                <div>
+                                    <field name="section_id" widget="selection" readonly="1"/>
+                                    <button name="case_escalate" string="Escalate" type="object" class="oe_link" attrs="{'invisible': ['|', ('section_id','=',False), ('state', 'not in', ['draft','open','pending'])]}"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="categ_ids"
+                                    string="Categories" widget="many2many_tags"
+                                    context = "{'object_name': 'crm.lead'}"
+                                    domain="[('object_id.model', '=', 'crm.lead')]" readonly="1"/>
+
+                            </group>
+                        </group>
+
+                        <notebook colspan="4">
+                        <page string="Internal Notes" readonly="1">
+                            <field name="description" readonly="1"/>
+                        </page>
+                        <page string="Lead" readonly="1">
+                            <group>
+                                <group>
+                                    <field name="partner_name" readonly="1"/>
+                					<field name="middle_name" placeholder="Middle Name" readonly="1"/>
+									<field name="last_name" placeholder="Last Name" readonly="1"/>
+                                    <label for="street" string="Address" />
+                                    <div>
+                                        <field name="street" placeholder="Street..." readonly="1"/>
+                                        <field name="street2" readonly="1"/>
+                                        <div class="address_format">
+                                            <field name="city" placeholder="City" style="width: 40%%" readonly="1"/>
+                                            <field name="state_id" options='{"no_open": True}' on_change="onchange_state(state_id)" placeholder="State" style="width: 24%%" readonly="1"/>
+                                            <field name="zip" placeholder="ZIP" style="width: 34%%" readonly="1"/>
+                                        </div>
+                                        <field name="country_id" placeholder="Country" options='{"no_open": True}' readonly="1"/>
+                                        <field name="auto_zip" placeholder="Auto-Zipcode" readonly="1" />
+                                    </div>
+                                </group>
+
+                                <group>
+                                    <label for="contact_name"/>
+                                    <div>
+                                        <field name="contact_name" class="oe_inline"/>
+                                        <field name="title" placeholder="Title" domain="[('domain', '=', 'contact')]" options='{"no_open": True}' class="oe_inline"/>
+                                    </div>
+                                    <field name="function"/>
+                                    <field name="mobile"/>
+                                    <field name="fax"/>
+                                    <field name="property" />
+									<field name="insentive_type" />
+									<field name="sci_step" />
+                                </group>
+                                <group string="Mailings" name="mailings">
+                                    <field name="opt_out"/>
+                                </group>
+                                <group string="Misc" readonly="1">
+                                    <field name="active" readonly="1"/>
+                                    <field name="day_open" groups="base.group_no_one" />
+                                    <field name="day_close" groups="base.group_no_one"/>
+                                    <field name="referred"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                </group>
+                                <group string="References">
+                                    <field name="ref"/>
+                                    <field name="ref2"/>
+                                </group>
+                            </group>
+                        </page>
+					<page string="Home Info" readonly="1">
+						<group col="4" colspan="4">
+							<field name="home" required="1" />
+							<group col="10" colspan="10"
+								attrs="{'invisible':[('home','!=','own')]}">
+								<field name="time_own_year" />
+								<span class="oe_grey"> Year </span>
+								<newline />
+								<span class="oe_grey">
+								</span>
+								<field name="time_own_month" nolabel="1" />
+								<span class="oe_grey"> Month </span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+							</group>
+							<field name="quote" />
+							<group col="4" colspan="4"
+								attrs="{'invisible':[('quote','=',False)]}">
+								<field name="quote_info" />
+							</group>
+							<field name="heat_home" readonly="1"/>
+							<field name="home_sq_foot" readonly="1"/>
+							<newline />
+						</group>
+						<group col="4" colspan="4">
+							<field name="roof_type" /><newline/>
+<!--							<field name="estimate_shade" /-->
+							<field name="loc_station_id" required="1" />
+							<newline />
+							<field name="tilt_degree" required="1" />
+							<newline />
+							<field name="faceing" required="1" />
+							<group col="10" colspan="10">
+								<field name="age_house_year" readonly="1"/>
+								<span class="oe_grey"> Year </span>
+								<newline />
+								<span class="oe_grey">
+								</span>
+								<field name="age_house_month" nolabel="1" readonly="1"/>
+								<span class="oe_grey"> Month </span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+								<span class="oe_grey">
+								</span>
+							</group>
+						</group>
+					</page>
+					<page string="Electricity Info">
+						<group col="4" colspan="4">
+							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)"
+								domain="[('is_utility_company','=','True')]" context="{'view_id': 'view_utility_customer_form'}"
+								required="1" readonly="1"/>
+							<!-- <field name="main_ele_serviece_panel" / -->
+							<newline />
+							<separator string="Required Documents" colspan="4" />
+							<field name='doc_req_ids' colspan="4" nolabel="1" readonly="1">
+								<tree editable="bottom">
+									<field name="doc_id" />
+									<field name="doc_ids">
+								    	<tree>
+											<field name="datas"/>
+										</tree>
+									</field>
+									<field name="collected" />
+								</tree>
+								<form>
+									<field name="doc_id" />
+									<field name="doc_ids" />
+									<field name="collected" readonly="1" />
+								</form>
+							</field>
+							<field name="required_document"/>
+							<field name="acc_no"
+								attrs="{'invisible':[('required_document','=',False)]}" />
+							<field name="meter_no"
+								attrs="{'invisible':[('required_document','=',False)]}" />
+							<field name="bill_summer"
+								attrs="{'invisible':[('required_document','=',False)]}" />
+							<field name="rate_plan"
+								attrs="{'invisible':[('required_document','=',False)]}" />
+							<field name="bill_winter"
+								attrs="{'invisible':[('required_document','=',False)]}" />
+							<label for="bill_average"
+								attrs="{'invisible':[('required_document','=',False)]}" />
+							<div attrs="{'invisible':[('required_document','=',False)]}">
+								<field name="bill_average" />
+								<span class="oe_grey"> of </span>
+								<field name="bill_month" nolabel="1" />
+							</div>
+							<label for="bill_total"
+								attrs="{'invisible':[('required_document','=',False)]}" />
+							<div attrs="{'invisible':[('required_document','=',False)]}">
+								<field name="bill_total" />
+								<span class="oe_grey"> of </span>
+								<field name="bill_month1" nolabel="1" />
+							</div>
+						</group>
+						<field name="see_lead_electricity_note" invisible="1" />
+						<label for="electricity_note" />
+						<field name="electricity_note" colspan="4" readonly="1"/>
+						<button name="view_lead_electricity_notes" string="Viewing This Tab Notes"
+							type="object" class="oe_link" />
+						<group>
+							<button name="view_lead_all_tab_notes" string="Viewing All Tab Notes"
+								type="object" class="oe_link" />
+						</group>
+					</page>
+					<page string="Marketing Data" readonly="1">
+						<group col="4" colspan="4">
+							<field name="lead_source" readonly="1"/>
+							<field name="level_of_lead" readonly="1"/>
+							<field name="qualified" readonly="1"/>
+							<field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}" readonly="1"/>
+							<field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}" readonly="1"/>
+							<field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}" readonly="1"/>
+							<field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}" readonly="1"/>
+							<separator string="Appointments" colspan="4" />
+							<field name="appointment_ids" nolabel="1" colspan="4" readonly="1"/>
+							<field name="marketing_note" colspan="4" readonly="1"/>
+						</group>
+					</page>
+					<page string="Accounting Data" readonly="1">
+						<group col="4" colspan="4">
+							<field name="type_of_sale_id" readonly="1"/>
+							<field name="deadline" readonly="1"/>
+							<field name="deposit" readonly="1"/>
+							<field name="federal_tax" readonly="1"/>
+							<field name="property_tax" readonly="1"/>
+							<field name="mortgage" readonly="1"/>
+							<field name="bankruptcy" readonly="1"/>
+							<field name="rate_credit" readonly="1"/>
+						</group>
+					</page>
+					<page string="Attachments">
+						<field name="attachment_ids" nolabel="1" colspan="4" />
+					</page>
+					<page string="Solar" readonly="1">
+						<separator string="Solar Information" />
+						<field name="solar_ids" colspan="4" nolabel="1" readonly="1">
+							<tree string="Solar Tree">
+								<field name="loc_station_id" required="1" />
+								<field name="tilt_degree" required="1" />
+								<field name="faceing" required="1" />
+								<field name="module_product_id" required="1"/>
+								<field name="inverter_product_id" required="1"/>
+								<field name="num_of_module" required="1"/>
+								<field name="num_of_invertor" />
+								<field name="estimate_shade" />
+								<field name="num_of_arrays" />
+							</tree>
+							<form>
+								<field name="module_product_id" required="1"/>
+								<field name="inverter_product_id" required="1"/>
+								<field name="num_of_module" required="1"/>
+								<field name="num_of_invertor" required="1"/>
+								<field name="loc_station_id" required="1" />
+								<field name="tilt_degree" required="1" />
+								<field name="faceing" required="1" />
+								<field name="estimate_shade" />
+								field name="num_of_arrays" />
+							</form>
+						</field>
+						<group col="4" colspan="4">
+							<group col="2" colspan="2" string="Calculation Field">
+								<field name="stc_dc_rating" />
+								<field name="ptc_dc_rating" />
+								<field name="cec_ac_rating" />
+								<field name="ptc_stc_ratio" />
+								<field name="annual_solar_prod" />
+								<field name="annual_ele_usage" />
+								<field name="site_avg_sun_hour" />
+							</group>
+							<group col="2" colspan="2" string="Cleaner and Greener Environment">
+								<!-- <field name="yearly_output_per_kw" /> <field name="solar_array_output" 
+									/> -->
+								<field name="co2_offset_tons" />
+								<field name="co2_offset_pounds" />
+								<field name="cars_off_roads" />
+								<field name="gasoline_equi" />
+								<field name="tree_equi" />
+								<field name="tree_planting_equi" />
+								<field name="ave_home_powered" />
+								<field name="ave_light_bulb_powered" />
+							</group>
+						</group>
+					</page>
+					
+					<page string="Solar PV Economics" readonly="1">
+						<group col="4" colspan="4">
+							<separator colspan="4" string="Economics Details" />
+							<group col="4" colspan="4">
+		                        <group string="PV" col="2" colspan="2">
+									<field name="cost" readonly="1" />
+								</group><newline/>
+	                            <group string="PV" col="2" colspan="2">
+	                                  <field name="peak_kw_stc" readonly="1" />
+	                                  <field name="sun_hour_per_day" readonly="1" />
+	                                  <field name="pv_kw_decline" />
+	                                  <field name="cost_peack_kw" />
+	                                  <field name="number_of_years" />
+	                            </group>
+	                            <group string="Loan" col="2" colspan="2" readonly="1">
+	                                  <field name="loan_period" />
+	                                  <field name="loan_interest_rate" />
+	                                  <field name="loan_amt" readonly="1" />
+	                                  <field name="down_payment" />
+	                                  <field name="down_payment_amt" readonly="1" />
+	                            </group>
+	                        </group>
+	                        <group col="4" colspan="4">
+	                            <group string="Grid" col="2" colspan="2">
+	                                  <field name="grid_energy_rate" />
+								      <field name="grid_rate_increase_by" />
+	                            </group>
+	                            <group string="Inverter" col="2" colspan="2">
+	                                  <field name="inverter_cost" />
+								      <field name="replace_inverter_every" />
+	                            </group>
+                            </group>
+                            <group string="Incentives" col="2" colspan="2">
+                                  <field name="pbi_epbb_incentive" />
+                                  <field name="rebate" />
+							      <field name="rebate_amt" readonly="1" />
+							      <field name="srec" />
+                            </group>
+						</group>
+						<newline />
+							<separator string="Cost and Rebate" colspan="4"/>
+								<field name="cost_rebate_ids" nolabel="1" readonly='1'>
+									<tree>
+										<field name="year" />
+										<field name="old_bill" />
+										<field name="new_bill" />
+										<field name="pv_energy" />
+										<field name="elec_bill_savings" />
+										<field name="loan_installment" />
+										<field name="srecs" />
+										<field name="incentives" />
+										<field name="depriciation" />
+										<field name="depriciation_savings" />
+										<field name="yearly_payout" />
+									</tree>
+									<form>
+										<field name="year" />
+										<field name="old_bill" />
+										<field name="new_bill" />
+										<field name="pv_energy" />
+										<field name="elec_bill_savings" />
+										<field name="loan_installment" />
+										<field name="srecs" />
+										<field name="incentives" />
+										<field name="depriciation" />
+										<field name="depriciation_savings" />
+										<field name="yearly_payout" />
+									</form>
+								</field>		
+					</page>
+					
+					<page string="Annual Electricity Usage" readonly="1">
+						<group col="4" colspan="4">
+							<separator colspan="4" string="Annual Electricity Usage" />
+							<field name="anual_electricity_usage_ids" nolabel="1" readonly="1">
+								<form>
+									<field name="name" />
+									<field name="type" />
+									<field name="jan" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="feb" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="mar" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name='apr' attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="may" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="jun" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="jul" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="aug" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="sep" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="oct" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="nov" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="dec" attrs="{'invisible':[('type','=','yearly')]}"
+										on_change="onchange_month_value(jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec)" />
+									<field name="usage_kwh" attrs="{'readonly':[('type','=','monthly')]}"
+										required="1" />
+								</form>
+								<tree>
+									<field name="name" />
+									<field name="usage_kwh" />
+								</tree>
+							</field>
+						</group>
+					</page>
+					<page string="Project Photos" readonly="1">
+						<group col="4" colspan="4">
+							<field name="project_photo_ids" nolabel="1">
+								<form>
+									<field name="name" required="1" />
+									<field name="photo" widget="image" required="1" />
+									<field name="tag_line" required="1" />
+								</form>
+								<tree>
+									<field name="name" required="1" />
+									<field name="photo" widget="image" required="1" />
+									<field name="tag_line" required="1" />
+								</tree>
+							</field>
+						</group>
+					</page>
+					<page string="Project Reviews" readonly="1">
+						<group col="4" colspan="4">
+							<field name="project_review_ids" nolabel="1">
+								<tree editable="bottom">
+									<field name="name" required="1" />
+								</tree>
+							</field>
+						</group>
+					</page>
+					<page string="Friend References">
+						<group col="4" colspan="4">
+							<field name="friend_refer_ids" nolabel="1">
+								<tree editable="bottom">
+									<field name="name" required="1" />
+									<field name="lname" required="1" />
+									<field name="phone" />
+									<field name="email" required="1" />
+								</tree>
+							</field>
+						</group>
+					</page>
+					</notebook>
+					</sheet>
+                </form>
+            </field>
+        </record>
+		
+
         <!-- SPS Dashboard Kanban View  -->
         <record model="ir.ui.view" id="sps_dashboard_kanban_view">
             <field name="name">Sunpro Dashboard</field>
@@ -78,6 +548,50 @@
         <field name="help">This report performs analysis on different state of the Customer project between Lead, Opportunity, Proposal, Contract, Project or Invoicing.</field>
     </record>
 
+    <record model="ir.actions.act_window" id="crm_case_category_act_oppor11_portal">
+        <field name="name">Opportunities</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">kanban,tree,graph,form,calendar</field>
+        <field name="domain">[('type','=','opportunity')]</field>
+        <field name="context">{'stage_type': 'opportunity', 'default_type': 'opportunity', 'default_user_id': uid}</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+          Click to create a new opportunity.
+          </p><p>
+          OpenERP helps you keep track of your sales pipeline to follow
+          up potential sales and better forecast your future revenues.
+          </p><p>
+          You will be able to plan meetings and phone calls from
+          opportunities, convert them into quotations, attach related
+          documents, track all discussions, and much more.
+          </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_crm_tag_kanban_view_oppor11_portal">
+        <field name="sequence" eval="0"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="act_window_id" ref="crm_case_category_act_oppor11_portal"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_oppor11_portal">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="act_window_id" ref="crm_case_category_act_oppor11_portal"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor11_portal">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="crm_case_form_view_oppor_portal"/>
+        <field name="act_window_id" ref="crm_case_category_act_oppor11_portal"/>
+    </record>
+
+
     <menuitem id="base.sps_dashboard" name="Sunpro Dashboard" parent="base.menu_reporting" sequence="1"/>
     <menuitem action="action_sps_dashboard_all" id="menu_sps_dashboard_all" parent="base.sps_dashboard" sequence="10"/>
 	
@@ -90,7 +604,7 @@
    	<menuitem id="portal_sps_leads_opp" name="Pre-Sales" parent="portal.portal_menu" sequence="20" />
    	
    	<menuitem name="Leads" id="menu_crm_leads_portal" parent="portal_sps_leads_opp" action="crm.crm_case_category_act_leads_all" sequence="21" />
-    <menuitem name="Opportunities" id="menu_crm_opportunities_portal" parent="portal_sps_leads_opp" action="crm.crm_case_category_act_oppor11" sequence="22" />
+    <menuitem name="Opportunities" id="menu_crm_opportunities_portal" parent="portal_sps_leads_opp" action="crm_case_category_act_oppor11_portal" sequence="22" />
 
    	<!-- Contracts -->
    	<menuitem id="portal_sps_contracts" name="Contracts" parent="portal.portal_menu" sequence="20" />

@@ -25,6 +25,7 @@ from tools.translate import _
 import math
 import time
 import tools
+from openerp import SUPERUSER_ID
 
 class type_of_sale(osv.Model):
 
@@ -375,7 +376,7 @@ class crm_lead(osv.Model):
         result = {}
         
         cost = 0.0
-        for data in self.browse(cr, uid, ids, context=context):
+        for data in self.browse(cr, SUPERUSER_ID, ids, context=context):
             result[data.id] = {
                 'cost' : 0.0,
                 'down_payment_amt' : 0.0, 
