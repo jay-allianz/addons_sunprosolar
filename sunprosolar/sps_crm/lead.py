@@ -23,12 +23,13 @@ from openerp.osv import fields, osv
 import datetime
 from tools.translate import _
 import math
+import time
 
 class type_of_sale(osv.Model):
 
     _name = "type.of.sale"
     _columns = {
-            'name': fields.selection([('cash', 'Cash'), ('sun_power_lease', 'Sun Power Lease'), ('cpf', 'CPF'), ('wells_fargo', 'Wells Fargo'), ('admirals_bank', 'Admirals Bank'), ('hero', 'Hero'), ('others', 'Others')], 'Type Of Sale'),
+            'name': fields.char('Type Of Sale', size=30),
             'number_of_days': fields.integer('Number Of Days'),
         }
     
@@ -533,7 +534,7 @@ class crm_lead(osv.Model):
                         ('w', '[W]West'),
                         ('nw', '[NW]North-West')
                     ], 'Tilt Degree'),
-        'faceing' : fields.many2one('tilt.tilt', 'Faceing'),
+        'faceing' : fields.many2one('tilt.tilt', 'Facing'),
         'estimate_shade': fields.integer('Estimated Shading'),
         'ahj': fields.selection([('structural', 'Structural'), ('electrical', 'Electrical')], 'AHJ', help="Authority Having Jurisdiction"),
         'utility_bill' : fields.boolean('Utility Bill', help="Checked Utility bill to sign customer contract."),
@@ -542,7 +543,7 @@ class crm_lead(osv.Model):
         'qualified': fields.boolean('Qualification Data?'),
         'annual_income': fields.float('Annual Income'),
         'tax_liability': fields.float('Tax Liability'),
-        'credit_source': fields.float('Credit Source'),
+        'credit_source': fields.float('Credit Score'),
         'property_tax': fields.float('Property Tax'),
         'appointment_ids': fields.one2many('crm.meeting', 'crm_id', 'Appointments'),
         'type_of_sale_id': fields.many2one('type.of.sale', 'Type Of Sale'),
@@ -1125,7 +1126,7 @@ class solar_solar(osv.Model):
                                 ('w', '[W]West'),
                                 ('nw', '[NW]North-West')
                             ], 'Tilt Degree'),
-                'faceing' : fields.many2one('tilt.tilt', 'Faceing'),
+                'faceing' : fields.many2one('tilt.tilt', 'Facing'),
                 'crm_lead_id': fields.many2one('crm.lead', "Lead"),
                 'module_product_id': fields.many2one('product.product', 'Module Name', domain=[('product_group', '=', 'module')], type='module'),
                 'num_of_module': fields.integer('Number of modules'),
@@ -1478,8 +1479,14 @@ class crm_meeting(osv.Model):
     _defaults = {
             'name': '/',
             'meeting_type': 'general_meeting',
-            'schedule_appointment': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+#            'schedul/e_appointment': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+    
+    def onchange_dates(self, cr, uid, ids, start_date, duration=False, end_date=False, allday=False, context=None):
+        res = super(crm_meeting, self).onchange_dates(cr, uid, ids, start_date, duration=duration, end_date=end_date, allday=allday, context=context)
+        if not ids:
+            res['value'].update({'schedule_appointment': start_date})
+        return res    
     
     def create(self, cr, uid, ids, context=None):
         res = super(crm_meeting, self).create(cr, uid, ids, context=context)

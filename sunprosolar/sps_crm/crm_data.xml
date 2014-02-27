@@ -102,7 +102,29 @@
          <record model="roof.type" id="roof8">
             <field name="name">Unknown</field>
          </record>
-									-->
-        
+							-->
+
+		<record model="type.of.sale" id="tos1">
+            <field name="name">Cash</field>
+         </record>
+		<record model="type.of.sale" id="tos2">
+            <field name="name">Sun Power Lease</field>
+         </record>
+		<record model="type.of.sale" id="tos3">
+            <field name="name">CPF</field>
+         </record>
+		<record model="type.of.sale" id="tos4">
+            <field name="name">Wells Fargo</field>
+         </record>
+		<record model="type.of.sale" id="tos5">
+            <field name="name">Admirals Bank</field>
+         </record>
+		<record model="type.of.sale" id="tos6">
+            <field name="name">Hero</field>
+         </record>
+		<record model="type.of.sale" id="tos7">
+            <field name="name">Others</field>
+         </record>
+		
     </data>
 </openerp>

@@ -805,6 +805,11 @@
 								<field name="inverter_product_id" required="1"/>
 								<field name="num_of_module" required="1"/>
 								<field name="num_of_invertor" required="1"/>
+								<field name="loc_station_id" required="1" />
+								<field name="tilt_degree" required="1" />
+								<field name="faceing" required="1" />
+								<field name="estimate_shade" />
+								field name="num_of_arrays" />
 							</form>
 						</field>
 						<group col="4" colspan="4">
@@ -1499,7 +1504,7 @@
 					<attribute name="invisible">1</attribute>
 				</xpath>
 				<xpath expr="//field[@name='name']" position="after">
-					<field name="schedule_appointment" />
+					<field name="schedule_appointment"/>
 					<field name="date" string="Actual Appointment Date" />
 					<field name="appointment_outcome" />
 					<field name="reason" />
