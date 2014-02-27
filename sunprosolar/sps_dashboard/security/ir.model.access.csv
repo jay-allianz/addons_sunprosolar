@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_leads_portal,crm.lead access for portal,crm.model_crm_lead,portal.group_portal,1,1,1,1
+access_sps_dashboard_portal,sps.dashboard access for portal,sps_dashboard.model_sps_dashboard,portal.group_portal,1,1,1,1

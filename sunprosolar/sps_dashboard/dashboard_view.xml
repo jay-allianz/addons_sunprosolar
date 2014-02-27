@@ -81,6 +81,22 @@
     <menuitem id="base.sps_dashboard" name="Sunpro Dashboard" parent="base.menu_reporting" sequence="1"/>
     <menuitem action="action_sps_dashboard_all" id="menu_sps_dashboard_all" parent="base.sps_dashboard" sequence="10"/>
 	
+    <!--  Portal Menus -->
+    <!-- Sunpro Analysis -->
+    <menuitem id="portal_sps_dashboard" name="Sunpro Dashboard" parent="portal.portal_menu" sequence="20" />
+    <menuitem action="action_sps_dashboard_all" id="menu_sps_dashboard_portal" parent="portal_sps_dashboard" />
 
+   	<!-- Leads and Opportunities-->
+   	<menuitem id="portal_sps_leads_opp" name="Pre-Sales" parent="portal.portal_menu" sequence="20" />
+   	
+   	<menuitem name="Leads" id="menu_crm_leads_portal" parent="portal_sps_leads_opp" action="crm.crm_case_category_act_leads_all" sequence="21" />
+    <menuitem name="Opportunities" id="menu_crm_opportunities_portal" parent="portal_sps_leads_opp" action="crm.crm_case_category_act_oppor11" sequence="22" />
+
+   	<!-- Contracts -->
+   	<menuitem id="portal_sps_contracts" name="Contracts" parent="portal.portal_menu" sequence="20" />
+   	
+   	<menuitem action="account.action_account_analytic_account_form" id="account_analytic_def_account_portal"
+            parent="portal_sps_contracts"
+            name='Contracts'/>
 	</data>
 </openerp>

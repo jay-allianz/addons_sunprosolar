@@ -233,13 +233,12 @@ class report_xml(osv.osv):
             helper_installed = helper_module and helper_module['state']=='installed'
 
         if OpenOffice_service and helper_installed:
-            cr.execute("SELECT host, port FROM oo_config")
-            host, port = cr.fetchone()
             try:
+                cr.execute("SELECT host, port FROM oo_config")
+                host, port = cr.fetchone()
                 OpenOffice_service(cr, host, port)
                 netsvc.Logger().notifyChannel('report_aeroo', netsvc.LOG_INFO, "OpenOffice.org connection successfully established")
             except Exception, e:
-                cr.rollback()
                 netsvc.Logger().notifyChannel('report_aeroo', netsvc.LOG_WARNING, str(e))
         ##############################################
 
