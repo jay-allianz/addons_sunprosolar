@@ -95,8 +95,19 @@
    	<!-- Contracts -->
    	<menuitem id="portal_sps_contracts" name="Contracts" parent="portal.portal_menu" sequence="20" />
    	
-   	<menuitem action="account.action_account_analytic_account_form" id="account_analytic_def_account_portal"
-            parent="portal_sps_contracts"
-            name='Contracts'/>
+   	<record id="portal_action_account_analytic_account_form" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.analytic.account</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('partner_id','=',user.partner_id.id)]</field>
+        <field name="view_id" ref="account.view_account_analytic_account_tree"/>
+        <field name="search_view_id" ref="account.view_account_analytic_account_search"/>
+    </record>
+
+	<menuitem action="portal_action_account_analytic_account_form" id="account_analytic_def_account_portal"
+        parent="portal_sps_contracts"
+        name='Contracts'/>
 	</data>
 </openerp>
