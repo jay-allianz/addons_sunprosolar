@@ -1,3 +1,36 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_crm_leads_portal,crm.lead access for portal,crm.model_crm_lead,portal.group_portal,1,1,1,1
-access_sps_dashboard_portal,sps.dashboard access for portal,sps_dashboard.model_sps_dashboard,portal.group_portal,1,1,1,1
+access_crm_leads_portal,crm.lead access for portal,crm.model_crm_lead,portal.group_portal,1,1,1,0
+access_sps_dashboard_portal,sps.dashboard access for portal,sps_dashboard.model_sps_dashboard,portal.group_portal,1,1,1,0
+access_account_analytic_line_portal,access_account_analytic_line access for portal,account.model_account_analytic_line,portal.group_portal,1,1,1,0
+access_crm_segmentation_user_portal,crm.segmentation user,crm.model_crm_segmentation,portal.group_portal,1,0,0,0
+access_crm_segmentation_line_user_portal,crm.segmentation.line user,crm.model_crm_segmentation_line,portal.group_portal,1,0,0,0
+access_crm_case_channel_user_portal,crm.case.channel user,crm.model_crm_case_channel,portal.group_portal,1,0,0,0
+access_crm_case_categ_portal,crm.case.categ,crm.model_crm_case_categ,portal.group_portal,1,0,0,0
+access_crm_lead_portal,crm.lead,crm.model_crm_lead,portal.group_portal,1,1,1,0
+access_crm_phonecall_portal,crm.phonecall,crm.model_crm_phonecall,portal.group_portal,1,0,0,0
+access_crm_case_section_user_portal,crm.case.section.user,crm.model_crm_case_section,portal.group_portal,1,0,0,0
+access_crm_case_resource_type_user_portal,crm_case_resource_type user,crm.model_crm_case_resource_type,portal.group_portal,1,0,0,0
+access_crm_phonecall_report_user_portal,crm.phonecall.report.user,crm.model_crm_phonecall_report,portal.group_portal,1,0,0,0
+access_calendar_attendee_crm_user_portal,calendar.attendee.crm.user,crm.model_calendar_attendee,portal.group_portal,1,0,0,0
+access_res_partner_portal,res.partner.crm.user,base.model_res_partner,portal.group_portal,1,0,0,0
+access_res_partner_category_portal,res.partner.category.crm.user,base.model_res_partner_category,portal.group_portal,1,0,0,0
+mail_mailgate_thread_portal,mail.thread,mail.model_mail_thread,portal.group_portal,1,0,0,0
+access_crm_lead_report_user_portal,crm.lead.report user,crm.model_crm_lead_report,portal.group_portal,1,0,0,0
+access_res_partner_bank_type_crm_user_portal,res.partner.bank.type.crm.user,base.model_res_partner_bank_type,portal.group_portal,1,0,0,0
+access_crm_payment_mode_user_portal,crm.payment.mode,crm.model_crm_payment_mode,portal.group_portal,1,0,0,0
+access_crm_case_section_portal,crm.case.section,crm.model_crm_case_section,portal.group_portal,1,0,0,0
+access_crm_lead_all_tabs_description_portal,crm.lead.all.tabs.description,sps_crm.model_crm_lead_all_tabs_description,portal.group_portal,1,1,1,1
+access_solar_solar_portal,solar.solar,sps_crm.model_solar_solar,portal.group_portal,1,1,1,1
+access_document_required_portal,document.required,sps_crm.model_document_required,portal.group_portal,1,1,1,0
+access_electricity_usage_portal,electricity.usage,sps_crm.model_electricity_usage,portal.group_portal,1,1,1,1
+access_project_reviews_portal,project.reviews,sps_crm.model_project_reviews,portal.group_portal,1,1,1,1
+access_ friend_reference_portal,friend.reference,sps_crm.model_friend_reference,portal.group_portal,1,1,1,1
+access_project_photos_portal,project.photos,sps_crm.model_project_photos,portal.group_portal,1,1,1,1
+access_crm_lead_electricity_description_portal,crm.lead.electricity.description,sps_crm.model_crm_lead_electricity_description,portal.group_portal,1,1,1,1
+access_documents_all_portal,documents.all,sps_crm.model_documents_all,portal.group_portal,1,1,1,1
+access_crm_lead_home_description_portal,crm.lead.home.description,sps_crm.model_crm_lead_home_description,portal.group_portal,1,1,1,1
+access_crm_lead_system_description_portal,crm.lead.system.description,sps_crm.model_crm_lead_system_description,portal.group_portal,1,1,1,1
+access_crm_lead_accounting_description_portal,crm.lead.accounting.description,sps_crm.model_crm_lead_accounting_description,portal.group_portal,1,1,1,1
+access_crm_lead_marketing_description_portal,crm.lead.marketing.description,sps_crm.model_crm_lead_marketing_description,portal.group_portal,1,1,1,1
+access_insolation_incident_yearly_portal,insolation.incident.yearly,sps_crm.model_insolation_incident_yearly,portal.group_portal,1,0,0,0
+access_ir_attachment_portal,ir.attachment,sps_crm.model_ir_attachment,portal.group_portal,1,1,1,1
