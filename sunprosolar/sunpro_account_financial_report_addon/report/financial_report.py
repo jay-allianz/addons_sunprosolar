@@ -312,14 +312,22 @@ class account_balance_inherit(account_balance):
         self.total_equ_comp1 = 0.00
         self.total_liab_equ_comp0 = 0.00
         self.total_liab_equ_comp1 = 0.00
+#        
+#        self.context = context
+        
         super(account_balance_inherit, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'get_debit' : self.get_debit,
             'get_total_debit' : self.get_total_debit,
             'get_credit' : self.get_credit,
             'get_total_credit' : self.get_total_credit,
+            'get_comp_debit' : self.get_comp_debit,
+            'get_total_comp_debit' : self.get_total_comp_debit,
+            'get_comp_credit' : self.get_comp_credit,
+            'get_total_comp_credit' : self.get_total_comp_credit
         })
-        self.context = context
+        
+    # Calculate the Debit and Credit amount of each line items of the Trail Balance for YTD reports.
         
     def get_debit(self, debit, level, type, name):
         if type in ['other', 'liquidity', 'receivable', 'payable']: 
@@ -1324,8 +1332,27 @@ class account_balance_inherit(account_balance):
                     result_acc.append(self.net_profit_dict)
         return result_acc
     
+    
+    # Calculate the amount Debit and Credit of the Trail Blanace of Periodic.  
+    
     def get_profit(self, bal):
         return bal
+    
+    def get_comp_debit(self, comp_debit, level, type, name):
+        if type in ['other', 'liquidity', 'receivable', 'payable']: 
+            self.comp_debit_total += comp_debit
+        return comp_debit
+    
+    def get_total_comp_debit(self):
+        return self.comp_debit_total
+    
+    def get_comp_credit(self, comp_credit, level, type, name):
+        if type in ['other', 'liquidity', 'receivable', 'payable']: 
+            self.comp_credit_total += comp_credit
+        return comp_credit
+    
+    def get_total_comp_credit(self):
+        return self.comp_credit_total
     
     def comparison1_lines(self, form, level=0):
         """
@@ -1345,36 +1372,6 @@ class account_balance_inherit(account_balance):
         def _get_children_and_consol(cr, uid, ids, level, context={}, change_sign=False):
             aa_obj = self.pool.get('account.account')
             ids2=[]
-#            ctx_bal =_ctx_end(self.context.copy())
-#            ctx_in =_ctx_init(self.context.copy())
-#            net_bal = 0.00
-#            user_type = ['Revenue', 'Cost Of Goods Sold', 'Expense', 'Other Income', 'Other Expense']
-#            acc_ids = aa_obj.search(self.cr, self.uid, [('type', '=', 'view'), ('level', '=', 1), ('user_type', 'in', user_type)])
-#            for acc in acc_ids:
-#                acc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_bal)
-#                Aacc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_in)
-#                periodic_bal = acc_data_browse.balance 
-#                net_bal += periodic_bal
-#            acc_ids = aa_obj.search(self.cr, self.uid, [('type', '=', 'view'), ('level', '=', 1)])
-#            for acc in acc_ids:
-#                acc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_bal)
-#                Aacc_data_browse = aa_obj.browse(self.cr, self.uid, acc, ctx_in)
-#                bal = acc_data_browse.balance + Aacc_data_browse.balance
-#                if acc_data_browse.name.lower() == 'revenue':
-#                    rev = bal
-#                if acc_data_browse.name.lower() == 'cost of goods sold':
-#                    cogs = bal
-#                if acc_data_browse.name.lower() == 'operating expenses':
-#                    opexp = bal
-#                if acc_data_browse.name.lower() == 'taxes':
-#                    tax = bal
-#                if acc_data_browse.name.lower() == 'other income':
-#                    other_income = bal
-#                if acc_data_browse.name.lower() == 'other expense':
-#                    other_expense = bal
-#            tot_balance = rev + cogs + opexp + tax + other_income + other_expense
-#            if form['inf_type'] == 'BS':
-#                self.bal = net_bal
             for aa_brw in aa_obj.browse(cr, uid, ids, context):
                 if aa_brw.child_id and aa_brw.level < level and aa_brw.type !='consolidation':
                     if not change_sign:
@@ -1638,54 +1635,13 @@ class account_balance_inherit(account_balance):
         result_acc = []
         tot = {}        
         
+        
+        
         ############################For getting the net balance for earning account
         net_balance = 0.0   
         temp_earning = {}  
         net_bal_temp = {}
         earning_data = {}
-#        if form['show_earning']:
-#            
-#            net_bal_temp[0]={
-#                    'ctx_init': ctx_init, 
-#                    'ctx_end': ctx_end, 
-#                    'balanceinit': 0.0, 
-#                    'debit': 0.0, 
-#                    'credit': 0.0, 
-#                    'ytd': 0.0, 
-#                    'balance':0.0
-#                }
-#            earning_data[0]={
-#                    'balanceinit': 0.0, 
-#                    'debit': 0.0, 
-#                    'credit': 0.0, 
-#                    'ytd': 0.0, 
-#                    'balance':0.0}
-#            for par_id in selected_accounts:
-#                
-#                aa_brw_init = account_obj.browse(self.cr, self.uid, par_id, ctx_init)
-#                aa_brw_end  = account_obj.browse(self.cr, self.uid, par_id, ctx_end)
-#                
-#                i, d, c = map(z, [aa_brw_init.balance, aa_brw_end.debit, aa_brw_end.credit])
-#                b = z(i+d-c)
-#                net_bal_temp[0].update({
-#                    'balanceinit': self.exchange(i) + net_bal_temp[0]['balanceinit'], 
-#                    'debit': self.exchange(d) + net_bal_temp[0]['debit'], 
-#                    'credit': self.exchange(c) + net_bal_temp[0]['credit'], 
-#                    'ytd': self.exchange(d-c) + net_bal_temp[0]['ytd'], 
-#                    'balance':self.exchange(b) + net_bal_temp[0]['balance'], 
-#                })
-#                earning_init = account_obj.browse(self.cr, self.uid, form['earning_account'], ctx_init)
-#                earning_end  = account_obj.browse(self.cr, self.uid, form['earning_account'], ctx_end)
-#                
-#            ei, ed, ec = map(z, [earning_init.balance, earning_end.debit, earning_end.credit])
-#            eb = z(ei+ed-ec)
-#            earning_data[0].update({
-#                'balanceinit': self.exchange(ei) + net_bal_temp[0]['balanceinit'], 
-#                'debit': self.exchange(ed) + net_bal_temp[0]['debit'], 
-#                'credit': self.exchange(ec) + net_bal_temp[0]['credit'], 
-#                'ytd': self.exchange(ed-ec) + net_bal_temp[0]['ytd'], 
-#                'balance':self.exchange(eb) + net_bal_temp[0]['balance'], 
-#            })
         
         for aa_id in account_ids:
             id = aa_id[0]
@@ -1706,7 +1662,6 @@ class account_balance_inherit(account_balance):
                 }
                 aa_brw_init = account_obj.browse(self.cr, self.uid, id, ctx_init)
                 aa_brw_end  = account_obj.browse(self.cr, self.uid, id, ctx_end)
-
                 if form['compr0_fiscalyear_id']:
                     compr0_aa_brw_init = account_obj.browse(self.cr, self.uid, id, compr0_ctx_init)
                     compr0_aa_brw_end  = account_obj.browse(self.cr, self.uid, id, compr0_ctx_end)
@@ -1722,37 +1677,67 @@ class account_balance_inherit(account_balance):
                     'compr0_ytd': self.exchange(compr0_d-compr0_c), 
                     })
 #                    if form['inf_type'] == 'IS' and  form['columns'] == 'one':
+
+                    # Check the condition for the Comparision 1
+                    
                     if form['inf_type'] == 'IS':# and  form['periodic_columns'] == 'one':
                         res.update({
                             'compr0_balance': self.exchange(compr0_d-compr0_c), 
                         })
-#                        if res.get('name').lower() == 'total revenue':
-#                            self.comp0_tot_revenue = compr0_b
-#                        if res.get('name').lower() == 'cost of goods sold':
-#                            self.comp0_tot_cogs = res.get('compr0_balance')
-#                        self.comp0_gross_profit = abs(self.comp0_tot_revenue) - abs(self.comp0_tot_cogs)
-#                        if res.get('name').lower() == 'total cost of goods sold':
-#                            result_acc.append({'id': False, 'name': ''})
-#                        if res.get('name').lower() == 'total operating expenses':
-#                            self.comp0_operating_expense = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total taxes':
-#                            self.comp0_taxes = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total other expense':
-#                            self.comp0_other_expense = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total other income':
-#                            self.comp0_other_income = res.get('compr0_balance')
-#                        self.comp0_total_expense = self.comp0_operating_expense + self.comp0_taxes + self.comp0_other_expense
-#                        self.comp0_net_profit = abs(self.comp0_gross_profit - abs(self.comp0_other_income + self.comp0_total_expense))
-#                        form['comp0_net_profit'] = self.comp0_net_profit
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view':
+                                    self.bal = self.bal + res.get('compr0_balance')
+                                bal = []
+                                for res_acc in result_acc:
+                                    if res_acc.get('name')=='Total Net Ordinary Income':
+                                        balance_res = res_acc.get('compr0_balance')
+                                        bal.append(balance_res)
+                                if len(bal) > 0 :
+                                    self.gross_profit = bal[0]
+#                                self.gross_profit = self.bal
+                                for acc in account_obj.browse(self.cr, self.uid, acc_ids):
+                                    if acc.name == 'Cost Of Goods Sold' or acc.name == 'Cost of Sales' and acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
+                                        if res.get('name').lower() == 'total cost of sales':
+                                            result_acc.append({'id': False, 'name': ''})
+                                    
+                                    if acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.total_exp = (self.exp_credit + self.exp_debit) + (self.other_exp_credit + self.other_exp_debit)
+                                    self.comp0_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
+                        if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
+                            self.profit_loss_comp0 += res.get('compr0_balance')
                     else:
                         res.update({
                             'compr0_balance': self.exchange(compr0_b), 
                         })
-#                        if res.get('name').lower() == 'total liabilities':
-#                            self.comp0_tot_liabilities = res.get('compr0_balance')
-#                        if res.get('name').lower() == 'total equity':
-#                            self.comp0_tot_equity = res.get('compr0_balance')
-#                        self.comp0_tot_liabilities_equity = self.comp0_tot_liabilities + self.comp0_tot_equity
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
+                                    self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('compr0_balance')
+                                self.total_liabilities_equity = self.total_balance_sheet_balance
+                        
+                        if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Liabilities':
+                            self.total_liab_comp0 = res.get('compr0_balance')
+                        if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Equity':
+                            self.total_equ_comp0 = res.get('compr0_balance')
+                    
+                        self.total_liab_equ_comp0 = self.total_liab_comp0 + self.total_equ_comp0
+                
+                # Check the condition for the Comparision 2
                 
                 if form['compr1_fiscalyear_id']:
                     compr1_aa_brw_init = account_obj.browse(self.cr, self.uid, id, compr1_ctx_init)
@@ -1770,37 +1755,58 @@ class account_balance_inherit(account_balance):
                         res.update({
                             'compr1_balance': self.exchange(compr1_d-compr1_c), 
                         })
-#                        if res.get('name').lower() == 'total revenue':
-#                            self.comp1_tot_revenue = compr1_b
-#                        if res.get('name').lower() == 'cost of goods sold':
-#                            self.comp1_tot_cogs = res.get('compr1_balance')
-#                        self.comp1_gross_profit = abs(self.comp1_tot_revenue) - abs(self.comp1_tot_cogs)
-#                        if res.get('name').lower() == 'total cost of goods sold':
-#                            result_acc.append({'id': False, 'name': ''})
-#                        if res.get('name').lower() == 'total operating expenses':
-#                            self.comp1_operating_expense = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total taxes':
-#                            self.comp1_taxes = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total other expense':
-#                            self.comp1_other_expense = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total other income':
-#                            self.comp1_other_income = res.get('compr1_balance')
-#                        self.comp1_total_expense = self.comp1_operating_expense + self.comp1_taxes + self.comp1_other_expense
-#                        self.comp1_net_profit = abs(self.comp1_gross_profit - abs(self.comp1_other_income + self.comp1_total_expense))
-#                        form['comp1_net_profit'] = self.comp1_net_profit
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view':
+                                    self.bal = self.bal + res.get('compr1_balance')
+                                bal = []
+                                for res_acc in result_acc:
+                                    if res_acc.get('name')=='Total Net Ordinary Income':
+                                        balance_res = res_acc.get('compr1_balance')
+                                        bal.append(balance_res)
+                                if len(bal) > 0 :
+                                    self.gross_profit = bal[0]
+#                                self.gross_profit = self.bal
+                                for acc in account_obj.browse(self.cr, self.uid, acc_ids):
+                                    if acc.name == 'Cost Of Goods Sold' or acc.name == 'Cost of Sales' and acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
+                                        if res.get('name').lower() == 'total cost of sales':
+                                            result_acc.append({'id': False, 'name': ''})
+                                    
+                                    if acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
+                                        self.total_exp = (self.exp_credit + self.exp_debit) + (self.other_exp_credit + self.other_exp_debit)
+                                    self.comp1_net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
+                        if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
+                            self.profit_loss_comp1 += res.get('compr1_balance')           
                     else:
                         res.update({
                             'compr1_balance': self.exchange(compr1_b), 
                         })
-#                        if res.get('name').lower() == 'total liabilities':
-#                            self.comp1_tot_liabilities = res.get('compr1_balance')
-#                        if res.get('name').lower() == 'total equity':
-#                            self.comp1_tot_equity = res.get('compr1_balance')
-#                        self.comp1_tot_liabilities_equity = self.comp1_tot_liabilities + self.comp1_tot_equity
-                    if form['inf_type'] == 'TB' and  form['periodic_columns'] == 'two':
-                        res.update({
-                            'compr1_balance': self.exchange(compr1_b), 
-                        })
+                        report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                        for ytd_acc_data in report_data.account_list:
+                            if ytd_acc_data.type == 'view':
+                                parent_id = ytd_acc_data.parent_id.id
+                        parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                        child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                        for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                            if parent_id == acc_data.id:
+                                acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                                if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
+                                    self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('compr1_balance')
+                                self.total_liabilities_equity = self.total_balance_sheet_balance
+                        
+                        if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Liabilities':
+                            self.total_liab_comp1 = res.get('compr1_balance')
+                        if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Equity':
+                            self.total_equ_comp1 = res.get('compr1_balance')
+                    
+                        self.total_liab_equ_comp1 = self.total_liab_comp1 + self.total_equ_comp1
                         
                 if (not form['compr0_fiscalyear_id']) == True and (not form['compr1_fiscalyear_id']==True) :
                     i, d, c = map(z, [0.00, aa_brw_end.debit, aa_brw_end.credit])
@@ -1813,8 +1819,8 @@ class account_balance_inherit(account_balance):
                     'credit': self.exchange(c), 
                     'ytd': self.exchange(d-c), 
                 })
-            
-#                if form['inf_type'] == 'IS' and  form['columns'] == 'one':
+                
+                # Check condition for Single Columns
                 if form['inf_type'] == 'IS' and  form['periodic_columns'] == 'one':
                     res.update({
                         'balance': self.exchange(d-c), 
@@ -1830,14 +1836,13 @@ class account_balance_inherit(account_balance):
                             acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
                             if res.get('total') == True and res.get('type') == 'view':
                                 self.bal = self.bal + res.get('balance')
-                                bal = []
-                                for res_acc in result_acc:
-                                    if res_acc.get('name')=='Total Net Ordinary Income':
-                                        balance_res = res_acc.get('balance')
-                                        bal.append(balance_res)
-                                if len(bal) > 0 :
-                                    self.gross_profit = bal[0]
-#                            self.gross_profit = self.bal
+                            bal = []
+                            for res_acc in result_acc:
+                                if res_acc.get('name')=='Total Net Ordinary Income':
+                                    balance_res = res_acc.get('balance')
+                                    bal.append(balance_res)
+                            if len(bal) > 0 :
+                                self.gross_profit = bal[0]
                             for acc in account_obj.browse(self.cr, self.uid, acc_ids):
                                 if acc.name == 'Cost Of Goods Sold' or acc.name == 'Cost of Sales' and acc.user_type.name == 'Income View' or acc.user_type.name == 'Income':
                                     if res.get('name').lower() == 'total cost of sales':
@@ -1845,70 +1850,38 @@ class account_balance_inherit(account_balance):
                                 if acc.user_type.name == 'Expense' or acc.user_type.name == 'Expense View':
                                     self.total_exp = (self.exp_credit + self.exp_debit) + (self.taxes_credit + self.taxes_debit) + (self.other_exp_credit + self.other_exp_debit)
                                 self.net_profit = self.gross_profit - ((self.other_income_credit + self.other_income_debit) + self.total_exp)
-#                    if res.get('name').lower() == 'total revenue':
-#                            self.tot_revenue = b
-#                    if res.get('name').lower() == 'cost of goods sold':
-#                        self.tot_cogs = res.get('balance')
-#                    self.gross_profit = abs(self.tot_revenue) - abs(self.tot_cogs)
-#                    if res.get('name').lower() == 'total cost of goods sold':
-#                        result_acc.append({'id': False, 'name': ''})
-#                    if res.get('name').lower() == 'total operating expenses':
-#                        self.operating_expense = res.get('balance')
-#                    if res.get('name').lower() == 'total taxes':
-#                        self.taxes = res.get('balance')
-#                    if res.get('name').lower() == 'total other expense':
-#                        self.other_expense = res.get('balance')
-#                    if res.get('name').lower() == 'total other income':
-#                        self.other_income = res.get('balance')
-#                    self.total_expense = self.operating_expense + self.taxes + self.other_expense
-#                    self.net_profit = abs(self.gross_profit - abs(self.other_income + self.total_expense))
-#                    form['periodic_net_profit_one'] = self.net_profit
-#                elif form['inf_type'] == 'BS' and form['show_earning'] and form['earning_account'] == id:
-#                        self.show_earnings = True
-#                        res.update({
-#                            'balanceinit': self.exchange(earning_data[0]['balanceinit'])+ \
-#                                        2 * res['change_sign'] * self.exchange(i), 
-#                            'debit': self.exchange(earning_data[0]['debit']) + \
-#                                        2 * res['change_sign'] * self.exchange(d), 
-#                            'credit': self.exchange(earning_data[0]['credit'])+ \
-#                                        2 * res['change_sign'] * self.exchange(c), 
-#                            'ytd': self.exchange(earning_data[0]['ytd']) + \
-#                                        2 * res['change_sign'] * self.exchange(d-c), 
-#                            'balance': self.exchange(earning_data[0]['balance']) + \
-#                                        2 * res['change_sign'] * self.exchange(b)
-#                        })
-#                        temp_earning.update({
-#                                'change_sign': res['change_sign'], 
-#                                'earning': self.exchange(b), 
-#                                'bal_init_diff': res['balanceinit'] - (self.exchange(i)* res['change_sign']), 
-#                                'dbr_diff': res['debit'] - (self.exchange(d)), #* res['change_sign']),
-#                                'cdr_diff': res['credit'] - (self.exchange(c)), #* res['change_sign']),
-#                                'ytd_diff':  res['ytd'] - (self.exchange(d-c)* res['change_sign']), 
-#                                'net_bal': res['balance'], 
-#                                'bal_diff': res['balance'] - (self.exchange(b) * res['change_sign']), 
-#                                'parent_id': aa_brw_init.parent_id and aa_brw_init.parent_id.id or False, 
-#                        })
+                    if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1:
+                            self.net_profit_loss_periodic += res.get('balance')
                 else:
                     res.update({
-                        'balance': self.exchange(b), 
+                        'balance': self.exchange(d-c), 
                     })
-#                     report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
-#                     for ytd_acc_data in report_data.account_list:
-#                         if ytd_acc_data.type == 'view':
-#                             parent_id = ytd_acc_data.parent_id.id
-#                     parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
-#                     child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
-#                     for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
-#                         if parent_id == acc_data.id:
-#                             acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
-#                             if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
-#                                 self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('balance')
-#                             self.total_liabilities_equity = self.total_balance_sheet_balance
-#                    if res.get('name').lower() == 'total liabilities':
-#                        self.tot_liabilities = res.get('balance')
-#                    if res.get('name').lower() == 'total equity':
-#                        self.tot_equity = res.get('balance')
-#                    self.tot_liabilities_equity = self.tot_liabilities + self.tot_equity
+                    report_data = wiz_rep.browse(self.cr, self.uid, self.context.get('active_id'))
+                    for ytd_acc_data in report_data.account_list:
+                        if ytd_acc_data.type == 'view':
+                            parent_id = ytd_acc_data.parent_id.id
+                        else:
+                            parent_id = ytd_acc_data.parent_id.id
+                    parent_acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',False)])
+                    child_acc_ids = account_obj.search(self.cr, self.uid, ['|',('parent_id','in',parent_acc_ids),('level','=',1)])
+                    for acc_data in account_obj.browse(self.cr, self.uid, child_acc_ids):
+                        if parent_id == acc_data.id:
+                            acc_ids = account_obj.search(self.cr, self.uid, [('parent_id','=',acc_data.id)])
+                            if res.get('total') == True and res.get('type') == 'view' and res.get('parent_id') == acc_data.id:
+                                self.total_balance_sheet_balance = self.total_balance_sheet_balance + res.get('balance')
+                            self.total_liabilities_equity = self.total_balance_sheet_balance
+                            
+                    if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Liabilities':
+                            self.total_liab_periodic = res.get('balance')
+                    if res.get('total')== True and res.get('type') == 'view' and res.get('level') == 1 and res.get('name') == 'Total Equity':
+                            self.total_equ_periodic = res.get('balance')
+                    
+                    self.total_liab_equ_periodic = self.total_liab_periodic + self.total_equ_periodic
+
+                if form['inf_type'] == 'TB' and form['periodic_columns'] == 'two':
+                        res.update({
+                            'balance': self.exchange(b), 
+                        })
 
                 #
                 # Check whether we must include this line in the report or not
@@ -1934,7 +1907,7 @@ class account_balance_inherit(account_balance):
                 
                 #~ ANALYTIC LEDGER
 #                if to_include and form['analytic_ledger'] and form['columns']=='four' and form['inf_type'] == 'BS' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
-                if to_include and form['analytic_ledger'] and form['periodic_columns']=='four' and form['inf_type'] == 'BS' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
+                if to_include and form['periodic_columns']=='four' and form['inf_type'] == 'GL' and res['type'] in ('other', 'liquidity', 'receivable', 'payable'):
                     res['mayor'] = self._get_analytic_ledger(res, ctx=ctx_end)
                 else:
                     res['mayor'] = []
@@ -1954,65 +1927,9 @@ class account_balance_inherit(account_balance):
                         tot_ytd += res['ytd']
                         tot_eje += res['balance']
 
-#        if tot_check:
-#            str_label = form['lab_str']
-#            res2 = {
-#                    'id' : form['id'],
-#                    'type' : 'view', 
-#                    'name': (str_label), 
-#                    'label': False, 
-#                    'total': True, 
-#                    'balanceinit': tot_bin, 
-#                    'debit': tot_deb, 
-#                    'credit': tot_crd, 
-#                    'ytd': tot_ytd, 
-#                    'balance': tot_eje, 
-#            }
-#            aa_brw_init = account_obj.browse(self.cr, self.uid, id, ctx_init)
-#            aa_brw_end  = account_obj.browse(self.cr, self.uid, id, ctx_end)
-#
-#            i, d, c = map(z, [aa_brw_init.balance, aa_brw_end.debit, aa_brw_end.credit])
-#            b = z(i+d-c)
-#            res2.update({
-#                    
-#                    'balance': net_balance, 
-#            })
-#            result_acc.append(res2)
-#        if  form['inf_type'] == 'BS' and form['show_earning']:
-#            if not self.show_earnings:
-#                earning_obj = account_obj.browse(self.cr, self.uid, form['earning_account'])
-#                res = {
-#                    'id'        : earning_obj.id, 
-#                    'type'      : 'view', 
-#                    'code'      : earning_obj.code, 
-#                    'name'      : earning_obj.name, 
-#                    'parent_id' : earning_obj.parent_id and earning_obj.parent_id.id, 
-#                    'level'     : earning_obj.level, 
-#                    'label'     : False, 
-#                    'total'     : True, 
-#                    'change_sign' : 1
-#                }
-#                res.update(earning_data[0])
-#                result_acc.append(res)
-#            else:
-#                has_parent = temp_earning['parent_id'] or False
-#                while has_parent:
-#                    res_index_list = [(i, d) for i, d in enumerate(result_acc) if d['id'] == has_parent]
-#                    parent = False
-#                    for index in res_index_list:
-#                        result_acc[index[0]].update({
-#                            'balanceinit': abs(result_acc[index[0]]['balanceinit']) + temp_earning['bal_init_diff'], 
-#                            'debit': abs(result_acc[index[0]]['debit']) + temp_earning['dbr_diff'], 
-#                            'credit': abs(result_acc[index[0]]['credit']) + temp_earning['cdr_diff'], 
-#                            'ytd': abs(result_acc[index[0]]['ytd']) + temp_earning['ytd_diff'], 
-#                            'balance': abs(result_acc[index[0]]['balance']) + temp_earning['bal_diff'], 
-#                        })
-#                        parent = result_acc[index[0]]['parent_id']
-#                    has_parent = parent or False
         afr_list = []
         if form['inf_type'] == 'BS':
             afr_ids = afr_obj.search(self.cr, self.uid, [('name', '=', 'Income Statement')])
-
             if afr_ids:
                 afr_data = afr_obj.browse(self.cr, self.uid, afr_ids[0]).account_ids
                 for afr_id in afr_data:
@@ -2020,12 +1937,8 @@ class account_balance_inherit(account_balance):
             form['account_list'] = afr_list
             form_copy = form.copy()
             form_copy['inf_type'] = 'IS'
-            self.lines(form_copy, 0)
-#            self.comparison1_lines(form_copy, 0)
-##            total_profit_loss = abs(form_copy.get('periodic_net_profit_one'))
-            total_profit_loss = self.net_profit
-#            total_comp0_profit_loss = self.comp0_net_profit
-#            total_comp1_profit_loss = self.comp1_net_profit
+            self.comparison1_lines(form_copy, 0)
+            total_profit_loss = self.net_profit_loss_periodic
             self.total_profit_loss = {
                 'balance' : total_profit_loss, 
                 'id' : False, 
@@ -2041,45 +1954,37 @@ class account_balance_inherit(account_balance):
                 'total' :True, 
                 'change_sign' : 1, 
                 'balanceinit' : 0.0, 
-                'ytd' :  total_profit_loss, 
+                'ytd' : total_profit_loss, 
             }
 #            
-#            if form['compr0_fiscalyear_id']:
-#                self.total_profit_loss.update({
-#                    'compr0_balance' : total_comp0_profit_loss,
-#                    'compr0_balanceinit' : 0.00,
-#                    'compr0_debit' : 0.00,
-#                    'compr0_credit' : 0.00,
-#                    'compr0_ytd' : self.comp0_net_profit,
-#                })
+            if form['compr0_fiscalyear_id']:
+                total_comp0_profit_loss = self.profit_loss_comp0
+                self.total_profit_loss.update({
+                    'compr0_balance' : total_comp0_profit_loss,
+                    'compr0_balanceinit' : 0.00,
+                    'compr0_debit' : 0.00,
+                    'compr0_credit' : 0.00,
+                    'compr0_ytd' : self.profit_loss_comp0,
+                })
 #            
-#            if form['compr1_fiscalyear_id']:
-#                self.total_profit_loss.update({
-#                    'compr1_balance' : total_comp1_profit_loss,
-#                    'compr1_balanceinit' : 0.00,
-#                    'compr1_debit' : 0.00,
-#                    'compr1_credit' : 0.00,
-#                    'compr1_ytd' : self.comp1_net_profit,
-#                })
+            if form['compr1_fiscalyear_id']:
+                total_comp1_profit_loss = self.profit_loss_comp1
+                self.total_profit_loss.update({
+                    'compr1_balance' : total_comp1_profit_loss,
+                    'compr1_balanceinit' : 0.00,
+                    'compr1_debit' : 0.00,
+                    'compr1_credit' : 0.00,
+                    'compr1_ytd' : self.profit_loss_comp1,
+                })
             result_acc.append(self.total_profit_loss)
-            a = []
-            for res_acc in result_acc:
-                if res_acc.get('name')=='Total Liabilities and Equity':
-                    index_1 = result_acc.index(res_acc)
-                    a.append(index_1)
-            for ele in a:
-                result_acc.insert(ele,self.total_profit_loss)
-                result_acc.pop(ele+2)
-#            
-            total_liabilities_equity = self.total_liabilities_equity + self.net_profit
-#            total_comp0_liabilities_equity = self.comp0_tot_liabilities_equity + abs(self.comp0_net_profit)
-#            total_comp1_liabilities_equity = self.comp1_tot_liabilities_equity + abs(self.comp1_net_profit)
-            self.total_liabilities_equity = {
-                'balance' : total_liabilities_equity, 
-                'id'        : False, 
+            
+            total_liab_equ_periodic = self.total_liab_equ_periodic + self.net_profit_loss_periodic
+            self.total_lbeq = {
+                'balance' : total_liab_equ_periodic, 
+                'id' : False, 
                 'type' : 'view', 
                 'code' : '', 
-                'name' : 'Total Liabilities & Owners Equity', 
+                'name' : 'Total Liabilities & Equity', 
                 'parent_id' : False, 
                 'level' : 1, 
                 'credit' : 0.0, 
@@ -2089,170 +1994,74 @@ class account_balance_inherit(account_balance):
                 'total' :True, 
                 'change_sign' : 1, 
                 'balanceinit' : 0.0, 
-                'ytd' : total_liabilities_equity 
+                'ytd' : total_liab_equ_periodic, 
             }
-#            
-#            if form['compr0_fiscalyear_id']:
-#                self.total_liabilities_equity.update({
-#                    'compr0_balance' : total_comp0_liabilities_equity,
-#                    'compr0_balanceinit' : 0.00,
-#                    'compr0_debit' : 0.00,
-#                    'compr0_credit' : 0.00,
-#                    'compr0_ytd' : self.comp0_tot_liabilities + abs(self.comp0_net_profit)
-#                })
-#                
-#            if form['compr1_fiscalyear_id']:
-#                self.total_liabilities_equity.update({
-#                    'compr1_balance' : total_comp1_liabilities_equity,
-#                    'compr1_balanceinit' : 0.00,
-#                    'compr1_debit' : 0.00,
-#                    'compr1_credit' : 0.00,
-#                    'compr1_ytd' : self.comp1_tot_liabilities + abs(self.comp1_net_profit)
-#                })
-#            result_acc.append(self.total_liabilities_equity)
-#            dict = {'balance': 0.0, 'code': '69', 'name': 'Total Other Income/Expense', 'level': 1, 'credit': 0.0, 'debit': 0.0, 'label': False, 'parent_id': 310, 'mayor': [], 'change_sign': 1, 'balanceinit': 0.0, 'ytd': 0.0, 'total': True, 'type': 'view', 'id': 586}
-#            index = result_acc.index(dict)
-#            result_acc.pop(index)
-#            dict_expence = {'balance': 0.0, 'code': '80', 'name': 'Total Other Expense', 'level': 2, 'credit': 0.0, 'debit': 0.0, 'label': False, 'parent_id': 586, 'mayor': [], 'change_sign': 1, 'balanceinit': 0.0, 'ytd': 0.0, 'total': True, 'type': 'view', 'id': 590}
-#            index_exp = result_acc.index(dict_expence)
-#            result_acc.pop(index_exp)
-#            
+            
+            total_comp0_liabilities_equity = self.total_liab_equ_comp0 + self.profit_loss_comp0
+            total_comp1_liabilities_equity = self.total_liab_equ_comp1 + self.profit_loss_comp1
+            
+            if form['compr0_fiscalyear_id']:
+                self.total_lbeq.update({
+                    'compr0_balance' : total_comp0_liabilities_equity,
+                    'compr0_balanceinit' : 0.00,
+                    'compr0_debit' : 0.00,
+                    'compr0_credit' : 0.00,
+                    'compr0_ytd' : total_comp0_liabilities_equity
+                })
+                
+            if form['compr1_fiscalyear_id']:
+                self.total_lbeq.update({
+                    'compr1_balance' : total_comp1_liabilities_equity,
+                    'compr1_balanceinit' : 0.00,
+                    'compr1_debit' : 0.00,
+                    'compr1_credit' : 0.00,
+                    'compr1_ytd' : total_comp1_liabilities_equity
+                })
+            
+            result_acc.append(self.total_lbeq)
         else:
-            if not form['afr_id'][1] == 'Balance Sheet':
-#                if {'id': False, 'name': ''} not in result_acc:
-#                        raise osv.except_osv(_('Configuration Error'), _('Please configure all type of Revenue, Cost Of Goods Sold, Expense, Income and Taxes accounts for Income Statement !'))
-#                index = result_acc.index({'id': False, 'name': ''})
-                for res_acc in result_acc:
-                    if res_acc.get('name')=='Total Net Ordinary Income':
-                        index = result_acc.index(res_acc)
-                        result_acc.insert(index+11,res_acc)
-                        result_acc.pop(index)
-                
-                total_gross_profit = self.gross_profit
-#                total_comp0_gross_profit = self.comp0_gross_profit
-#                total_comp1_gross_profit = self.comp1_gross_profit
-                self.gross_profit_dict = {
-                    'balance' : total_gross_profit, 
-                    'id'        : False, 
-                    'type' : 'view', 
-                    'code' : '', 
-                    'name' : 'Gross Profit', 
-                    'parent_id' : False, 
-                    'level' : 1, 
-                    'credit' : 0.0, 
-                    'debit' : 0.0, 
-                    'label' : False, 
-                    'mayor' : [], 
-                    'total' :True, 
-                    'change_sign' : 1, 
-                    'balanceinit' : 0.0, 
-                    'ytd' : total_gross_profit 
-                }
-#                
-#                if form['compr0_fiscalyear_id']:
-#                    self.gross_profit_dict.update({
-#                        'compr0_balance' : total_comp0_gross_profit,
-#                        'compr0_balanceinit' : 0.00,
-#                        'compr0_debit' : 0.00,
-#                        'compr0_credit' : 0.00,
-#                        'compr0_ytd' : abs(self.comp0_tot_revenue - self.comp0_tot_cogs),
-#                    })
-#                if form['compr1_fiscalyear_id']:
-#                    self.gross_profit_dict.update({
-#                        'compr1_balance' : total_comp1_gross_profit,
-#                        'compr1_balanceinit' : 0.00,
-#                        'compr1_debit' : 0.00,
-#                        'compr1_credit' : 0.00,
-#                        'compr1_ytd' : abs(self.comp1_tot_revenue - self.comp1_tot_cogs),
-#                    })
-#                result_acc.insert(index+2, self.gross_profit_dict)
-#                result_acc.append(self.gross_profit_dict)
-#                result_acc.pop(index)
-#                
-                tot_expense = self.total_exp
-#                tot_comp0_expense = self.comp0_total_expense
-#                tot_comp1_expense = self.comp1_total_expense
-                self.tot_exp = {
-                    'balance' : tot_expense, 
-                    'id'        : False, 
-                    'type' : 'view', 
-                    'code' : '', 
-                    'name' : 'Total Expense', 
-                    'parent_id' : False, 
-                    'level' : 1, 
-                    'credit' : 0.0, 
-                    'debit' : 0.0, 
-                    'label' : False, 
-                    'mayor' : [], 
-                    'total' :True, 
-                    'change_sign' : 1, 
-                    'balanceinit' : 0.0, 
-                    'ytd' : tot_expense 
-                }
-#                
-#                if form['compr0_fiscalyear_id']:
-#                    self.tot_exp.update({
-#                        'compr0_balance' : tot_comp0_expense,
-#                        'compr0_balanceinit' : 0.00,
-#                        'compr0_debit' : 0.00,
-#                        'compr0_credit' : 0.00,
-#                        'compr0_ytd' : abs(self.comp0_operating_expense + self.comp0_taxes + self.comp0_other_expense),
-#                    })
-#                    
-#                if form['compr1_fiscalyear_id']:
-#                    self.tot_exp.update({
-#                        'compr1_balance' : tot_comp1_expense,
-#                        'compr1_balanceinit' : 0.00,
-#                        'compr1_debit' : 0.00,
-#                        'compr1_credit' : 0.00,
-#                        'compr1_ytd' : abs(self.comp1_operating_expense + self.comp1_taxes + self.comp1_other_expense),
-#                    })
-#                    
-#                result_acc.append(self.tot_exp)
-#                
-                net_profit = self.net_profit
-#                net_comp0_profit = self.comp0_net_profit
-#                net_comp1_profit = self.comp1_net_profit
-                self.tot_net_prodict = {
-                    'balance' : net_profit, 
-                    'id'        : False, 
-                    'type' : 'view', 
-                    'code' : '', 
-                    'name' : 'Net Profit', 
-                    'parent_id' : False, 
-                    'level' : 1, 
-                    'credit' : 0.0, 
-                    'debit' : 0.0, 
-                    'label' : False, 
-                    'mayor' : [], 
-                    'total' :True, 
-                    'change_sign' : 1, 
-                    'balanceinit' : 0.0, 
-                    'ytd' : net_profit 
-                }
-#                if form['compr0_fiscalyear_id']:
-#                    self.tot_net_prodict.update({
-#                        'compr0_balance' : net_comp0_profit,
-#                        'compr0_balanceinit' : 0.00,
-#                        'compr0_debit' : 0.00,
-#                        'compr0_credit' : 0.00,
-#                        'compr0_ytd' : abs(self.comp0_gross_profit + self.comp0_other_income - self.comp0_total_expense),
-#                    })
-#                    
-#                if form['compr1_fiscalyear_id']:
-#                    self.tot_net_prodict.update({
-#                        'compr1_balance' : net_comp1_profit,
-#                        'compr1_balanceinit' : 0.00,
-#                        'compr1_debit' : 0.00,
-#                        'compr1_credit' : 0.00,
-#                        'compr1_ytd' : abs(self.comp1_gross_profit + self.comp1_other_income - self.comp1_total_expense),
-#                    })
-#    
-                
-#                result_acc.append(self.tot_net_prodict)
-                
+            if not form['afr_id'][1] == 'General Ledger':
+                if not form['afr_id'][1] == 'Trial Balance':
+                    if not form['afr_id'][1] == 'Balance Sheet':
+                        if not form['inf_type'] == 'TB':
+                            total_gross_profit = self.net_profit_loss_periodic
+                            self.net_profit_dict = {
+                                'balance' : total_gross_profit, 
+                                'id'        : False, 
+                                'type' : 'view', 
+                                'code' : '', 
+                                'name' : 'Net Profit(Loss)', 
+                                'parent_id' : False, 
+                                'level' : 1, 
+                                'credit' : 0.0, 
+                                'debit' : 0.0, 
+                                'label' : False, 
+                                'mayor' : [], 
+                                'total' :True, 
+                                'change_sign' : 1, 
+                                'balanceinit' : 0.0, 
+                                'ytd' : total_gross_profit, 
+                            }
+                            
+                            if form['compr0_fiscalyear_id']:
+                                self.net_profit_dict.update({
+                                    'compr0_balance' : self.profit_loss_comp0,
+                                    'compr0_balanceinit' : 0.00,
+                                    'compr0_debit' : 0.00,
+                                    'compr0_credit' : 0.00,
+                                    'compr0_ytd' : self.profit_loss_comp0,
+                                })
+                            if form['compr1_fiscalyear_id']:
+                                self.net_profit_dict.update({
+                                    'compr1_balance' : self.profit_loss_comp1,
+                                    'compr1_balanceinit' : 0.00,
+                                    'compr1_debit' : 0.00,
+                                    'compr1_credit' : 0.00,
+                                    'compr1_ytd' : self.profit_loss_comp1,
+                                })
+                            
+                            result_acc.append(self.net_profit_dict)
         return result_acc
-    
     
 report_sxw.report_sxw('report.afr.1cols.inherit', 
                       'wizard.report', 
