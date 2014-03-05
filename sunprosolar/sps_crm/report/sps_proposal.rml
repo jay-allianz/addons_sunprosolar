@@ -48,9 +48,9 @@
     [[ repeatIn(objects,'o') ]]
     <para style="P4" alignment="LEFT">[[calculate_cost_rebate(o.partner_id.id)]]</para>
     <para style="P_header" alignment="CENTER"><font color="#006699">Solar Electric Investment Proposal</font></para>
-    <para style="P3" alignment="CENTER"><font color="#006699">for [[o.partner_id.name]]</font></para>
+    <para style="P3" alignment="CENTER"><font color="#006699">for [[get_lead_name(o.partner_id.id)]]</font></para>
     <para style="P3" alignment="CENTER"><font color="#FFFFFF"></font></para>
-    <para style="P2" alignment="CENTER"><font color="#006699">Site Location: [[o.partner_id.street]], [[o.partner_id.street2]], [[o.partner_id.city_id.name]] [[o.partner_id.city_id.zip]]</font></para>
+    <para style="P2" alignment="CENTER"><font color="#006699">Site Location: [[get_lead_street1(o.partner_id.id)]], [[get_lead_street2(o.partner_id.id)]], [[get_lead_city_id(o.partner_id.id)]]</font></para>
      
     <para style="P4" alignment="LEFT">Date:  [[formatLang(time.strftime("%Y-%m-%d"), date=True)]]</para>
     <para style="P3_bold" alignment="LEFT"><font color="#006699"> </font></para>

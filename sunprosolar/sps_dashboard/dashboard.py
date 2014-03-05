@@ -43,6 +43,14 @@ AVAILABLE_STATES = [
     ('site_inspection', 'Site Inspection'),
     ('progress', 'Sales Order'),
     ('assign_financing_incharge', 'Assign Financing Incharge'),
+    ('contract_generated', 'Contract Generated'),
+    ('follow_up','Follow Up'),
+    ('project_management_notified','Project Management Notified'),
+    ('permit','Permit'),
+    ('city','City Submission'),
+    ('drawing','Eng. Create/Modify Following Drawings'),
+    ('permit_pack','Permit Pack'),
+    ('cancel', 'Cancelled'),
 ]
 
 class sps_dashboard(osv.Model):

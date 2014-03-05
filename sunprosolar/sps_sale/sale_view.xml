@@ -88,18 +88,18 @@
 			<field name="inherit_id" ref="sale.view_order_form" />
 			<field name="arch" type="xml">
 				<button name="action_button_confirm" position="attributes">
-					<attribute name="states">contract_generated,contract_signed,site_inspection,progress
+					<attribute name="states">contract_generated,follow_up,contract_signed,permit,city,permit_pack,drawing,project_management_notified,financing_type,site_inspection,progress
 					</attribute>
 					<attribute name="class">oe_highlight</attribute>
 				</button>
 				<button name="print_quotation" string="Print" type="object"
 					position="attributes">
-					<attribute name="states">contract_generated,contract_signed,site_inspection,progress
+					<attribute name="states">contract_generated,follow_up,contract_signed,permit,city,permit_pack,drawing,project_management_notified,financing_type,site_inspection,progress
 					</attribute>
 				</button>
 				<xpath expr="/form/header/field[@name='state']" position="replace">
 					<field name="state" widget="statusbar"
-						statusbar_visible="draft,sent,contract_generated,contract_signed,site_inspection,progress"
+						statusbar_visible="draft,sent,contract_generated,follow_up,contract_signed,city,permit_pack,drawing,permit,project_management_notified,financing_type,site_inspection,progress"
 						statusbar_colors='{"waiting_date":"blue"}' />
 				</xpath>
 				<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="after">
@@ -107,16 +107,6 @@
 					<field name="no_inverter"/>
 				</xpath>
 
-
-				<!-- <xpath expr="//form/sheet/group/group[2]/field[3][@name='client_order_ref']" 
-					position="after"> -->
-				<!-- <label for="contract_id" attrs="{'invisible':[('state','!=','sent')]}"/> -->
-				<!-- <div attrs="{'invisible':[('state','!=','sent')]}"> -->
-				<!-- <field name="contract_id" colspan="2"/> -->
-				<!-- <button name="contract_sign" string="Contract Sign" colspan="2" 
-					type="object" icon="gtk-yes" /> -->
-				<!-- </div> -->
-				<!-- </xpath> -->
 				<field name="project_id" position="after">
 				    <group cols="1" colspan="4">
                         <button name="contract_generate" string="Generate Contract"
@@ -127,6 +117,9 @@
                         <button name="contract_sign" string="Contract Sign"
                             colspan="2" type="object" icon="gtk-yes"
                             attrs="{'invisible':[('state','!=','contract_generated')]}" />
+                        <button name="contract_rejected" string="Contract Rejected"
+                            colspan="2" type="object" icon="gtk-no"
+                            attrs="{'invisible':[('state','!=','contract_generated')]}" />
                     </group>
                     <group cols="1" colspan="4">
                         <button name="site_inspection_mail" string="Email Project Mgt Team - New Site Inspection"
@@ -134,13 +127,33 @@
                             attrs="{'invisible':[('state','!=','financing_type')]}"/>
                     </group>
                     <group cols="1" colspan="4">
-                        <button name="document_collected" string="Document Collected"
+                        <button name="project_management_notified" string="Email Project Mgt Team - New Site Inspection"
                             colspan="2" type="object" icon="gtk-yes"
                             attrs="{'invisible':[('state','!=','contract_signed')]}" />
                     </group>
+                    <group cols="1" colspan="4">
+                        <button name="document_collected" string="Document Collected"
+                            colspan="2" type="object" icon="gtk-yes"
+                            attrs="{'invisible':[('state','!=','project_management_notified')]}"/>
+                    </group>
+                    <group cols="1" colspan="4">
+                        <button name="customer_appove" string="Customer Approved"
+                            colspan="2" type="object" icon="gtk-yes"
+                            attrs="{'invisible':[('state','!=','permit')]}"/> 
+                    </group>
+                    <group cols="1" colspan="4">
+                        <button name="drwaing" string="Eng. Create/Modify Following Drawings"
+                            colspan="2" type="object" icon="gtk-yes"
+                            attrs="{'invisible':[('state','!=','city')]}"/>
+                    </group>
+                    <group cols="1" colspan="4">
+                        <button name="permit_pack" string="Permit Pack"
+                            colspan="2" type="object" icon="gtk-yes" 
+                            attrs="{'invisible':[('state','!=','drawing')]}"/>
+                    </group>
                     <newline/>
-					<field name="contract_signing_date" readonly="1" />
-					<field name="inspection_done_date" readonly="1" />
+					<field name="contract_signing_date"/>
+					<field name="inspection_done_date"/>
 					<group cols="2" colspan="4">
 						<field name="insp_after_72_hour" readonly="1" />
 					</group>
@@ -175,7 +188,7 @@
 			<field name="view_id" ref="sale.view_quotation_tree" />
 			<field name="view_mode">tree,form,calendar,graph</field>
 			<field name="context">{}</field>
-			<field name="domain">[('state','in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))]
+			<field name="domain">[('state','in',('draft','sent','contract_generated','follow_up','contract_signed','project_management_notified','site_inspection','cancel'))]
 			</field>
 			<field name="search_view_id" ref="sale.view_sales_order_filter" />
 			<field name="help" type="html">
@@ -197,29 +210,6 @@
 				</p>
 			</field>
 		</record>
-
-		<!-- <record id="sale.action_orders" model="ir.actions.act_window"> -->
-		<!-- <field name="name">Sales Order</field> -->
-		<!-- <field name="type">ir.actions.act_window</field> -->
-		<!-- <field name="res_model">sale.order</field> -->
-		<!-- <field name="view_type">form</field> -->
-		<!-- <field name="view_mode">tree,form,calendar,graph,kanban</field> -->
-		<!-- <field name="search_view_id" ref="sale.view_sales_order_filter" /> -->
-		<!-- <field name="context">{}</field> -->
-		<!-- <field name="domain">[('state','not -->
-		<!-- in',('draft','sent','contract_generated','contract_signed','site_inspection','cancel'))] -->
-		<!-- </field> -->
-		<!-- <field name="help" type="html"> -->
-		<!-- <p class="oe_view_nocontent_create"> -->
-		<!-- Click to create a quotation that can be converted into a sales -->
-		<!-- order. -->
-		<!-- </p> -->
-		<!-- <p> -->
-		<!-- OpenERP will help you efficiently handle the complete sales flow: -->
-		<!-- quotation, sales order, delivery, invoicing and payment. -->
-		<!-- </p> -->
-		<!-- </field> -->
-		<!-- </record> -->
 
 		<record model="ir.ui.view" id="account_analytic_form1">
 			<field name="name">account.analytic.form</field>
@@ -253,7 +243,76 @@
 			<field name="arch" type="xml">
 				<xpath expr="//button[@string='Quotations and Sales']" position="attributes">
 				    <attribute name="invisible">1</attribute>
-				</xpath>	
+				</xpath>
+			</field>
+		</record>
+		
+		<!--Required Doc Search View -->
+		<record model="ir.ui.view" id="doc_required_search">
+			<field name="name">doc_required_Search</field>
+			<field name="model">doc.required</field>
+			<field name="arch" type="xml">
+				<search string="Required Doc Search">
+					<field name="doc_id" />
+				</search>
+			</field>
+		</record>
+
+		<!-- Required Doc Form View -->
+		<record model="ir.ui.view" id="doc_required_form">
+			<field name="name">doc_required_Form</field>
+			<field name="model">doc.required</field>
+			<field name="arch" type="xml">
+				<form string="Required Doc Form" version="7.0">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="name" required="1"/><newline/>
+							<separator string="Documents" colspan="4"/>
+							<!--<field name="doc_ids" colspan="4" nolabel="1">
+								<tree>
+									<field name="datas"/>
+								</tree>
+							</field>-->
+							<field name="collected" readonly="1"/>
+							<field name="days_to_collect" />
+							<field name="notify_customer" />
+							<separator string="Notify Users" colspan="4"/>
+							<field name="notify_users" colspan="4"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Required Doc Tree View -->
+		<record model="ir.ui.view" id="doc_required_tree">
+			<field name="name">doc_required_Tree</field>
+			<field name="model">doc.required</field>
+			<field name="arch" type="xml">
+				<tree string="Required Doc Tree">
+					<field name="name" />
+					<!--<field name="doc_ids" nolabel="1">
+						<tree>
+							<field name="datas"/>
+						</tree>
+					</field>-->
+					<field name="days_to_collect" />
+					<field name="notify_customer" nolabel="1"/>
+					<field name="notify_users" />
+					<field name="collected" readonly="1"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_inherited_view_account_type_form">
+			<field name="name">inherited.account.account.type.form</field>
+			<field name="model">account.account.type</field>
+			<field name="inherit_id" ref="account.view_account_type_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//separator[@string='Description']" position="before">
+					<separator string="Required Documents"/>
+				    <field name="doc_req_ids"/>
+				</xpath>		
 			</field>
 		</record>
 		

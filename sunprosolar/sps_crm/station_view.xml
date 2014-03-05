@@ -27,7 +27,7 @@
 							<field name="parent_id" />
 							<field name="from_zip" required="1" />
 							<field name="to_zip" required="1" />
-							<field name="utility_company_id" required="1" domain="[('is_utility_company','=',True)]"/>
+							<field name="utility_company_id" domain="[('is_utility_company','=',True)]"/>
 							<label for="parent_persentage" />
 							<div>
 								<field name="parent_persentage" />
@@ -134,7 +134,6 @@
 							<newline />
 							<field name="azimuth" />
 							<newline />
-							<!-- <field name = "month"/><newline/ -->
 							<field name="production" />
 						</group>
 					</sheet>
@@ -163,8 +162,6 @@
 					<field name="nov" />
 					<field name="dec" />
 					<field name="annual_avg" />
-
-					<!-- <field name = "month" required="1"/ -->
 					<field name="production" required="1" />
 				</tree>
 			</field>

@@ -1,0 +1,68 @@
+id,name,is_utility_company
+UC1,SCE Region 5 Basic,TRUE
+UC2,SCE Region 5 All Electric,TRUE
+UC3,SCE Region 5 CARE,TRUE
+UC4,SCE Region 5 All Electric CARE,TRUE
+UC5,SCE Region 5 Medical,TRUE
+UC6,SCE Region 6 Basic,TRUE
+UC7,SCE Region 6 All Electric,TRUE
+UC8,SCE Region 6 CARE,TRUE
+UC9,SCE Region 6 All Electric CARE,TRUE
+UC10,SCE Region 6 Medical,TRUE
+UC11,SCE Region 8 Basic,TRUE
+UC12,SCE Region 8 All Electric,TRUE
+UC13,SCE Region 8 CARE,TRUE
+UC14,SCE Region 8 All Electric CARE,TRUE
+UC15,SCE Region 8 Medical,TRUE
+UC16,SCE Region 9 Basic,TRUE
+UC17,SCE Region 9 All Electric,TRUE
+UC18,SCE Region 9 CARE,TRUE
+UC19,SCE Region 9 All Electric CARE,TRUE
+UC20,SCE Region 9 Medical,TRUE
+UC21,SCE Region 10 Basic,TRUE
+UC22,SCE Region 10 All Electric,TRUE
+UC23,SCE Region 10 CARE,TRUE
+UC24,SCE Region 10 All Electric CARE,TRUE
+UC25,SCE Region 10 Medical,TRUE
+UC26,SCE Region 15 Basic,TRUE
+UC27,SCE Region 15 All Electric,TRUE
+UC28,SCE Region 15 CARE,TRUE
+UC29,SCE Region 15 All Electric CARE,TRUE
+UC30,SCE Region 15 Medical,TRUE
+UC31,SCE Region 16 Basic,TRUE
+UC32,SCE Region 16 All Electric,TRUE
+UC33,SCE Region 16 CARE,TRUE
+UC34,SCE Region 16 All Electric CARE,TRUE
+UC35,SCE Region 16 Medical,TRUE
+UC36,SDGE Coastal Basic,TRUE
+UC37,SDGE Coastal All Electric ,TRUE
+UC38,SDGE Coastal CARE ,TRUE
+UC39,SDGE Coastal All Electric CARE,TRUE
+UC40,SDGE Coastal Medical,TRUE
+UC41,SDGE Inland Basic,TRUE
+UC42,SDGE Inland All Electric,TRUE
+UC43,SDGE Inland CARE,TRUE
+UC44,SDGE Inland All Electric CARE,TRUE
+UC45,SDGE Inland Medical,TRUE
+UC46,SDGE Mountain Basic,TRUE
+UC47,SDGE Mountain All Electric,TRUE
+UC48,SDGE Mountain CARE,TRUE
+UC49,SDGE Mountain All Electric CARE,TRUE
+UC50,SDGE Mountain Medical,TRUE
+UC51,SDGE Desert Basic,TRUE
+UC52,SDGE Desert All Electric,TRUE
+UC53,SDGE Desert CARE,TRUE
+UC54,SDGE Desert All Electric CARE,TRUE
+UC55,SDGE Desert Medical,TRUE
+UC56,APU D-A Domestic Service,TRUE
+UC57,APU D-B Domestic Service,TRUE
+UC58,APU D-C Domestic Service,TRUE
+UC59,APU D-D Domestic Service,TRUE
+UC60,RPU D-Domestic Service Small Residence,TRUE
+UC61,RPU D-Domestic Service Medium Residence,TRUE
+UC62,RPU D-Domestic Service Large Residence,TRUE
+UC63,COLTON ,TRUE
+UC64,COLTON ,TRUE
+UC65,COLTON ,TRUE
+UC66,COLTON ,TRUE
+UC67,MVEU Residential-A,TRUE

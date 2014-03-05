@@ -68,16 +68,6 @@
 			action="utility_company_action_partner_form" sequence="13"
 			string="Utility Company" />
 
-		<!-- <record id="multi_company_action_partner_form" model="ir.actions.act_window"> -->
-		<!-- <field name="name">Utility Company</field> -->
-		<!-- <field name="type">ir.actions.act_window</field> -->
-		<!-- <field name="res_model">res.partner</field> -->
-		<!-- <field name="view_type">form</field> -->
-		<!-- <field name="view_mode">kanban,tree,form</field> -->
-		<!-- <field name="context">{"search_default_is_company":1}</field> -->
-		<!-- <field name="search_view_id" ref="base.view_res_partner_filter" /> -->
-		<!-- </record> -->
-
 		<menuitem id="base.menu_partner_form" parent="base.menu_sales"
 			action="base.action_partner_form" sequence="1" string="Contacts" />
 
@@ -115,29 +105,6 @@
 				</p>
 			</field>
 		</record>
-
-		<!-- CRM Lead Form View -->
-
-		<!-- <record id="view_sun_opportunity_form" model="ir.ui.view"> -->
-		<!-- <field name="name">opportunity.form</field> -->
-		<!-- <field name="model">crm.lead</field> -->
-		<!-- <field name="type">form</field> -->
-		<!-- <field name="inherit_id" ref="crm.crm_case_form_view_oppor" /> -->
-		<!-- <field name="arch" type="xml"> -->
-		<!-- <xpath expr="//page[@string='Internal Notes']" position="attributes"> -->
-		<!-- <attribute name="invisible">1</attribute> -->
-		<!-- </xpath> -->
-		<!-- </field> -->
-		<!-- </record> -->
-
-		<!-- <record forcecreate="True" id="ir_cron_scheduler_lead_days" model="ir.cron"> 
-			<field name="name">Run Lead days</field> <field eval="True" name="active" 
-			/> <field name="user_id" ref="base.user_root" /> <field name="interval_number">1</field> 
-			<field name="interval_type">minutes</field> <field name="numbercall">-1</field> 
-			<field eval="'crm.lead'" name="model" /> <field eval="'run_lead_days'" name="function" 
-			/> <field eval="'(False,)'" name="args" /> </record> -->
-
-
 		
 		<record forcecreate="True" id="ir_cron_scheduler_lead_days" model="ir.cron">
 			<field name="name">Run Lead days</field>
@@ -150,7 +117,6 @@
 			<field eval="'run_lead_days'" name="function" />
 			<field eval="'(False,)'" name="args" />
 		</record>
-        
 
 		<record id="view_sun_crm_lead_form" model="ir.ui.view">
 			<field name="name">crm.lead.form</field>
@@ -187,15 +153,9 @@
 				<xpath expr="//field[@name='mobile']" position="attributes">
 					<attribute name="string">Cell</attribute>
 				</xpath>
-				<!-- <xpath expr="//page[@string='Notes']" position="attributes"> <attribute 
-					name="invisible">1</attribute> </xpath> -->
 				<field name="user_id" position="before">
 					<field name="ahj" selection="1" />
 					<field name="see_lead_all_note" invisible="1" />
-				</field>
-				<field name="section_id" position="after">
-					<button name="salesteam_send_email" type="object" string="Send Mail"
-						attrs="{'invisible': ['|', ('section_id','=',False), ('user_id', '=', False)]}" />
 				</field>
 				<xpath expr="/form/sheet/group/group/field[@name='categ_ids']"
 					position="after">
@@ -266,12 +226,11 @@
 							<field name="home_sq_foot" />
 							<newline />
 							<field name="roof_type" /><newline/>
-<!--							<field name="estimate_shade" /-->
-							<field name="loc_station_id" required="1" />
+							<field name="loc_station_id" />
 							<newline />
-							<field name="tilt_degree" required="1" />
+							<field name="tilt_degree" />
 							<newline />
-							<field name="faceing" required="1" />
+							<field name="faceing"  />
 							<group col="10" colspan="10">
 								<field name="age_house_year" />
 								<span class="oe_grey"> Year </span>
@@ -308,8 +267,7 @@
 						<group col="4" colspan="4">
 							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)"
 								domain="[('is_utility_company','=','True')]" context="{'view_id': 'view_utility_customer_form'}"
-								required="1" />
-							<!-- <field name="main_ele_serviece_panel" / -->
+								/>
 							<newline />
 							<separator string="Required Documents" colspan="4" />
 							<field name='doc_req_ids' colspan="4" nolabel="1">
@@ -320,41 +278,30 @@
 											<field name="datas"/>
 										</tree>
 									</field>
+									<field name="countdown" />
 									<field name="collected" />
 								</tree>
 								<form>
 									<field name="doc_id" />
 									<field name="doc_ids" />
+									<field name="countdown" />
 									<field name="collected" readonly="1" />
 								</form>
 							</field>
 							<field name="required_document" />
-							<!-- <field name="notify_customer" on_change="on_change_notifiy_customer(notify_customer)" 
-								/> -->
-							<!-- <field name="notify_user" on_change="on_change_notifiy_user(notify_user)" 
-								/> -->
-							<!-- <separator string="Users to Notify" colspan="4" /> -->
-							<!-- <field name="user_notification_id" colspan="4" nolabel="1" /> -->
-							<field name="acc_no"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="meter_no"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="bill_summer"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="rate_plan"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="bill_winter"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<label for="bill_average"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<div attrs="{'invisible':[('required_document','=',False)]}">
+							<field name="acc_no"/>
+							<field name="meter_no"/>
+							<field name="bill_summer"/>
+							<field name="rate_plan"/>
+							<field name="bill_winter" />
+							<label for="bill_average"/>
+							<div>
 								<field name="bill_average" />
 								<span class="oe_grey"> of </span>
 								<field name="bill_month" nolabel="1" />
 							</div>
-							<label for="bill_total"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<div attrs="{'invisible':[('required_document','=',False)]}">
+							<label for="bill_total"/>
+							<div>
 								<field name="bill_total" />
 								<span class="oe_grey"> of </span>
 								<field name="bill_month1" nolabel="1" />
@@ -372,7 +319,7 @@
 					</page>
 					<page string="Marketing Data">
 						<group col="4" colspan="4">
-							<field name="lead_source" />
+							<field name="lead_source"  widget="selection"/>
 							<field name="level_of_lead" />
 							<field name="qualified" />
 							<field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}" />
@@ -543,13 +490,6 @@
 					<button name="openMap" string="Google Map" type="object"
 						help="It will open google map for the above address." />
 				</field>
-				<!-- <field name="partner_id" position="attributes"> <attribute name="on_change">onchange_partner_id(partner_id, 
-					email_from)</attribute> <attribute name="context">{'default_name': contact_name, 
-					'default_street': street, 'default_city': city, 'default_state_id': state_id, 
-					'default_zip': zip, 'default_country_id': country_id, 'default_function': 
-					function, 'default_phone': phone, 'default_mobile': mobile, 'default_fax': 
-					fax, 'default_email': email_from, 'default_user_id': user_id, 'default_section_id': 
-					section_id}</attribut </field> -->
 				<field name="partner_id" position="after">
 					<label for="street" string="Address" />
 					<div>
@@ -662,12 +602,11 @@
 						</group>
 						<group col="4" colspan="4">
 							<field name="roof_type" /><newline/>
-<!--							<field name="estimate_shade" /-->
-							<field name="loc_station_id" required="1" />
+							<field name="loc_station_id" />
 							<newline />
-							<field name="tilt_degree" required="1" />
+							<field name="tilt_degree" />
 							<newline />
-							<field name="faceing" required="1" />
+							<field name="faceing" />
 							<group col="10" colspan="10">
 								<field name="age_house_year" />
 								<span class="oe_grey"> Year </span>
@@ -693,10 +632,8 @@
 					</page>
 					<page string="Electricity Info">
 						<group col="4" colspan="4">
-							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)"
-								domain="[('is_utility_company','=','True')]" context="{'view_id': 'view_utility_customer_form'}"
-								required="1" />
-							<!-- <field name="main_ele_serviece_panel" / -->
+							<field name="utility_company_id" on_change="on_change_utility_company(utility_company_id)" 
+								domain="[('is_utility_company','=','True')]" context="{'view_id': 'view_utility_customer_form'}"/>
 							<newline />
 							<separator string="Required Documents" colspan="4" />
 							<field name='doc_req_ids' colspan="4" nolabel="1">
@@ -716,12 +653,6 @@
 								</form>
 							</field>
 							<field name="required_document" />
-							<!-- <field name="notify_customer" on_change="on_change_notifiy_customer(notify_customer)" 
-								/> -->
-							<!-- <field name="notify_user" on_change="on_change_notifiy_user(notify_user)" 
-								/> -->
-							<!-- <separator string="Users to Notify" colspan="4" /> -->
-							<!-- <field name="user_notification_id" colspan="4" nolabel="1" /> -->
 							<field name="acc_no"
 								attrs="{'invisible':[('required_document','=',False)]}" />
 							<field name="meter_no"
@@ -759,7 +690,7 @@
 					</page>
 					<page string="Marketing Data">
 						<group col="4" colspan="4">
-							<field name="lead_source" />
+							<field name="lead_source"  widget="selection"/>
 							<field name="level_of_lead" />
 							<field name="qualified" />
 							<field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}" />
@@ -809,7 +740,7 @@
 								<field name="tilt_degree" required="1" />
 								<field name="faceing" required="1" />
 								<field name="estimate_shade" />
-								field name="num_of_arrays" />
+								<field name="num_of_arrays" />
 							</form>
 						</field>
 						<group col="4" colspan="4">
@@ -823,8 +754,6 @@
 								<field name="site_avg_sun_hour" />
 							</group>
 							<group col="2" colspan="2" string="Cleaner and Greener Environment">
-								<!-- <field name="yearly_output_per_kw" /> <field name="solar_array_output" 
-									/> -->
 								<field name="co2_offset_tons" />
 								<field name="co2_offset_pounds" />
 								<field name="cars_off_roads" />
@@ -836,23 +765,6 @@
 							</group>
 						</group>
 					</page>
-					<!-- <page string="Cleaner and Greener Environment"> -->
-					<!-- <group col="2" colspan="4"> -->
-					<!-- <separator colspan="4" string="Equivalencies and Value Factors" 
-						/> -->
-					<!-- <field name="avg_co2_ele" /> -->
-					<!-- <field name="annual_equvi_tree" /> -->
-					<!-- <field name="years_40_offset_tree" /> -->
-					<!-- <field name="medium_pollusion" /> -->
-					<!-- <field name="avg_yearly_miles" /> -->
-					<!-- <field name="annnual_co2_car" /> -->
-					<!-- <field name="annual_home_ele" /> -->
-					<!-- <field name="avg_light_bulb" /> -->
-					<!-- <field name="avg_comp" /> -->
-					<!-- <field name="emmision_gas" /> -->
-					<!-- </group> -->
-					<!-- </page> -->
-					
 					<page string="Solar PV Economics">
 						<group col="4" colspan="4">
 							<separator colspan="4" string="Economics Details" />
@@ -1421,8 +1333,6 @@
 					<separator string="Required Documents"/>
 					<field name="document_ids" colspan="4" />
 				</xpath>
-				
-				
 			</field>
 		</record>
 		
@@ -1483,6 +1393,14 @@
 				<xpath expr="//field[@name='name']" position="attributes">
 					<attribute name="invisible">1</attribute>
 				</xpath>
+				<xpath expr="//field[@name='user_id']" position="replace">
+					<label for="user_id"/>
+					<div>
+						<field name="user_id" groups="base.group_no_one"/>
+						<button name="salesteam_send_email" type="object" string="Send Mail"/>
+					</div>
+				</xpath>
+				
 			</field>
 		</record>
 

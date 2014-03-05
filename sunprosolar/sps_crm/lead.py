@@ -491,7 +491,7 @@ class crm_lead(osv.Model):
                         (10,'Step 10')
                     ],'Current SCI Step'),
          'spouse': fields.many2one('res.partner', string='Secondary Customer', help="Secondary Customer (spouse) in case he/she exist."),
-         'utility_company_id': fields.many2one('res.partner', 'Utility Company', domain=[('is_company','=',True)]),
+         'utility_company_id': fields.many2one('res.partner', 'Utility Company', domain=[('is_utility_company','=',True)]),
          'doc_req_ids' : fields.one2many('document.required', 'crm_lead_id', 'Required Documents'),
          'required_document':fields.function(_get_require_doc, method=True, type='boolean', string="Required Document Collected?", help="Checked if Yes."),
          'acc_no':fields.char('Account Number', size=32),
@@ -516,7 +516,6 @@ class crm_lead(osv.Model):
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
          'age_house_month': fields.integer('Age of House month'),
-#         'roof_type':fields.selection([('s_family', 'Single Family'),('Mobil','Mobil'),('manufactured','Manufactured')], 'Type Of Roof',),
          'roof_type': fields.many2one('roof.type', 'Type Of Roof'),
          'time_own_year': fields.integer('Owned Home Time', help="How long have you owned your home?"),
          'partner_is_company' : fields.boolean('Partner is Company'),
@@ -524,8 +523,8 @@ class crm_lead(osv.Model):
          'pool': fields.boolean('Is Pool?', help="Have a pool or not? Checked if Yes."),
          'spent_money': fields.float('Money spent to Heat Home', help='How much spent to heat home?'),
          'equity': fields.boolean('Equity', help="Do you have equity in your home? Checked if Yes."),
-        'loc_station_id' : fields.many2one('insolation.incident.yearly', 'Closest NERL Locations'),
-        'tilt_degree' : fields.selection(
+         'loc_station_id' : fields.many2one('insolation.incident.yearly', 'Closest NERL Locations'),
+         'tilt_degree' : fields.selection(
                     [
                         ('n', '[N]North'),
                         ('ne', '[NE]North-East'),
@@ -535,12 +534,12 @@ class crm_lead(osv.Model):
                         ('sw', '[SW]South-West'),
                         ('w', '[W]West'),
                         ('nw', '[NW]North-West')
-                    ], 'Tilt Degree'),
-        'faceing' : fields.many2one('tilt.tilt', 'Facing'),
+                    ], 'Facing'),
+        'faceing' : fields.many2one('tilt.tilt', 'Tilt Degree'),
         'estimate_shade': fields.integer('Estimated Shading'),
         'ahj': fields.selection([('structural', 'Structural'), ('electrical', 'Electrical')], 'AHJ', help="Authority Having Jurisdiction"),
         'utility_bill' : fields.boolean('Utility Bill', help="Checked Utility bill to sign customer contract."),
-        'lead_source': fields.char('Lead Source', size=32),
+        'lead_source': fields.many2one('crm.case.channel','Lead Source'),
         'level_of_lead': fields.many2one('level.lead', 'Level Of Lead'),
         'qualified': fields.boolean('Qualification Data?'),
         'annual_income': fields.float('Annual Income'),
@@ -612,6 +611,7 @@ class crm_lead(osv.Model):
         'project_photo_ids' : fields.one2many('project.photos', 'crm_lead_id', "Project Photos"),
         'project_review_ids' : fields.one2many('project.reviews', 'crm_lead_id', "Project Reviews"),
         'friend_refer_ids' : fields.one2many('friend.reference', 'crm_lead_id', "Friend References"),
+        'reg_no' : fields.char('Registration Number.')
         }
 
     _defaults = {
@@ -619,6 +619,7 @@ class crm_lead(osv.Model):
             'home':'own',
             'property': 'residential',
             'lead_date': fields.date.context_today,
+            'reg_no': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'crm.lead'),
     }
     
     def on_change_notifiy_customer(self, cr, uid, ids, notify_customer, context=None):
@@ -779,49 +780,6 @@ class crm_lead(osv.Model):
         obj_mail_server = self.pool.get('ir.mail_server')
         obj_mail_server.send_email(cr, uid, message=message, mail_server_id=mail_server_id, context=context)
     
-    def salesteam_send_email(self, cr, uid, ids, context=None):
-        if not context:
-            context = {}
-        obj_mail_server = self.pool.get('ir.mail_server')
-        crm_case_stage_obj = self.pool.get('crm.case.stage')
-        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-        if not mail_server_ids:
-            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-        email_from = mail_server_record.smtp_user
-        if not email_from:
-            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-        email_to = []
-        for data in self.browse(cr, uid, ids, context):
-            if not data.section_id.member_ids:
-                raise osv.except_osv(_('Warning'), _('There is no sale team member define in section !'))
-            else:
-                for member in data.section_id.member_ids:
-                    if not member.email:
-                        raise osv.except_osv(_('Warning'), _('%s team member have no email defined !' % member.name))
-                    else:
-                        email_to.append(member.email)
-            subject_line = 'New Customer ' + tools.ustr(data.partner_id.name) + ' ' + tools.ustr(data.last_name) + ' Comes.'
-            message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : ' + tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', ' + tools.ustr(data.city) + ', ' + tools.ustr(data.state_id.name) + ', ' + tools.ustr(data.zip) + ', ' + tools.ustr(data.country_id.name) + '<br/><br/>Email : ' + tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
-        message_hrmanager = obj_mail_server.build_email(
-            email_from=email_from,
-            email_to=email_to,
-            subject=subject_line,
-            body=message_body,
-            body_alternative=message_body,
-            email_cc=None,
-            email_bcc=None,
-            attachments=None,
-            references=None,
-            object_id=None,
-            subtype='html',
-            subtype_alternative=None,
-            headers=None)
-        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
-        stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Sales Assignment')])
-        self.write(cr, uid, ids, {'stage_id': stage_id[0]})
-        return True
-    
     def create(self, cr, uid, vals, context=None):
         if not context:
             context = {}
@@ -897,7 +855,6 @@ class crm_lead(osv.Model):
                                                                 'date': datetime.datetime.today(),
                                                                 'notes': vals['system_note']
                                                             })
-        
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -1048,7 +1005,6 @@ class solar_solar(osv.Model):
                     for t_a_data in data.loc_station_id.tilt_azimuth_ids:
                         if t_a_data.azimuth == data.tilt_degree and t_a_data.tilt.id == data.faceing.id:
                             production = t_a_data.production
-#                            res[data.id]['annual_ele_usage'] = t_a_data.annual_avg
                             tot_sun_hour = t_a_data.jan + t_a_data.feb + t_a_data.mar + t_a_data.apr + t_a_data.may + t_a_data.jun + t_a_data.jul + t_a_data.aug + t_a_data.sep + t_a_data.oct + t_a_data.nov + t_a_data.dec
                             avg_sun_hour = tot_sun_hour / 12
                         if avg_sun_hour:
@@ -1093,30 +1049,10 @@ class solar_solar(osv.Model):
                         ave_light_bulb_powered = output / avg_light_bulb
                         res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
                         
-        #                 'annual_ele_usage' : 0,
-        #                 'site_avg_sun_hour' : 0,
         return res
-    
-#    def _get_tilt(self, cr, uid, ids, name, args, context=None):
-#        res = {}
-#        for solar_data in self.browse(cr, uid, ids, context=context):
-#            tilt_lead = self.pool.get('crm.lead').browse(cr, uid, solar_data.crm_lead_id.id, context=context).tilt_degree
-#            res[solar_data.id] = tilt_lead
-#        return res
-#    
-#    def _get_faceing(self, cr, uid, ids, name, args, context=None):
-#        res = {}
-#        for data in self.browse(cr, uid, ids, context):
-#            faceing_lead_1 = self.pool.get('crm.lead').browse(cr, uid, data.crm_lead_id.id, context=context)
-#            faceing_lead=faceing.id
-#            res[data.id] = faceing_lead
-#        return res
     
     _columns = {
                 'loc_station_id' : fields.many2one('insolation.incident.yearly', 'Closest NERL Locations'),
-#                'tilt_degree'  : fields.function(_get_tilt, method= True, store=True, string='Tilt Degree', type='selection'),
-#                'faceing' : fields.function(_get_faceing, method= True, store=True, string='Faceing', type='many2one'),
-                
                 'tilt_degree' : fields.selection(
                             [
                                 ('n', '[N]North'),
@@ -1127,8 +1063,8 @@ class solar_solar(osv.Model):
                                 ('sw', '[SW]South-West'),
                                 ('w', '[W]West'),
                                 ('nw', '[NW]North-West')
-                            ], 'Tilt Degree'),
-                'faceing' : fields.many2one('tilt.tilt', 'Facing'),
+                            ], 'Facing'),
+                'faceing' : fields.many2one('tilt.tilt', 'Tilt Degree'),
                 'crm_lead_id': fields.many2one('crm.lead', "Lead"),
                 'module_product_id': fields.many2one('product.product', 'Module Name', domain=[('product_group', '=', 'module')], type='module'),
                 'num_of_module': fields.integer('Number of modules'),
@@ -1155,9 +1091,6 @@ class solar_solar(osv.Model):
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
                 'estimate_shade': fields.integer('Estimated Shading'),
                 }
-    _defaults = {
-#        'num_of_arrays': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'solar.array.size'),
-    }
 
     def create(self, cr, uid, vals, context=None):
         crm_obj = self.pool.get('crm.lead')
@@ -1361,22 +1294,24 @@ class project_project(osv.Model):
                     self.write(cr, uid, [project_id], {'members': member_list})
         return project_id
 
-class ir_attachment(osv.Model):
-    
-    _inherit = "ir.attachment"
-    
-    _columns ={
-            'doc_id': fields.many2one("document.required","Document")
-    }
     
 class document_required(osv.Model):
     
     _name = "document.required"
     
+    def _get_count_down(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        count = 0
+        for data in self.browse(cr, uid, ids, context):
+            today_date = datetime.datetime.today()
+            res[data.id] = 0
+        return res
+    
     _columns = {
         'doc_id': fields.many2one('documents.all', 'Document Name'),
         'doc_ids': fields.one2many('ir.attachment','doc_id',"Document" ),
         'collected' : fields.boolean("Collected"),
+        'countdown': fields.function(_get_count_down, method=True, store=True, string="Countdown Counter", type="integer", help="Remaining days for each document collection"),
         'crm_lead_id' : fields.many2one('crm.lead', 'Lead'),
         'partner_id' : fields.many2one('res.partner', 'Customer'),
     }
@@ -1408,6 +1343,14 @@ class document_required(osv.Model):
             send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, cur_rec.crm_lead_id.user_id.email, context=context)
             
         return res
+
+class ir_attachment(osv.Model):
+    
+    _inherit = "ir.attachment"
+    
+    _columns ={
+            'doc_id': fields.many2one("document.required","Document")
+    }
     
 class documents_all(osv.Model):
     """ Model for document information """
@@ -1481,7 +1424,6 @@ class crm_meeting(osv.Model):
     _defaults = {
             'name': '/',
             'meeting_type': 'general_meeting',
-#            'schedul/e_appointment': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
     
     def onchange_dates(self, cr, uid, ids, start_date, duration=False, end_date=False, allday=False, context=None):
@@ -1498,7 +1440,60 @@ class crm_meeting(osv.Model):
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Appointment Setup')])
             opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
         return res
-
+    
+    def send_email(self, cr, uid, message, mail_server_id, context):
+        '''
+           This method sends mail using information given in message 
+        '''
+        obj_mail_server = self.pool.get('ir.mail_server')
+        obj_mail_server.send_email(cr, uid, message=message, mail_server_id=mail_server_id, context=context)
+    
+    def salesteam_send_email(self, cr, uid, ids, context=None):
+        if not context:
+            context = {}
+        if context.get('default_opportunity_id'):
+            crm_obj = self.pool.get('crm.lead')
+            crm_id = crm_obj.search(cr, uid, [('id','=',context.get('default_opportunity_id'))])
+            crm_data = crm_obj.browse(cr, uid, crm_id, context=context)
+            obj_mail_server = self.pool.get('ir.mail_server')
+            crm_case_stage_obj = self.pool.get('crm.case.stage')
+            mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+            if not mail_server_ids:
+                raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+            mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+            email_from = mail_server_record.smtp_user
+            if not email_from:
+                raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+            email_to = []
+            for data in self.browse(cr, uid, ids, context):
+                if not data.user_id:
+                    raise osv.except_osv(_('Warning'), _('There is no Responsible Person define for meeting  !'))
+                else:
+                    if not data.user_id.email:
+                        raise osv.except_osv(_('Warning'), _('%s Responsible user have no email defined !' % data.user_id.name))
+                    else:
+                        email_to.append(data.user_id.email)
+                for crm_data1 in crm_data:
+                    subject_line = 'New Customer ' + tools.ustr(crm_data1.partner_id.name) + ' ' + tools.ustr(crm_data1.last_name) + ' Comes.'
+                    message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(crm_data1.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(crm_data1.last_name) + '<br/><br/>Address : ' + tools.ustr(crm_data1.street) + ', ' + tools.ustr(crm_data1.street2) + ', ' + tools.ustr(crm_data1.city) + ', ' + tools.ustr(crm_data1.state_id.name) + ', ' + tools.ustr(crm_data1.zip) + ', ' + tools.ustr(crm_data1.country_id.name) + '<br/><br/>Email : ' + tools.ustr(crm_data1.email_from) + '<br/><br/>Mobile : ' + tools.ustr(crm_data1.mobile) + '<br/><br/> Thank You.'
+                    message_hrmanager = obj_mail_server.build_email(
+                    email_from=email_from,
+                    email_to=email_to,
+                    subject=subject_line,
+                    body=message_body,
+                    body_alternative=message_body,
+                    email_cc=None,
+                    email_bcc=None,
+                    attachments=None,
+                    references=None,
+                    object_id=None,
+                    subtype='html',
+                    subtype_alternative=None,
+                    headers=None)
+            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+            stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Sales Assignment')])
+            crm_obj.write(cr, uid, ids, {'stage_id': stage_id[0]})
+            return True
 
 class project_photos(osv.Model):
     
@@ -1685,4 +1680,3 @@ class friend_reference(osv.Model):
         SUB_LINE = 'Notification For Friend Reference.'
         MSG_BODY = 'Hello Admin,<br/>' + user_rec.name + ' added friend reference.' + '<br/><br/>The reference is : <br/>' + fname + " " + lname + "<br/>Email : " + friend_email_id + '<br/> Thank You.'
         send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, auto_email_id, context=context)
-

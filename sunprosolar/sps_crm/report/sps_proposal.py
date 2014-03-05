@@ -25,7 +25,6 @@ import datetime
 from openerp.report import report_sxw
 from pychart import *
 
-
 class proposal_report(report_sxw.rml_parse):
     
     old_bill_total = 0
@@ -78,8 +77,49 @@ class proposal_report(report_sxw.rml_parse):
             'get_net_system_cost' : self._get_net_system_cost,
             'get_total_savings' : self._get_total_savings,
             'get_rebate_amt' : self._get_rebate_amt,
+            'get_lead_name':self._lead_name,
+            'get_lead_street1':self._lead_street1,
+            'get_lead_street2':self._lead_street2,
+            'get_lead_city_id':self._lead_city_id,
         })
         
+    def _lead_name(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        if lead_id:
+            lead_name = lead_obj.browse(self.cr, self.uid, lead_id)[0].name
+        return lead_name
+    
+    def _lead_street1(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        if lead_id:
+            street1 = lead_obj.browse(self.cr, self.uid, lead_id)[0].street
+        return street1
+    
+    def _lead_city_id(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        if lead_id:
+            name = lead_obj.browse(self.cr, self.uid, lead_id)[0].city_id.name or ''
+            zip = lead_obj.browse(self.cr, self.uid, lead_id)[0].city_id.zip or ''
+            state =  lead_obj.browse(self.cr, self.uid, lead_id)[0].state_id.name or ''
+            country =  lead_obj.browse(self.cr, self.uid, lead_id)[0].country_id.name or ''
+            
+            city_id = str(name) + ' ' + str(zip) + ' ' + str(state) + ' ' + str(country)
+        return city_id
+    
+    def _lead_street2(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        if lead_id:
+            street2 = lead_obj.browse(self.cr, self.uid, lead_id)[0].street2
+        return street2
+    
     def _get_first_year_saving(self):
         return self.first_year_saving
     
@@ -130,7 +170,6 @@ class proposal_report(report_sxw.rml_parse):
                     y_axis=axis.Y(label="KWHs"),
                     legend=legend.T(loc=(250,-80)),
                     y_range=(0, None))
-#        ar.addBarLayer3(data, colors).setBorderColor(-1, 1)
         ar.add_plot(bar_plot.T(label="Usage", data=data,width=30,fill_style = fill_style.aquamarine1), 
                     line_plot.T(label="Production", data=data, ycol=1))
         ar.draw(can)

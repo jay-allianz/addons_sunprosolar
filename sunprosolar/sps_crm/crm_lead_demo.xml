@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-		<!-- Demo Opportunities -->
+        <!-- Demo Opportunities -->
         <record id="crm.crm_case_13" model="crm.lead">
             <field name="type">opportunity</field>
             <field name="name">Plan to buy 60 keyboards and mouses</field>
@@ -24,8 +24,7 @@
             <field eval="1" name="active"/>
         </record>
 
-       
-		<record id="crm.crm_case_14" model="crm.lead">
+        <record id="crm.crm_case_14" model="crm.lead">
             <field name="type">opportunity</field>
             <field name="name">Interest in your Graphic Design Project</field>
             <field name="color">7</field>
@@ -289,7 +288,6 @@
             <field name="stage_id" ref="crm.stage_lead3"/>
             <field eval="1" name="active"/>
         </record>
-							
-        
+
   </data>
 </openerp>

@@ -38,6 +38,7 @@
         'crm_data.xml',
         'crm_report_view.xml',
         'station_view.xml',
+        'sequence.xml',
         'wizard/crm_lead_to_opportunity_view.xml',
         
     ],
