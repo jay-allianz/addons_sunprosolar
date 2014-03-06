@@ -26,7 +26,7 @@
     "website" : "http://www.serpentcs.com",
     "depends" : ["base", "account"],
     "category" : "Localisation/Accounting",
-    "description": """This modules allows you to create your own Financial Statements by creating templates for Balance Sheets and Income Statements, including Analytic Ledgers within the "Report Templates" menu (Accounting > Reporting > Legal Reports > Accounting Reports > Report Templates).\n"""\
+    "description": """Testing Module_3.3.14. This modules allows you to create your own Financial Statements by creating templates for Balance Sheets and Income Statements, including Analytic Ledgers within the "Report Templates" menu (Accounting > Reporting > Legal Reports > Accounting Reports > Report Templates).\n"""\
     "\n"\
     """You will be able to generate Year-To-Date (End. Balance), monthly (12 Months + YTD), or quarterly (4QRT's + YTD) reports. In addition, you can generate periodic reports based on date or period intervals. Comparison Balance Sheets are also available.\n"""\
     "\n"\
