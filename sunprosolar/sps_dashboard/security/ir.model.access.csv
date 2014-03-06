@@ -12,6 +12,7 @@ access_crm_case_section_user_portal,crm.case.section.user,crm.model_crm_case_sec
 access_crm_case_resource_type_user_portal,crm_case_resource_type user,crm.model_crm_case_resource_type,portal.group_portal,1,0,0,0
 access_crm_phonecall_report_user_portal,crm.phonecall.report.user,crm.model_crm_phonecall_report,portal.group_portal,1,0,0,0
 access_calendar_attendee_crm_user_portal,calendar.attendee.crm.user,crm.model_calendar_attendee,portal.group_portal,1,0,0,0
+access_res_partner_portal,res.partner.crm.user,base.model_res_partner,portal.group_portal,1,0,0,0
 access_res_partner_category_portal,res.partner.category.crm.user,base.model_res_partner_category,portal.group_portal,1,0,0,0
 mail_mailgate_thread_portal,mail.thread,mail.model_mail_thread,portal.group_portal,1,0,0,0
 access_crm_lead_report_user_portal,crm.lead.report user,crm.model_crm_lead_report,portal.group_portal,1,0,0,0

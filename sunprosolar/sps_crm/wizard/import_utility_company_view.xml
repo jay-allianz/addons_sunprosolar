@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="binary_import_utility_company_wizard_file" model="ir.ui.view">
+            <field name="name">binary.import.utility.company.wiz.file</field>
+            <field name="model">import.utility.company</field>
+            <field name="arch" type="xml">
+                <form string="Import Product" version="7.0">
+                    <group col="4" colspan="4">
+                        <field name="file" colspan="4"/>
+                    </group>
+                    <separator string="" colspan="4"/>
+                    <footer>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                        or
+                        <button name="import_company" string="Import" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_binary_import_utility_company_wizard_file" model="ir.actions.act_window">
+            <field name="name">Import Utility Company</field>
+            <field name="res_model">import.utility.company</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+       </record>
+       <menuitem id="menu_sale_import_utility_company"
+           parent="base.menu_sales" sequence="14" name="Import Utility Company" action="action_binary_import_utility_company_wizard_file"/>
+
+    </data>
+</openerp>

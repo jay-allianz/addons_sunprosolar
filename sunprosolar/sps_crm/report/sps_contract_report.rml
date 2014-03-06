@@ -140,7 +140,7 @@
     <blockTable colWidths="180.0, 300.0" style="Table1">
         <tr>
             <td>
-                <image file="sps_crm/images/sunpro.png" height="100" width="160" />
+                <image file="sps_crm/images/sunpro.png" height="80" width="160" />
             </td>
             <td>
 			    <para style="new_line"><font color="#FFFFFF">1</font></para>
@@ -178,7 +178,7 @@
         </tr>
         <tr>
             <td>
-                <para style="P3"><u>[[ s.partner_id.name ]]</u> is here after referred to as “Customer” for purposes of the Agreement. The Agreement will also refer to the “Subject Property” in this Agreement.The Subject Property refers to the Customer’s property at which SunPro Solar Inc. is installing a SunPro Solar System.</para>
+                <para style="P3"><u>[[get_lead_name(s.partner_id.id)]]</u> is here after referred to as “Customer” for purposes of the Agreement. The Agreement will also refer to the “Subject Property” in this Agreement.The Subject Property refers to the Customer’s property at which SunPro Solar Inc. is installing a SunPro Solar System.</para>
             </td>
         </tr>
         <tr>
@@ -211,7 +211,7 @@
             <td>
                 <para style="P3"><b>3. Description Of Solar System Being Purchased.</b></para>
                 <para style="P3">SunPro Solar, Inc. will design and install a SunPro Solar System intended for the purpose of generating</para>
-                <para style="P3">_________kWh per year at a system size of _____ kW-DC. This size has been determined by using the available</para>
+                <para style="P3"><u> [[ get_annul_usage(s.partner_id.id) ]]</u>kWh per year at a system size of <u> [[get_stc_dc_rating(s.partner_id.id)]] </u> kW-DC. This size has been determined by using the available</para>
                 <para style="P3">utility bills. Each year, after year one, will be subject to degradation in accordance with manufacturer</para>
                 <para style="P3">specifications. You will be billed by your utility for any amount of electricity consumed above the production of</para>
                 <para style="P3">your solar electric system. It is important to review your utility billing throughout the year to avoid a large lump</para>
@@ -221,9 +221,16 @@
             </td>
         </tr>
         <tr>
+           <td>
+             <para style="P3">The solar system will be installed at the Subject Property in the following location:</para>
+           </td>
+        </tr>
+        <tr>
             <td>
                 <para style="P3">__________________________________________________________________________________________________________________________.</para>
-                <para style="P3">The solar system will be installed at the Subject Property in the following location:</para>
+                <para style="P3">The solar system will be installed at the Subject Property with the following panels and inverter(s):</para>
+                <para style="p3">[[get_products(s.partner_id.id)]]</para>
+                
                 <para style="P3">__________________________________________________________________________________________________________________________.</para>
             </td>
         </tr>
@@ -401,10 +408,10 @@
                 <blockTable colWidths="160.0,320.0" style="Table1">
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[ s.partner_id.name ]] Initials___________</para>
+			        	    <para style="P3">Customer Initials___________</para>
 			        	</td>
 			            <td>
-			                <para style="P3">[[ s.partner_id.name ]] Initials___________</para>
+			                <para style="P3">Customer Initials___________</para>
 			            </td>
 			        </tr>
 			    </blockTable>
@@ -444,10 +451,10 @@
                 <blockTable colWidths="160.0,160.0,160.0" style="Table1">
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[ s.partner_id.name ]] Initials___________</para>
+			        	    <para style="P3">Customer Initials___________</para>
 			        	</td>
 			            <td>
-			                <para style="P3">[[ s.partner_id.name ]] Initials___________</para>
+			                <para style="P3">Customer Initials___________</para>
 			            </td>
 			            <td>
 			                <para style="P3">Energy Consultant Initials __________</para>
@@ -676,7 +683,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[ s.partner_id.name ]]’s Signature</para>
+			        	    <para style="P3">Customer’s Signature</para>
 			        	</td>
 			            <td>
 			                <para style="P3">Date</para>
@@ -700,7 +707,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[ s.partner_id.name ]]</para>
+			        	    <para style="P3">Customer’s Printed Name</para>
 			        	</td>
 			            <td>
 			                <para style="P3"></para>
@@ -724,7 +731,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[ s.partner_id.name ]]</para>
+			        	    <para style="P3">Customer’s Printed Name</para>
 			        	</td>
 			            <td>
 			                <para style="P3">Date</para>
@@ -748,7 +755,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[ s.partner_id.name ]]</para>
+			        	    <para style="P3">Customer’s Printed Name</para>
 			        	</td>
 			            <td>
 			                <para style="P3"></para>
@@ -788,7 +795,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[get_sales_person(s.partner_id.id)]]</para>
+			        	    <para style="P3">Authorized Representative’s Signature</para>
 			        	</td>
 			            <td>
 			                <para style="P3">Date</para>
@@ -812,7 +819,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[get_sales_person(s.partner_id.id)]]</para>
+			        	    <para style="P3">Authorized Representative’s Signature</para>
 			        	</td>
 			            <td>
 			                <para style="P3"></para>
@@ -828,7 +835,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3"><u>[[ get_reg_no(s.partner_id.id) ]]</u></para>
+			        	    <para style="P3"><u>[[ get_reg_no(s.partner_id.id) ]]</u>___________________________</para>
 			        	</td>
 			            <td>
 			                <para style="P3"></para>
@@ -1087,7 +1094,25 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3">[[ s.partner_id.name ]]’s Signature</para>
+			        	    <para style="P3">Customer’s Signature</para>
+			        	</td>
+			            <td>
+			                <para style="P3">Date</para>
+			            </td>
+			        </tr>
+			   </blockTable>
+			   <blockTable colWidths="200.0,280.0" style="Table1">
+                 <tr>
+			        	<td>
+			        	    <para style="P3">________________________________________</para>
+			        	</td>
+			            <td>
+			                <para style="P3">____________________</para>
+			            </td>
+			        </tr>
+			        <tr>
+			        	<td>
+			        	    <para style="P3">Customer’s Signature</para>
 			        	</td>
 			            <td>
 			                <para style="P3">Date</para>
@@ -1589,10 +1614,10 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P2">([[ s.partner_id.name ]])</para>
+			        	    <para style="P2">(Buyer’s Printed Name)</para>
 			        	</td>
 			            <td>
-			                <para style="P2">([[ s.partner_id.name ]])</para>
+			                <para style="P2">(Buyer’s Printed Name)</para>
 			            </td>
 			        </tr>
 			        <tr>
@@ -1605,10 +1630,10 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P2">([[ s.partner_id.name ]])</para>
+			        	    <para style="P2">(Buyer's Signature)</para>
 			        	</td>
 			            <td>
-			                <para style="P2">([[ s.partner_id.name ]])</para>
+			                <para style="P2">(Buyer's Signature)</para>
 			            </td>
 			        </tr>
 			   </blockTable>
@@ -1890,7 +1915,7 @@
         </tr>
         <tr>
             <td>
-                <para style="P2">not later than midnight of <u>3 business days from [[ s.contract_signing_date ]]</u>(date).</para>
+                <para style="P2">not later than midnight of <u>3 business days from ([[ s.contract_signing_date ]])</u>.</para>
                 <para style="new_line"><font color="#FFFFFF">1</font></para>
                 <para style="P2">I hereby cancel this transaction.</para>
                 <para style="new_line"><font color="#FFFFFF">1</font></para>
@@ -1925,10 +1950,10 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P2">([[ s.partner_id.name or '' ]])</para>
+			        	    <para style="P2">(Buyer’s Printed Name)</para>
 			        	</td>
 			            <td>
-			                <para style="P2">([[ s.partner_id.name or '' ]])</para>
+			                <para style="P2">(Buyer’s Printed Name)</para>
 			            </td>
 			        </tr>
 			        <tr>
@@ -1941,10 +1966,10 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P2">([[ s.partner_id.name or '' ]])</para>
+			        	    <para style="P2">(Buyer's Signature)</para>
 			        	</td>
 			            <td>
-			                <para style="P2">([[ s.partner_id.name or '' ]])</para>
+			                <para style="P2">(Buyer's Signature)</para>
 			            </td>
 			        </tr>
 			   </blockTable>
@@ -2134,7 +2159,7 @@
             <td>
                 <blockTable colWidths="270.0,270.0" style="Table2">
                     <tr>
-                        <td><para style="P1">NAME : [[ s.partner_id.name or '' ]]</para></td>
+                        <td><para style="P1">NAME : [[get_lead_name(s.partner_id.id)]]</para></td>
                         <td><para style="P1">SUNPRO REPRESENTATIVE:  [[get_sales_person(s.partner_id.id) or '' ]]</para></td>
                     </tr>
                     <tr>

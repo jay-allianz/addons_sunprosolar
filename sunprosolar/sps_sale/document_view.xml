@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		
+		<!--
+		<record model="ir.ui.view" id="view_inherited_view_account_type_form">
+			<field name="name">inherited.account.account.type.form</field>
+			<field name="model">account.account.type</field>
+			<field name="inherit_id" ref="account.view_account_type_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//separator[@string='Description']" position="before">
+					<separator string="Required Documents"/>
+				    <field name="doc_req_ids"/>
+				</xpath>		
+			</field>
+		</record>
+		-->
+		
+		<record model="ir.ui.view" id="view_inherited_document_form">
+			<field name="name">inherited.document.type.form</field>
+			<field name="model">documents.all</field>
+			<field name="inherit_id" ref="sps_crm.req_doc_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='code']" position="after">
+				    <newline/>
+				    <field name="days_to_collect"/>
+				</xpath>		
+			</field>
+		</record>
+
+
+		<!--Required Doc Search View -->
+		<record model="ir.ui.view" id="doc_required_search">
+			<field name="name">doc_required_Search</field>
+			<field name="model">doc.required</field>
+			<field name="arch" type="xml">
+				<search string="Required Doc Search">
+					<field name="doc_id" />
+				</search>
+			</field>
+		</record>
+
+		<!-- Required Doc Form View -->
+		<record model="ir.ui.view" id="doc_required_form">
+			<field name="name">doc_required_Form</field>
+			<field name="model">doc.required</field>
+			<field name="arch" type="xml">
+				<form string="Required Doc Form" version="7.0">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="name" required="1"/><newline/>
+							<separator string="Documents" colspan="4"/>
+							<field name="doc_ids" colspan="4" nolabel="1">
+								<tree>
+									<field name="datas"/>
+								</tree>
+							</field>
+							<field name="collected" readonly="1"/><newline/>
+							<field name="days_to_collect" readony="1"/>
+							<field name="cowndown"/><newline/>
+							<field name="notify_customer" />
+							<separator string="Notify Users" colspan="4"/>
+							<field name="notify_users" colspan="4"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Required Doc Tree View -->
+		<record model="ir.ui.view" id="doc_required_tree">
+			<field name="name">doc_required_Tree</field>
+			<field name="model">doc.required</field>
+			<field name="arch" type="xml">
+				<tree string="Required Doc Tree">
+					<field name="name" />
+					<field name="doc_ids" nolabel="1">
+						<tree>
+							<field name="datas"/>
+						</tree>
+					</field>
+					<field name="days_to_collect" />
+					<field name="notify_customer" nolabel="1"/>
+					<field name="notify_users" />
+					<field name="cowndown"/>
+					<field name="collected" readonly="1"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record forcecreate="True" id="ir_cron_scheduler_site_inspection_in_72_hours" model="ir.cron">
+            <field name="name">Site Inspectino in 72 Hours</field>
+            <field eval="True" name="active" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="'sale.order'" name="model" />
+            <field eval="'is_inspection_done_in_72_hours'" name="function" />
+            <field eval="'(False,)'" name="args" />
+        </record>
+        
+        <!--Required Documents Search View -->
+		<!--
+		<record model="ir.ui.view" id="finance_req_doc_search">
+			<field name="name">finance_req_doc_Search</field>
+			<field name="model">finance.documents.all</field>
+			<field name="arch" type="xml">
+				<search string="Required Documents Search">
+					<field name="name" />
+					<field name="code" />
+				</search>
+			</field>
+		</record>
+		-->
+
+		<!--Finance Required Documents Form View -->
+		<!--
+		<record model="ir.ui.view" id="finance_req_doc_form">
+			<field name="name">finance_req_doc_Form</field>
+			<field name="model">finance.documents.all</field>
+			<field name="arch" type="xml">
+				<form string="Finance Required Documents Form" version="7.0">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="name" />
+							<newline />
+							<field name="code" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		-->
+
+		<!-- Finance Required Documents Tree View -->
+		<!--
+		<record model="ir.ui.view" id="finance_req_doc_tree">
+			<field name="name">req_doc_Tree</field>
+			<field name="model">finance.documents.all</field>
+			<field name="arch" type="xml">
+				<tree string="Finance Required Documents">
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+		-->
+
+		<!-- Required Documents -->
+		<!--
+		<record id="action_finance_req_doc" model="ir.actions.act_window">
+			<field name="name">Finance Required Documents</field>
+			<field name="res_model">finance.documents.all</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		-->
+
+		<!--
+		<menuitem action="action_finance_req_doc" id="menu_finance_req_doc"
+			parent="base.menu_base_config" string="Finance Required Documents"
+			sequence="79" />
+		-->
+		
+	</data>
+</openerp>

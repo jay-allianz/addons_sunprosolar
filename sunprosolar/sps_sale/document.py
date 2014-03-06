@@ -20,19 +20,40 @@
 ##############################################################################
 
 from osv import fields, osv
+import datetime
+from dateutil.relativedelta import relativedelta
     
 class doc_required(osv.Model):
+    
+    def _get_count_down(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        count = 0
+        for data in self.browse(cr, uid, ids, context):
+            days_to_collect = data.days_to_collect
+            for data in self.browse(cr, uid, ids, context=context):
+                end_date = datetime.datetime.strptime(data.create_date , '%Y-%m-%d %H:%M:%S')
+                start_date =  datetime.datetime.today()
+                difference_in_days = relativedelta(end_date, start_date).days
+                if days_to_collect >= difference_in_days:
+                    count = days_to_collect- difference_in_days
+                else:
+                    count = 0
+            res[data.id] = count
+        return res
     
     _name="doc.required"
     
     _columns={
+        'create_date':fields.datetime('Date',readonly=True),
+        'doc_sale_id' : fields.many2one("sale.order", 'order'),
         'doc_id': fields.many2one("account.account.type"),
-        'name' : fields.char("Document Name"),
-#        'doc_ids': fields.one2many('ir.attachment','document_id1',"Document" ),
+        'name' : fields.many2one("documents.all","Document Name"),
+        'doc_ids': fields.one2many('ir.attachment','document_id1',"Document" ),
         'collected' : fields.boolean("Collected"),
         'days_to_collect': fields.integer("Days to Collect"),
         'notify_customer': fields.many2one("res.partner","Notify Customer when Collected"),
-        'notify_users': fields.many2many("res.users", "part_document_rel", "part_id", 'document_id',"Notify Users When Collected")
+        'notify_users': fields.many2many("res.users", "part_document_rel", "part_id", 'document_id',"Notify Users When Collected"),
+        'cowndown':fields.function(_get_count_down, method=True, store=True, string="Countdown Counter", type="integer", help="Remaining days for each document collection"),
     }
     
     def write(self, cr, uid, ids, vals, context=None):
@@ -43,11 +64,19 @@ class doc_required(osv.Model):
         customer = cur_rec.notify_customer
         users = cur_rec.notify_users
         send_mail_obj = self.pool.get('send.send.mail')
+        obj_mail_server = self.pool.get('ir.mail_server')
+        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+        if not mail_server_ids:
+            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+        email_from = mail_server_record.smtp_user
+        if not email_from:
+            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         if customer:
             if customer.email:
                 NO_REC_MSG = ''
                 SUB_LINE = 'Notification for Document Upload.'
-                MSG_BODY = 'Hello ' + customer.name + ',<br/><br/>' + ' Your Document named ' + cur_rec.name + '.<br/><br/> Have been successfully Uploaded.<br/><br/> Thank You.'
+                MSG_BODY = 'Hello ' + customer.name + ',<br/><br/>' + ' Your Document named ' + cur_rec.name.name + '.<br/><br/> Have been successfully Uploaded.<br/><br/> Thank You.'
                 send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, customer.email, context=context)
                 
         if users:
@@ -55,23 +84,79 @@ class doc_required(osv.Model):
                 if user.email:
                     NO_REC_MSG1 = ''
                     SUB_LINE1 = 'Notification for Document Upload.'
-                    MSG_BODY1 = 'Hello ' + user.name +',<br/>' +  ' The Document named ' + cur_rec.name + '.<br/><br/> Have been successfully Uploaded.<br/><br/> Thank You.'
+                    MSG_BODY1 = 'Hello ' + user.name +',<br/>' +  ' The Document named ' + cur_rec.name.name + '.<br/><br/> Have been successfully Uploaded.<br/><br/> Thank You.'
                     send_mail_obj.send(cr, uid, NO_REC_MSG1, SUB_LINE1, MSG_BODY1, user.email, context=context)
         return super(doc_required, self).write(cr, uid, ids, vals, context=context)
 
-#class ir_attachment(osv.Model):
-#    
-#    _inherit = "ir.attachment"
-#    
-#    _columns ={
-#            'document_id1': fields.many2one("doc.required","Document")
-#    }
+class ir_attachment(osv.Model):
     
-class account_account_type(osv.Model):
+    _inherit = "ir.attachment"
     
-    _inherit= "account.account.type"
+    _columns ={
+            'document_id1': fields.many2one("doc.required","Document")
+    }
+    
+class documents_all(osv.Model):
+    
+    _inherit = "documents.all"
+    
+    _columns = {
+            'days_to_collect': fields.integer("Days to Collect"),
+     }
+    
+class sale_order(osv.Model):
+    
+    _inherit= "sale.order"
+    
+    def _get_require_doc(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for data in self.browse(cr, uid, ids, context=context):
+            for doc in data.doc_req_ids:
+                if doc.doc_ids:
+                    for datas in doc.doc_ids:
+                        if datas.datas == False:
+                            res[data.id] = False
+                        else:
+                            res[data.id] = True
+                else:
+                    res[data.id] = False
+        return res
     
     _columns={
-        'doc_req_ids' : fields.one2many('doc.required', 'doc_id', 'Required Documents'),
+        'doc_req_ids' : fields.one2many('doc.required', 'doc_sale_id', 'Required Documents'),
+        'required_document':fields.function(_get_require_doc, method=True, type='boolean', string="Required Document Collected?", help="Checked if Yes."),
     }
+    
+    def create(self, cr, uid, vals, context=None):
+        res = super(sale_order, self).create(cr, uid, vals, context=context)
+        docs = []
+        crm_obj = self.pool.get('crm.lead')
+        doc_required_obj = self.pool.get('doc.required')
+        if vals.get('partner_id'):
+            crm_ids = crm_obj.search(cr, uid, [('partner_id','=', vals.get('partner_id'))], context=context)
+            crm_id = crm_ids[0]
+            crm_data = crm_obj.browse(cr, uid, crm_id, context=context)
+            req_doc = crm_data.doc_req_ids
+            for rec in req_doc:
+                rec_id = rec.id
+                doc_created = doc_required_obj.create(cr, uid, {'name' : rec.doc_id.id, 'days_to_collect': rec.doc_id.days_to_collect}, context=context)
+                docs.append(doc_created)
+            self.write(cr, uid, res, {'doc_req_ids': [(6,0,docs)]})
+        return res
+        
+    
+    
+#class finance_documents_all(osv.Model):
+#    """ Model for document information """
+#    _name = "finance.documents.all"
+#    _description = "Finance Documents Information."
+#    
+#    _columns = {
+#         'name': fields.char('Document Name'),
+#         'code': fields.char('Code'),
+#     }
+#    
+#    _sql_constraints = [
+#        ('code_uniq', 'unique (code)', 'The code of the Document must be unique !')
+#    ]
     

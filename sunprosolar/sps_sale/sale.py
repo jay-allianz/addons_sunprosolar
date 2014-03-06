@@ -43,16 +43,16 @@ class sale_order(osv.Model):
           'color': fields.integer('Color Index'),
           'company_currency': fields.related('company_id', 'currency_id', type='many2one', string='Currency', readonly=True, relation="res.currency"),
           'planned_revenue': fields.float('Expected Revenue', track_visibility='always'),
-#          'contract_id' : fields.one2many('account.analytic.account','sale_child','Contract'),
           'state': fields.selection([
-                ('draft', 'Draft Quotation'),
-                ('sent', 'Quotation Sent'),
+                ('draft', 'Proposal'),
+                ('sent', 'Proposal Sent'),
                 ('contract_generated', 'Contract Generated'),
                 ('follow_up','Follow Up'),
                 ('contract_signed', 'Contract Signed'),
                 ('project_management_notified','Project Management Notified'),
                 ('manual', 'Procurement Created'),
                 ('financing_type','Financing Type'),
+                ('assign_financing_incharge','Assign Financing In-Charge'),
                 ('site_inspection', 'Site Inspection'),
                 ('permit','Permit'),
                 ('city','City Submission'),
@@ -293,7 +293,7 @@ class account_analytic_account(osv.Model):
             'contract_id':fields.char('Contract ID'),
             'sale_id': fields.many2one('sale.order', 'Sale Order'),
             'contract_date': fields.date('Contract Date'),
-            'type_of_finance': fields.many2one('account.account.type', 'Type of Financing '),
+#            'type_of_finance': fields.many2one('account.account.type', 'Type of Financing '),
             'amount': fields.float('Contract Amount'),
             'deposit' :fields. float('Deposit Collected'),
             'planet': fields.selection([('lease', 'Lease'), ('ppa', 'PPA')], 'Plant'),
@@ -304,6 +304,8 @@ class account_analytic_account(osv.Model):
                                   "If you select Contract or Project, it offers you the possibility to manage the validity and the invoicing options for this account.\n"\
                                   "The special type 'Template of Contract' allows you to define a template with default data that you can reuse easily."),
             'members': fields.many2many('res.users', 'project_user_relation', 'project_id', 'uid', 'Project Members'),
+            'hoa': fields.boolean("HOA"),
+            'csi': fields.boolean("CSI")
         }
     
 

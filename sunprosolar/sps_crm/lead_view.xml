@@ -278,13 +278,11 @@
 											<field name="datas"/>
 										</tree>
 									</field>
-									<field name="countdown" />
 									<field name="collected" />
 								</tree>
 								<form>
 									<field name="doc_id" />
 									<field name="doc_ids" />
-									<field name="countdown" />
 									<field name="collected" readonly="1" />
 								</form>
 							</field>
@@ -653,26 +651,19 @@
 								</form>
 							</field>
 							<field name="required_document" />
-							<field name="acc_no"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="meter_no"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="bill_summer"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="rate_plan"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<field name="bill_winter"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<label for="bill_average"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<div attrs="{'invisible':[('required_document','=',False)]}">
+							<field name="acc_no" />
+							<field name="meter_no"/>
+							<field name="bill_summer"/>
+							<field name="rate_plan"/>
+							<field name="bill_winter" />
+							<label for="bill_average"/>
+							<div>
 								<field name="bill_average" />
 								<span class="oe_grey"> of </span>
 								<field name="bill_month" nolabel="1" />
 							</div>
-							<label for="bill_total"
-								attrs="{'invisible':[('required_document','=',False)]}" />
-							<div attrs="{'invisible':[('required_document','=',False)]}">
+							<label for="bill_total"/>
+							<div>
 								<field name="bill_total" />
 								<span class="oe_grey"> of </span>
 								<field name="bill_month1" nolabel="1" />
@@ -1463,5 +1454,32 @@
 				</xpath>
 			</field>
 		</record>
+
+        <record model="ir.ui.view" id="product_pricelist_item_form_view_inherited">
+            <field name="name">product.pricelist.item.inherited</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view" />
+            <field name="arch" type="xml">
+                <field name="sequence" position="after">
+                    <field name="daily_minimum_charges" />
+                    <field name="monthly_minimum_charges" />
+                    <field name="daily_meter_charges" />
+                    <field name="monthly_meter_charges" />
+                    <field name="tier1" />
+                    <field name="off_peak_tier2" />
+                    <field name="part_peak_tier3" />
+                    <field name="peak_tier4" />
+                    <field name="stage_changes" />
+                    <field name="rate_stablization" />
+                    <field name="surcharge_3" />
+                    <field name="surcharge_4" />
+                    <field name="surcharge_5" />
+                    <field name="surcharge_6" />
+                    <field name="summer_qty" />
+                    <field name="winter_qty" />
+                </field>
+            </field>
+        </record>
+
 	</data>
 </openerp>

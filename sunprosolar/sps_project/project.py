@@ -43,7 +43,6 @@ class project_project(osv.Model):
                  }
 project_project()
 
-
 class product_task_type(osv.Model):
     
     _inherit = 'project.task.type'
@@ -70,12 +69,24 @@ class project_task(osv.Model):
     def write(self, cr, uid, ids, vals, context=None):
         stage_pool = self.pool.get('project.task.type')
         project_obj = self.pool.get('project.project')
-        if vals.get('stage_id', False):
-            for task_rec in self.browse(cr, uid, ids, context=context):
-                rec = stage_pool.browse(cr, uid, vals.get('stage_id'), context=context)
-                if rec.color:
-                    vals.update({'color' : rec.color})
-                    project_obj.write(cr, uid, [task_rec.project_id.id], {'color':rec.color}, context=context)
+        if context is None:
+            context = {}
+        if context.get('default_project_id'):
+            project_id = context.get('default_project_id')
+            project_data = self.browse(cr, uid, ids,context=context)
+            if not vals.get('stage_id', None):
+                return super(project_project, self).write(cr, uid, ids, vals, context=context)
+            task_type = stage_pool.search(cr, uid, [('name','=','Invoicing')],context=context)
+            if vals.get('stage_id', False) and vals['stage_id'] in task_type:
+                invoice_obj = self.pool.get('account.invoice.line')
+                invoice_ids = invoice_obj.search(cr, uid, [('account_analytic_id', '=', project_data[0].project_id.analytic_account_id.id)], context=context)
+                if not invoice_ids:
+                    raise osv.except_osv(_('Stage Restriction'), _('You can not goto invoicing stage without creating invoice!'))
+            if vals.get('stage_id', False):
+                for task_rec in self.browse(cr, uid, ids, context=context):
+                    rec = stage_pool.browse(cr, uid, vals.get('stage_id'), context=context)
+                    if rec.color:
+                        vals.update({'color' : rec.color})
+                        project_obj.write(cr, uid, [task_rec.project_id.id], {'color':rec.color}, context=context)
         return super(project_task, self).write(cr, uid, ids, vals, context=context)
-            
 
