@@ -42,9 +42,13 @@ class crm_make_sale(osv.osv_memory):
         lead = lead_obj.browse(cr, uid, context.get('active_id'), context=context)
         make_sale = self.browse(cr, uid, ids[0], context=context).partner_id
         partner = sale_order_obj.onchange_partner_id(cr, uid, ids, make_sale.id, context=context)
+        utility_company_id = False
+        if lead.utility_company_id and lead.utility_company_id.property_product_pricelist:
+            utility_company_id = lead.utility_company_id.property_product_pricelist.id
+        
         order = {
             'partner_id' : make_sale.id,
-            'pricelist_id' : partner.get('value').get('pricelist_id'),
+            'pricelist_id' : utility_company_id,
             'partner_invoice_id' : partner.get('value').get('partner_invoice_id'),
             'partner_shipping_id' : partner.get('value').get('partner_shipping_id'),
         }
@@ -73,7 +77,6 @@ class crm_make_sale(osv.osv_memory):
             }
             sale_order_line_obj.create(cr, uid, module_line, context=context)
             sale_order_line_obj.create(cr, uid, inv_line, context=context)
-            
         return {
             'domain': str([('id', 'in', [order_id])]),
             'view_type': 'form',

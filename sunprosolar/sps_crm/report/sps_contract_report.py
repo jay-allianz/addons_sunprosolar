@@ -39,12 +39,53 @@ class contract(report_sxw.rml_parse):
             'get_reg_no':self._get_reg_no,
             'get_lead_city_id':self._lead_city_id,
             'get_address':self.get_address,
+            'get_lead_name':self._lead_name,
+            'get_annul_usage':self._annul_usage,
+            'get_stc_dc_rating':self._stc_dc_rating,
+            'get_products':self.get_products,
+            
         })
         
+    def _lead_name(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        if lead_id:
+            lead_name = lead_obj.browse(self.cr, self.uid, lead_id)[0].name
+        return lead_name
+    
+    def get_products(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        sting = ''
+        if lead_id:
+            for data in solar_ids:
+                module = data.module_product_id.name
+                inverter = data.invertor_product_id.name
+                product = str(module) + ',' + str(inverter)
+                string = string + product
+        return string
+    
+    def _annul_usage(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        if lead_id:
+            annual_ele_usage = lead_obj.browse(self.cr, self.uid, lead_id)[0].annual_ele_usage
+        return annual_ele_usage
+    
+    def _stc_dc_rating(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        lead_name = False
+        if lead_id:
+            stc_dc_rating = lead_obj.browse(self.cr, self.uid, lead_id)[0].stc_dc_rating
+        return stc_dc_rating
+    
     def _lead_city_id(self, customer):
         lead_obj = self.pool.get("crm.lead")
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
-        print "lead_id==========",lead_id
         lead_name = False
         if lead_id:
             name = lead_obj.browse(self.cr, self.uid, lead_id)[0].city_id.name or ''

@@ -327,6 +327,7 @@ class crm_lead(osv.Model):
                     if line.usage_kwh:
                         annual_ele_usage = line.usage_kwh
             res = []
+            
             prev_old_bill = annual_ele_usage * data.grid_energy_rate
             prev_pv_energy = data.annual_solar_prod or 0
             elec_bill_savings = prev_pv_energy * data.grid_energy_rate
@@ -371,7 +372,17 @@ class crm_lead(osv.Model):
                 elec_bill_savings = prev_pv_energy * data.grid_energy_rate * math.pow(( 1 + data.grid_rate_increase_by ),year)  
             result[data.id] = res#
         return result
-    
+
+    def _get_company_tier_amount(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        pricelist_obj = self.pool.get('product.pricelist')
+        for data in self.browse(cr, uid, ids, context):
+            price = 0.0
+            if data.utility_company_id and data.utility_company_id.property_product_pricelist:
+                price = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, data.partner_id.id)[data.utility_company_id.property_product_pricelist.id]
+            res[data.id] = price
+        return res
+
     def _get_cost_rebate(self, cr, uid, ids, name, args, context=None):
         result = {}
         
@@ -576,7 +587,8 @@ class crm_lead(osv.Model):
         'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
         'cost_peack_kw' : fields.float('Cost / Peack KW'),
         'pv_kw_decline':fields.float('PV KW Decline (%)'),
-        'grid_energy_rate':fields.float("Electricity Grid energy intial Rate Per KWh/$"),
+#        'grid_energy_rate':fields.float("Electricity Grid energy intial Rate Per KWh/$"),
+        'grid_energy_rate':fields.function(_get_company_tier_amount, type='float', method=True, string="Electricity Grid energy intial Rate Per KWh/$"),
         'grid_rate_increase_by':fields.float('Grid Rate Increase By'),
         'rebate':fields.float("Rebate"),
         'srec':fields.float('SREC/kwh'),
@@ -1299,19 +1311,10 @@ class document_required(osv.Model):
     
     _name = "document.required"
     
-    def _get_count_down(self, cr, uid, ids, name, args, context=None):
-        res = {}
-        count = 0
-        for data in self.browse(cr, uid, ids, context):
-            today_date = datetime.datetime.today()
-            res[data.id] = 0
-        return res
-    
     _columns = {
         'doc_id': fields.many2one('documents.all', 'Document Name'),
         'doc_ids': fields.one2many('ir.attachment','doc_id',"Document" ),
         'collected' : fields.boolean("Collected"),
-        'countdown': fields.function(_get_count_down, method=True, store=True, string="Countdown Counter", type="integer", help="Remaining days for each document collection"),
         'crm_lead_id' : fields.many2one('crm.lead', 'Lead'),
         'partner_id' : fields.many2one('res.partner', 'Customer'),
     }
@@ -1423,7 +1426,7 @@ class crm_meeting(osv.Model):
     
     _defaults = {
             'name': '/',
-            'meeting_type': 'general_meeting',
+            'meeting_type': 'appointment',
     }
     
     def onchange_dates(self, cr, uid, ids, start_date, duration=False, end_date=False, allday=False, context=None):
@@ -1438,7 +1441,7 @@ class crm_meeting(osv.Model):
             crm_case_stage_obj = self.pool.get('crm.case.stage')
             opo_obj = self.pool.get('crm.lead')
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Appointment Setup')])
-            opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0]})
+            opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0],'appointment_ids': [(6,0,[res])]})
         return res
     
     def send_email(self, cr, uid, message, mail_server_id, context):
@@ -1680,3 +1683,132 @@ class friend_reference(osv.Model):
         SUB_LINE = 'Notification For Friend Reference.'
         MSG_BODY = 'Hello Admin,<br/>' + user_rec.name + ' added friend reference.' + '<br/><br/>The reference is : <br/>' + fname + " " + lname + "<br/>Email : " + friend_email_id + '<br/> Thank You.'
         send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, auto_email_id, context=context)
+
+
+class product_pricelist_item(osv.Model):
+    
+    _inherit = 'product.pricelist.item'
+    
+    _columns = {
+            'daily_minimum_charges': fields.float('Daily Minumum Charges'),
+            'monthly_minimum_charges': fields.float('Monthly Minumum Charges'),
+            'daily_meter_charges': fields.float('Daily Meter Charges'),
+            'monthly_meter_charges': fields.float('Monthly Meter Charges'),
+            'tier1': fields.float('Tier1'),
+            'off_peak_tier2': fields.float('Off-Peak/Tier2'),
+            'part_peak_tier3': fields.float('Part-Peak/Tier3'),
+            'peak_tier4': fields.float('Peak Tier4'),
+            'stage_changes': fields.float('Stage Changes'),
+            'rate_stablization': fields.float('Rate Stablization'),
+            'surcharge_3': fields.float('Surcharge 3'),
+            'surcharge_4': fields.float('Surcharge 4'),
+            'surcharge_5': fields.float('Surcharge 5'),
+            'surcharge_6': fields.float('Surcharge 6'),
+            'summer_qty': fields.float('Summer Quantity'),
+            'winter_qty': fields.float('Winter Quantity'),
+    }
+
+class product_pricelist(osv.osv):
+    _inherit = 'product.pricelist'
+    
+    def price_get_multi(self, cr, uid, pricelist_ids, products_by_qty_by_partner, context=None):
+        """multi products 'price_get'.
+           @param pricelist_ids:
+           @param products_by_qty:
+           @param partner:
+           @param context: {
+             'date': Date of the pricelist (%Y-%m-%d),}
+           @return: a dict of dict with product_id as key and a dict 'price by pricelist' as value
+        """
+
+        def _create_parent_category_list(id, lst):
+            if not id:
+                return []
+            parent = product_category_tree.get(id)
+            if parent:
+                lst.append(parent)
+                return _create_parent_category_list(parent, lst)
+            else:
+                return lst
+        # _create_parent_category_list
+
+        if context is None:
+            context = {}
+
+        date = context.get('date') or time.strftime('%Y-%m-%d')
+
+        currency_obj = self.pool.get('res.currency')
+        product_obj = self.pool.get('product.product')
+        product_category_obj = self.pool.get('product.category')
+        product_uom_obj = self.pool.get('product.uom')
+        supplierinfo_obj = self.pool.get('product.supplierinfo')
+        price_type_obj = self.pool.get('product.price.type')
+
+        # product.pricelist.version:
+        if not pricelist_ids:
+            pricelist_ids = self.pool.get('product.pricelist').search(cr, uid, [], context=context)
+
+        pricelist_version_ids = self.pool.get('product.pricelist.version').search(cr, uid, [
+                                                        ('pricelist_id', 'in', pricelist_ids),
+                                                        '|',
+                                                        ('date_start', '=', False),
+                                                        ('date_start', '<=', date),
+                                                        '|',
+                                                        ('date_end', '=', False),
+                                                        ('date_end', '>=', date),
+                                                    ])
+        if len(pricelist_ids) != len(pricelist_version_ids):
+            raise osv.except_osv(_('Warning!'), _("At least one pricelist has no active version !\nPlease create or activate one."))
+
+        # product.product:
+        product_ids = [i[0] for i in products_by_qty_by_partner]
+        #products = dict([(item['id'], item) for item in product_obj.read(cr, uid, product_ids, ['categ_id', 'product_tmpl_id', 'uos_id', 'uom_id'])])
+        products = product_obj.browse(cr, uid, product_ids, context=context)
+        products_dict = dict([(item.id, item) for item in products])
+
+        # product.category:
+        product_category_ids = product_category_obj.search(cr, uid, [])
+        product_categories = product_category_obj.read(cr, uid, product_category_ids, ['parent_id'])
+        product_category_tree = dict([(item['id'], item['parent_id'][0]) for item in product_categories if item['parent_id']])
+
+        results = {}
+        for product_id, qty, partner in products_by_qty_by_partner:
+            for pricelist_id in pricelist_ids:
+                price = False
+
+                tmpl_id = products_dict[product_id].product_tmpl_id and products_dict[product_id].product_tmpl_id.id or False
+
+                categ_id = products_dict[product_id].categ_id and products_dict[product_id].categ_id.id or False
+                categ_ids = _create_parent_category_list(categ_id, [categ_id])
+                if categ_ids:
+                    categ_where = '(categ_id IN (' + ','.join(map(str, categ_ids)) + '))'
+                else:
+                    categ_where = '(categ_id IS NULL)'
+
+                if partner:
+                    partner_where = 'base <> -2 OR %s IN (SELECT name FROM product_supplierinfo WHERE product_id = %s) '
+                    partner_args = (partner, tmpl_id)
+                else:
+                    partner_where = 'base <> -2 '
+                    partner_args = ()
+
+                cr.execute(
+                    'SELECT i.*, pl.currency_id '
+                    'FROM product_pricelist_item AS i, '
+                        'product_pricelist_version AS v, product_pricelist AS pl '
+                    'WHERE (product_tmpl_id IS NULL OR product_tmpl_id = %s) '
+                        'AND (product_id IS NULL OR product_id = %s) '
+                        'AND (' + categ_where + ' OR (categ_id IS NULL)) '
+                        'AND (' + partner_where + ') '
+                        'AND price_version_id = %s '
+                        'AND (min_quantity IS NULL OR min_quantity <= %s) '
+                        'AND i.price_version_id = v.id AND v.pricelist_id = pl.id '
+                    'ORDER BY sequence',
+                    (tmpl_id, product_id) + partner_args + (pricelist_version_ids[0], qty))
+                res1 = cr.dictfetchall()
+                uom_price_already_computed = False
+                tier1_amount = 0.0
+                for res in res1:
+                    tier1_amount = res['tier1']
+                results[product_id] = {pricelist_id: tier1_amount}
+        return results
