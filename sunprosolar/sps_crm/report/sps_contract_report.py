@@ -43,7 +43,14 @@ class contract(report_sxw.rml_parse):
             'get_annul_usage':self._annul_usage,
             'get_stc_dc_rating':self._stc_dc_rating,
             'get_products':self.get_products,
-            
+            'get_roof_vents_moved':self._roof_vents_moved,
+            'get_dormers_moved':self._dormers_moved,
+            'get_service_needed':self._service_needed,
+            'get_trenching':self._trenching,
+            'get_tilt_azimuth':self._tilt_azimuth,
+            'get_mount':self._mount,
+            'get_rebate_amt':self.get_rebate_amt,
+            'get_total_due':self.get_total_due,
         })
         
     def _lead_name(self, customer):
@@ -57,20 +64,27 @@ class contract(report_sxw.rml_parse):
     def get_products(self, customer):
         lead_obj = self.pool.get("crm.lead")
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
-        lead_name = False
-        sting = ''
+        products_str = ' '
         if lead_id:
-            for data in solar_ids:
+            for data in lead_obj.browse(self.cr, self.uid, lead_id)[0].solar_ids:
                 module = data.module_product_id.name
-                inverter = data.invertor_product_id.name
-                product = str(module) + ',' + str(inverter)
-                string = string + product
-        return string
+                inverter = data.inverter_product_id.name
+                product = str(module) + ', ' + str(inverter) + ', '
+                products_str = products_str + product
+        return products_str
+    
+    def _tilt_azimuth(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        if lead_id:
+            tilt = lead_obj.browse(self.cr, self.uid, lead_id)[0].faceing.tilt
+            azimuth = lead_obj.browse(self.cr, self.uid, lead_id)[0].tilt_degree
+            tilt_azimuth = str(tilt) + '/' + str(azimuth)
+        return tilt_azimuth
     
     def _annul_usage(self, customer):
         lead_obj = self.pool.get("crm.lead")
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
-        lead_name = False
         if lead_id:
             annual_ele_usage = lead_obj.browse(self.cr, self.uid, lead_id)[0].annual_ele_usage
         return annual_ele_usage
@@ -86,7 +100,6 @@ class contract(report_sxw.rml_parse):
     def _lead_city_id(self, customer):
         lead_obj = self.pool.get("crm.lead")
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
-        lead_name = False
         if lead_id:
             name = lead_obj.browse(self.cr, self.uid, lead_id)[0].city_id.name or ''
             zip = lead_obj.browse(self.cr, self.uid, lead_id)[0].city_id.zip or ''
@@ -99,20 +112,61 @@ class contract(report_sxw.rml_parse):
     def get_address(self, customer):
         lead_obj = self.pool.get("crm.lead")
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
-        lead_data = False
         if lead_id:
             street = lead_obj.browse(self.cr, self.uid, lead_id)[0].street or ''
             street2 = lead_obj.browse(self.cr, self.uid, lead_id)[0].street2 or ''
             lead_data = str(street) + ' ' + str(street2)
         return lead_data
+    
+    def get_rebate_amt(self, customer):
+        lead_obj = self.pool.get("crm.lead")
+        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        rebate_amt = 0.0
+        if lead_obj:
+            rebate = lead_obj.browse(self.cr, self.uid, lead_obj)[0].rebate
+        return rebate
         
     def get_sales_person(self, customer):
         lead_obj = self.pool.get("crm.lead")
         lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
-        lead_data = False
         if lead_id:
             lead_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].user_id.name
         return lead_data
+    
+    def _roof_vents_moved(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        if analytic_id:
+            roof_vents_moved = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].roof_vents_moved
+        return roof_vents_moved
+    
+    def _dormers_moved(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        if analytic_id:
+            dormers_moved = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].dormers_moved
+        return dormers_moved
+    
+    def _trenching(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        if analytic_id:
+            trenching = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].trenching
+        return trenching
+    
+    def _service_needed(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        if analytic_id:
+            service_needed = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].service_needed
+        return service_needed
+    
+    def _mount(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        if analytic_id:
+            mount = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].mount
+        return mount
     
     def get_total_contract_price(self, customer):
         analytic_obj = self.pool.get("account.analytic.account")
@@ -121,11 +175,21 @@ class contract(report_sxw.rml_parse):
         if analytic_id:
             analytic_data = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].amount
         return analytic_data
-
+    
+    def get_total_due(self, customer):
+        analytic_obj = self.pool.get("account.analytic.account")
+        analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        due = 0.0
+        if analytic_id:
+            total_amt = analytic_data = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].amount
+            deposit = analytic_data = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].deposit
+            due = total_amt-deposit
+        return due
+    
     def get_install_date(self, customer):
         analytic_obj = self.pool.get("account.analytic.account")
         analytic_id = analytic_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
-        analytic_data = False
+        analytic_data = ' '
         if analytic_id:
             analytic_data = analytic_obj.browse(self.cr, self.uid, analytic_id)[0].date_start
         return analytic_data

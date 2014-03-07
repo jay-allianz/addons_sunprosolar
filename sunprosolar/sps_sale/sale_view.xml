@@ -117,7 +117,7 @@
                         <button name="contract_rejected" string="Contract Rejected"
                             colspan="2" type="object" icon="gtk-no"/>
                     </group>
-                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','financing_type')]}">
+                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','assign_financing_incharge')]}">
                         <button name="site_inspection_mail" string="New Site Inspection"
                             colspan="2" type="object" icon="gtk-yes"/> 
                     </group>
@@ -136,6 +136,9 @@
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','drawing')]}">
                         <button name="permit_pack" string="Permit Pack"
                             colspan="2" type="object" icon="gtk-yes"  />
+                    </group>
+                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','site_inspection')]}">
+                        <button name="done_inspection" icon="gtk-yes" type="object" string="Done Site Inspection" />
                     </group>
                     <newline/>
                     <group>
@@ -159,8 +162,15 @@
 									attrs="{'invisible':[('confirm_original','!=','change')]}" />
 							</div>
 						</group>
-						<button name="done_inspection" type="object" string="Done Site Inspection" />
+						<group cols="4" colspan="4" attrs="{'invisible':[('state','!=','financing_type')]}">
+							<label for="incharge_user_id"/>
+							<div>
+								<field name="incharge_user_id" colspan="2"/>
+								<button name="assign_professional" type="object" string="Assigned Financing Professionals" />
+							</div>
+						</group>
 						<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','project_management_notified')]}">
+						<field name="financing_type_id"/>
                         <separator string="Required Documents"/>
 				        <field name="doc_req_ids" colspan="4" nolabel="1"/>
 				        <field name="required_document" readonly="1"/>
@@ -226,6 +236,14 @@
 							<field name="planet" />
 							<field name="power" attrs="{'invisible':[('planet','!=','ppa')]}" />
 						</group>
+						<group col="4" colspan="4">
+							<newline/>
+							<field name="service_needed"/>
+							<field name="roof_vents_moved"/>
+							<field name="trenching"/>
+							<field name="dormers_moved"/>
+							<field name="mount"/><newline/>
+						</group>
 					</page>
 					<page string="Project Team Members">
 						<field name="members" />
@@ -255,6 +273,20 @@
             <field eval="'is_inspection_done_in_72_hours'" name="function" />
             <field eval="'(False,)'" name="args" />
         </record>
+        
+        <record model="ir.ui.view" id="financing_type_form">
+			<field name="name">financing.type.form</field>
+			<field name="model">financing.type</field>
+			<field name="arch" type="xml">
+				<form string='Financing Type' version='7.0'>
+					<group>
+						<field name="name" string="Name" required="1" />
+						<separator string="Description"/>
+						<field name="description" colspan="4" nolabel="1"/>
+					</group>
+				</form>
+			</field>
+		</record>
         
 	</data>
 </openerp>

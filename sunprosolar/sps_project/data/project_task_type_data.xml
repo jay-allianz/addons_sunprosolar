@@ -12,7 +12,7 @@
             <field name="name">Installation</field>
             <field name="state">draft</field>
             <field name="case_default" eval="True"/>
-            <field name="color" eval="4" />
+            <field name="color" eval="6" />
         </record>
         <record id="project.project_tt_design" model="project.task.type">
             <field name="sequence">3</field>

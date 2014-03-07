@@ -187,16 +187,12 @@
 							<field name='doc_req_ids' colspan="4" nolabel="1" readonly="1">
 								<tree editable="bottom">
 									<field name="doc_id" />
-									<field name="doc_ids">
-								    	<tree>
-											<field name="datas"/>
-										</tree>
-									</field>
+									<field name="document_id"/>
 									<field name="collected" />
 								</tree>
 								<form>
 									<field name="doc_id" />
-									<field name="doc_ids" />
+									<field name="document_id" />
 									<field name="collected" readonly="1" />
 								</form>
 							</field>

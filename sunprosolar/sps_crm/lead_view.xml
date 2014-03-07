@@ -273,16 +273,12 @@
 							<field name='doc_req_ids' colspan="4" nolabel="1">
 								<tree editable="bottom">
 									<field name="doc_id" />
-									<field name="doc_ids">
-								    	<tree>
-											<field name="datas"/>
-										</tree>
-									</field>
+									<field name="document_id"/>
 									<field name="collected" />
 								</tree>
 								<form>
 									<field name="doc_id" />
-									<field name="doc_ids" />
+									<field name="document_id" />
 									<field name="collected" readonly="1" />
 								</form>
 							</field>
@@ -534,13 +530,11 @@
 					<field name="insentive_type" />
 					<field name="sci_step" />
 				</xpath>
-				<xpath
-					expr="//notebook/page[@string='Lead']/group/group/div/div[@class='address_format']"
+				<xpath expr="//notebook/page[@string='Lead']/group/group/div/div[@class='address_format']"
 					position="replace">
 					<field name="city_id" />
 				</xpath>
-				<xpath
-					expr="//notebook/page[@string='Lead']/group/group/div/field[@name='country_id']"
+				<xpath expr="//notebook/page[@string='Lead']/group/group/div/field[@name='country_id']"
 					position="replace">
 				</xpath>
 				<xpath expr="//notebook/page[@string='Lead']" position="before">
@@ -598,8 +592,14 @@
 							<field name="home_sq_foot" />
 							<newline />
 						</group>
+						<group string="Type of install" colspan="4">
+							<field name="pool" />
+							<field name="hot_water" />
+							<field name="pv" />
+							<field name="other" />
+						</group>
 						<group col="4" colspan="4">
-							<field name="roof_type" /><newline/>
+							<field name="roof_type" />
 							<field name="loc_station_id" />
 							<newline />
 							<field name="tilt_degree" />
@@ -637,16 +637,12 @@
 							<field name='doc_req_ids' colspan="4" nolabel="1">
 								<tree editable="bottom">
 									<field name="doc_id" />
-									<field name="doc_ids">
-								    	<tree>
-											<field name="datas"/>
-										</tree>
-									</field>
+									<field name="document_id"/>
 									<field name="collected" />
 								</tree>
 								<form>
 									<field name="doc_id" />
-									<field name="doc_ids" />
+									<field name="document_id" />
 									<field name="collected" readonly="1" />
 								</form>
 							</field>

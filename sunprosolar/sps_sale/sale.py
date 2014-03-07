@@ -67,6 +67,8 @@ class sale_order(osv.Model):
          'contract_signing_date' : fields.datetime('Contract Signing Date'),
          'inspection_done_date' : fields.datetime('Inspection Done Date'),
          'insp_after_72_hour' : fields.boolean('Inspection After 72 Hours '),
+         'financing_type_id' : fields.many2one('financing.type','Financing Type'),
+         'incharge_user_id' : fields.many2one('res.users','Financing In-Charge'),
     }
     
     _defaults = {
@@ -92,6 +94,7 @@ class sale_order(osv.Model):
             'name' : cur_rec.partner_id.name,
             'partner_id' : cur_rec.partner_id.id,
             'amount' : cur_rec.amount_total,
+            'sale_id': cur_rec.id,
             'contract_date': datetime.datetime.today(),
             'use_tasks' : True,
         }
@@ -101,6 +104,7 @@ class sale_order(osv.Model):
         task_vals = {
             'name' : cur_rec.partner_id.name,
             'project_id':project_id,
+            'color': 4,
         }
         task_obj.create(cr, uid, task_vals, context=context)
         self.write(cr, uid, ids, {'state': 'contract_generated','project_id': proj_acc_analy_id})
@@ -131,7 +135,19 @@ class sale_order(osv.Model):
         return True
     
     def document_collected(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state': 'financing_type'})
+        cur_rec = self.browse(cr, uid, ids, context=context)[0]
+        if not cur_rec.financing_type_id :
+            raise osv.except_osv(_('Warning !'),_("Please select the \'Financing Type\' for Document collection."))
+        else:
+            self.write(cr, uid, ids, {'state': 'financing_type'})
+        return True
+    
+    def assign_professional(self, cr, uid, ids, context=None):
+        cur_rec = self.browse(cr, uid, ids, context=context)[0]
+        if not cur_rec.incharge_user_id :
+            raise osv.except_osv(_('Warning !'),_("Please select the 'Financing In-Charge'."))
+        else:
+            self.write(cr, uid, ids, {'state': 'assign_financing_incharge'})
         return True
     
     def done_inspection(self, cr, uid, ids, context=None):
@@ -284,6 +300,18 @@ class sale_order(osv.Model):
         self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
         self.write(cr, uid, ids, {'state': 'site_inspection'})
         return True
+    
+class financing_type(osv.osv):
+    
+    _name = "financing.type"
+    
+    _columns = {
+        'name' : fields.char('Name'),
+        'description': fields.text('Description')
+#        'document_ids' : fields.many2many('document.document','document_financing_type_rel','fin_type_id','doc_id','Documents'),
+    }
+    
+financing_type()
 
 class account_analytic_account(osv.Model):
     
@@ -294,6 +322,13 @@ class account_analytic_account(osv.Model):
             'sale_id': fields.many2one('sale.order', 'Sale Order'),
             'contract_date': fields.date('Contract Date'),
 #            'type_of_finance': fields.many2one('account.account.type', 'Type of Financing '),
+
+            'roof_vents_moved':fields.char("# of Roof Vents To Be Moved"),
+            'dormers_moved':fields.char('# of Dormers To Be Moved'),
+            'service_needed': fields.char('Service Upgrade Needed'),
+            'trenching':fields.char('Trenching'),
+            'mount':fields.selection([('Ground','Ground Mount'),('Roof','Roof Mount')],"Mount"),
+            
             'amount': fields.float('Contract Amount'),
             'deposit' :fields. float('Deposit Collected'),
             'planet': fields.selection([('lease', 'Lease'), ('ppa', 'PPA')], 'Plant'),

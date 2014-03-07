@@ -64,7 +64,7 @@ class crm_make_sale(osv.osv_memory):
                 'price_unit' : ((solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.cost_per_stc_watt) + (solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.labor_per_stc_watt) + (solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.materials_per_stc)) * (1 + solar_line.module_product_id.markup/100),     
                 'type' : solar_line.module_product_id.procure_method,
                 'order_id' : order_id
-            }        
+            }
 
             inv_line = {
                 'product_id' : solar_line.inverter_product_id.id,
