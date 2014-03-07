@@ -28,8 +28,8 @@
     "description": """This module provides the functionality to generate Invoice for customer. 
     """,
     'data' : [
-        'account_invoice_view.xml',
-        'data/financing_type_data.xml',
+#        'account_invoice_view.xml',
+#        'data/financing_type_data.xml',
     ],
     'depends': ['account'],
     'installable': True,

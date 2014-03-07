@@ -132,11 +132,12 @@
     <paraStyle name="P2" fontName="Helvetica" fontSize="9.5" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P2_bold" fontName="Helvetica-Bold" fontSize="9" leading="10" alignment="LEFT" spaceBefore="2.0" spaceAfter="2.0"/>
     <paraStyle name="P3" fontSize="8.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P4" fontSize="7.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P3_bold" fontName="Helvetica-Bold" fontSize="15" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <images/>
   </stylesheet>
   <story>
-    <para style="terp_default_8">[[ repeatIn(objects, 's')]] </para>
+    <para style="P3">[[ repeatIn(objects, 's')]] </para>
     <blockTable colWidths="180.0, 300.0" style="Table1">
         <tr>
             <td>
@@ -223,15 +224,10 @@
         <tr>
            <td>
              <para style="P3">The solar system will be installed at the Subject Property in the following location:</para>
-           </td>
-        </tr>
-        <tr>
-            <td>
-                <para style="P3">__________________________________________________________________________________________________________________________.</para>
+                <para fontSize="7.0">__________________________________________________________________________________________________________________________.</para>
                 <para style="P3">The solar system will be installed at the Subject Property with the following panels and inverter(s):</para>
-                <para style="p3">[[get_products(s.partner_id.id)]]</para>
-                
-                <para style="P3">__________________________________________________________________________________________________________________________.</para>
+                <para fontSize="7.0">[[get_products(s.partner_id.id)]]</para>
+                <para fontSize="7.0">__________________________________________________________________________________________________________________________.</para>
             </td>
         </tr>
         <tr>
@@ -2220,22 +2216,22 @@
                 <blockTable colWidths="165.0,40.0,45.0,20.0,270.0" style="Table4">
                     <tr>
                         <td><para style="P1">TOTAL SYSTEM VALUE</para></td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_untaxed or '']]</td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_untaxed or '']]</td>
+                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_untaxed or '0.0']]</td>
+                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_untaxed or '0.0']]</td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">ESTIMATED CSI REBATE TO BE CARRIED BY SUNPRO SOLAR</para></td>
-                        <td><para style="P1"></para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1"></para>[[ get_rebate_amt(s.partner_id.id)]]</td>
+                        <td><para style="P1"></para>[[ get_rebate_amt(s.partner_id.id)]]</td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">TOTAL CONTRACT PRICE</para></td>
-                        <td><para style="P1" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id) ]]</para></td>
-                        <td><para style="P1" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id) or '0.0']]</para></td>
+                        <td><para style="P1" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id) or '0.0']]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
@@ -2248,8 +2244,8 @@
                     </tr>
                     <tr>
                         <td><para style="P1">TOTAL NET PRICE TO CUSTOMER</para></td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_total or '']]</td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_total or '']]</td>
+                        <td><para style="P1" alignment="RIGHT"></para>[[ get_total_contract_price(s.partner_id.id) or '0.0']]</td>
+                        <td><para style="P1" alignment="RIGHT"></para>[[ get_total_contract_price(s.partner_id.id) or '0.0']]</td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
@@ -2264,7 +2260,7 @@
                             <para style="P1">□ Combination: See Financing type</para>
                         </td>
                         <td><para style="P1">TOTAL DUE</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1">[[ get_total_due(s.partner_id.id) ]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1">ESTIMATED START DATE: [[ get_install_date(s.partner_id.id) or '' ]]</para></td>
                     </tr>
@@ -2282,36 +2278,36 @@
                     <tr>
                         <td><para style="P1">Utility Company</para></td>
                         <td><para style="P1">[[ get_utility_company(s.partner_id.id) ]]</para></td>
-                        <td><para style="P1"># of Roof Vents To Be Moved</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1"># of Roof Vents To Be Moved:</para></td>
+                        <td><para style="P1">[[ get_roof_vents_moved(s.partner_id.id) ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Meter No.</para></td>
                         <td><para style="P1">[[ get_meter_no(s.partner_id.id) ]]</para></td>
-                        <td><para style="P1"># of Dormers To Be Moved</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1"># of Dormers To Be Moved: </para></td>
+                        <td><para style="P1">[[ get_dormers_moved(s.partner_id.id) ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Utility Acc. No.</para></td>
                         <td><para style="P1">[[ get_account_no(s.partner_id.id) ]]</para></td>
                         <td><para style="P1">Service Upgrade Needed</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1">[[ get_service_needed(s.partner_id.id) ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Est. Tilt/Azimuth of Roof</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1">[[ get_tilt_azimuth(s.partner_id.id) ]]</para></td>
                         <td><para style="P1">Trenching</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1">[[ get_trenching(s.partner_id.id) ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Roof Type/Age</para></td>
                         <td><para style="P1">[[ get_roof_type(s.partner_id.id) ]] / [[ get_roof_type_age(s.partner_id.id) or '0' ]]</para></td>
                         <td><para style="P1">Ground / Roof Mount</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1">[[ get_mount(s.partner_id.id) ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Elect Panel Svc Rating</para></td>
-                        <td><para style="P1"></para></td>
+                        <td><para style="P1">[[get_stc_dc_rating(s.partner_id.id)]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>

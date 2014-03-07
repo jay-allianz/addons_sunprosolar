@@ -24,6 +24,8 @@
 				<xpath expr="//field[@name='code']" position="after">
 				    <newline/>
 				    <field name="days_to_collect"/>
+				    <newline/>
+				    <field name="finace_type"/>
 				</xpath>		
 			</field>
 		</record>
@@ -48,13 +50,9 @@
 				<form string="Required Doc Form" version="7.0">
 					<sheet>
 						<group col="4" colspan="4">
-							<field name="name" required="1"/><newline/>
+							<field name="doc_id" required="1"/><newline/>
 							<separator string="Documents" colspan="4"/>
-							<field name="doc_ids" colspan="4" nolabel="1">
-								<tree>
-									<field name="datas"/>
-								</tree>
-							</field>
+							<field name="document_id"/>
 							<field name="collected" readonly="1"/><newline/>
 							<field name="days_to_collect" readony="1"/>
 							<field name="cowndown"/><newline/>
@@ -73,11 +71,8 @@
 			<field name="model">doc.required</field>
 			<field name="arch" type="xml">
 				<tree string="Required Doc Tree">
-					<field name="name" />
-					<field name="doc_ids" nolabel="1">
-						<tree>
-							<field name="datas"/>
-						</tree>
+					<field name="doc_id" />
+					<field name="document_id">
 					</field>
 					<field name="days_to_collect" />
 					<field name="notify_customer" nolabel="1"/>

@@ -116,12 +116,11 @@ class crm_lead(osv.Model):
         res = {}
         for data in self.browse(cr, uid, ids, context=context):
             for doc in data.doc_req_ids:
-                if doc.doc_ids:
-                    for datas in doc.doc_ids:
-                        if datas.datas == False:
-                            res[data.id] = False
-                        else:
-                            res[data.id] = True
+                if doc.document_id:
+                    if doc.document_id.datas == False:
+                        res[data.id] = False
+                    else:
+                        res[data.id] = True
                 else:
                     res[data.id] = False
         return res
@@ -532,6 +531,9 @@ class crm_lead(osv.Model):
          'partner_is_company' : fields.boolean('Partner is Company'),
          'time_own_month': fields.integer('Owned home Time month'),
          'pool': fields.boolean('Is Pool?', help="Have a pool or not? Checked if Yes."),
+         'pv': fields.boolean('Is PV', help="Have a PV or not? Checked if Yes."),
+         'hot_water': fields.boolean('HOT WATER', help="Checked if Yes."),
+         'other': fields.boolean('Other', help="Checked if Yes."),
          'spent_money': fields.float('Money spent to Heat Home', help='How much spent to heat home?'),
          'equity': fields.boolean('Equity', help="Do you have equity in your home? Checked if Yes."),
          'loc_station_id' : fields.many2one('insolation.incident.yearly', 'Closest NERL Locations'),
@@ -602,7 +604,7 @@ class crm_lead(osv.Model):
         'cost' : fields.function(_get_cost_rebate, string="Cost",type="float",multi="cost_all"),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
-        'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",multi="cost_all"),
+        'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
         'cost_rebate_ids' : fields.function(_calculate_table, relation='cost.rebate',string = 'Cost & Rebate',type="one2many"),
         'auto_zip' : fields.char(string="Auto-Zipcode"),
         'co2_offset_tons' : fields.function(_get_co2_offset_tons, string='CO2 Offset (Tons)', type='integer', help="Tons of Carbon Annually"),
@@ -1313,14 +1315,14 @@ class document_required(osv.Model):
     
     _columns = {
         'doc_id': fields.many2one('documents.all', 'Document Name'),
-        'doc_ids': fields.one2many('ir.attachment','doc_id',"Document" ),
+        'document_id': fields.many2one('ir.attachment',"Document" ),
         'collected' : fields.boolean("Collected"),
         'crm_lead_id' : fields.many2one('crm.lead', 'Lead'),
         'partner_id' : fields.many2one('res.partner', 'Customer'),
     }
     
     def write(self, cr, uid, ids, vals, context=None):
-        if not vals.get('doc_ids', None):
+        if not vals.get('document_id', None):
             return super(document_required, self).write(cr, uid, ids, vals, context=context)
         vals.update({'collected' : True})
         res = super(document_required, self).write(cr, uid, ids, vals, context=context)
@@ -1347,13 +1349,13 @@ class document_required(osv.Model):
             
         return res
 
-class ir_attachment(osv.Model):
-    
-    _inherit = "ir.attachment"
-    
-    _columns ={
-            'doc_id': fields.many2one("document.required","Document")
-    }
+#class ir_attachment(osv.Model):
+#    
+#    _inherit = "ir.attachment"
+#    
+#    _columns ={
+#            'doc_id': fields.many2one("document.required","Document")
+#    }
     
 class documents_all(osv.Model):
     """ Model for document information """
@@ -1495,7 +1497,7 @@ class crm_meeting(osv.Model):
                     headers=None)
             self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Sales Assignment')])
-            crm_obj.write(cr, uid, ids, {'stage_id': stage_id[0]})
+            crm_obj.write(cr, uid, crm_id, {'stage_id': stage_id[0]}, context=context)
             return True
 
 class project_photos(osv.Model):
