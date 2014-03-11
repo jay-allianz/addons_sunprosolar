@@ -436,9 +436,9 @@ class crm_lead(osv.Model):
             prev_old_bill = self._get_old_bill(cr, uid, ids, name, args, context=context)
             prev_pv_energy = data.annual_solar_prod or 0
             context.update({'get_field':'tier1'})
-            grid_energy_rate = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-            if not grid_energy_rate:
-                grid_energy_rate = 0
+            grid_energy_rate = 0
+            if data.utility_company_id:
+                grid_energy_rate = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
             elec_bill_savings = prev_pv_energy * grid_energy_rate
             i = data.loan_interest_rate
             n = data.loan_period
