@@ -24,9 +24,10 @@ import time
 import datetime
 from openerp.report import report_sxw
 from pychart import *
-
+import tempfile
 class proposal_report(report_sxw.rml_parse):
-    
+    bar_out_filename = tempfile.mktemp(suffix=".png", prefix="bar1")
+    pie_out_filename = tempfile.mktemp(suffix=".png", prefix="pie")
     old_bill_total = 0
     new_bill_total = 0
     bill_saving_total = 0
@@ -34,8 +35,8 @@ class proposal_report(report_sxw.rml_parse):
     srec_total = 0
     incentive_total = 0
     lead_cost_rebate_lines = []
-    file_name = "bar1.png"
-    file_name_pie = "pie.png"
+    file_name = "/tmp/bar1.png"
+    file_name_pie = "/tmp/pie.png"    
     customer_id = 0
     estimated_shading = 0
     number_of_years = 0
