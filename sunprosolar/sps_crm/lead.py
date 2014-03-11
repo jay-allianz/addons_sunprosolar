@@ -1111,6 +1111,8 @@ class solar_solar(osv.Model):
                 'annual_solar_prod' : 0,
                 'annual_ele_usage' : 0,
                 'site_avg_sun_hour' : 0,
+                'array_size' : 0,
+                'array_output' : 0,
             }
             stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = 0.00
             stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = None
