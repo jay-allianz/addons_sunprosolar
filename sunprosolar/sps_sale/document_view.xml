@@ -72,8 +72,7 @@
 			<field name="arch" type="xml">
 				<tree string="Required Doc Tree">
 					<field name="doc_id" />
-					<field name="document_id">
-					</field>
+					<field name="document_id"/>
 					<field name="days_to_collect" />
 					<field name="notify_customer" nolabel="1"/>
 					<field name="notify_users" />

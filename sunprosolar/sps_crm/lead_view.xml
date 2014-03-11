@@ -127,6 +127,9 @@
 				<xpath expr="//button[@string='Cancel Case']" position="attributes">
 					<attribute name="string">Disqualify Lead</attribute>
 				</xpath>
+				<xpath expr="//button[@string='Schedule/Log Call']" position="attributes">
+					<attribute name="class">oe_highlight</attribute>
+				</xpath>
 				<xpath expr="//field[@name='contact_name']" position="attributes">
 					<attribute name="Placeholder">First Name</attribute>
 					<attribute name="required">True</attribute>
@@ -162,8 +165,12 @@
 					<field name="property" />
 				</xpath>
 				<xpath expr="/form/sheet/group/group/field[@name='partner_id']"
+					position="attributes">
+					<attribute name="domain">[('customer','=',True)]</attribute>
+				</xpath>
+				<xpath expr="/form/sheet/group/group/field[@name='partner_id']"
 					position="after">
-					<field name="spouse" />
+					<field name="spouse" domain="[('customer','=',True)]"/>
 				</xpath>
 				<field name="city" position="after">
 					<button name="openMap" string="Google Map" type="object"
@@ -220,7 +227,7 @@
 								<field name="quote_info" />
 							</group>
 							<field name="heat_home" />
-							<field name="pool" />
+<!--							<field name="pool" /-->
 							<field name="spent_money" />
 							<field name="equity" />
 							<field name="home_sq_foot" />
@@ -379,9 +386,6 @@
 						<button name="exit_notes" string="Exit Notes" type="object"
 							class="oe_link" />
 					</page>
-					<page string="Internal Notes">
-						<field name="description" />
-					</page>
 					<page string="Viewing Electricity Notes"
 						attrs="{'invisible':[('see_lead_electricity_note','=',False)]}">
 						<field name="crm_lead_electricity_note_ids" readonly="1">
@@ -462,18 +466,18 @@
 			</field>
 		</record>
 
-        <!-- Opportunities Form View Inherited 
-        <record id="view_sale_crm_crm_case_form_view_oppor_inherited" model="ir.ui.view">
+        <!-- Opportunities Form View Inherited -->
+       <!--
+							 <record id="view_sale_crm_crm_case_form_view_oppor_inherited" model="ir.ui.view">
             <field name="name">crm.opp.form</field>
             <field name="model">crm.lead</field>
             <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor" />
             <field name="arch" type="xml">
-                <button string="Convert to Quotation" position="attributes">
-                    <attribute name="string">Convert to Proposal</attribute>
-                </button>
+                
             </field>
         </record>
--->
+
+							-->
 		<!-- Opportunities Form View -->
 		<record id="view_sun_crm_opp_form" model="ir.ui.view">
 			<field name="name">crm.opp.form</field>
@@ -484,6 +488,9 @@
 					<button name="openMap" string="Google Map" type="object"
 						help="It will open google map for the above address." />
 				</field>
+				<field name="partner_id" position="attributes">
+					<attribute name="domain">[('customer','=',True)]</attribute>
+				</field>
 				<field name="partner_id" position="after">
 					<label for="street" string="Address" />
 					<div>
@@ -492,15 +499,18 @@
 						<field name="city_id" on_change="on_change_station_and_utility(city_id)"/>
 					</div>
 				</field>
+				<xpath expr="//button[@string='Meeting']" position="attributes">
+					<attribute name="class">oe_highlight</attribute>
+				</xpath>
 				<xpath expr="//page[@string='Internal Notes']" position="attributes">
 					<attribute name="invisible">1</attribute>
 				</xpath>
-				<xpath expr="//form/header/button[2][@string='Mark Lost']"
-					position="after">
+				<xpath expr="/form/header/button[@string='Mark Won']"
+					position="before">
 					<button name="type_change" string="Convert to Lead" type="object"
 						states="draft,open,pending" help="Convert to Lead" />
 				</xpath>
-				<xpath expr="//form/sheet/div[2]/h2" position="attributes">
+				<xpath expr="/form/sheet/div/h2" position="attributes">
 					<attribute name="invisible">1</attribute>
 				</xpath>
 				<xpath expr="//field[@name='categ_ids']" position="after">
@@ -524,8 +534,7 @@
 				<field name="country_id" position="after">
 					<field name="auto_zip" placeholder="Auto-Zipcode" readonly="1" />
 				</field>
-				<xpath expr="//notebook/page/group/group/field[@name='fax']"
-					position="after">
+				<xpath expr="/form/sheet/notebook/page[@string='Lead']/group/group/field[@name='fax']" position="after">
 					<field name="property" />
 					<field name="insentive_type" />
 					<field name="sci_step" />
@@ -592,14 +601,9 @@
 							<field name="home_sq_foot" />
 							<newline />
 						</group>
-						<group string="Type of install" colspan="4">
-							<field name="pool" />
-							<field name="hot_water" />
-							<field name="pv" />
-							<field name="other" />
-						</group>
 						<group col="4" colspan="4">
 							<field name="roof_type" />
+							<newline/>
 							<field name="loc_station_id" />
 							<newline />
 							<field name="tilt_degree" />
@@ -741,6 +745,7 @@
 								<field name="site_avg_sun_hour" />
 							</group>
 							<group col="2" colspan="2" string="Cleaner and Greener Environment">
+							    <field name="array_output"/>
 								<field name="co2_offset_tons" />
 								<field name="co2_offset_pounds" />
 								<field name="cars_off_roads" />
@@ -756,7 +761,7 @@
 						<group col="4" colspan="4">
 							<separator colspan="4" string="Economics Details" />
 							<group col="4" colspan="4">
-		                        <group string="PV" col="2" colspan="2">
+		                        <group string="System" col="2" colspan="2">
 									<field name="cost" readonly="1" />
 								</group><newline/>
 	                            <group string="PV" col="2" colspan="2">
@@ -776,7 +781,7 @@
 	                        </group>
 	                        <group col="4" colspan="4">
 	                            <group string="Grid" col="2" colspan="2">
-	                                  <field name="grid_energy_rate" />
+<!--	                                  <field name="grid_energy_rate" /-->
 								      <field name="grid_rate_increase_by" />
 	                            </group>
 	                            <group string="Inverter" col="2" colspan="2">
@@ -785,6 +790,9 @@
 	                            </group>
                             </group>
                             <group string="Incentives" col="2" colspan="2">
+                                  <field name="property" />
+							      <field name="insentive_type" />
+							      <field name="sci_step" />
                                   <field name="pbi_epbb_incentive" />
                                   <field name="rebate" />
 							      <field name="rebate_amt" readonly="1" />
@@ -1302,7 +1310,7 @@
 						attrs="{'invisible':[('is_company','=',True)]}" />
 				</xpath>
 				<xpath expr="//label[@string='Address']" position="before">
-					<field name="spouse" />
+					<field name="spouse"/>
 				</xpath>
 				<xpath expr="//field[@name='mobile']" position="attributes">
 					<attribute name="string">Cell</attribute>
@@ -1314,11 +1322,11 @@
                      <field name="from_zip" attrs="{'invisible':[('is_utility_company','=',False)]}" />
                      <field name="to_zip" attrs="{'invisible':[('is_utility_company','=',False)]}"/>
 				</field>
-				<xpath expr="/form/sheet/group" position="after">
-				    <separator string="ZIP" attrs="{'invisible':[('is_utility_company','=',False)]}"/>
-					<field name="zip_ids" colspan="4" attrs="{'invisible':[('is_utility_company','=',False)]}"/><newline/>
+				<xpath expr="/form/sheet/group" position="after" attrs="{'invisible':[('is_utility_company','=',False)]}">
+				    <separator string="ZIP" />
+					<field name="zip_ids" colspan="4" nolabel="1"/><newline/>
 					<separator string="Required Documents"/>
-					<field name="document_ids" colspan="4" />
+					<field name="document_ids" colspan="4" nolabel="1"/>
 				</xpath>
 			</field>
 		</record>

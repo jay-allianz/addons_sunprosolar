@@ -2114,26 +2114,6 @@
 				<para style="new_line"><font color="#FFFFFF">1</font></para>
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<para style="new_line"><font color="#FFFFFF">1</font></para>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<para style="new_line"><font color="#FFFFFF">1</font></para>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<para style="new_line"><font color="#FFFFFF">1</font></para>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<para style="new_line"><font color="#FFFFFF">1</font></para>
-			</td>
-		</tr>
     	<tr>
     		<td>
 			    <blockTable colWidths="180.0, 300.0" style="Table1">
@@ -2177,12 +2157,12 @@
                 <blockTable colWidths="270.0,270.0" style="Table2">
                     <tr>
                         <td><para style="P1">TYPE OF INSTALL</para>
-                        	<para style="p1">□ PV  □ POOL  □ HOT WATER  □ OTHER:_______</para>
+                        	<para style="P1">□ PV  □ POOL  □ HOT WATER  □ OTHER: <u>[[ get_type_install(s.partner_id.id) ]]</u></para>
                         </td>
                         <td><para style="P1">EST. INSTALL DATE : [[ s.contract_signing_date ]]</para></td>
                     </tr>
                 </blockTable>
-                <blockTable colWidths="25.0,140.0,40.0,45.0,20.0,270.0" style="Table4">
+                <blockTable colWidths="25.0,135.0,45.0,45.0,20.0,270.0" style="Table4">
                     <tr>
                         <td><para style="P1_bold" alignment="CENTER">QTY.</para></td>
                         <td><para style="P1_bold" alignment="CENTER">PART NO. &amp; DESCRIPTION</para></td>
@@ -2201,56 +2181,56 @@
                     </tr>
                 </blockTable>
                 <section>
-                <para style="terp_default_8">[[repeatIn(s.order_line,'line')]]</para>
-                <blockTable colWidths="25.0,140.0,40.0,45.0,20.0,270.0" style="Table4">
+                <para style="P3">[[repeatIn(s.order_line,'line')]]</para>
+                <blockTable colWidths="25.0,135.0,45.0,45.0,20.0,270.0" style="Table4">
                     <tr>
-                        <td><para style="P1" alignment="RIGHT">[[ round(line.product_uom_qty, 2) or '0.0' ]]</para></td>
-                        <td><para style="P1" alignment="RIGHT">[[ line.product_id.default_code or '' ]] [[ line.name or '' ]]</para></td>
-                        <td><para style="P1" alignment="RIGHT">[[ round(line.price_unit, 2) or '0.0' ]]</para></td>
-                        <td><para style="P1" alignment="RIGHT">[[ round(line.price_subtotal, 2) or '0.0' ]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ round(line.product_uom_qty, 2)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ line.product_id.default_code]] [[ line.name or '' ]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ round(line.price_unit, 2) ]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ round(line.price_subtotal, 2) ]]</para></td>
                         <td><para style="P1" alignment="RIGHT"></para></td>
                         <td><para style="P1" alignment="RIGHT"></para></td>
                     </tr>
                 </blockTable>
                 </section>
-                <blockTable colWidths="165.0,40.0,45.0,20.0,270.0" style="Table4">
+                <blockTable colWidths="160.0,45.0,45.0,20.0,270.0" style="Table4">
                     <tr>
                         <td><para style="P1">TOTAL SYSTEM VALUE</para></td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_untaxed or '0.0']]</td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_untaxed or '0.0']]</td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.amount_untaxed]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.amount_untaxed]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">ESTIMATED CSI REBATE TO BE CARRIED BY SUNPRO SOLAR</para></td>
-                        <td><para style="P1"></para>[[ get_rebate_amt(s.partner_id.id)]]</td>
-                        <td><para style="P1"></para>[[ get_rebate_amt(s.partner_id.id)]]</td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_rebate_amt(s.partner_id.id)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_rebate_amt(s.partner_id.id)]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">TOTAL CONTRACT PRICE</para></td>
-                        <td><para style="P1" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id) or '0.0']]</para></td>
-                        <td><para style="P1" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id) or '0.0']]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">ESTIMATED FEDERAL TAX CREDIT</para></td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_tax or '0.0']]</td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ s.amount_tax or '0.0']]</td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.amount_tax]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.amount_tax]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">TOTAL NET PRICE TO CUSTOMER</para></td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ get_total_contract_price(s.partner_id.id) or '0.0']]</td>
-                        <td><para style="P1" alignment="RIGHT"></para>[[ get_total_contract_price(s.partner_id.id) or '0.0']]</td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                 </blockTable>
-                <blockTable colWidths="165.0,40.0,45.0,20.0,270.0" style="Table5">
+                <blockTable colWidths="160.0,45.0,45.0,20.0,270.0" style="Table5">
                     <tr>
                         <td>
                             <para style="P1">□ SAME AS CASH</para>
@@ -2314,7 +2294,23 @@
                 </blockTable>
                 <blockTable colWidths="270.0,270.0" style="Table4">
                     <tr>
-                        <td><para style="P1">Contractors are required by law to be licensed and regulated by the Contractors State License Board, which can investigate complaints against contractors if a complaint regarding a patent act or omission is filled within four years of the date of the alleged violation. Contractors lien laws and maximum interest will apply after 30 days of non- payment. 10% restocking fee will apply if job is cancelled after the material has been delivered. Fees associated with unpermitted structures on the property are the customer’s responsibility. By signing the agreement you agree to pay SUNPRO SOLAR.</para></td>
+                        <td>
+                            <para style="P1">Contractors are required by law to be licensed and regulated by the Contractors State License Board, which can investigate complaints against contractors if a complaint regarding a patent act or omission is filled within four years of the date of the alleged violation. Contractors lien laws and maximum interest will apply after 30 days of non- payment. 10% restocking fee will apply if job is cancelled after the material has been delivered. Fees associated with unpermitted structures on the property are the customer’s responsibility. By signing the agreement you agree to pay SUNPRO SOLAR.</para>
+                            <blockTable colWidths="165.0,95.0" style="Table1">
+                                <tr>
+                                    <td><para style="P1"></para></td>
+                                    <td><para style="P1"></para></td>
+                                </tr>
+                                <tr>
+                                    <td><para style="P1">___________________________________</para></td>
+                                    <td><para style="P1">______________________</para></td>
+                                </tr>
+                                <tr>
+                                    <td><para style="P1">CUSTOMER SIGNATURE</para></td>
+                                    <td><para style="P1" alignment="CENTER">DATE</para></td>
+                                </tr>
+                            </blockTable>
+                        </td>
                         <td>
                             <para style="P1_bold">PAYMENT SCHEDULE</para>
                             <blockTable colWidths="170.0,90.0" style="Table4">
@@ -2331,7 +2327,22 @@
                                     <td><para style="P1"></para></td>
                                 </tr>
                             </blockTable>
+                            <blockTable colWidths="260.0" style="Table1">
+                                <tr>
+                                    <td><para style="new_line"><font color="#FFFFFF">1</font></para></td>
+                                </tr>
+                            </blockTable>
+                            <para style="P1">SYSTEM CHECK AND PANEL CLEANING RECOMMENDATION</para>
+                            <blockTable colWidths="87.0,87.0,87.0" style="Table1">
+                                <tr>
+                                    <td><para style="P1" alignment="CENTER">ANNUAL □ </para></td>
+                                    <td><para style="P1" alignment="CENTER">SEMI ANNUAL □</para></td>
+                                    <td><para style="P1" alignment="CENTER">QUARTERLY  □ </para>
+                                    </td>
+                                </tr>
+                            </blockTable>
                         </td>
+                        
                     </tr>
                 </blockTable>
             </td>

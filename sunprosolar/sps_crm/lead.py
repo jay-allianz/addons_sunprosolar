@@ -92,7 +92,8 @@ class crm_lead(osv.Model):
             res['value'].update({'partner_is_company':partner.is_company,
                                  'spouse' : partner.spouse and partner.spouse.id or False,
                                  'contact_name': partner.name or '',
-                                 'last_name': partner.last_name or ''
+                                 'last_name': partner.last_name or '',
+                                 'city_id' : partner.city_id and partner.city_id.id or False,
                                  })
         return res
 
@@ -153,19 +154,33 @@ class crm_lead(osv.Model):
         return res
     
     def _get_ptc_stc_ratio(self, cr, uid, ids, name, args, context=None):
-         res={}
-         rating=0.0
-         line_number=0
-         for data in self.browse(cr, uid, ids, context):
-             for line in data.solar_ids:
-                 rating += line.ptc_stc_ratio
-                 line_number += 1
-             if line_number:
-                 res[data.id] = rating/line_number
-             else:
-                 res[data.id] = rating
+        res={}
+        rating=0.0
+        line_number=0
+        for data in self.browse(cr, uid, ids, context):
+            for line in data.solar_ids:
+                rating += line.ptc_stc_ratio
+                line_number += 1
+            if line_number:
+                res[data.id] = rating/line_number
+            else:
+                res[data.id] = rating
              
-         return res
+        return res
+     
+    def _get_output(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for data in self.browse(cr, uid, ids, context):
+            output = 0.0
+            line_number = 0
+            for line in data.solar_ids:
+                output += line.array_output
+                line_number += 1
+            if line_number:
+                res[data.id] = output / line_number
+            else:
+                res[data.id] = output
+        return res
     
     def _get_annual_solar_prod(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -314,10 +329,102 @@ class crm_lead(osv.Model):
             res[data.id] = annual_home_ele
         return res
     
+    def _get_old_bill(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        pricelist_obj = self.pool.get('product.pricelist')
+        for data in self.browse(cr, uid, ids, context):
+            price = 0.0
+            total_old_bill = 0.0
+            old_bill =  0.0
+            if data.utility_company_id and data.utility_company_id.property_product_pricelist:
+                context.update({'get_field':'summer_qty'})
+                summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                if data.anual_electricity_usage_ids :
+                    if data.anual_electricity_usage_ids[0].name % 4 == 0:
+                        month_list = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                    else:
+                        month_list = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                    usage = data.anual_electricity_usage_ids[0].usage_kwh / 12
+                    for days in month_list:
+                        if not summer_qty:
+                            summer_qty = 0
+                        basline = summer_qty * days
+                        over_basline1 = basline * 0.3
+                        over_basline2 = basline * 0.7
+                        more_than = (usage) - (basline + over_basline1 + over_basline2 + basline)
+                        
+                        context.update({'get_field':'daily_meter_charges'})
+                        daily_meter_charge = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not daily_meter_charge:
+                            daily_meter_charge = 0
+                        basic_charge = daily_meter_charge * days
+                        
+                        context.update({'get_field':'tier1'})
+                        tier1 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not tier1:
+                            tier1 = 0
+                        base_line_summer = days * 13.5 * tier1
+                        
+                        context.update({'get_field':'off_peak_tier2'})
+                        peak_tier2 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not peak_tier2:
+                            peak_tier2 = 0
+                        over_base_line1_1 = over_basline1 * peak_tier2
+                        
+                        context.update({'get_field':'part_peak_tier3'})
+                        peak_tier3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not peak_tier3:
+                            peak_tier3 = 0
+                        over_base_line1_2 = over_basline2 * peak_tier3
+                        
+                        context.update({'get_field':'peak_tier4'})
+                        peak_tier4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not peak_tier4:
+                            peak_tier4 = 0
+                        over_base_line1_3 = more_than * peak_tier4
+                        
+                        context.update({'get_field':'surcharge_3'})
+                        surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not surcharge3:
+                            surcharge3 = 0
+                        
+                        context.update({'get_field':'surcharge_4'})
+                        surcharge4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not surcharge4:
+                            surcharge4 = 0
+                        
+                        context.update({'get_field':'surcharge_5'})
+                        surcharge5 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not surcharge5:
+                            surcharge5 = 0
+                        
+                        context.update({'get_field':'surcharge_6'})
+                        surcharge6 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not surcharge6:
+                            surcharge6 = 0
+                        
+                        context.update({'get_field':'rate_stablization'})
+                        rate_stablization = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not rate_stablization:
+                            rate_stablization = 0
+                        delivery_subtotal = basic_charge + round(base_line_summer,2) + round(over_base_line1_1,2) + round(over_base_line1_2,2) + round(over_base_line1_3,2) + surcharge3 + surcharge4 + surcharge5 + surcharge6 + rate_stablization
+                        
+                        context.update({'get_field':'stage_changes'})
+                        stage_change = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        if not stage_change:
+                            stage_change = 0
+                        stage_changes = stage_change * usage
+                        
+                        total_old_bill = delivery_subtotal + stage_changes
+                        old_bill = old_bill + total_old_bill
+                    
+        return old_bill
+    
     def _calculate_table(self, cr, uid, ids, name, args, context=None):
         result = {}
         cost_rebate_obj = self.pool.get('cost.rebate')
         user_obj = self.pool.get('res.users')
+        pricelist_obj = self.pool.get('product.pricelist')
         cur_user = user_obj.browse(cr, uid, uid, context=context)
         for data in self.browse(cr, uid, ids, context=context):
             annual_ele_usage = 0.0
@@ -326,10 +433,13 @@ class crm_lead(osv.Model):
                     if line.usage_kwh:
                         annual_ele_usage = line.usage_kwh
             res = []
-            
-            prev_old_bill = annual_ele_usage * data.grid_energy_rate
+            prev_old_bill = self._get_old_bill(cr, uid, ids, name, args, context=context)
             prev_pv_energy = data.annual_solar_prod or 0
-            elec_bill_savings = prev_pv_energy * data.grid_energy_rate
+            context.update({'get_field':'tier1'})
+            grid_energy_rate = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+            if not grid_energy_rate:
+                grid_energy_rate = 0
+            elec_bill_savings = prev_pv_energy * grid_energy_rate
             i = data.loan_interest_rate
             n = data.loan_period
             PV = data.loan_amt
@@ -368,7 +478,7 @@ class crm_lead(osv.Model):
                 res.append(cost_rebate_obj.create(cr, uid, vals,context=context))
                 prev_old_bill = prev_old_bill * ( 1 + data.grid_rate_increase_by)
                 prev_pv_energy = prev_pv_energy * (( 100 - data.pv_kw_decline)/100)
-                elec_bill_savings = prev_pv_energy * data.grid_energy_rate * math.pow(( 1 + data.grid_rate_increase_by ),year)  
+                elec_bill_savings = prev_pv_energy * grid_energy_rate * math.pow(( 1 + data.grid_rate_increase_by ),year)  
             result[data.id] = res#
         return result
 
@@ -378,7 +488,7 @@ class crm_lead(osv.Model):
         for data in self.browse(cr, uid, ids, context):
             price = 0.0
             if data.utility_company_id and data.utility_company_id.property_product_pricelist:
-                price = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, data.partner_id.id)[data.utility_company_id.property_product_pricelist.id]
+                price = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], 1, data.annual_ele_usage, data.partner_id.id, context=context)[data.utility_company_id.property_product_pricelist.id]
             res[data.id] = price
         return res
 
@@ -400,8 +510,8 @@ class crm_lead(osv.Model):
             
             if data.solar_ids:
                 for array_id in data.solar_ids:
-#                    cost_per_array = (array_id.stc_dc_rating * array_id.module_product_id.cost_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.labor_per_stc_watt)+(array_id.stc_dc_rating * array_id.module_product_id.materials_per_stc)+(1+ array_id.module_product_id.markup)+ array_id.num_of_invertor * (array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)
-                    cost_per_array = (array_id.module_product_id.standard_price * array_id.num_of_module) + (array_id.inverter_product_id.standard_price * array_id.num_of_invertor)
+                    cost_per_array = (array_id.num_of_module * (((array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.materials_per_stc)) * (1 + array_id.module_product_id.markup / 100)))  + (array_id.num_of_invertor * ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)))
+#                    cost_per_array = (array_id.module_product_id.standard_price * array_id.num_of_module) + (array_id.inverter_product_id.standard_price * array_id.num_of_invertor)
                     cost += cost_per_array
             if cost and data.down_payment:
                 down_payment_amt = cost * data.down_payment
@@ -530,10 +640,10 @@ class crm_lead(osv.Model):
          'time_own_year': fields.integer('Owned Home Time', help="How long have you owned your home?"),
          'partner_is_company' : fields.boolean('Partner is Company'),
          'time_own_month': fields.integer('Owned home Time month'),
-         'pool': fields.boolean('Is Pool?', help="Have a pool or not? Checked if Yes."),
-         'pv': fields.boolean('Is PV', help="Have a PV or not? Checked if Yes."),
-         'hot_water': fields.boolean('HOT WATER', help="Checked if Yes."),
-         'other': fields.boolean('Other', help="Checked if Yes."),
+#         'pool': fields.boolean('Is Pool?', help="Have a pool or not? Checked if Yes."),
+#         'pv': fields.boolean('Is PV', help="Have a PV or not? Checked if Yes."),
+#         'hot_water': fields.boolean('HOT WATER', help="Checked if Yes."),
+#         'other': fields.boolean('Other', help="Checked if Yes."),
          'spent_money': fields.float('Money spent to Heat Home', help='How much spent to heat home?'),
          'equity': fields.boolean('Equity', help="Do you have equity in your home? Checked if Yes."),
          'loc_station_id' : fields.many2one('insolation.incident.yearly', 'Closest NERL Locations'),
@@ -598,7 +708,8 @@ class crm_lead(osv.Model):
         'replace_inverter_every':fields.float('Replace Inverter Every(Years)'),
         'replace_inverter_over_loan_period' : fields.integer("Replace Inverter Over Loan Period"),
         'inverter_cost' : fields.integer('Inverter Cost'),
-        'peak_kw_stc' : fields.function(_get_stc_dc_rating, string='Peak KW STC', type='float'),
+        'array_output' : fields.function(_get_output, string='Solar Array Output', type='float'),
+        'peak_kw_stc' : fields.function(_get_stc_dc_rating, string='Yearly output per KW', type='float'),
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float'),
         'pbi_epbb_incentive' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
         'cost' : fields.function(_get_cost_rebate, string="Cost",type="float",multi="cost_all"),
@@ -719,7 +830,7 @@ class crm_lead(osv.Model):
         if utility_company_id:
             utility_company = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
             for document in utility_company.document_ids:
-                document_list.append({'doc_id':document.id})
+                    document_list.append({'doc_id':document.id})
             values = {'doc_req_ids' : document_list or False}
         return {'value' : values}
     
@@ -1000,7 +1111,7 @@ class solar_solar(osv.Model):
                 ptc_dc_rating_amount = data.num_of_module * (data.module_product_id.module_ptc_rating / 1000)
                 cec_ac_rating_amount = (ptc_dc_rating_amount * data.inverter_product_id.cec_efficiency) / 100
             if stc_dc_rating_amount and ptc_dc_rating_amount:
-                ptc_stc_ratio_amount = (ptc_dc_rating_amount / stc_dc_rating_amount)
+                ptc_stc_ratio_amount = (ptc_dc_rating_amount / stc_dc_rating_amount) * 100
             res[data.id]['stc_dc_rating'] = stc_dc_rating_amount or 0.0
             res[data.id]['ptc_dc_rating'] = ptc_dc_rating_amount or 0.0
             res[data.id]['cec_ac_rating'] = cec_ac_rating_amount or 0.0
@@ -1026,8 +1137,8 @@ class solar_solar(osv.Model):
                             annual_solar_prod = None
                             if ptc_stc_ratio_amount:
                                 tot_perfomance_ratio = (data.inverter_product_id.cec_efficiency / 100) * 0.84 * (ptc_stc_ratio_amount / 100)
-                                annual_solar_prod = (ptc_dc_rating_amount * production  * data.estimate_shade) / 100
-    #                            annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
+#                                annual_solar_prod = (ptc_dc_rating_amount * production  * data.estimate_shade) / 100
+                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                             if annual_solar_prod:
                                 annual_s_prod = round(annual_solar_prod)
                                 res[data.id]['annual_solar_prod'] = int(annual_s_prod)
@@ -1045,12 +1156,15 @@ class solar_solar(osv.Model):
                             num_of_arrays = len(data.crm_lead_id.solar_ids)
                         else:
                             num_of_arrays = data.num_of_arrays
+                        res[data.id]['array_size'] = num_of_arrays
+                        res[data.id]['array_output'] = production
                         output = production * stc_dc_rating_amount
+                        res[data.id]['array_output'] = output
                         co2_offset_tons = output * avg_co2_ele / 2000
                         res[data.id]['co2_offset_tons'] = co2_offset_tons
                         co2_offset_pounds = co2_offset_tons * 2000
                         res[data.id]['co2_offset_pounds'] = co2_offset_pounds
-                        cars_off_roads = co2_offset_pounds * 2000
+                        cars_off_roads = co2_offset_pounds / annnual_co2_car
                         res[data.id]['cars_off_roads'] = cars_off_roads
                         gasoline_equi = co2_offset_pounds / emmision_gas
                         res[data.id]['gasoline_equi'] = gasoline_equi
@@ -1091,6 +1205,9 @@ class solar_solar(osv.Model):
                 'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all'),
                 'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all'),
                 
+                'array_size' : fields.function(_get_system_rating_data, string='Solar Array Size', type='integer', multi='green_all', help="Solar Array Size"),
+                'production' : fields.function(_get_system_rating_data, string='Yearly output per KW', type='integer', multi='green_all', help="Yearly output per KW"),
+                'array_output' : fields.function(_get_system_rating_data, string='Solar Array Output', type='integer', multi='green_all', help="Solar Array Output"),
                 'co2_offset_tons' : fields.function(_get_system_rating_data, string='CO2 Offset', type='integer', multi='green_all', help="Tons of Carbon Annually"),
                 'co2_offset_pounds' : fields.function(_get_system_rating_data, string='CO2 Offset', type="integer", multi='green_all', help="Pounds of Carbon annually Eliminated"),
                 'cars_off_roads' : fields.function(_get_system_rating_data, string='Cars off the Road', type="integer", multi='green_all', help="Cars taken off the road for one year"),
@@ -1456,6 +1573,9 @@ class crm_meeting(osv.Model):
     def salesteam_send_email(self, cr, uid, ids, context=None):
         if not context:
             context = {}
+#        crm_obj = self.pool.get('crm.lead')
+#        crm_data = crm_obj.browse(cr, uid, ids, context= context)
+#        crm_id = crm_obj.search(cr, uid, [('id','=',crm_data[0].crm_id)])
         if context.get('default_opportunity_id'):
             crm_obj = self.pool.get('crm.lead')
             crm_id = crm_obj.search(cr, uid, [('id','=',context.get('default_opportunity_id'))])
@@ -1479,8 +1599,8 @@ class crm_meeting(osv.Model):
                     else:
                         email_to.append(data.user_id.email)
                 for crm_data1 in crm_data:
-                    subject_line = 'New Customer ' + tools.ustr(crm_data1.partner_id.name) + ' ' + tools.ustr(crm_data1.last_name) + ' Comes.'
-                    message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(crm_data1.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(crm_data1.last_name) + '<br/><br/>Address : ' + tools.ustr(crm_data1.street) + ', ' + tools.ustr(crm_data1.street2) + ', ' + tools.ustr(crm_data1.city) + ', ' + tools.ustr(crm_data1.state_id.name) + ', ' + tools.ustr(crm_data1.zip) + ', ' + tools.ustr(crm_data1.country_id.name) + '<br/><br/>Email : ' + tools.ustr(crm_data1.email_from) + '<br/><br/>Mobile : ' + tools.ustr(crm_data1.mobile) + '<br/><br/> Thank You.'
+                    subject_line = 'New Customer ' + tools.ustr(crm_data1.partner_id and crm_data1.partner_id.name or '') + ' ' + tools.ustr(crm_data1.last_name) + ' Comes.'
+                    message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(crm_data1.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(crm_data1.last_name) + '<br/><br/>Address : ' + tools.ustr(crm_data1.street) + ', ' + tools.ustr(crm_data1.street2) + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.state_id and crm_data1.city_id.state_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.country_id and crm_data1.city_id.country_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.zip or '') + '<br/><br/>Email : ' + tools.ustr(crm_data1.email_from) + '<br/><br/>Mobile : ' + tools.ustr(crm_data1.mobile) + '<br/><br/> Thank You.'
                     message_hrmanager = obj_mail_server.build_email(
                     email_from=email_from,
                     email_to=email_to,
@@ -1692,15 +1812,15 @@ class product_pricelist_item(osv.Model):
     _inherit = 'product.pricelist.item'
     
     _columns = {
-            'daily_minimum_charges': fields.float('Daily Minumum Charges'),
-            'monthly_minimum_charges': fields.float('Monthly Minumum Charges'),
-            'daily_meter_charges': fields.float('Daily Meter Charges'),
-            'monthly_meter_charges': fields.float('Monthly Meter Charges'),
-            'tier1': fields.float('Tier1'),
-            'off_peak_tier2': fields.float('Off-Peak/Tier2'),
-            'part_peak_tier3': fields.float('Part-Peak/Tier3'),
-            'peak_tier4': fields.float('Peak Tier4'),
-            'stage_changes': fields.float('Stage Changes'),
+            'daily_minimum_charges': fields.float('Daily Minumum Charges', digits=(12,5)),
+            'monthly_minimum_charges': fields.float('Monthly Minumum Charges', digits=(12,5)),
+            'daily_meter_charges': fields.float('Daily Meter Charges', digits=(12,5)),
+            'monthly_meter_charges': fields.float('Monthly Meter Charges', digits=(12,5)),
+            'tier1': fields.float('Tier1',digits=(12,5)),
+            'off_peak_tier2': fields.float('Off-Peak/Tier2' , digits=(12,5)),
+            'part_peak_tier3': fields.float('Part-Peak/Tier3', digits=(12,5)),
+            'peak_tier4': fields.float('Peak Tier4', digits=(12,5)),
+            'stage_changes': fields.float('Stage Changes', digits=(12,5)),
             'rate_stablization': fields.float('Rate Stablization'),
             'surcharge_3': fields.float('Surcharge 3'),
             'surcharge_4': fields.float('Surcharge 4'),
@@ -1736,7 +1856,10 @@ class product_pricelist(osv.osv):
 
         if context is None:
             context = {}
-
+        if not context.get('get_field'):
+            supplier_ids = []
+            product_id = 1
+            return super(product_pricelist, self).price_get_multi(cr, uid, pricelist_ids, products_by_qty_by_partner, context=context)
         date = context.get('date') or time.strftime('%Y-%m-%d')
 
         currency_obj = self.pool.get('res.currency')
@@ -1809,8 +1932,8 @@ class product_pricelist(osv.osv):
                     (tmpl_id, product_id) + partner_args + (pricelist_version_ids[0], qty))
                 res1 = cr.dictfetchall()
                 uom_price_already_computed = False
-                tier1_amount = 0.0
+                value1 = 0.0
                 for res in res1:
-                    tier1_amount = res['tier1']
-                results[product_id] = {pricelist_id: tier1_amount}
+                    value1 = res[context.get('get_field')]
+                results[product_id] = {pricelist_id: value1}
         return results
