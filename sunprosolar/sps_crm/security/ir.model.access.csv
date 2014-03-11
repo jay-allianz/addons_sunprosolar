@@ -13,4 +13,3 @@ access_crm_lead_system_description,crm.lead.system.description,model_crm_lead_sy
 access_crm_lead_accounting_description,crm.lead.accounting.description,model_crm_lead_accounting_description,sps_crm.customer,1,1,1,1
 access_crm_lead_marketing_description,crm.lead.marketing.description,model_crm_lead_marketing_description,sps_crm.customer,1,1,1,1
 access_insolation_incident_yearly,insolation.incident.yearly,model_insolation_incident_yearly,sps_crm.customer,1,0,0,0
-access_ir_attachment,ir.attachment,model_ir_attachment,sps_crm.customer,1,1,1,1

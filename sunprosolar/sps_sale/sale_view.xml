@@ -108,22 +108,22 @@
 				<xpath expr="/form/sheet/group" position="after">
 					<group cols="1" colspan="4">
                         <button name="contract_generate" string="Generate Contract"
-                            colspan="2" type="object" icon="gtk-yes"
+                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight"
                             attrs="{'invisible':[('state','!=','sent')]}" />
                     </group>
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','contract_generated')]}" >
                         <button name="contract_sign" string="Contract Sign"
-                            colspan="2" type="object" icon="gtk-yes"/>
+                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight"/>
                         <button name="contract_rejected" string="Contract Rejected"
                             colspan="2" type="object" icon="gtk-no"/>
                     </group>
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','assign_financing_incharge')]}">
                         <button name="site_inspection_mail" string="New Site Inspection"
-                            colspan="2" type="object" icon="gtk-yes"/> 
+                            colspan="2" type="object" icon="gtk-yes" /> 
                     </group>
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','contract_signed')]}" >
                         <button name="project_management_notified" string="Project Management Team Notify"
-                            colspan="2" type="object" icon="gtk-yes" />
+                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" />
                     </group>
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','permit')]}">
                         <button name="customer_appove" string="Customer Approved"
@@ -166,17 +166,27 @@
 							<label for="incharge_user_id"/>
 							<div>
 								<field name="incharge_user_id" colspan="2"/>
-								<button name="assign_professional" type="object" string="Assigned Financing Professionals" />
+								<button name="assign_professional" type="object" string="Assigned Financing Professionals" class="oe_highlight" icon="gtk-yes"/>
 							</div>
 						</group>
 						<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','project_management_notified')]}">
-						<field name="financing_type_id"/>
+						<field name="financing_type_id" on_change="onchange_financing_type(financing_type_id)"/>
                         <separator string="Required Documents"/>
-				        <field name="doc_req_ids" colspan="4" nolabel="1"/>
+				        <field name="doc_req_ids" colspan="4" nolabel="1">
+					        <tree editable="bottom">
+					        	<field name="doc_id" />
+								<field name="document_id"/>
+								<field name="days_to_collect" />
+								<field name="notify_customer" nolabel="1"/>
+								<field name="notify_users" />
+								<field name="cowndown"/>
+								<field name="collected" readonly="1"/>
+					        </tree>
+				        </field>
 				        <field name="required_document" readonly="1"/>
                         <button name="document_collected" string="Document Collected"
                             colspan="2" type="object" icon="gtk-yes" 
-                            attrs="{'invisible':[('required_document','!=', True)]}"/> 
+                            attrs="{'invisible':[('required_document','!=', True)]}" class="oe_highlight" /> 
                     </group>
 					</page>
 				</xpath>
@@ -281,6 +291,8 @@
 				<form string='Financing Type' version='7.0'>
 					<group>
 						<field name="name" string="Name" required="1" />
+						<separator string="Financing Documents"/>
+						<field name="document_ids" nolabel="1" colspan="4" domain="[('finace_type','=','False')]"/>
 						<separator string="Description"/>
 						<field name="description" colspan="4" nolabel="1"/>
 					</group>

@@ -34,6 +34,7 @@ class crm_make_sale(osv.osv_memory):
         lead_obj = self.pool.get('crm.lead')
         sale_order_line_obj = self.pool.get('sale.order.line')
         sale_order_obj = self.pool.get('sale.order')
+        data = context and context.get('active_ids', []) or []
         
         module_line = {}
         inv_line = {}
@@ -45,7 +46,8 @@ class crm_make_sale(osv.osv_memory):
         utility_company_id = False
         if lead.utility_company_id and lead.utility_company_id.property_product_pricelist:
             utility_company_id = lead.utility_company_id.property_product_pricelist.id
-        
+        if self.browse(cr, uid, ids[0], context=context).close:
+                lead_obj.case_close(cr, uid, data)
         order = {
             'partner_id' : make_sale.id,
             'pricelist_id' : utility_company_id,

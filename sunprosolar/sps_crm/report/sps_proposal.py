@@ -212,7 +212,7 @@ class proposal_report(report_sxw.rml_parse):
         return self.lead_cost_rebate_lines
     
     def _get_estimated_offset(self):
-        return format(int(round(self.pv_energy_total*self.estimated_shading/100,0)),',d')
+        return format(int(round(self.pv_energy_total*(self.estimated_shading or 1)/100,0)),',d')
     
     def _get_co2_emission(self):
         return format(int(round(self.co2_emission,0)),',d')

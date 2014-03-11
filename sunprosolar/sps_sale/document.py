@@ -2,6 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
+#    Copyright (C) 2013 Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
 #    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -48,7 +49,6 @@ class doc_required(osv.Model):
         'doc_sale_id' : fields.many2one("sale.order", 'order'),
         'doc_id' : fields.many2one("documents.all","Document Name"),
         'document_id': fields.many2one('ir.attachment',"Document" ),
-#        'doc_ids': fields.one2many('ir.attachment','document_id1',"Document" ),
         'collected' : fields.boolean("Collected"),
         'days_to_collect': fields.integer("Days to Collect"),
         'notify_customer': fields.many2one("res.partner","Notify Customer when Collected"),
@@ -88,14 +88,6 @@ class doc_required(osv.Model):
                     send_mail_obj.send(cr, uid, NO_REC_MSG1, SUB_LINE1, MSG_BODY1, user.email, context=context)
         return super(doc_required, self).write(cr, uid, ids, vals, context=context)
 
-#class ir_attachment(osv.Model):
-#    
-#    _inherit = "ir.attachment"
-#    
-#    _columns ={
-#            'document_id1': fields.many2one("doc.required","Document")
-#    }
-    
 class documents_all(osv.Model):
     
     _inherit = "documents.all"
@@ -141,42 +133,3 @@ class sale_order(osv.Model):
         'doc_req_ids' : fields.one2many('doc.required', 'doc_sale_id', 'Required Documents'),
         'required_document':fields.function(_get_require_doc, method=True, type='boolean', string="Required Document Collected?", help="Checked if Yes."),
     }
-    
-    def create(self, cr, uid, vals, context=None):
-        res = super(sale_order, self).create(cr, uid, vals, context=context)
-        docs = []
-        crm_obj = self.pool.get('crm.lead')
-        doc_required_obj = self.pool.get('doc.required')
-        if vals.get('partner_id'):
-            crm_ids = crm_obj.search(cr, uid, [('partner_id','=', vals.get('partner_id'))], context=context)
-            crm_id = crm_ids[0]
-            crm_data = crm_obj.browse(cr, uid, crm_id, context=context)
-            if crm_data.utility_company_id:
-                if crm_data.utility_company_id.document_ids:
-                    req_doc = crm_data.utility_company_id.document_ids
-                    if req_doc is None:
-                        req_doc= []
-                    for rec in req_doc:
-                        rec_id = rec.id
-                        if rec.finace_type == True:
-                            doc_created = doc_required_obj.create(cr, uid, {'doc_id' : rec.id, 'days_to_collect': rec.days_to_collect}, context=context)
-                            docs.append(doc_created)
-                    self.write(cr, uid, res, {'doc_req_ids': [(6,0,docs)]})
-        return res
-        
-    
-    
-#class finance_documents_all(osv.Model):
-#    """ Model for document information """
-#    _name = "finance.documents.all"
-#    _description = "Finance Documents Information."
-#    
-#    _columns = {
-#         'name': fields.char('Document Name'),
-#         'code': fields.char('Code'),
-#     }
-#    
-#    _sql_constraints = [
-#        ('code_uniq', 'unique (code)', 'The code of the Document must be unique !')
-#    ]
-    

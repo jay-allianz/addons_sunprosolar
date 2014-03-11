@@ -27,7 +27,7 @@
     "website" : "'http://www.allianztechnology.com",
     "description": """This module provides the functionality to generate Quotation and Sale Order. 
     """,
-    'depends': ['base','sps_crm'],
+    'depends': ['base','sps_crm','sale_stock'],
     'data': [
         'sale_view.xml',
         'document_view.xml'

@@ -8,6 +8,7 @@ from tools.translate import _
 import datetime
 from tools import DEFAULT_SERVER_DATETIME_FORMAT, DEFAULT_SERVER_DATE_FORMAT
 from xlrd import open_workbook,xldate_as_tuple
+from dateutil.relativedelta import relativedelta
 import tools
 
 
@@ -28,6 +29,10 @@ class import_utility_company(osv.osv_memory):
         fp.write(csv_data)
         fp.close()
         wb = xlrd.open_workbook(temp_path + '/utility_company.xls')
+        current_year = datetime.date.today().year
+        year_start_date = '01/01/%s' % current_year
+        year_end_date = '%s-12-31' % current_year
+        year_end_date = datetime.datetime.strptime(year_end_date , DEFAULT_SERVER_DATE_FORMAT).strftime(DEFAULT_SERVER_DATE_FORMAT)
         for sheet in wb.sheets():
             for rownum in range(sheet.nrows):
                 if rownum == 0:
@@ -72,38 +77,54 @@ class import_utility_company(osv.osv_memory):
                                                         'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
                                                         'type': 'sale'
                                                 })
-                    
-                    price_version_id = product_pricelist_version_obj.create(cr, uid, {
+                    price_version_ids = []
+                    price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
+                                                                'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
+                                                                'date_start': year_start_date or False,
+                                                                'date_end': date_from or False,
+                                                                'pricelist_id': pricelist_id
+                                                        }))
+                    date_from = (datetime.datetime.strptime(date_from , DEFAULT_SERVER_DATE_FORMAT) + relativedelta(days=1)).strftime(DEFAULT_SERVER_DATE_FORMAT)
+                    price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
                                                                 'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
                                                                 'date_start': date_from or False,
                                                                 'date_end': date_to or False,
                                                                 'pricelist_id': pricelist_id
+                                                        }))
+                    date_to = (datetime.datetime.strptime(date_to , DEFAULT_SERVER_DATE_FORMAT) + relativedelta(days=1)).strftime(DEFAULT_SERVER_DATE_FORMAT)
+                    price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
+                                                                'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
+                                                                'date_start': date_to or False,
+                                                                'date_end': year_end_date or False,
+                                                                'pricelist_id': pricelist_id
+                                                        }))
+                    for price_version in price_version_ids:
+                        price_list_id = product_pricelist_item_obj.create(cr, uid, {
+                                                                'daily_minimum_charges': sheet.row_values(rownum)[daily_minimum_charges_index] or 0.00,
+                                                                'monthly_minimum_charges': sheet.row_values(rownum)[monthly_minimum_charges_index] or 0.00,
+                                                                'daily_meter_charges': sheet.row_values(rownum)[daily_meter_charges_index] or 0.00,
+                                                                'monthly_meter_charges': sheet.row_values(rownum)[monthly_minimum_charges_index] or 0.00,
+                                                                'tier1': sheet.row_values(rownum)[tier1_index] or 0.00,
+                                                                'off_peak_tier2': sheet.row_values(rownum)[off_peaktier2_index] or 0.00,
+                                                                'part_peak_tier3': sheet.row_values(rownum)[part_peak_tier3_index] or 0.00,
+                                                                'peak_tier4': sheet.row_values(rownum)[peak_tier4_index] or 0.00,
+                                                                'stage_changes': sheet.row_values(rownum)[state_chages_index] or 0.00,
+                                                                'rate_stablization': sheet.row_values(rownum)[rate_stablization_index] or 0.00,
+                                                                'surcharge_3': sheet.row_values(rownum)[surcharge3_index] or 0.00,
+                                                                'surcharge_4': sheet.row_values(rownum)[surcharge4_index] or 0.00,
+                                                                'surcharge_5': sheet.row_values(rownum)[surcharge5_index] or 0.00,
+                                                                'surcharge_6': sheet.row_values(rownum)[surcharge6_index] or 0.00,
+                                                                'summer_qty': summer_data or 0.00,
+                                                                'winter_qty': winter_data or 0.00,
+                                                                'name': sheet.row_values(rownum)[season_name_index] or '',
+                                                                'price_version_id': price_version
                                                         })
-                    price_list_id = product_pricelist_item_obj.create(cr, uid, {
-                                                            'daily_minimum_charges': sheet.row_values(rownum)[daily_minimum_charges_index] or 0.00,
-                                                            'monthly_minimum_charges': sheet.row_values(rownum)[monthly_minimum_charges_index] or 0.00,
-                                                            'daily_meter_charges': sheet.row_values(rownum)[daily_meter_charges_index] or 0.00,
-                                                            'monthly_meter_charges': sheet.row_values(rownum)[monthly_minimum_charges_index] or 0.00,
-                                                            'tier1': sheet.row_values(rownum)[tier1_index] or 0.00,
-                                                            'off_peak_tier2': sheet.row_values(rownum)[off_peaktier2_index] or 0.00,
-                                                            'part_peak_tier3': sheet.row_values(rownum)[part_peak_tier3_index] or 0.00,
-                                                            'peak_tier4': sheet.row_values(rownum)[peak_tier4_index] or 0.00,
-                                                            'stage_changes': sheet.row_values(rownum)[state_chages_index] or 0.00,
-                                                            'rate_stablization': sheet.row_values(rownum)[rate_stablization_index] or 0.00,
-                                                            'surcharge_3': sheet.row_values(rownum)[surcharge3_index] or 0.00,
-                                                            'surcharge_4': sheet.row_values(rownum)[surcharge4_index] or 0.00,
-                                                            'surcharge_5': sheet.row_values(rownum)[surcharge5_index] or 0.00,
-                                                            'surcharge_6': sheet.row_values(rownum)[surcharge6_index] or 0.00,
-                                                            'summer_qty': summer_data or 0.00,
-                                                            'winter_qty': winter_data or 0.00,
-                                                            'name': sheet.row_values(rownum)[season_name_index] or '',
-                                                            'price_version_id': price_version_id
-                                                    })
                     partner_obj.create(cr, uid, {
                                             'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[features_index]),
                                             'is_utility_company': True,
                                             'is_company': True,
                                             'property_product_pricelist': pricelist_id,
+                                            'customer': False
                                     })
         return {}
 
