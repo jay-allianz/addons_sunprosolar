@@ -63,7 +63,8 @@ class crm_make_sale(osv.osv_memory):
                 'name' : solar_line.module_product_id.name,
                 'product_uom_qty' : solar_line.num_of_module,
                 'no_module' : solar_line.num_of_module,
-                'price_unit' : ((solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.cost_per_stc_watt) + (solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.labor_per_stc_watt) + (solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.materials_per_stc)) * (1 + solar_line.module_product_id.markup/100),     
+                'price_unit' : (((solar_line.stc_dc_rating * 1000 * solar_line.module_product_id.cost_per_stc_watt)+(solar_line.stc_dc_rating * 1000 * solar_line.module_product_id.labor_per_stc_watt)+(solar_line.stc_dc_rating * 1000 * solar_line.module_product_id.materials_per_stc)) * (1 + (solar_line.module_product_id.markup / 100)))/solar_line.num_of_module,
+                 #((solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.cost_per_stc_watt) + (solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.labor_per_stc_watt) + (solar_line.module_product_id.pv_module_power_stc * solar_line.module_product_id.materials_per_stc)) * (1 + solar_line.module_product_id.markup/100),     
                 'type' : solar_line.module_product_id.procure_method,
                 'order_id' : order_id
             }
@@ -73,7 +74,8 @@ class crm_make_sale(osv.osv_memory):
                 'name' : solar_line.inverter_product_id.name,
                 'product_uom_qty' : solar_line.num_of_invertor,
                 'no_inverter' : solar_line.num_of_invertor,
-                'price_unit' : ((solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.cost_per_ac_capacity_watt ) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.labor_per_ac_watt) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.materials_per_stc)),
+                'price_unit' : ((solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.cost_per_ac_capacity_watt)+(solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.labor_per_ac_watt)+(solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.materials_per_ac_watt))/solar_line.num_of_invertor,
+                #((solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.cost_per_ac_capacity_watt ) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.labor_per_ac_watt) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.materials_per_stc)),
                 'type' : solar_line.inverter_product_id.procure_method,
                 'order_id' : order_id
             }
