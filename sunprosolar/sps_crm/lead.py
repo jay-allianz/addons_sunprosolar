@@ -354,7 +354,7 @@ class crm_lead(osv.Model):
                         basline = summer_qty * days
                         over_basline1 = basline * 0.3
                         over_basline2 = basline * 0.7
-                        more_than = (usage) - (basline + over_basline1 + over_basline2 + basline)
+#                        more_than = (usage) - (basline + over_basline1 + over_basline2 + basline)
                         context.update({'get_field':'daily_meter_charges'})
                         
                         daily_meter_charge = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
@@ -380,11 +380,11 @@ class crm_lead(osv.Model):
                             peak_tier3 = 0
                         over_base_line1_2 = over_basline2 * peak_tier3
                         
-                        context.update({'get_field':'peak_tier4'})
-                        peak_tier4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not peak_tier4:
-                            peak_tier4 = 0
-                        over_base_line1_3 = more_than * peak_tier4
+#                        context.update({'get_field':'peak_tier4'})
+#                        peak_tier4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not peak_tier4:
+#                            peak_tier4 = 0
+#                        over_base_line1_3 = more_than * peak_tier4
                         
                         context.update({'get_field':'surcharge_3'})
                         surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
@@ -410,7 +410,7 @@ class crm_lead(osv.Model):
                         rate_stablization = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not rate_stablization:
                             rate_stablization = 0
-                        delivery_subtotal = basic_charge + round(base_line_summer,2) + round(over_base_line1_1,2) + round(over_base_line1_2,2) + round(over_base_line1_3,2) + surcharge3 + surcharge4 + surcharge5 + surcharge6 + rate_stablization
+                        delivery_subtotal = basic_charge + round(base_line_summer,2) + round(over_base_line1_1,2) + round(over_base_line1_2,2) + surcharge3 + surcharge4 + surcharge5 + surcharge6 + rate_stablization
                         
                         context.update({'get_field':'stage_changes'})
                         stage_change = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
@@ -462,9 +462,9 @@ class crm_lead(osv.Model):
                 for array_id in data.solar_ids:
 #                    cost_per_array = (array_id.num_of_module * (((array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.materials_per_stc)) * (1 + array_id.module_product_id.markup / 100)))  + (array_id.num_of_invertor * ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)))
 #                    cost_per_array = (array_id.module_product_id.standard_price * array_id.num_of_module) + (array_id.inverter_product_id.standard_price * array_id.num_of_invertor)
-                    cost_per_array = (((array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.materials_per_stc)) * (1 + (array_id.module_product_id.markup / 100)))  + ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt))
+                    cost_per_array = (((array_id.stc_dc_rating * 1000 * array_id.module_product_id.cost_per_stc_watt)+(array_id.stc_dc_rating * 1000 * array_id.module_product_id.labor_per_stc_watt)+(array_id.stc_dc_rating * 1000 * array_id.module_product_id.materials_per_stc)) * (1 + (array_id.module_product_id.markup / 100)))  + ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt))
                     cost += cost_per_array
-                    cost_peack_kw += (((array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.materials_per_stc)) * (1 + (array_id.module_product_id.markup / 100)))
+                    cost_peack_kw += (((array_id.stc_dc_rating * 1000 * array_id.module_product_id.cost_per_stc_watt)+(array_id.stc_dc_rating * 1000 * array_id.module_product_id.labor_per_stc_watt)+(array_id.stc_dc_rating * 1000 * array_id.module_product_id.materials_per_stc)) * (1 + (array_id.module_product_id.markup / 100)))
                     inverter_cost += ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt))
             if cost and data.down_payment:
                 down_payment_amt = cost * data.down_payment
@@ -685,7 +685,7 @@ class crm_lead(osv.Model):
         'stc_dc_rating': fields.function(_get_stc_dc_rating, string='STC-DC Rating', type='float',digits=(12,3)),
         'ptc_dc_rating': fields.function(_get_ptc_dc_rating, string='PTC-DC Rating', type='float',digits=(12,3)),
         'cec_ac_rating': fields.function(_get_cec_ac_rating, string='CEC-AC Rating', type='float',digits=(12,3)),
-        'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float'),
+        'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float',digits=(12,3)),
         'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='integer'),
         'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float',digits=(12,3)),
         'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Average Sun Hours', type='float'),
@@ -1153,20 +1153,20 @@ class solar_solar(osv.Model):
                     else:
                         res[data.id]['annual_ele_usage'] = 0.0
             production = None
-            avg_sun_hour = None
-            tot_sun_hour = 0
+            avg_sun_hour = 0
             if data and data.loc_station_id:
                 if data.loc_station_id and data.loc_station_id.tilt_azimuth_ids:
                     for t_a_data in data.loc_station_id.tilt_azimuth_ids:
                         if t_a_data.azimuth == data.tilt_degree and t_a_data.tilt.id == data.faceing.id:
                             production = t_a_data.production
-                            tot_sun_hour = t_a_data.jan + t_a_data.feb + t_a_data.mar + t_a_data.apr + t_a_data.may + t_a_data.jun + t_a_data.jul + t_a_data.aug + t_a_data.sep + t_a_data.oct + t_a_data.nov + t_a_data.dec
-                            avg_sun_hour = tot_sun_hour / 12
+                            avg_sun_hour = t_a_data.annual_avg
                         if avg_sun_hour:
                             res[data.id]['site_avg_sun_hour'] = avg_sun_hour
                             annual_solar_prod = None
                             if ptc_stc_ratio_amount:
                                 tot_perfomance_ratio = (data.inverter_product_id.cec_efficiency / 100) * 0.84 * (ptc_stc_ratio_amount / 100)
+                                if data.estimate_shade == 0:
+                                    data.estimate_shade = 0.1
                                 annual_solar_prod = (stc_dc_rating_amount * production  * data.estimate_shade) / 100
 #                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                             if annual_solar_prod:
@@ -1233,7 +1233,7 @@ class solar_solar(osv.Model):
                 'stc_dc_rating': fields.function(_get_system_rating_data, string='STC-DC Rating', type='float', multi='rating_all',digits=(12,3)),
                 'ptc_dc_rating': fields.function(_get_system_rating_data, string='PTC-DC Rating', type='float', multi='rating_all',digits=(12,3)),
                 'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all',digits=(12,3)),
-                'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all'),
+                'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all',digits=(12,3)),
                 
                 'array_size' : fields.function(_get_system_rating_data, string='Solar Array Size', type='integer', multi='green_all', help="Solar Array Size"),
                 'production' : fields.function(_get_system_rating_data, string='Yearly output per KW', type='integer', multi='green_all', help="Yearly output per KW"),
