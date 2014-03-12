@@ -209,7 +209,7 @@ class cost_rebate(osv.TransientModel):
     _columns = {
         'old_bill' : fields.float('Old Electricity Bill'),
         'new_bill' : fields.float('New Electricity Bill'),
-        'pv_energy' : fields.float('PV Energy KWH'),
+        'pv_energy' : fields.float('PV Energy'),
         'elec_bill_savings' : fields.float('Electric Bill Savings'),
         'loan_installment' : fields.float("Loan Installment"),
         'srecs' : fields.float('SRECs'),

@@ -754,7 +754,7 @@ class crm_lead(osv.Model):
                 vals = {
                     'year':year,
                     'old_bill':prev_old_bill,
-                    'pv_energy' : prev_pv_energy,
+                    'pv_energy' : prev_pv_energy * 1000,
                     'elec_bill_savings' : elec_bill_savings,
                     'new_bill' : prev_old_bill - elec_bill_savings,
                     'srecs' : prev_pv_energy * data.srec,
