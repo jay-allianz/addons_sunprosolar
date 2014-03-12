@@ -205,9 +205,9 @@ class crm_lead(osv.Model):
                 line_number += 1
                 annual_ele_usage += line.annual_ele_usage
             if line_number:
-                 res[data.id] = annual_ele_usage/line_number
+                res[data.id] = annual_ele_usage/line_number
             else:
-                 res[data.id] = annual_ele_usage
+                res[data.id] = annual_ele_usage
         return res
     
     def _get_site_avg_sun_hour(self, cr, uid, ids, name, args, context=None):
@@ -744,19 +744,23 @@ class crm_lead(osv.Model):
             else:
                 depriciation = data.cost
             depriciation_savings = depriciation * ((cur_user.company_id.fedral_tax + cur_user.company_id.sales_tax)/100)
-            
+            if not data.annual_ele_usage:
+                annual_ele_usage_temp = 1
+            else:
+                annual_ele_usage_temp = data.annual_ele_usage
             for yr in range(data.number_of_years):
                 year = yr + 1
                 if year >= 15:
                     yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings
                 else:
                     yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings + 5000
+                
                 vals = {
                     'year':year,
                     'old_bill':prev_old_bill,
                     'pv_energy' : prev_pv_energy * 1000,
-                    'elec_bill_savings' : elec_bill_savings,
-                    'new_bill' : prev_old_bill - elec_bill_savings,
+                    'elec_bill_savings' : (prev_old_bill - ((prev_pv_energy * 1000 * prev_old_bill) / annual_ele_usage_temp)),
+                    'new_bill' : ((prev_pv_energy * 1000 * prev_old_bill) / annual_ele_usage_temp),
                     'srecs' : prev_pv_energy * data.srec,
                     'incentives' : prev_pv_energy * data.pbi_epbb_incentive,
                     'depriciation' : 0,
