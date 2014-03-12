@@ -686,7 +686,7 @@ class crm_lead(osv.Model):
         'ptc_dc_rating': fields.function(_get_ptc_dc_rating, string='PTC-DC Rating', type='float',digits=(12,3)),
         'cec_ac_rating': fields.function(_get_cec_ac_rating, string='CEC-AC Rating', type='float',digits=(12,3)),
         'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float',digits=(12,3)),
-        'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='integer'),
+        'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='float'),
         'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float',digits=(12,3)),
         'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Average Sun Hours', type='float'),
         'project_photo_ids' : fields.one2many('project.photos', 'crm_lead_id', "Project Photos"),
