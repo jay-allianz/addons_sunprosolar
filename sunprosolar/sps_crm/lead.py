@@ -1247,7 +1247,7 @@ class solar_solar(osv.Model):
                 'ave_home_powered' : fields.function(_get_system_rating_data, string='Average Homes Powered', type='integer', multi="green_all", help="Homes Powered for One Year"),
                 'ave_light_bulb_powered' : fields.function(_get_system_rating_data, string='Average Light-bulbs Powered', type='integer', multi="green_all", help="Light-bulbs Powered for One Year"),
                 
-                'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='integer', multi='rating_all'),
+                'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='float', multi='rating_all'),
                 'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all',digits=(12,3)),
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
                 'estimate_shade': fields.integer('Estimated Shading'),
