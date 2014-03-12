@@ -1202,7 +1202,7 @@ class solar_solar(osv.Model):
                         res[data.id]['tree_equi'] = tree_equi
                         tree_planting_equi = output / years_40_offset_tree
                         res[data.id]['tree_planting_equi'] = tree_planting_equi
-                        ave_home_powered = output / annual_home_ele
+                        ave_home_powered = output / 8900
                         res[data.id]['ave_home_powered'] = ave_home_powered
                         ave_light_bulb_powered = output / avg_light_bulb
                         res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
