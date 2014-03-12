@@ -1166,8 +1166,8 @@ class solar_solar(osv.Model):
                             if ptc_stc_ratio_amount:
                                 tot_perfomance_ratio = (data.inverter_product_id.cec_efficiency / 100) * 0.84 * (ptc_stc_ratio_amount / 100)
                                 if data.estimate_shade == 0:
-                                    data.estimate_shade = 0.1
-                                annual_solar_prod = (stc_dc_rating_amount * production  * data.estimate_shade) / 100
+                                    data.estimate_shade = 1
+                                annual_solar_prod = (stc_dc_rating_amount * production  * data.estimate_shade) / 1000
 #                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                             if annual_solar_prod:
                                 annual_s_prod = round(annual_solar_prod)
