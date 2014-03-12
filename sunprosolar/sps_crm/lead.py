@@ -1170,8 +1170,8 @@ class solar_solar(osv.Model):
                                 annual_solar_prod = (stc_dc_rating_amount * production  * data.estimate_shade) / 1000
 #                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                             if annual_solar_prod:
-                                annual_s_prod = round(annual_solar_prod)
-                                res[data.id]['annual_solar_prod'] = int(annual_s_prod)
+                                annual_s_prod = annual_solar_prod
+                                res[data.id]['annual_solar_prod'] = annual_s_prod
                     if production:
                         user_obj = self.pool.get('res.users')
                         cur_user = user_obj.browse(cr, uid, uid, context=context)
