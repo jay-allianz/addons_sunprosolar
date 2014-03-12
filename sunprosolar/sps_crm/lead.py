@@ -161,10 +161,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 rating += line.ptc_stc_ratio
                 line_number += 1
-            if line_number:
-                res[data.id] = rating/line_number
-            else:
-                res[data.id] = rating
+#            if line_number:
+#                res[data.id] = rating/line_number
+#            else:
+            res[data.id] = rating
              
         return res
      
