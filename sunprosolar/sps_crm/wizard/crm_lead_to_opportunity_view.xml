@@ -11,6 +11,9 @@
 						<field name="msg" readonly="True" nolabel="1"/>
 					</group>
 				</xpath> 
+				<xpath expr="/form/group/field[@name='partner_id']" position="attributes">
+					<attribute name="domain">[('customer','=',True)]</attribute>
+				</xpath> 
 			</field>
 		</record>
 	</data>

@@ -329,7 +329,7 @@ class crm_lead(osv.Model):
             res[data.id] = annual_home_ele
         return res
     
-    def _get_old_bill(self, cr, uid, ids, name, args, context=None):
+    def _get_old_bill(self, cr, uid, ids, context=None):
         res = {}
         pricelist_obj = self.pool.get('product.pricelist')
         product_obj = self.pool.get('product.product')
@@ -423,70 +423,7 @@ class crm_lead(osv.Model):
                     
         return old_bill
     
-    def _calculate_table(self, cr, uid, ids, name, args, context=None):
-        result = {}
-        cost_rebate_obj = self.pool.get('cost.rebate')
-        user_obj = self.pool.get('res.users')
-        pricelist_obj = self.pool.get('product.pricelist')
-        product_obj = self.pool.get('product.product')
-        cur_user = user_obj.browse(cr, uid, uid, context=context)
-        for data in self.browse(cr, uid, ids, context=context):
-            annual_ele_usage = 0.0
-            for line in data.anual_electricity_usage_ids:
-                if line.name == datetime.datetime.now().year:
-                    if line.usage_kwh:
-                        annual_ele_usage = line.usage_kwh
-            res = []
-            prev_old_bill = self._get_old_bill(cr, uid, ids, name, args, context=context)
-            prev_pv_energy = data.annual_solar_prod or 0
-            context.update({'get_field':'tier1'})
-            grid_energy_rate = 0
-            product_ids = product_obj.search(cr, uid, [], context=context)
-            pro_id = product_ids and product_ids[0]
-            if data.utility_company_id:
-                grid_energy_rate = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-            elec_bill_savings = prev_pv_energy * grid_energy_rate
-            i = data.loan_interest_rate
-            n = data.loan_period
-            PV = data.loan_amt
-            loan_installment = 0
-            if i != 0:
-                loan_installment = PV / ((1- (1 / pow((1 + i),n) )) / i) 
-            
-            if data.loan_period != 0.0:
-                depriciation = data.cost/data.loan_period
-            else:
-                depriciation = data.cost
-            depriciation_savings = depriciation * ((cur_user.company_id.fedral_tax + cur_user.company_id.sales_tax)/100)
-            
-            for yr in range(data.number_of_years):
-                year = yr + 1
-                if year >= 15:
-                    yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings
-                else:
-                    yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings + 5000
-                vals = {
-                    'year':year,
-                    'old_bill':prev_old_bill,
-                    'pv_energy' : prev_pv_energy,
-                    'elec_bill_savings' : elec_bill_savings,
-                    'new_bill' : prev_old_bill - elec_bill_savings,
-                    'srecs' : prev_pv_energy * data.srec,
-                    'incentives' : prev_pv_energy * data.pbi_epbb_incentive,
-                    'depriciation' : 0,
-                    'depriciation_savings' : 0,
-                    'yearly_payout' : yearly_payout,
-                    'loan_installment' : 0,
-                    'crm_lead_id': data.id
-                }
-                if year <= data.loan_period:
-                    vals.update({'depriciation' : depriciation, 'depriciation_savings' : depriciation_savings, 'loan_installment':loan_installment})
-                res.append(cost_rebate_obj.create(cr, uid, vals,context=context))
-                prev_old_bill = prev_old_bill * ( 1 + data.grid_rate_increase_by)
-                prev_pv_energy = prev_pv_energy * (( 100 - data.pv_kw_decline)/100)
-                elec_bill_savings = prev_pv_energy * grid_energy_rate * math.pow(( 1 + data.grid_rate_increase_by ),year)  
-            result[data.id] = res#
-        return result
+    
 
     def _get_company_tier_amount(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -510,18 +447,25 @@ class crm_lead(osv.Model):
                 'cost' : 0.0,
                 'down_payment_amt' : 0.0, 
                 'loan_amt' : 0.0,
-                'rebate_amt' : 0.0
+                'rebate_amt' : 0.0,
+                'cost_peack_kw' : 0.0,
+                'inverter_cost' : 0.0,
             }
             cost = 0 
             cost_per_array= 0.0
             down_payment_amt = 0
             rebate_amt = 0
+            cost_peack_kw = 0.0
+            inverter_cost = 0.0
             
             if data.solar_ids:
                 for array_id in data.solar_ids:
-                    cost_per_array = (array_id.num_of_module * (((array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.materials_per_stc)) * (1 + array_id.module_product_id.markup / 100)))  + (array_id.num_of_invertor * ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)))
+#                    cost_per_array = (array_id.num_of_module * (((array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * array_id.module_product_id.materials_per_stc)) * (1 + array_id.module_product_id.markup / 100)))  + (array_id.num_of_invertor * ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt)))
 #                    cost_per_array = (array_id.module_product_id.standard_price * array_id.num_of_module) + (array_id.inverter_product_id.standard_price * array_id.num_of_invertor)
+                    cost_per_array = (((array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.materials_per_stc)) * (1 + (array_id.module_product_id.markup / 100)))  + ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt))
                     cost += cost_per_array
+                    cost_peack_kw += (((array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.cost_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.labor_per_stc_watt)+(array_id.module_product_id.pv_module_power_stc * 1000 * array_id.module_product_id.materials_per_stc)) * (1 + (array_id.module_product_id.markup / 100)))
+                    inverter_cost += ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt))
             if cost and data.down_payment:
                 down_payment_amt = cost * data.down_payment
             if cost and data.rebate:
@@ -532,6 +476,8 @@ class crm_lead(osv.Model):
                 'down_payment_amt' : down_payment_amt,
                 'rebate_amt' : rebate_amt, 
                 'loan_amt' : loan_amt,
+                'cost_peack_kw' : cost_peack_kw,
+                'inverter_cost' : inverter_cost,
             }
         return result
     
@@ -706,7 +652,7 @@ class crm_lead(osv.Model):
         'loan_period' :fields.float("Loan Period(Years)"),
         'down_payment' :fields.float("Down Payment (%)"),
         'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
-        'cost_peack_kw' : fields.float('Cost / Peack KW'),
+        'cost_peack_kw' : fields.function(_get_cost_rebate, string="'Cost / Peack KW'",type="float",multi="cost_all"),
         'pv_kw_decline':fields.float('PV KW Decline (%)'),
 #        'grid_energy_rate':fields.float("Electricity Grid energy intial Rate Per KWh/$"),
         'grid_energy_rate':fields.function(_get_company_tier_amount, type='float', method=True, string="Electricity Grid energy intial Rate Per KWh/$"),
@@ -716,16 +662,17 @@ class crm_lead(osv.Model):
         'number_of_years':fields.integer('Number Of Years'),
         'replace_inverter_every':fields.float('Replace Inverter Every(Years)'),
         'replace_inverter_over_loan_period' : fields.integer("Replace Inverter Over Loan Period"),
-        'inverter_cost' : fields.integer('Inverter Cost'),
+        'inverter_cost' : fields.function(_get_cost_rebate, string="Inverter Cost",type="float",multi="cost_all"),
         'array_output' : fields.function(_get_output, string='Solar Array Output', type='float'),
         'peak_kw_stc' : fields.function(_get_stc_dc_rating, string='Yearly output per KW', type='float'),
-        'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float'),
+        'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
         'pbi_epbb_incentive' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
         'cost' : fields.function(_get_cost_rebate, string="Cost",type="float",multi="cost_all"),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
         'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
-        'cost_rebate_ids' : fields.function(_calculate_table, relation='cost.rebate',string = 'Cost & Rebate',type="one2many"),
+        'cost_rebate_ids' : fields.one2many( 'cost.rebate','crm_lead_id',string = 'Cost & Rebate'),
+#        'cost_rebate_ids' : fields.function(_calculate_table, relation='cost.rebate',string = 'Cost & Rebate',type="one2many"),
         'auto_zip' : fields.char(string="Auto-Zipcode"),
         'co2_offset_tons' : fields.function(_get_co2_offset_tons, string='CO2 Offset (Tons)', type='integer', help="Tons of Carbon Annually"),
         'co2_offset_pounds' : fields.function(_get_co2_offset_pounds, string='CO2 Offset (Pounds)', type="integer", help="Pounds of Carbon annually Eliminated"),
@@ -735,12 +682,12 @@ class crm_lead(osv.Model):
         'tree_planting_equi' : fields.function(_get_tree_planting_equi, string='Tree Planting Equivalent', type='integer', help="Trees planted for life of tree"),
         'ave_home_powered' : fields.function(_get_ave_home_powered, string='Average Homes Powered', type='integer', help="Homes Powered for One Year"),
         'ave_light_bulb_powered' : fields.function(_get_ave_light_bulb_powered, string='Average Light-bulbs Powered', type='integer', help="Light-bulbs Powered for One Year"),
-        'stc_dc_rating': fields.function(_get_stc_dc_rating, string='STC-DC Rating', type='float'),
-        'ptc_dc_rating': fields.function(_get_ptc_dc_rating, string='PTC-DC Rating', type='float'),
-        'cec_ac_rating': fields.function(_get_cec_ac_rating, string='CEC-AC Rating', type='float'),
+        'stc_dc_rating': fields.function(_get_stc_dc_rating, string='STC-DC Rating', type='float',digits=(12,3)),
+        'ptc_dc_rating': fields.function(_get_ptc_dc_rating, string='PTC-DC Rating', type='float',digits=(12,3)),
+        'cec_ac_rating': fields.function(_get_cec_ac_rating, string='CEC-AC Rating', type='float',digits=(12,3)),
         'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float'),
         'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='integer'),
-        'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float'),
+        'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float',digits=(12,3)),
         'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Average Sun Hours', type='float'),
         'project_photo_ids' : fields.one2many('project.photos', 'crm_lead_id', "Project Photos"),
         'project_review_ids' : fields.one2many('project.reviews', 'crm_lead_id', "Project Reviews"),
@@ -755,6 +702,77 @@ class crm_lead(osv.Model):
             'lead_date': fields.date.context_today,
             'reg_no': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'crm.lead'),
     }
+    
+    def calculate_table(self, cr, uid, ids, context=None):
+        result = {}
+        cost_rebate_obj = self.pool.get('cost.rebate')
+        user_obj = self.pool.get('res.users')
+        pricelist_obj = self.pool.get('product.pricelist')
+        product_obj = self.pool.get('product.product')
+        cur_user = user_obj.browse(cr, uid, uid, context=context)
+        
+        old_rec_len = len(self.browse(cr, uid, ids[0],context=context).cost_rebate_ids)
+        if old_rec_len:
+            cost_rebate_ids = cost_rebate_obj.search(cr, uid, [('crm_lead_id','=',ids[0])],context=context)
+            cost_rebate_obj.unlink(cr, uid, cost_rebate_ids)
+        
+        for data in self.browse(cr, uid, ids, context=context):
+            annual_ele_usage = 0.0
+            for line in data.anual_electricity_usage_ids:
+                if line.name == datetime.datetime.now().year:
+                    if line.usage_kwh:
+                        annual_ele_usage = line.usage_kwh
+            res = []
+            prev_old_bill = self._get_old_bill(cr, uid, ids, context=context)
+            prev_pv_energy = data.annual_solar_prod or 0
+            context.update({'get_field':'tier1'})
+            grid_energy_rate = 0
+            product_ids = product_obj.search(cr, uid, [], context=context)
+            pro_id = product_ids and product_ids[0]
+            if data.utility_company_id:
+                grid_energy_rate = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+            elec_bill_savings = prev_pv_energy * grid_energy_rate
+            i = data.loan_interest_rate
+            n = data.loan_period
+            PV = data.loan_amt
+            loan_installment = 0
+            if i != 0:
+                loan_installment = PV / ((1- (1 / pow((1 + i),n) )) / i) 
+            
+            if data.loan_period != 0.0:
+                depriciation = data.cost/data.loan_period
+            else:
+                depriciation = data.cost
+            depriciation_savings = depriciation * ((cur_user.company_id.fedral_tax + cur_user.company_id.sales_tax)/100)
+            
+            for yr in range(data.number_of_years):
+                year = yr + 1
+                if year >= 15:
+                    yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings
+                else:
+                    yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings + 5000
+                vals = {
+                    'year':year,
+                    'old_bill':prev_old_bill,
+                    'pv_energy' : prev_pv_energy,
+                    'elec_bill_savings' : elec_bill_savings,
+                    'new_bill' : prev_old_bill - elec_bill_savings,
+                    'srecs' : prev_pv_energy * data.srec,
+                    'incentives' : prev_pv_energy * data.pbi_epbb_incentive,
+                    'depriciation' : 0,
+                    'depriciation_savings' : 0,
+                    'yearly_payout' : yearly_payout,
+                    'loan_installment' : 0,
+                    'crm_lead_id': data.id
+                }
+                if year <= data.loan_period:
+                    vals.update({'depriciation' : depriciation, 'depriciation_savings' : depriciation_savings, 'loan_installment':loan_installment})
+                res.append(cost_rebate_obj.create(cr, uid, vals,context=context))
+                prev_old_bill = prev_old_bill * ( 1 + data.grid_rate_increase_by)
+                prev_pv_energy = prev_pv_energy * (( 100 - data.pv_kw_decline)/100)
+                elec_bill_savings = prev_pv_energy * grid_energy_rate * math.pow(( 1 + data.grid_rate_increase_by ),year)  
+            result[data.id] = res#
+        return result
     
     def on_change_notifiy_customer(self, cr, uid, ids, notify_customer, context=None):
         if notify_customer == True:
@@ -1113,6 +1131,7 @@ class solar_solar(osv.Model):
                 'site_avg_sun_hour' : 0,
                 'array_size' : 0,
                 'array_output' : 0,
+
             }
             stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = 0.00
             stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = None
@@ -1122,7 +1141,7 @@ class solar_solar(osv.Model):
                 ptc_dc_rating_amount = data.num_of_module * (data.module_product_id.module_ptc_rating / 1000)
                 cec_ac_rating_amount = (ptc_dc_rating_amount * data.inverter_product_id.cec_efficiency) / 100
             if stc_dc_rating_amount and ptc_dc_rating_amount:
-                ptc_stc_ratio_amount = (ptc_dc_rating_amount / stc_dc_rating_amount) * 100
+                ptc_stc_ratio_amount = (ptc_dc_rating_amount / stc_dc_rating_amount)
             res[data.id]['stc_dc_rating'] = stc_dc_rating_amount or 0.0
             res[data.id]['ptc_dc_rating'] = ptc_dc_rating_amount or 0.0
             res[data.id]['cec_ac_rating'] = cec_ac_rating_amount or 0.0
@@ -1148,8 +1167,8 @@ class solar_solar(osv.Model):
                             annual_solar_prod = None
                             if ptc_stc_ratio_amount:
                                 tot_perfomance_ratio = (data.inverter_product_id.cec_efficiency / 100) * 0.84 * (ptc_stc_ratio_amount / 100)
-#                                annual_solar_prod = (ptc_dc_rating_amount * production  * data.estimate_shade) / 100
-                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
+                                annual_solar_prod = (stc_dc_rating_amount * production  * data.estimate_shade) / 100
+#                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                             if annual_solar_prod:
                                 annual_s_prod = round(annual_solar_prod)
                                 res[data.id]['annual_solar_prod'] = int(annual_s_prod)
@@ -1211,9 +1230,9 @@ class solar_solar(osv.Model):
                 'num_of_invertor':fields.integer('Number of Inverters'),
                 'num_of_arrays':fields.char('Array Number',size = 32, readonly=True,
                                             help="This Number of Arrays is automatically created by OpenERP."),
-                'stc_dc_rating': fields.function(_get_system_rating_data, string='STC-DC Rating', type='float', multi='rating_all'),
-                'ptc_dc_rating': fields.function(_get_system_rating_data, string='PTC-DC Rating', type='float', multi='rating_all'),
-                'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all'),
+                'stc_dc_rating': fields.function(_get_system_rating_data, string='STC-DC Rating', type='float', multi='rating_all',digits=(12,3)),
+                'ptc_dc_rating': fields.function(_get_system_rating_data, string='PTC-DC Rating', type='float', multi='rating_all',digits=(12,3)),
+                'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all',digits=(12,3)),
                 'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all'),
                 
                 'array_size' : fields.function(_get_system_rating_data, string='Solar Array Size', type='integer', multi='green_all', help="Solar Array Size"),
@@ -1229,7 +1248,7 @@ class solar_solar(osv.Model):
                 'ave_light_bulb_powered' : fields.function(_get_system_rating_data, string='Average Light-bulbs Powered', type='integer', multi="green_all", help="Light-bulbs Powered for One Year"),
                 
                 'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='integer', multi='rating_all'),
-                'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all'),
+                'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all',digits=(12,3)),
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
                 'estimate_shade': fields.integer('Estimated Shading'),
                 }
@@ -1584,12 +1603,12 @@ class crm_meeting(osv.Model):
     def salesteam_send_email(self, cr, uid, ids, context=None):
         if not context:
             context = {}
-#        crm_obj = self.pool.get('crm.lead')
-#        crm_data = crm_obj.browse(cr, uid, ids, context= context)
-#        crm_id = crm_obj.search(cr, uid, [('id','=',crm_data[0].crm_id)])
-        if context.get('default_opportunity_id'):
+        crm_meeting_data = self.browse(cr, uid, ids[0], context=context)
+        crm_obj = self.pool.get('crm.lead')
+        crm_data = crm_obj.browse(cr, uid, crm_meeting_data.crm_id, context= context)
+        if crm_meeting_data.crm_id:
             crm_obj = self.pool.get('crm.lead')
-            crm_id = crm_obj.search(cr, uid, [('id','=',context.get('default_opportunity_id'))])
+            crm_id = crm_obj.search(cr, uid, [('id','=',crm_meeting_data.crm_id.id)])
             crm_data = crm_obj.browse(cr, uid, crm_id, context=context)
             obj_mail_server = self.pool.get('ir.mail_server')
             crm_case_stage_obj = self.pool.get('crm.case.stage')
@@ -1868,8 +1887,6 @@ class product_pricelist(osv.osv):
         if context is None:
             context = {}
         if not context.get('get_field'):
-            supplier_ids = []
-            product_id = 1
             return super(product_pricelist, self).price_get_multi(cr, uid, pricelist_ids, products_by_qty_by_partner, context=context)
         date = context.get('date') or time.strftime('%Y-%m-%d')
 

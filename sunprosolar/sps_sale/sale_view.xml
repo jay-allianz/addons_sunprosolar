@@ -185,8 +185,7 @@
 				        </field>
 				        <field name="required_document" readonly="1"/>
                         <button name="document_collected" string="Document Collected"
-                            colspan="2" type="object" icon="gtk-yes" 
-                            attrs="{'invisible':[('required_document','!=', True)]}" class="oe_highlight" /> 
+                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" /> 
                     </group>
 					</page>
 				</xpath>

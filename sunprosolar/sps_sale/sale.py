@@ -157,6 +157,8 @@ class sale_order(osv.Model):
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
         if not cur_rec.financing_type_id :
             raise osv.except_osv(_('Warning !'),_("Please select the \'Financing Type\' for Document collection."))
+        elif cur_rec.required_document == False:
+            raise osv.except_osv(_('Warning !'),_("Please select collect Required Documents."))
         else:
             self.write(cr, uid, ids, {'state': 'financing_type'})
         return True

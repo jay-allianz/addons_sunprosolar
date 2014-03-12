@@ -104,12 +104,11 @@ class tilt_azimuth(osv.Model):
         'oct': fields.float('Oct'),
         'nov': fields.float('Nov'),
         'dec': fields.float('Dec'),
-        'annual_avg': fields.function(_get_annual_avg, string='Annual Average', type='float'),
+        'annual_avg': fields.float(string='Annual Average'),
+#        'annual_avg': fields.function(_get_annual_avg, string='Annual Average', type='float'),
         'production' : fields.float('Production (kWh/m2)')
     }
     
-    _sql_constraints = [('record_uniq', 'unique(tilt_azimuth_id, tilt, azimuth)', 'Duplication found in Tilt and Azimuth Reading.')]
-
 class station_station(osv.Model):
     
     _name = "station.station"

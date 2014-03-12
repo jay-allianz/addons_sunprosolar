@@ -745,7 +745,7 @@
 								<field name="site_avg_sun_hour" />
 							</group>
 							<group col="2" colspan="2" string="Cleaner and Greener Environment">
-							    <field name="array_output"/>
+<!--							    <field name="array_output"/-->
 								<field name="co2_offset_tons" />
 								<field name="co2_offset_pounds" />
 								<field name="cars_off_roads" />
@@ -799,6 +799,8 @@
 							      <field name="srec" />
                             </group>
 						</group>
+						<button name="calculate_table" string="Calculate"
+                            colspan="2" type="object" icon="gtk-execute"/>
 						<newline />
 							<separator string="Cost and Rebate" colspan="4"/>
 								<field name="cost_rebate_ids" nolabel="1" readonly='1'>
