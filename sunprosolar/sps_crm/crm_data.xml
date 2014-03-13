@@ -95,11 +95,6 @@
          <record model="roof.type" id="roof7">
             <field name="name">Wood Shake</field>
          </record>
-        <!--
-								 <record model="roof.type" id="roof8">
-            <field name="name">Unknown</field>
-         </recor
-								-->
 
 		<record model="type.of.sale" id="tos1">
             <field name="name">Cash</field>

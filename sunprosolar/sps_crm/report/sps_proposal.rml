@@ -46,11 +46,11 @@
   </stylesheet>
   <story>
     [[ repeatIn(objects,'o') ]]
-    <para style="P4" alignment="LEFT">[[calculate_cost_rebate(o.partner_id.id)]]</para>
+    <para style="P4" alignment="LEFT">[[calculate_cost_rebate(o.id)]]</para>
     <para style="P_header" alignment="CENTER"><font color="#006699">Solar Electric Investment Proposal</font></para>
-    <para style="P3" alignment="CENTER"><font color="#006699">for [[get_lead_name(o.partner_id.id)]]</font></para>
+    <para style="P3" alignment="CENTER"><font color="#006699">for [[get_lead_name(o.id)]]</font></para>
     <para style="P3" alignment="CENTER"><font color="#FFFFFF"></font></para>
-    <para style="P2" alignment="CENTER"><font color="#006699">Site Location: [[get_lead_street1(o.partner_id.id)]], [[get_lead_street2(o.partner_id.id)]], [[get_lead_city_id(o.partner_id.id)]]</font></para>
+    <para style="P2" alignment="CENTER"><font color="#006699">Site Location: [[get_lead_street1(o.id)]], [[get_lead_street2(o.id)]], [[get_lead_city_id(o.id)]]</font></para>
      
     <para style="P4" alignment="LEFT">Date:  [[formatLang(time.strftime("%Y-%m-%d"), date=True)]]</para>
     <para style="P3_bold" alignment="LEFT"><font color="#006699"> </font></para>
@@ -76,17 +76,17 @@
                 <para style="P4" alignment="LEFT">PV Solar System T0 Be Mounted On:</para>
             </td>
             <td>
-                <para style="P4" alignment="LEFT">[[formatLang(lead_STC_rating_get(o.partner_id.id))]] kW STC DC</para>
-                <para style="P4" alignment="LEFT">[[formatLang(lead_CEC_rating_get(o.partner_id.id))]] kW CEC AC</para>
-                <para style="P4" alignment="LEFT">[[formatLang(lead_site_average_sun_get(o.partner_id.id))]] sun-hours</para>
-                <para style="P4" alignment="LEFT">[[lead_annual_solar_prod_get(o.partner_id.id)]] kWh</para>
-                <para style="P4" alignment="LEFT">[[lead_annual_usage_get(o.partner_id.id)]] kWh</para>
-                <para style="P4" alignment="LEFT">[[lead_roof_type_get(o.partner_id.id)]]</para>
+                <para style="P4" alignment="LEFT">[[formatLang(lead_STC_rating_get(o.id))]] kW STC DC</para>
+                <para style="P4" alignment="LEFT">[[formatLang(lead_CEC_rating_get(o.id))]] kW CEC AC</para>
+                <para style="P4" alignment="LEFT">[[formatLang(lead_site_average_sun_get(o.id))]] sun-hours</para>
+                <para style="P4" alignment="LEFT">[[lead_annual_solar_prod_get(o.id)]] kWh</para>
+                <para style="P4" alignment="LEFT">[[lead_annual_usage_get(o.id)]] kWh</para>
+                <para style="P4" alignment="LEFT">[[lead_roof_type_get(o.id)]]</para>
             </td>
         </tr>
     </blockTable>
     <section>
-        <para style="P4" alignment="LEFT">[[ repeatIn(get_solar_info(),'solar')]]</para>
+        <para style="P4" alignment="LEFT">[[ repeatIn(get_solar_info(o.id),'solar')]]</para>
         <blockTable colWidths="270.0,270.0" style="Table1">
             <tr>
                 <td>
@@ -111,7 +111,7 @@
     <blockTable colWidths="540.0" style="Table2">
         <tr>
             <td>
-                <para style="P3" alignment="CENTER">[[lead_make_bar_chart() or removeParentNode('blockTable') ]]</para>
+                <para style="P3" alignment="CENTER">[[lead_make_bar_chart(o.id) or removeParentNode('blockTable') ]]</para>
                 <para style="P3" alignment="CENTER"><font color="#006699">Estimated Electric Usage and Solar Production</font></para>
                 <illustration height="380.0" width="0.0">
                     <image x="10" y="60" file="/tmp/bar1.png" height="300.0" width="600.0"/>
@@ -245,7 +245,7 @@
         </tr>
         <tr>
             <td>
-                <para style="P4" alignment="LEFT">Net Savings over 25 years:
+                <para style="P4" alignment="LEFT">Net Savings over [[get_number_of_years()]] years:
                                                   (   including bill savings, sRECs, Maintanance, and invertor replacement(after-tax)   )</para>
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
@@ -255,7 +255,7 @@
         </tr>
         <tr>
             <td>
-                <para style="P4" alignment="LEFT">Total Lifecycle Payback (25-year Net Savings divided by Net Cost)</para>
+                <para style="P4" alignment="LEFT">Total Lifecycle Payback ([[get_number_of_years()]]-year Net Savings divided by Net Cost)</para>
                 <para style="new_line"><font color="#FFFFFF"> </font></para>
             </td>
             <td>
@@ -306,9 +306,35 @@
             </td>
         </tr>
     </blockTable>
+    <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" >
+            <tr>
+                <td>
+                    <para style="P4" alignment="CENTER"></para>
+                </td>
+                <td>
+                    <para style="P4" alignment="CENTER"></para>
+                </td>
+                <td>
+                    <para style="P4" alignment="CENTER"></para>
+                </td>
+                <td>
+                    <para style="P4" alignment="CENTER"></para>
+                </td>
+                <td>
+                    <para style="P4" alignment="CENTER"></para>
+                </td>
+                <td>
+                    <para style="P4" alignment="CENTER">[[ formatLang(get_rebate_amt(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
+                </td>
+                <td>
+                    <para style="P4" alignment="CENTER"></para>
+                </td>
+            </tr>
+     </blockTable >
     <section>
     <para style="P4_bold" alignment="CENTER">[[repeatIn(lead_get_cost_rebate(),'cost_rebate')]]</para>
     <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" >
+    
             <tr>
                 <td>
                     <para style="P4" alignment="CENTER">[[ cost_rebate.year ]]</para>
@@ -326,7 +352,7 @@
                     <para style="P4" alignment="CENTER">[[ formatLang(cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings, digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
                 </td>
                 <td>
-                    <para style="P4" alignment="CENTER">[[ formatLang(get_rebate_amt(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
+                    <para style="P4" alignment="CENTER"></para>
                 </td>
                 <td>
                     <para style="P4" alignment="CENTER">[[ formatLang(cost_rebate.yearly_payout, digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
@@ -379,7 +405,7 @@
                 <para style="P4" alignment="CENTER">[[ formatLang(get_total_savings(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
             <td>
-                <para style="P4" alignment="CENTER"></para>
+                <para style="P4" alignment="CENTER">[[ formatLang(get_rebate_amt(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
             <td>
                 <para style="P4" alignment="CENTER"></para>

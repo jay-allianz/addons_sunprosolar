@@ -10,7 +10,6 @@
                  <xpath expr="//field[@name='description']" position="before">
                         <group col="4" colspan="2">
                              <field name="product_group" colspan="4" required="1"/>
-<!--                             <field name="pv_module_name" attrs="{'invisible':[('product_group','!=','module')]}"/-->
                              <field name="brand_module" attrs="{'invisible':[('product_group','!=','module')]}"/><newline/>
                              <field name="module_hieght" attrs="{'invisible':[('product_group','!=','module')]}"/>
                              <field name="module_ptc_rating" attrs="{'invisible':[('product_group','!=','module')]}" required="1"/>
@@ -55,8 +54,6 @@
 	               </xpath>
             </field>
         </record>
-        
-                  
         
         <!-- PV Module Name Search View  -->
         <record model="ir.ui.view" id="module_master_search">

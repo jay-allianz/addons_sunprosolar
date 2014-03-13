@@ -44,7 +44,6 @@ class insolation_incident(osv.Model):
         (osv.osv._check_recursion, 'Error ! You cannot create recursive Station.', ['parent_id'])
     ]
     
-    
     def compute_percentage(self, cr, uid, ids, context=None):
         for data in self.browse(cr, uid, ids, context=context):
             if data.parent_id:
@@ -77,7 +76,6 @@ class tilt_azimuth(osv.Model):
             res[anual_avg.id] =  avg/12
         return res
     
-    
     _columns = {
         'tilt_azimuth_id': fields.many2one('insolation.incident.yearly','Tilt and Azimuth'),
         'tilt': fields.many2one('tilt.tilt','Tilt'),
@@ -105,7 +103,6 @@ class tilt_azimuth(osv.Model):
         'nov': fields.float('Nov'),
         'dec': fields.float('Dec'),
         'annual_avg': fields.float(string='Annual Average'),
-#        'annual_avg': fields.function(_get_annual_avg, string='Annual Average', type='float'),
         'production' : fields.float('Production (kWh/m2)')
     }
     
@@ -209,7 +206,7 @@ class cost_rebate(osv.TransientModel):
     _columns = {
         'old_bill' : fields.float('Old Electricity Bill'),
         'new_bill' : fields.float('New Electricity Bill'),
-        'pv_energy' : fields.float('PV Energy'),
+        'pv_energy' : fields.float('PV Energy KWH'),
         'elec_bill_savings' : fields.float('Electric Bill Savings'),
         'loan_installment' : fields.float("Loan Installment"),
         'srecs' : fields.float('SRECs'),

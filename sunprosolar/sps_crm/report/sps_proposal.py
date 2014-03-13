@@ -84,26 +84,31 @@ class proposal_report(report_sxw.rml_parse):
             'get_lead_city_id':self._lead_city_id,
         })
         
-    def _lead_name(self, customer):
+    def _lead_name(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_name = False
         if lead_id:
             lead_name = lead_obj.browse(self.cr, self.uid, lead_id)[0].name
         return lead_name
     
-    def _lead_street1(self, customer):
+    def _lead_street1(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_name = False
+        street1=''
         if lead_id:
             street1 = lead_obj.browse(self.cr, self.uid, lead_id)[0].street
         return street1
     
-    def _lead_city_id(self, customer):
+    def _lead_city_id(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_name = False
+        city_id = ''
         if lead_id:
             name = lead_obj.browse(self.cr, self.uid, lead_id)[0].city_id.name or ''
             zip = lead_obj.browse(self.cr, self.uid, lead_id)[0].city_id.zip or ''
@@ -113,10 +118,12 @@ class proposal_report(report_sxw.rml_parse):
             city_id = str(name) + ' ' + str(zip) + ' ' + str(state) + ' ' + str(country)
         return city_id
     
-    def _lead_street2(self, customer):
+    def _lead_street2(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_name = False
+        street2 = ''
         if lead_id:
             street2 = lead_obj.browse(self.cr, self.uid, lead_id)[0].street2
         return street2
@@ -136,9 +143,10 @@ class proposal_report(report_sxw.rml_parse):
     def _get_number_of_years(self):
         return self.number_of_years
 
-    def _make_bar_chart(self):
+    def _make_bar_chart(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', self.customer_id)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         usage_data = False
         if lead_id:
             usage_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].anual_electricity_usage_ids
@@ -242,11 +250,11 @@ class proposal_report(report_sxw.rml_parse):
     def _get_rebate_amt(self):
         return self.rebate_amt
     
-    def _calculate_cost_rebate(self, customer):
-        self.customer_id = customer
+    def _calculate_cost_rebate(self, id):
         lead_obj = self.pool.get("crm.lead")
         user_obj = self.pool.get('res.users')
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         cur_user = user_obj.browse(self.cr, self.uid, self.uid)
         lead_data = []
         crm_lead = False
@@ -291,45 +299,50 @@ class proposal_report(report_sxw.rml_parse):
         self.net_system_cost = self.grand_total - self.srec_total - self.incentive_total
         self.lead_cost_rebate_lines = lead_data
             
-    def _lead_STC_rating_get(self, customer):
+    def _lead_STC_rating_get(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_data = False
         if lead_id:
             lead_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].stc_dc_rating
         return lead_data
     
-    def _lead_CEC_rating_get(self, customer):
+    def _lead_CEC_rating_get(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_cec_data = False
         if lead_id:
             lead_cec_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].cec_ac_rating
         return lead_cec_data
     
-    def _lead_site_average_sun_get(self, customer):
+    def _lead_site_average_sun_get(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_avg_sun_data = False
         if lead_id:
             lead_avg_sun_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].site_avg_sun_hour
         return lead_avg_sun_data  
     
-    def _lead_annual_solar_prod_get(self, customer):
+    def _lead_annual_solar_prod_get(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_annual_solar_pro_data = False
         if lead_id:
             lead_annual_solar_pro_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].annual_solar_prod
-        return format(int(round(lead_annual_solar_pro_data,0)),',d')
+        return lead_annual_solar_pro_data
     
-    def _lead_annual_usage_get(self, customer):
+    def _lead_annual_usage_get(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_annual_usage_get = False
         if lead_id:
             lead_annual_usage_get = lead_obj.browse(self.cr, self.uid, lead_id)[0].annual_ele_usage
-        return format(int(round(lead_annual_usage_get*1000,0)),',d')
+        return lead_annual_usage_get
     
     def _lead_annual_offset_get(self, customer):
         lead_obj = self.pool.get("crm.lead")
@@ -339,17 +352,19 @@ class proposal_report(report_sxw.rml_parse):
             lead_annual_offset_get = lead_obj.browse(self.cr, self.uid, lead_id)[0].co2_offset_tons
         return lead_annual_offset_get
     
-    def _lead_roof_type_get(self, customer):
+    def _lead_roof_type_get(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', customer)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_roof_type_get = False
         if lead_id:
             lead_roof_type_get = lead_obj.browse(self.cr, self.uid, lead_id)[0].roof_type.name
         return lead_roof_type_get
     
-    def _lead_solar_info(self):
+    def _lead_solar_info(self, id):
         lead_obj = self.pool.get("crm.lead")
-        lead_id = lead_obj.search(self.cr, self.uid, [('partner_id.id', '=', self.customer_id)])
+        reference = 'sale.order,' + str(id)
+        lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         solar_data = False
         solar_info = []
         if lead_id:
