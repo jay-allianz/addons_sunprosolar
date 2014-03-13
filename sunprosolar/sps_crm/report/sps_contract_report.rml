@@ -2135,7 +2135,7 @@
             <td>
                 <blockTable colWidths="270.0,270.0" style="Table2">
                     <tr>
-                        <td><para style="P1">NAME : [[get_lead_name(s.partner_id.id)]]</para></td>
+                        <td><para style="P1">NAME : [[get_lead_name(s.id)]]</para></td>
                         <td><para style="P1">SUNPRO REPRESENTATIVE:  [[get_sales_person(s.id) or '' ]]</para></td>
                     </tr>
                     <tr>
