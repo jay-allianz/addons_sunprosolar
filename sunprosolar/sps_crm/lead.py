@@ -2,6 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
+#    Copyright (C) 2013 Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
 #    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,7 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
-
 from openerp.osv import fields, osv
 import datetime
 from tools.translate import _
@@ -161,11 +161,10 @@ class crm_lead(osv.Model):
             for line in data.solar_ids:
                 rating += line.ptc_stc_ratio
                 line_number += 1
-#            if line_number:
-#                res[data.id] = rating/line_number
-#            else:
-            res[data.id] = rating
-             
+            if line_number:
+                res[data.id] = rating/line_number
+            else:
+                res[data.id] = rating
         return res
      
     def _get_output(self, cr, uid, ids, name, args, context=None):
@@ -189,10 +188,6 @@ class crm_lead(osv.Model):
             estimate_shade = 0.0
             for line in data.solar_ids:
                 annual_prod += line.annual_solar_prod or 0
-#                estimate_shade += line.estimate_shade
-#            if estimate_shade > 0:
-#                res[data.id] = (annual_prod * data.estimate_shade) / 100
-#            else:
             res[data.id] = annual_prod
         return res
     
@@ -321,14 +316,6 @@ class crm_lead(osv.Model):
             res[data.id] = annnual_co2_car
         return res
     
-    def _get_annual_home_ele(self, cr, uid, ids, name, args, context=None):
-        res = {}
-        annual_home_ele = 0.0
-        for data in self.browse(cr, uid, ids, context):
-            annual_home_ele = 8900 * data.avg_co2_ele
-            res[data.id] = annual_home_ele
-        return res
-    
     def _get_old_bill(self, cr, uid, ids, context=None):
         res = {}
         pricelist_obj = self.pool.get('product.pricelist')
@@ -354,7 +341,6 @@ class crm_lead(osv.Model):
                         basline = summer_qty * days
                         over_basline1 = basline * 0.3
                         over_basline2 = basline * 0.7
-#                        more_than = (usage) - (basline + over_basline1 + over_basline2 + basline)
                         context.update({'get_field':'daily_meter_charges'})
                         
                         daily_meter_charge = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
@@ -379,12 +365,6 @@ class crm_lead(osv.Model):
                         if not peak_tier3:
                             peak_tier3 = 0
                         over_base_line1_2 = over_basline2 * peak_tier3
-                        
-#                        context.update({'get_field':'peak_tier4'})
-#                        peak_tier4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-#                        if not peak_tier4:
-#                            peak_tier4 = 0
-#                        over_base_line1_3 = more_than * peak_tier4
                         
                         context.update({'get_field':'surcharge_3'})
                         surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
@@ -422,8 +402,6 @@ class crm_lead(osv.Model):
                         old_bill = old_bill + total_old_bill
                     
         return old_bill
-    
-    
 
     def _get_company_tier_amount(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -543,7 +521,6 @@ class crm_lead(osv.Model):
                                 subtype_alternative=None,
                                 headers=None)
                             self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
-
         return True
         
     _columns = {
@@ -595,10 +572,6 @@ class crm_lead(osv.Model):
          'time_own_year': fields.integer('Owned Home Time', help="How long have you owned your home?"),
          'partner_is_company' : fields.boolean('Partner is Company'),
          'time_own_month': fields.integer('Owned home Time month'),
-#         'pool': fields.boolean('Is Pool?', help="Have a pool or not? Checked if Yes."),
-#         'pv': fields.boolean('Is PV', help="Have a PV or not? Checked if Yes."),
-#         'hot_water': fields.boolean('HOT WATER', help="Checked if Yes."),
-#         'other': fields.boolean('Other', help="Checked if Yes."),
          'spent_money': fields.float('Money spent to Heat Home', help='How much spent to heat home?'),
          'equity': fields.boolean('Equity', help="Do you have equity in your home? Checked if Yes."),
          'loc_station_id' : fields.many2one('insolation.incident.yearly', 'Closest NERL Locations'),
@@ -654,7 +627,6 @@ class crm_lead(osv.Model):
         'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
         'cost_peack_kw' : fields.function(_get_cost_rebate, string="'Cost / Peack KW'",type="float",multi="cost_all"),
         'pv_kw_decline':fields.float('PV KW Decline (%)'),
-#        'grid_energy_rate':fields.float("Electricity Grid energy intial Rate Per KWh/$"),
         'grid_energy_rate':fields.function(_get_company_tier_amount, type='float', method=True, string="Electricity Grid energy intial Rate Per KWh/$"),
         'grid_rate_increase_by':fields.float('Grid Rate Increase By'),
         'rebate':fields.float("Rebate"),
@@ -672,7 +644,6 @@ class crm_lead(osv.Model):
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
         'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
         'cost_rebate_ids' : fields.one2many( 'cost.rebate','crm_lead_id',string = 'Cost & Rebate'),
-#        'cost_rebate_ids' : fields.function(_calculate_table, relation='cost.rebate',string = 'Cost & Rebate',type="one2many"),
         'auto_zip' : fields.char(string="Auto-Zipcode"),
         'co2_offset_tons' : fields.function(_get_co2_offset_tons, string='CO2 Offset (Tons)', type='integer', help="Tons of Carbon Annually"),
         'co2_offset_pounds' : fields.function(_get_co2_offset_pounds, string='CO2 Offset (Pounds)', type="integer", help="Pounds of Carbon annually Eliminated"),
@@ -854,7 +825,7 @@ class crm_lead(osv.Model):
                                     headers=None)
                                 self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
         return True
-                            
+
     def on_change_utility_company(self, cr, uid, ids, utility_company_id, context=None):
         values = {}
         document_list = []
@@ -1170,8 +1141,8 @@ class solar_solar(osv.Model):
                             if ptc_stc_ratio_amount:
                                 tot_perfomance_ratio = (data.inverter_product_id.cec_efficiency / 100) * 0.84 * (ptc_stc_ratio_amount / 100)
                                 if data.estimate_shade == 0:
-                                    data.estimate_shade = 1
-                                annual_solar_prod = (stc_dc_rating_amount * production  * data.estimate_shade) / 1000
+                                    data.estimate_shade = 100
+                                annual_solar_prod = (stc_dc_rating_amount * production  * (data.estimate_shade/100)) / 1000
 #                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                             if annual_solar_prod:
                                 annual_s_prod = annual_solar_prod
@@ -1254,15 +1225,16 @@ class solar_solar(osv.Model):
                 'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='float', multi='rating_all', digits=(12,3)),
                 'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all',digits=(12,3)),
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
-                'estimate_shade': fields.integer('Estimated Shading'),
+                'estimate_shade': fields.float('Estimated Shading'),
                 }
+    
 
     def create(self, cr, uid, vals, context=None):
         crm_obj = self.pool.get('crm.lead')
         if vals.get('crm_lead_id', False):
             crm_rec = crm_obj.browse(cr, uid, vals['crm_lead_id'], context=context)
             LenArray = len([x.id for x in crm_rec.solar_ids])
-            vals.update({'num_of_arrays' : LenArray + 1, 'loc_station_id': crm_rec.loc_station_id.id,'tilt_degree':crm_rec.tilt_degree , 'faceing': crm_rec.faceing.id})
+            vals.update({'num_of_arrays' : LenArray + 1})
         return super(solar_solar, self).create(cr, uid, vals, context=context)
     
     def unlink(self, cr, uid, ids, context=None):
@@ -1500,14 +1472,6 @@ class document_required(osv.Model):
             
         return res
 
-#class ir_attachment(osv.Model):
-#    
-#    _inherit = "ir.attachment"
-#    
-#    _columns ={
-#            'doc_id': fields.many2one("document.required","Document")
-#    }
-    
 class documents_all(osv.Model):
     """ Model for document information """
     _name = "documents.all"
@@ -1707,7 +1671,7 @@ class res_company(osv.Model):
         res = {}
         annual_home_ele = 0.0
         for data in self.browse(cr, uid, ids, context):
-            annual_home_ele = 8900 * data.avg_co2_ele
+            annual_home_ele = data.factor_home_ele_annual * data.avg_co2_ele
             res[data.id] = annual_home_ele
         return res
     
@@ -1719,6 +1683,7 @@ class res_company(osv.Model):
         'medium_pollusion': fields.float("Medium Car CO2 Pollution per Mile(lbs)"),
         'avg_yearly_miles': fields.float("Average Yearly Miles Driven(Miles)"),
         'annnual_co2_car': fields.function(_get_annnual_co2_car, type="float", string="Annual CO2 for Medium Car(lbs)"),
+        'factor_home_ele_annual': fields.float('Factor to count Average Yearly Home Electricity'),
         'annual_home_ele': fields.function(_get_annual_home_ele, type="float", string="Average Yearly Home Electricity(lbs)"),
         'avg_light_bulb': fields.float("Average Yearly Light Bulb(KWh)"),
         'avg_comp': fields.float("Average Yearly Computer((KWh))"),
@@ -1733,6 +1698,7 @@ class res_company(osv.Model):
         'annual_equvi_tree':50,
         'avg_yearly_miles': 15000,
         'avg_light_bulb':116.8,
+        'factor_home_ele_annual':8900,
         'annual_home_ele': 11926,
         'avg_comp':1,
         'medium_pollusion':1.1,

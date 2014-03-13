@@ -2,6 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
+#    Copyright (C) 2013 Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
 #    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -66,8 +67,6 @@ class product_product(osv.Model):
     
     _columns = {
             'product_group' : fields.selection([('module', 'Module'),('inverter','Inverter'),('others','Others')], 'Product Group',help="In which group the product belongs to?",required=True),
-#            'pv_module_name' : fields.many2one("module.master",'PV Module Name'),
-#            'no_module': fields.integer('No of Module'),
             'brand_module': fields.many2one("product.brand","Brand"),
             'pv_module_power_stc': fields.float("PV Module Power STC (KW)"),
             'module_ptc_rating':fields.float("Module PTC rating (KW)"),
@@ -75,7 +74,6 @@ class product_product(osv.Model):
             'module_width':fields.float("Module Width (CM)"),
             'module_weight':fields.float("Module Weight (LBS)"),
             'panel_area': fields.float("Solar Panel Area (Meter2)"),
-#            'module_stc_dc_rating': fields.float("Module STC-DC Ratings (KW)"),
             'module_ptc_dc_rating': fields.float("Module PTC-DC Ratings (KW)"),
             'cost_per_stc_watt': fields.float("Cost Per STC Watt ($)"),
             'labor_per_stc_watt': fields.float("Labor Per STC Watt ($)"),
@@ -90,7 +88,6 @@ class product_product(osv.Model):
             'cost_per_ac_capacity_watt':fields.float("Cost Per AC capacity Watt ($)"),
             'labor_per_ac_watt':fields.float("Labor Per AC Watt ($)"),
             'materials_per_ac_watt':fields.float("Materials Per AC Watt ($)"),
-
           }
     
     _defaults={

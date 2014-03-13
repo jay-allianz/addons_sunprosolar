@@ -179,7 +179,7 @@
         </tr>
         <tr>
             <td>
-                <para style="P3"><u>[[get_lead_name(s.partner_id.id)]]</u> is here after referred to as “Customer” for purposes of the Agreement. The Agreement will also refer to the “Subject Property” in this Agreement.The Subject Property refers to the Customer’s property at which SunPro Solar Inc. is installing a SunPro Solar System.</para>
+                <para style="P3"><u>[[get_lead_name(s.id)]]</u> is here after referred to as “Customer” for purposes of the Agreement. The Agreement will also refer to the “Subject Property” in this Agreement.The Subject Property refers to the Customer’s property at which SunPro Solar Inc. is installing a SunPro Solar System.</para>
             </td>
         </tr>
         <tr>
@@ -212,7 +212,7 @@
             <td>
                 <para style="P3"><b>3. Description Of Solar System Being Purchased.</b></para>
                 <para style="P3">SunPro Solar, Inc. will design and install a SunPro Solar System intended for the purpose of generating</para>
-                <para style="P3"><u> [[ get_annul_usage(s.partner_id.id) ]]</u>kWh per year at a system size of <u> [[get_stc_dc_rating(s.partner_id.id)]] </u> kW-DC. This size has been determined by using the available</para>
+                <para style="P3"><u> [[ get_annul_usage(s.id) ]]</u>kWh per year at a system size of <u> [[get_stc_dc_rating(s.id)]] </u> kW-DC. This size has been determined by using the available</para>
                 <para style="P3">utility bills. Each year, after year one, will be subject to degradation in accordance with manufacturer</para>
                 <para style="P3">specifications. You will be billed by your utility for any amount of electricity consumed above the production of</para>
                 <para style="P3">your solar electric system. It is important to review your utility billing throughout the year to avoid a large lump</para>
@@ -226,7 +226,7 @@
              <para style="P3">The solar system will be installed at the Subject Property in the following location:</para>
                 <para fontSize="7.0">__________________________________________________________________________________________________________________________.</para>
                 <para style="P3">The solar system will be installed at the Subject Property with the following panels and inverter(s):</para>
-                <para fontSize="7.0">[[get_products(s.partner_id.id)]]</para>
+                <para fontSize="7.0">[[get_products(s.id)]]</para>
                 <para fontSize="7.0">__________________________________________________________________________________________________________________________.</para>
             </td>
         </tr>
@@ -252,7 +252,7 @@
         </tr>
         <tr>
             <td>
-                <para style="P3">Customer agrees to the following contract price: $<u>[[ get_total_contract_price(s.partner_id.id) ]]</u></para>
+                <para style="P3">Customer agrees to the following contract price: $<u>[[ s.project_id and s.project_id.amount or 0 ]]</u></para>
             </td>
         </tr>
         <tr>
@@ -831,7 +831,7 @@
 			        </tr>
 			        <tr>
 			        	<td>
-			        	    <para style="P3"><u>[[ get_reg_no(s.partner_id.id) ]]</u>___________________________</para>
+			        	    <para style="P3"><u>[[ get_reg_no(s.id) ]]</u>___________________________</para>
 			        	</td>
 			            <td>
 			                <para style="P3"></para>
@@ -2136,14 +2136,14 @@
                 <blockTable colWidths="270.0,270.0" style="Table2">
                     <tr>
                         <td><para style="P1">NAME : [[get_lead_name(s.partner_id.id)]]</para></td>
-                        <td><para style="P1">SUNPRO REPRESENTATIVE:  [[get_sales_person(s.partner_id.id) or '' ]]</para></td>
+                        <td><para style="P1">SUNPRO REPRESENTATIVE:  [[get_sales_person(s.id) or '' ]]</para></td>
                     </tr>
                     <tr>
-                        <td><para style="P1">ADDRESS : [[ get_address(s.partner_id.id) or '' ]] </para></td>
+                        <td><para style="P1">ADDRESS : [[ get_address(s.id) or '' ]] </para></td>
                         <td><para style="P1">CUSTOMER NEEDS _______ DAYS NOTICE TO SHIP PRODUCT</para></td>
                     </tr>
                     <tr>
-                        <td><para style="P1">CITY : [[get_lead_city_id(s.partner_id.id) or '']]</para></td>
+                        <td><para style="P1">CITY : [[get_lead_city_id(s.id) or '']]</para></td>
                         <td><para style="P1">EMAIL : [[ s.partner_id.email or '' ]]</para></td>
                     </tr>
                 </blockTable>
@@ -2157,7 +2157,7 @@
                 <blockTable colWidths="270.0,270.0" style="Table2">
                     <tr>
                         <td><para style="P1">TYPE OF INSTALL</para>
-                        	<para style="P1">□ PV  □ POOL  □ HOT WATER  □ OTHER: <u>[[ get_type_install(s.partner_id.id) ]]</u></para>
+                        	<para style="P1">□ PV  □ POOL  □ HOT WATER  □ OTHER: <u>[[ s.project_id and s.project_id.type_install or '' ]]</u></para>
                         </td>
                         <td><para style="P1">EST. INSTALL DATE : [[ s.contract_signing_date ]]</para></td>
                     </tr>
@@ -2203,15 +2203,15 @@
                     </tr>
                     <tr>
                         <td><para style="P1">ESTIMATED CSI REBATE TO BE CARRIED BY SUNPRO SOLAR</para></td>
-                        <td><para style="P4" alignment="RIGHT">[[ get_rebate_amt(s.partner_id.id)]]</para></td>
-                        <td><para style="P4" alignment="RIGHT">[[ get_rebate_amt(s.partner_id.id)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_rebate_amt(s.id)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ get_rebate_amt(s.id)]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">TOTAL CONTRACT PRICE</para></td>
-                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
-                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.project_id and s.project_id.amount or 0]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.project_id and s.project_id.amount or 0]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
@@ -2224,8 +2224,8 @@
                     </tr>
                     <tr>
                         <td><para style="P1">TOTAL NET PRICE TO CUSTOMER</para></td>
-                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
-                        <td><para style="P4" alignment="RIGHT">[[ get_total_contract_price(s.partner_id.id)]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.project_id and s.project_id.amount or 0]]</para></td>
+                        <td><para style="P4" alignment="RIGHT">[[ s.project_id and s.project_id.amount or 0]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1"></para></td>
                     </tr>
@@ -2240,9 +2240,9 @@
                             <para style="P1">□ Combination: See Financing type</para>
                         </td>
                         <td><para style="P1">TOTAL DUE</para></td>
-                        <td><para style="P1">[[ get_total_due(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ s.project_id and s.project_id.amount or 0 - s.project_id and s.project_id.deposit or 0]]</para></td>
                         <td><para style="P1"></para></td>
-                        <td><para style="P1">ESTIMATED START DATE: [[ get_install_date(s.partner_id.id) or '' ]]</para></td>
+                        <td><para style="P1">ESTIMATED START DATE: [[ s.project_id.date_start or '' ]]</para></td>
                     </tr>
                 </blockTable>
                 
@@ -2257,33 +2257,33 @@
                 <blockTable colWidths="135.0,135.0,135.0,135.0" style="Table4">
                     <tr>
                         <td><para style="P1">Utility Company</para></td>
-                        <td><para style="P1">[[ get_utility_company(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ get_utility_company(s.id) ]]</para></td>
                         <td><para style="P1"># of Roof Vents To Be Moved:</para></td>
-                        <td><para style="P1">[[ get_roof_vents_moved(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[s.project_id and s.project_id.roof_vents_moved or '' ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Meter No.</para></td>
-                        <td><para style="P1">[[ get_meter_no(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ get_meter_no(s.id) ]]</para></td>
                         <td><para style="P1"># of Dormers To Be Moved: </para></td>
-                        <td><para style="P1">[[ get_dormers_moved(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ s.project_id and s.project_id.dormers_moved or '']]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Utility Acc. No.</para></td>
-                        <td><para style="P1">[[ get_account_no(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ get_account_no(s.id) ]]</para></td>
                         <td><para style="P1">Service Upgrade Needed</para></td>
-                        <td><para style="P1">[[ get_service_needed(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ s.project_id and s.project_id.service_needed or '']]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Est. Tilt/Azimuth of Roof</para></td>
-                        <td><para style="P1">[[ get_tilt_azimuth(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ get_tilt_azimuth(s.id) ]]</para></td>
                         <td><para style="P1">Trenching</para></td>
-                        <td><para style="P1">[[ get_trenching(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ s.project_id and s.project_id.trenching or '']]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Roof Type/Age</para></td>
-                        <td><para style="P1">[[ get_roof_type(s.partner_id.id) ]] / [[ get_roof_type_age(s.partner_id.id) or '0' ]]</para></td>
+                        <td><para style="P1">[[ get_roof_type(s.id) ]] / [[ get_roof_type_age(s.id) or '0' ]]</para></td>
                         <td><para style="P1">Ground / Roof Mount</para></td>
-                        <td><para style="P1">[[ get_mount(s.partner_id.id) ]]</para></td>
+                        <td><para style="P1">[[ s.project_id and s.project_id.mount or 0 ]]</para></td>
                     </tr>
                     <tr>
                         <td><para style="P1">Elect Panel Svc Rating</para></td>

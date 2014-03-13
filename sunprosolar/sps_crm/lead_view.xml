@@ -227,7 +227,6 @@
 								<field name="quote_info" />
 							</group>
 							<field name="heat_home" />
-<!--							<field name="pool" /-->
 							<field name="spent_money" />
 							<field name="equity" />
 							<field name="home_sq_foot" />
@@ -710,7 +709,7 @@
 					</page>
 					<page string="Solar">
 						<separator string="Solar Information" />
-						<field name="solar_ids" colspan="4" nolabel="1">
+						<field name="solar_ids" colspan="4" nolabel="1" context="{'default_loc_station_id':loc_station_id, 'default_tilt_degree':tilt_degree, 'default_faceing':faceing}">
 							<tree string="Solar Tree">
 								<field name="loc_station_id" required="1" />
 								<field name="tilt_degree" required="1" />
@@ -728,8 +727,8 @@
 								<field name="num_of_module" required="1"/>
 								<field name="num_of_invertor" required="1"/>
 								<field name="loc_station_id" required="1" />
-								<field name="tilt_degree" required="1" />
-								<field name="faceing" required="1" />
+								<field name="tilt_degree" required="1"/>
+								<field name="faceing" required="1"/>
 								<field name="estimate_shade" />
 								<field name="num_of_arrays" />
 							</form>
@@ -745,7 +744,6 @@
 								<field name="site_avg_sun_hour" />
 							</group>
 							<group col="2" colspan="2" string="Cleaner and Greener Environment">
-<!--							    <field name="array_output"/-->
 								<field name="co2_offset_tons" />
 								<field name="co2_offset_pounds" />
 								<field name="cars_off_roads" />
@@ -781,7 +779,6 @@
 	                        </group>
 	                        <group col="4" colspan="4">
 	                            <group string="Grid" col="2" colspan="2">
-<!--	                                  <field name="grid_energy_rate" /-->
 								      <field name="grid_rate_increase_by" />
 	                            </group>
 	                            <group string="Inverter" col="2" colspan="2">
@@ -803,34 +800,34 @@
                             colspan="2" type="object" icon="gtk-execute"/>
 						<newline />
 							<separator string="Cost and Rebate" colspan="4"/>
-								<field name="cost_rebate_ids" nolabel="1" readonly='1'>
-									<tree>
-										<field name="year" />
-										<field name="old_bill" />
-										<field name="new_bill" />
-										<field name="pv_energy" />
-										<field name="elec_bill_savings" />
-										<field name="loan_installment" />
-										<field name="srecs" />
-										<field name="incentives" />
-										<field name="depriciation" />
-										<field name="depriciation_savings" />
-										<field name="yearly_payout" />
-									</tree>
-									<form>
-										<field name="year" />
-										<field name="old_bill" />
-										<field name="new_bill" />
-										<field name="pv_energy" />
-										<field name="elec_bill_savings" />
-										<field name="loan_installment" />
-										<field name="srecs" />
-										<field name="incentives" />
-										<field name="depriciation" />
-										<field name="depriciation_savings" />
-										<field name="yearly_payout" />
-									</form>
-								</field>		
+							<field name="cost_rebate_ids" nolabel="1" readonly='1'>
+								<tree>
+									<field name="year" />
+									<field name="old_bill" />
+									<field name="new_bill" />
+									<field name="pv_energy" />
+									<field name="elec_bill_savings" />
+									<field name="loan_installment" />
+									<field name="srecs" />
+									<field name="incentives" />
+									<field name="depriciation" />
+									<field name="depriciation_savings" />
+									<field name="yearly_payout" />
+								</tree>
+								<form>
+									<field name="year" />
+									<field name="old_bill" />
+									<field name="new_bill" />
+									<field name="pv_energy" />
+									<field name="elec_bill_savings" />
+									<field name="loan_installment" />
+									<field name="srecs" />
+									<field name="incentives" />
+									<field name="depriciation" />
+									<field name="depriciation_savings" />
+									<field name="yearly_payout" />
+								</form>
+							</field>
 					</page>
 					
 					<page string="Annual Electricity Usage">
@@ -948,7 +945,6 @@
 	                    </group>
 	                </page>
 				</xpath>
-				
 			</field>
 		</record>
 
@@ -1445,6 +1441,7 @@
 							<field name="medium_pollusion" />
 							<field name="avg_yearly_miles" />
 							<field name="annnual_co2_car" />
+							<field name="factor_home_ele_annual"/>
 							<field name="annual_home_ele" />
 							<field name="avg_light_bulb" />
 							<field name="avg_comp" />

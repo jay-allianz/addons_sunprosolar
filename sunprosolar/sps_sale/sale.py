@@ -2,6 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
+#    Copyright (C) 2013 Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
 #    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -289,8 +290,6 @@ class financing_type(osv.osv):
         'description': fields.text('Description'),
         'document_ids' : fields.many2many('documents.all','document_financing_type_rel','fin_type_id','doc_id','Documents'),
     }
-    
-financing_type()
 
 class account_analytic_account(osv.Model):
     
@@ -356,7 +355,4 @@ class sale_order_line(osv.Model):
         for sale_id in sales:
             wf_service.trg_write(uid, 'sale.order', sale_id, cr)
         return create_ids
-    
-financing_type()
-
 

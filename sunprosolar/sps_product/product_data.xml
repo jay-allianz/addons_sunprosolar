@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="0">
-	<!--
-    Resource: product.price.type
-    -->
+		<!--Resource: product.price.type-->
         <record id="list_price01" model="product.price.type">
             <field name="name">Public Price Sun Pro</field>
             <field name="field">list_price</field>
@@ -13,17 +11,13 @@
             <field name="field">standard_price</field>
         </record>
 
-        <!--
-    Price list type
-    -->
+        <!--Price list type-->
         <record id="pricelist_type_sale01" model="product.pricelist.type">
             <field name="name">Sale Pricelist</field>
             <field name="key">sale</field>
         </record>
 
-        <!--
-    Price list
-    -->
+        <!--Price list-->
         <record id="list01" model="product.pricelist">
             <field name="name">Sun Pro Solar Pricelist</field>
             <field name="type">sale</field>
