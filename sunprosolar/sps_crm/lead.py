@@ -561,7 +561,7 @@ class crm_lead(osv.Model):
                                 
                         total_new_bill = delivery_subtotal + stage_changes
                         new_bill = new_bill + total_new_bill
-                return new_bill
+        return new_bill
                             
 
     def _get_company_tier_amount(self, cr, uid, ids, name, args, context=None):
@@ -704,50 +704,49 @@ class crm_lead(osv.Model):
                 'dec_production': 0.0,
             }
             
-            for data in self.browse(cr, uid, ids, context=context):
-                jan_production = 0.0
-                feb_production = 0.0
-                mar_production = 0.0
-                apr_production = 0.0
-                may_production = 0.0
-                jun_production = 0.0
-                jul_production = 0.0
-                aug_production = 0.0
-                sep_production = 0.0
-                oct_production = 0.0
-                nov_production = 0.0
-                dec_production = 0.0
+            jan_production = 0.0
+            feb_production = 0.0
+            mar_production = 0.0
+            apr_production = 0.0
+            may_production = 0.0
+            jun_production = 0.0
+            jul_production = 0.0
+            aug_production = 0.0
+            sep_production = 0.0
+            oct_production = 0.0
+            nov_production = 0.0
+            dec_production = 0.0
                 
-                if data and data.loc_station_id:
-                    tilt_azimuth_id = tilt_azimuth_obj.search(cr, uid, [('tilt_azimuth_id','=',data.loc_station_id.id),('tilt','=', data.faceing.id),('azimuth','=',data.tilt_degree)],context=context)
-                    if tilt_azimuth_id:
-                        tilt_azimuth_data = tilt_azimuth_obj.browse(cr, uid, tilt_azimuth_id, context=context)[0]
-                        sum = tilt_azimuth_data.jan + tilt_azimuth_data.feb + tilt_azimuth_data.mar + tilt_azimuth_data.apr + tilt_azimuth_data.may + tilt_azimuth_data.jun + tilt_azimuth_data.jul + tilt_azimuth_data.aug + tilt_azimuth_data.sep + tilt_azimuth_data.oct + tilt_azimuth_data.nov + tilt_azimuth_data.dec
-                        jan_production = (tilt_azimuth_data.jan * data.annual_solar_prod * 1000)/sum
-                        feb_production = (tilt_azimuth_data.feb * data.annual_solar_prod * 1000)/sum
-                        mar_production = (tilt_azimuth_data.mar * data.annual_solar_prod * 1000)/sum
-                        apr_production = (tilt_azimuth_data.apr * data.annual_solar_prod * 1000)/sum
-                        may_production = (tilt_azimuth_data.may * data.annual_solar_prod * 1000)/sum
-                        jun_production = (tilt_azimuth_data.jun * data.annual_solar_prod * 1000)/sum
-                        jul_production = (tilt_azimuth_data.jul * data.annual_solar_prod * 1000)/sum
-                        aug_production = (tilt_azimuth_data.aug * data.annual_solar_prod * 1000)/sum
-                        sep_production = (tilt_azimuth_data.sep * data.annual_solar_prod * 1000)/sum
-                        oct_production = (tilt_azimuth_data.oct * data.annual_solar_prod * 1000)/sum
-                        nov_production = (tilt_azimuth_data.nov * data.annual_solar_prod * 1000)/sum
-                        dec_production = (tilt_azimuth_data.dec * data.annual_solar_prod * 1000)/sum
-                                
-                res[data.id]['jan_production'] = jan_production
-                res[data.id]['feb_production'] = feb_production
-                res[data.id]['mar_production'] = mar_production
-                res[data.id]['apr_production'] = apr_production
-                res[data.id]['may_production'] = may_production
-                res[data.id]['jun_production'] = jun_production
-                res[data.id]['jul_production'] = jul_production
-                res[data.id]['aug_production'] = aug_production
-                res[data.id]['sep_production'] = sep_production
-                res[data.id]['oct_production'] = oct_production
-                res[data.id]['nov_production'] = nov_production
-                res[data.id]['dec_production'] = dec_production
+            if data and data.loc_station_id:
+                tilt_azimuth_id = tilt_azimuth_obj.search(cr, uid, [('tilt_azimuth_id','=',data.loc_station_id.id),('tilt','=', data.faceing.id),('azimuth','=',data.tilt_degree)],context=context)
+                if tilt_azimuth_id:
+                    tilt_azimuth_data = tilt_azimuth_obj.browse(cr, uid, tilt_azimuth_id, context=context)[0]
+                    sum = tilt_azimuth_data.jan + tilt_azimuth_data.feb + tilt_azimuth_data.mar + tilt_azimuth_data.apr + tilt_azimuth_data.may + tilt_azimuth_data.jun + tilt_azimuth_data.jul + tilt_azimuth_data.aug + tilt_azimuth_data.sep + tilt_azimuth_data.oct + tilt_azimuth_data.nov + tilt_azimuth_data.dec
+                    jan_production = (tilt_azimuth_data.jan * data.annual_solar_prod * 1000)/sum
+                    feb_production = (tilt_azimuth_data.feb * data.annual_solar_prod * 1000)/sum
+                    mar_production = (tilt_azimuth_data.mar * data.annual_solar_prod * 1000)/sum
+                    apr_production = (tilt_azimuth_data.apr * data.annual_solar_prod * 1000)/sum
+                    may_production = (tilt_azimuth_data.may * data.annual_solar_prod * 1000)/sum
+                    jun_production = (tilt_azimuth_data.jun * data.annual_solar_prod * 1000)/sum
+                    jul_production = (tilt_azimuth_data.jul * data.annual_solar_prod * 1000)/sum
+                    aug_production = (tilt_azimuth_data.aug * data.annual_solar_prod * 1000)/sum
+                    sep_production = (tilt_azimuth_data.sep * data.annual_solar_prod * 1000)/sum
+                    oct_production = (tilt_azimuth_data.oct * data.annual_solar_prod * 1000)/sum
+                    nov_production = (tilt_azimuth_data.nov * data.annual_solar_prod * 1000)/sum
+                    dec_production = (tilt_azimuth_data.dec * data.annual_solar_prod * 1000)/sum
+                            
+            res[data.id]['jan_production'] = jan_production
+            res[data.id]['feb_production'] = feb_production
+            res[data.id]['mar_production'] = mar_production
+            res[data.id]['apr_production'] = apr_production
+            res[data.id]['may_production'] = may_production
+            res[data.id]['jun_production'] = jun_production
+            res[data.id]['jul_production'] = jul_production
+            res[data.id]['aug_production'] = aug_production
+            res[data.id]['sep_production'] = sep_production
+            res[data.id]['oct_production'] = oct_production
+            res[data.id]['nov_production'] = nov_production
+            res[data.id]['dec_production'] = dec_production
                         
         return res
         
@@ -925,6 +924,7 @@ class crm_lead(osv.Model):
         elec_bill_savings = 0
         prev_old_bill = 0
         depriciation_savings = 0
+        prev_new_bill = 0
         
         old_rec_len = len(self.browse(cr, uid, ids[0],context=context).cost_rebate_ids)
         if old_rec_len:
@@ -961,6 +961,7 @@ class crm_lead(osv.Model):
             else:
                 depriciation = data.cost
             depriciation_savings = depriciation * ((cur_user.company_id.fedral_tax + cur_user.company_id.sales_tax)/100)
+            
             if not data.annual_ele_usage:
                 annual_ele_usage_temp = 1
             else:
