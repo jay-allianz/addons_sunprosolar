@@ -742,6 +742,20 @@
 								<field name="annual_solar_prod" />
 								<field name="annual_ele_usage" />
 								<field name="site_avg_sun_hour" />
+								<group invisible= "1">
+									<field name="jan_production" />
+									<field name="feb_production" />
+									<field name="mar_production" />
+									<field name="apr_production" />
+									<field name="may_production" />
+									<field name="jun_production" />
+									<field name="jul_production" />
+									<field name="aug_production" />
+									<field name="sep_production" />
+									<field name="oct_production" />
+									<field name="nov_production" />
+									<field name="dec_production" />
+								</group>
 							</group>
 							<group col="2" colspan="2" string="Cleaner and Greener Environment">
 								<field name="co2_offset_tons" />

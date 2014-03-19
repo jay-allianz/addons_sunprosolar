@@ -473,14 +473,14 @@
             <field name="name">Sunpro Dashboard</field>
             <field name="model">sps.dashboard</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="state">
+                <kanban default_group_by="state_id">
                     <field name="name"/>
                     <field name="partner_id"/>
-                    <field name="state"/>
+                    <field name="state_id"/>
                     <templates>
                         <field name="name"/>
                         <t t-name="kanban-box">
-                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.state.raw_value)} oe_kanban_card oe_kanban_global_click">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.state_id.raw_value)} oe_kanban_card oe_kanban_global_click">
                                 <div class="oe_kanban_content">
                                     <div>
                                         <field name="partner_id"/>
@@ -502,7 +502,7 @@
             <tree string="Sunpro Dashboard" create="false">
             	<field name="name"/>
             	<field name="partner_id"/>
-                <field name="state"/>
+                <field name="state_id"/>
             </tree>
         </field>
     </record>
@@ -514,7 +514,7 @@
              <graph string="Sunpro Dashboard" type="pie">
                  <field name="partner_id"/>
                  <field name="nbr" operator="+"/>
-                 <field name="state" group="True"/>
+                 <field name="state_id" group="True"/>
              </graph>
          </field>
     </record>
@@ -528,7 +528,7 @@
                 <field name="partner_id"/>
                 <group expand="1" string="Group By...">
                     <filter string="Partner" icon="terp-partner" name="Customer" context="{'group_by':'partner_id'}"/>
-                    <filter string="Status" icon="terp-stock_effects-object-colorize" context="{'group_by':'state'}"/>
+                    <filter string="Status" icon="terp-stock_effects-object-colorize" context="{'group_by':'state_id'}"/>
                 </group>
             </search>
         </field>

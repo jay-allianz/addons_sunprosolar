@@ -69,12 +69,12 @@ class tilt_azimuth(osv.Model):
     
     _description= "Tilt and Azimuth Information."
     
-    def _get_annual_avg(self, cr, uid, ids, field_name, arg, context=None):
-        res={}
-        for anual_avg in self.browse(cr, uid, ids, context=context):
-            avg = anual_avg.jan + anual_avg.feb + anual_avg.mar + anual_avg.apr + anual_avg.may + anual_avg.jun + anual_avg.jul + anual_avg.aug + anual_avg.sep + anual_avg.oct + anual_avg.nov + anual_avg.dec
-            res[anual_avg.id] =  avg/12
-        return res
+#    def _get_annual_avg(self, cr, uid, ids, field_name, arg, context=None):
+#        res={}
+#        for anual_avg in self.browse(cr, uid, ids, context=context):
+#            avg = anual_avg.jan + anual_avg.feb + anual_avg.mar + anual_avg.apr + anual_avg.may + anual_avg.jun + anual_avg.jul + anual_avg.aug + anual_avg.sep + anual_avg.oct + anual_avg.nov + anual_avg.dec
+#            res[anual_avg.id] =  avg/12
+#        return res
     
     _columns = {
         'tilt_azimuth_id': fields.many2one('insolation.incident.yearly','Tilt and Azimuth'),
@@ -103,7 +103,7 @@ class tilt_azimuth(osv.Model):
         'nov': fields.float('Nov'),
         'dec': fields.float('Dec'),
         'annual_avg': fields.float(string='Annual Average'),
-        'production' : fields.float('Production (kWh/m2)')
+        'production' : fields.float('Production (kWh/m2)'),
     }
     
 class station_station(osv.Model):

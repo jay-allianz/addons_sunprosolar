@@ -306,35 +306,9 @@
             </td>
         </tr>
     </blockTable>
-    <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" >
-            <tr>
-                <td>
-                    <para style="P4" alignment="CENTER"></para>
-                </td>
-                <td>
-                    <para style="P4" alignment="CENTER"></para>
-                </td>
-                <td>
-                    <para style="P4" alignment="CENTER"></para>
-                </td>
-                <td>
-                    <para style="P4" alignment="CENTER"></para>
-                </td>
-                <td>
-                    <para style="P4" alignment="CENTER"></para>
-                </td>
-                <td>
-                    <para style="P4" alignment="CENTER">[[ formatLang(get_rebate_amt(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
-                </td>
-                <td>
-                    <para style="P4" alignment="CENTER"></para>
-                </td>
-            </tr>
-     </blockTable >
     <section>
     <para style="P4_bold" alignment="CENTER">[[repeatIn(lead_get_cost_rebate(),'cost_rebate')]]</para>
     <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" >
-    
             <tr>
                 <td>
                     <para style="P4" alignment="CENTER">[[ cost_rebate.year ]]</para>
@@ -352,7 +326,7 @@
                     <para style="P4" alignment="CENTER">[[ formatLang(cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings, digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
                 </td>
                 <td>
-                    <para style="P4" alignment="CENTER"></para>
+                    <para style="P4" alignment="CENTER">[[ not get_count() and formatLang(get_rebate_amt(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) or '' ]]</para>
                 </td>
                 <td>
                     <para style="P4" alignment="CENTER">[[ formatLang(cost_rebate.yearly_payout, digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
@@ -360,7 +334,7 @@
             </tr>
     </blockTable>
     </section>
-    
+    [[ set_count() ]]
     <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" style="Table3">
         <tr>
             <td>

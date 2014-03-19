@@ -30,7 +30,9 @@
               'dashboard_view.xml',
               'security/security.xml',
               'security/ir.model.access.csv',
+              
     ],
+    "update_xml" : ['state_data.xml',],
     'depends': ['sps_crm','sps_project','sps_account_invoice','sps_sale','sps_stock','portal'],
     'installable': True,
     'application': True,
