@@ -922,6 +922,9 @@ class crm_lead(osv.Model):
         pricelist_obj = self.pool.get('product.pricelist')
         product_obj = self.pool.get('product.product')
         cur_user = user_obj.browse(cr, uid, uid, context=context)
+        elec_bill_savings = 0
+        prev_old_bill = 0
+        depriciation_savings = 0
         
         old_rec_len = len(self.browse(cr, uid, ids[0],context=context).cost_rebate_ids)
         if old_rec_len:
@@ -989,7 +992,7 @@ class crm_lead(osv.Model):
                 res.append(cost_rebate_obj.create(cr, uid, vals,context=context))
                 prev_old_bill = prev_old_bill * ( 1 + data.grid_rate_increase_by)
                 prev_pv_energy = prev_pv_energy * (( 100 - data.pv_kw_decline)/100)
-                prev_new_bill = prev_new_bill - (data.pv_kw_decline * 100)
+                prev_new_bill = prev_new_bill - (prev_new_bill*data.pv_kw_decline)
                 elec_bill_savings = prev_pv_energy * grid_energy_rate * math.pow(( 1 + data.grid_rate_increase_by ),year)  
             result[data.id] = res#
         return result
@@ -2142,6 +2145,8 @@ class product_pricelist(osv.osv):
 
         results = {}
         for product_id, qty, partner in products_by_qty_by_partner:
+            if not qty:
+                qty = 0
             for pricelist_id in pricelist_ids:
                 price = False
 
