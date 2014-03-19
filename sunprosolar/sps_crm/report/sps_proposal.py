@@ -46,6 +46,7 @@ class proposal_report(report_sxw.rml_parse):
     co2_emission = 0
     def __init__(self, cr, uid, name, context=None):
         super(proposal_report, self).__init__(cr, uid, name, context=context)
+        self.count = 0.0
         self.localcontext.update({
             'time': time,
             'lead_STC_rating_get': self._lead_STC_rating_get ,
@@ -82,7 +83,19 @@ class proposal_report(report_sxw.rml_parse):
             'get_lead_street1':self._lead_street1,
             'get_lead_street2':self._lead_street2,
             'get_lead_city_id':self._lead_city_id,
+            'get_count' : self.get_count,
+            'set_count' : self.set_count
         })
+        
+    def get_count(self):
+        if not self.count:
+            self.count += 1
+            return False
+        return True
+    
+    def set_count(self):
+        self.count = 0.0
+        return '' 
         
     def _lead_name(self, id):
         lead_obj = self.pool.get("crm.lead")
@@ -145,6 +158,7 @@ class proposal_report(report_sxw.rml_parse):
 
     def _make_bar_chart(self, id):
         lead_obj = self.pool.get("crm.lead")
+        tilt_azimuth_obj = self.pool.get('tilt.azimuth')
         reference = 'sale.order,' + str(id)
         lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         usage_data = False
@@ -172,6 +186,19 @@ class proposal_report(report_sxw.rml_parse):
             ("Sep", use_data.sep), ("Oct", use_data.oct),
             ("Nov", use_data.nov), ("Dec", use_data.dec)]
         
+        if lead_id:
+            production_data = lead_obj.browse(self.cr, self.uid, lead_id)[0]
+        
+        if production_data and production_data.loc_station_id:
+            tilt_azimuth_id = tilt_azimuth_obj.search(self.cr, self.uid, [('tilt_azimuth_id','=',production_data.loc_station_id.id),('tilt','=', production_data.faceing.id),('azimuth','=',production_data.tilt_degree)])
+            if tilt_azimuth_id:
+                tilt_azimuth_data = tilt_azimuth_obj.browse(self.cr, self.uid, tilt_azimuth_id)[0]
+                pro_data = [("Jan", production_data.jan_production), ("Feb", production_data.feb_production),
+                            ("Mar", production_data.mar_production), ("Apr", production_data.apr_production),
+                            ("May", production_data.may_production), ("Jun", production_data.jun_production),
+                            ("Jul", production_data.jul_production), ("Aug", production_data.aug_production),
+                            ("Sep", production_data.sep_production), ("Oct", production_data.oct_production),
+                            ("Nov", production_data.nov_production), ("Dec", production_data.dec_production)]
         ar = area.T(size=(600, 300),
                     y_grid_interval=200, 
                     x_coord = category_coord.T(data, 0),
@@ -180,7 +207,7 @@ class proposal_report(report_sxw.rml_parse):
                     legend=legend.T(loc=(250,-80)),
                     y_range=(0, None))
         ar.add_plot(bar_plot.T(label="Usage", data=data,width=30,fill_style = fill_style.aquamarine1), 
-                    line_plot.T(label="Production", data=data, ycol=1))
+                    line_plot.T(label="Production", data=pro_data, ycol=1))
         ar.draw(can)
         can.close()
         return True
