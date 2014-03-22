@@ -29,7 +29,7 @@
 <!--                    <group colspan="4" col="4"-->
                         <button type='special' special='cancel' string='_Cancel' icon='gtk-cancel'/>
                         <button name="print_report" string="Print in PDF Format" type="object" icon='gtk-print'/>
-                        <button name="print_report_aeroo" string="Print" type="object" icon='gtk-print'/>
+                        <button name="print_report_aeroo" string="Print in Excel Format" type="object" icon='gtk-print'/>
 <!--                    </group-->
                 </xpath>
             </field>
@@ -66,7 +66,7 @@
                     <attribute name="string">Print in PDF Format</attribute>
                 </xpath>
                 <button name="periodic_print_report" position="after">
-                    <button name="periodic_print_report_aeroo" string="Print" type="object" icon='gtk-print'/>
+                    <button name="periodic_print_report_aeroo" string="Print in Excel Format" type="object" icon='gtk-print'/>
                 </button>
                 
             </field>
