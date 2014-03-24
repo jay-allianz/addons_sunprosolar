@@ -69,7 +69,7 @@ class sale_order(osv.Model):
                 ('follow_up','Follow Up'),
                 ('contract_signed', 'Contract Signed'),
                 ('project_management_notified','Project Management Notified'),
-                ('manual', 'Procurement Created'),
+                ('manual', 'Sale to Invoice'),
                 ('financing_type','Financing Type'),
                 ('assign_financing_incharge','Assign Financing In-Charge'),
                 ('site_inspection', 'Site Inspection'),
@@ -88,6 +88,7 @@ class sale_order(osv.Model):
          'insp_after_72_hour' : fields.boolean('Inspection After 72 Hours '),
          'financing_type_id' : fields.many2one('financing.type','Financing Type'),
          'incharge_user_id' : fields.many2one('res.users','Financing In-Charge'),
+         'ahj': fields.selection([('structural', 'Structural'), ('electrical', 'Electrical')], 'AHJ', help="Authority Having Jurisdiction"),
     }
     
     _defaults = {
@@ -143,6 +144,9 @@ class sale_order(osv.Model):
         return True
     
     def customer_appove(self, cr, uid, ids, context=None):
+        cur_rec = self.browse(cr, uid, ids, context=context)[0]
+        if not cur_rec.ahj:
+            raise osv.except_osv(_('Warning !'),_("Please select AHJ(Authority Having Jurisdiction)."))
         self.write(cr, uid, ids, {'state': 'city'})
         return True
     
@@ -160,16 +164,14 @@ class sale_order(osv.Model):
             raise osv.except_osv(_('Warning !'),_("Please select the \'Financing Type\' for Document collection."))
         elif cur_rec.required_document == False:
             raise osv.except_osv(_('Warning !'),_("Please select collect Required Documents."))
-        else:
-            self.write(cr, uid, ids, {'state': 'financing_type'})
+        self.write(cr, uid, ids, {'state': 'financing_type'})
         return True
     
     def assign_professional(self, cr, uid, ids, context=None):
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
         if not cur_rec.incharge_user_id :
             raise osv.except_osv(_('Warning !'),_("Please select the 'Financing In-Charge'."))
-        else:
-            self.write(cr, uid, ids, {'state': 'assign_financing_incharge'})
+        self.write(cr, uid, ids, {'state': 'assign_financing_incharge'})
         return True
     
     def done_inspection(self, cr, uid, ids, context=None):
@@ -196,12 +198,20 @@ class sale_order(osv.Model):
             self.write(cr, uid, [sale_order.id], {'insp_after_72_hour' : done_within_72}, context=context)
         return True
     
-    
     def project_management_notified(self, cr, uid, ids, context=None):
         schedule_mail_object = self.pool.get('mail.message')
         data_obj = self.pool.get('ir.model.data')
+        lead_obj = self.pool.get('crm.lead')
         group_object = self.pool.get('res.groups')
         obj_mail_server = self.pool.get('ir.mail_server')
+        station = []
+        tilt = []
+        faceing = []
+        product_module = []
+        no_of_module = []
+        product_inverter = []
+        no_of_inverter = []
+        solar_info = ' '
         mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
         if not mail_server_ids:
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
@@ -211,6 +221,36 @@ class sale_order(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         member_email_list = []
         for data in self.browse(cr, uid, ids):
+            reference = 'sale.order,' + str(data.id)
+            lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
+            for lead_data in lead_obj.browse(cr, uid, lead_id,context=context):
+                for solar_data in lead_data.solar_ids:
+                    station_temp = solar_data.loc_station_id and solar_data.loc_station_id.name
+                    faceing_temp = solar_data.faceing and solar_data.faceing.tilt
+                    tilt_temp = solar_data.tilt_degree
+                    product_module_temp = solar_data.module_product_id and solar_data.module_product_id.name
+                    no_of_module_temp = solar_data.num_of_module
+                    product_inverter_temp = solar_data.inverter_product_id and solar_data.inverter_product_id.name
+                    no_of_inverter_temp = solar_data.num_of_invertor
+                    
+                    station.append(str(station_temp))
+                    tilt.append(str(tilt_temp))
+                    faceing.append(str(faceing_temp))
+                    product_module.append(str(product_module_temp))
+                    no_of_module.append(str(no_of_module_temp))
+                    product_inverter.append(str(product_inverter_temp))
+                    no_of_inverter.append(str(no_of_inverter_temp))
+                    
+                    solar_info = 'Station: '+ str(station[0]) + ', Tilt/Azimuth: ' + str(tilt[0]) + ', Facing: ' + str(faceing[0]) + ', Module Name: ' + str(product_module[0]) + ', Number of Module: ' + str(no_of_module[0]) + ', Inverter Name: ' + str(product_inverter[0]) + ', Number of Inverter: ' + str(no_of_inverter[0]) + '.'
+                    
+                    station = []
+                    tilt = []
+                    faceing = []
+                    product_module = []
+                    no_of_module = []
+                    product_inverter = []
+                    no_of_inverter = []
+        
             if not data.project_id.members:
                 raise osv.except_osv(_('Warning'), _('There is no project team member define in contract !'))
             else:
@@ -220,11 +260,11 @@ class sale_order(osv.Model):
                     else:
                         member_email_list.append(member.email)
             
-            message_body = 'Hello,<br/><br/>New site inspection needs to be done.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.project_id.contract_id) + '<br/><br/>Contract Amount : ' + tools.ustr(data.project_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.project_id.deposit) + '<br/><br/> Thank You.'
+            message_body = 'Hello,<br/><br/>Project Notification.<br/><br/>Customer Information<br/><br/>Name : ' + tools.ustr(data.partner_id.name) + '<br/><br/>Email : ' + tools.ustr(data.partner_id.email) + '<br/><br/>Phone : ' + tools.ustr(data.partner_id.phone) +'<br/><br/>Solar Information<br/><br/>'+ solar_info +' <br/><br/> Thank You.'
         message_hrmanager = obj_mail_server.build_email(
             email_from=email_from,
             email_to=member_email_list,
-            subject='New site inspection needs to be done',
+            subject='Project Notification',
             body=message_body,
             body_alternative=message_body,
             email_cc=None,
@@ -243,7 +283,16 @@ class sale_order(osv.Model):
         schedule_mail_object = self.pool.get('mail.message')
         data_obj = self.pool.get('ir.model.data')
         group_object = self.pool.get('res.groups')
+        lead_obj = self.pool.get('crm.lead')
         obj_mail_server = self.pool.get('ir.mail_server')
+        station = []
+        tilt = []
+        faceing = []
+        product_module = []
+        no_of_module = []
+        product_inverter = []
+        no_of_inverter = []
+        solar_info = ''
         mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
         if not mail_server_ids:
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
@@ -261,9 +310,39 @@ class sale_order(osv.Model):
                         raise osv.except_osv(_('Warning'), _('%s team member have no email defined !' % member.name))
                     else:
                         member_email_list.append(member.email)
+
+            reference = 'sale.order,' + str(data.id)
+            lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
+            for lead_data in lead_obj.browse(cr, uid, lead_id,context=context):
+                for solar_data in lead_data.solar_ids:
+                    station_temp = solar_data.loc_station_id and solar_data.loc_station_id.name
+                    faceing_temp = solar_data.faceing and solar_data.faceing.tilt
+                    tilt_temp = solar_data.tilt_degree
+                    product_module_temp = solar_data.module_product_id and solar_data.module_product_id.name
+                    no_of_module_temp = solar_data.num_of_module
+                    product_inverter_temp = solar_data.inverter_product_id and solar_data.inverter_product_id.name
+                    no_of_inverter_temp = solar_data.num_of_invertor
+                    
+                    station.append(str(station_temp))
+                    tilt.append(str(tilt_temp))
+                    faceing.append(str(faceing_temp))
+                    product_module.append(str(product_module_temp))
+                    no_of_module.append(str(no_of_module_temp))
+                    product_inverter.append(str(product_inverter_temp))
+                    no_of_inverter.append(str(no_of_inverter_temp))
+                    
+                    solar_info = 'Station: '+ str(station[0]) + ', Tilt/Azimuth: ' + str(tilt[0]) + ', Facing: ' + str(faceing[0]) + ', Module Name: ' + str(product_module[0]) + ', Number of Module: ' + str(no_of_module[0]) + ', Inverter Name: ' + str(product_inverter[0]) + ', Number of Inverter: ' + str(no_of_inverter[0])
+                    
+                    station = []
+                    tilt = []
+                    faceing = []
+                    product_module = []
+                    no_of_module = []
+                    product_inverter = []
+                    no_of_inverter = []
             
-            message_body = 'Hello,<br/><br/>New site inspection needs to be done.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.project_id.contract_id) + '<br/><br/>Contract Amount : ' + tools.ustr(data.project_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.project_id.deposit) + '<br/><br/> Thank You.'
-        message_hrmanager = obj_mail_server.build_email(
+            message_body = 'Hello,<br/><br/>New site inspection needs to be done.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.project_id.contract_id) + '<br/><br/>Contract Amount : ' + tools.ustr(data.project_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.project_id.deposit) + '<br/><br/>Customer Information<br/><br/>Name : ' + tools.ustr(data.partner_id.name) + '<br/><br/>Email : ' + tools.ustr(data.partner_id.email) + '<br/><br/>Phone : ' + tools.ustr(data.partner_id.phone) + '<br/><br/>Solar Information<br/><br/>'+ solar_info + '<br/><br/> Thank You.'
+            message_hrmanager = obj_mail_server.build_email(
             email_from=email_from,
             email_to=member_email_list,
             subject='New site inspection needs to be done',

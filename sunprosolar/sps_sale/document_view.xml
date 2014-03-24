@@ -15,7 +15,19 @@
 				</xpath>		
 			</field>
 		</record>
-
+		
+		<!-- Schedular for cowndown-->
+		<record id="ir_cron_cowndown_schedule" model="ir.cron">
+            <field name="name">Cowndown Conter for Document</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field eval="'doc.required'" name="model" />
+            <field eval="'_get_count_down'" name="function" />
+            <field eval="" name="args" />
+        </record>
+        
 		<!--Required Doc Search View -->
 		<record model="ir.ui.view" id="doc_required_search">
 			<field name="name">doc_required_Search</field>
@@ -40,8 +52,8 @@
 							<field name="document_id"/>
 							<field name="collected" readonly="1"/><newline/>
 							<field name="days_to_collect" readony="1"/>
-							<field name="cowndown"/><newline/>
-							<field name="notify_customer" />
+							<field name="cowndown" readonly="1"/><newline/>
+							<field name="notify_customer"/>
 							<separator string="Notify Users" colspan="4"/>
 							<field name="notify_users" colspan="4"/>
 						</group>

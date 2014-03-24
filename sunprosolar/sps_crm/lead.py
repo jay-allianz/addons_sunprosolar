@@ -562,7 +562,6 @@ class crm_lead(osv.Model):
                         total_new_bill = delivery_subtotal + stage_changes
                         new_bill = new_bill + total_new_bill
         return new_bill
-                            
 
     def _get_company_tier_amount(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -812,10 +811,9 @@ class crm_lead(osv.Model):
                         ('sw', '[SW]South-West'),
                         ('w', '[W]West'),
                         ('nw', '[NW]North-West')
-                    ], 'Facing'),
-        'faceing' : fields.many2one('tilt.tilt', 'Tilt Degree'),
+                    ], 'Facing / Azimuth'),
+        'faceing' : fields.many2one('tilt.tilt', 'Degree Tilt'),
         'estimate_shade': fields.integer('Estimated Shading'),
-        'ahj': fields.selection([('structural', 'Structural'), ('electrical', 'Electrical')], 'AHJ', help="Authority Having Jurisdiction"),
         'utility_bill' : fields.boolean('Utility Bill', help="Checked Utility bill to sign customer contract."),
         'lead_source': fields.many2one('crm.case.channel','Lead Source'),
         'level_of_lead': fields.many2one('level.lead', 'Level Of Lead'),
@@ -890,6 +888,7 @@ class crm_lead(osv.Model):
         'project_photo_ids' : fields.one2many('project.photos', 'crm_lead_id', "Project Photos"),
         'project_review_ids' : fields.one2many('project.reviews', 'crm_lead_id', "Project Reviews"),
         'friend_refer_ids' : fields.one2many('friend.reference', 'crm_lead_id', "Friend References"),
+        'submit_que_ids' : fields.one2many('submit.question', 'crm_lead_id', "Submit Question"),
         'reg_no' : fields.char('Registration Number.'),
         
         'jan_production': fields.function(_get_monthly_production, method=True, type='float', multi='monthly_production', string="January Production", store=True),
@@ -910,6 +909,7 @@ class crm_lead(osv.Model):
             'name': '/',
             'home':'own',
             'property': 'residential',
+            'number_of_years':25,
             'lead_date': fields.date.context_today,
             'reg_no': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'crm.lead'),
     }
@@ -1446,8 +1446,8 @@ class solar_solar(osv.Model):
                                 ('sw', '[SW]South-West'),
                                 ('w', '[W]West'),
                                 ('nw', '[NW]North-West')
-                            ], 'Facing'),
-                'faceing' : fields.many2one('tilt.tilt', 'Tilt Degree'),
+                            ], 'Facing / Azimuth'),
+                'faceing' : fields.many2one('tilt.tilt', 'Degree Tilt'),
                 'crm_lead_id': fields.many2one('crm.lead', "Lead"),
                 'module_product_id': fields.many2one('product.product', 'Module Name', domain=[('product_group', '=', 'module')], type='module'),
                 'num_of_module': fields.integer('Number of modules'),
@@ -1848,7 +1848,7 @@ class crm_meeting(osv.Model):
                         email_to.append(data.user_id.email)
                 for crm_data1 in crm_data:
                     subject_line = 'New Customer ' + tools.ustr(crm_data1.partner_id and crm_data1.partner_id.name or '') + ' ' + tools.ustr(crm_data1.last_name) + ' Comes.'
-                    message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(crm_data1.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(crm_data1.last_name) + '<br/><br/>Address : ' + tools.ustr(crm_data1.street) + ', ' + tools.ustr(crm_data1.street2) + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.state_id and crm_data1.city_id.state_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.country_id and crm_data1.city_id.country_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.zip or '') + '<br/><br/>Email : ' + tools.ustr(crm_data1.email_from) + '<br/><br/>Mobile : ' + tools.ustr(crm_data1.mobile) + '<br/><br/> Thank You.'
+                    message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(crm_data1.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(crm_data1.last_name) + '<br/><br/>Address : ' + tools.ustr(crm_data1.street) + ', ' + tools.ustr(crm_data1.street2) + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.state_id and crm_data1.city_id.state_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.country_id and crm_data1.city_id.country_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.zip or '') + '<br/><br/>Email : ' + tools.ustr(crm_data1.email_from) + '<br/><br/>Phone : ' + tools.ustr(crm_data1.phone) + '<br/><br/> Thank You.'
                     message_hrmanager = obj_mail_server.build_email(
                     email_from=email_from,
                     email_to=email_to,
@@ -2019,6 +2019,15 @@ class project_reviews(osv.Model):
         MSG_BODY = 'Hello Admin,<br/>' + user_rec.name + ' uploaded a project review.' + '<br/><br/>The review is : <br/>"' + vals.get('name') + '"<br/> Thank You.'
         send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, auto_email_id, context=context)
         return res
+    
+class submit_question(osv.Model):
+    
+    _name = "submit.question"
+    
+    _columns = {
+                'name' : fields.text("Question"),
+                'crm_lead_id' : fields.many2one("crm.lead", "Lead"),
+    }
     
 class friend_reference(osv.Model):
     
