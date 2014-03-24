@@ -89,8 +89,6 @@
         <blockTable colWidths="1.5cm,9.5cm,3.5cm,3.5cm" style="BODY">
             <tr noRowsplits="1">
                 <td>
-                    <para style="TITLE_LEFT_ALIGN">
-                    </para>
                 </td>
                 <td>
                 </td>
@@ -108,6 +106,8 @@
                 </td>
                 <td>
                     <para style="TITLES">
+                    	<font>[[ ((a['total'] and not a['label']) and setTag('para','para',{'alignment':"RIGHT"}) or (a['type']&lt;&gt;'view' and setTag('para','para',{'fontName':"Helvetica"}))) or removeParentNode('font') ]]</font>
+					    <font>[[ a['type']=='view' and  a['name'] or a['name'].title() ]]</font>
                     </para>
                 </td>
                 <td>
