@@ -125,10 +125,6 @@
                         <button name="project_management_notified" string="Project Management Team Notify"
                             colspan="2" type="object" icon="gtk-yes" class="oe_highlight" />
                     </group>
-                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','permit')]}">
-                        <button name="customer_appove" string="Customer Approved"
-                            colspan="2" type="object" icon="gtk-yes" /> 
-                    </group>
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','city')]}">
                         <button name="drwaing" string="Eng. Create/Modify Following Drawings"
                             colspan="2" type="object" icon="gtk-yes" />
@@ -162,6 +158,8 @@
 									attrs="{'invisible':[('confirm_original','!=','change')]}" />
 							</div>
 						</group>
+					</page>
+					<page string="Financing Type" attrs="{'invisible':[('state','!=','financing_type'),('state','!=','project_management_notified')]}">
 						<group cols="4" colspan="4" attrs="{'invisible':[('state','!=','financing_type')]}">
 							<label for="incharge_user_id"/>
 							<div>
@@ -170,23 +168,28 @@
 							</div>
 						</group>
 						<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','project_management_notified')]}">
-						<field name="financing_type_id" on_change="onchange_financing_type(financing_type_id)"/>
-                        <separator string="Required Documents"/>
-				        <field name="doc_req_ids" colspan="4" nolabel="1">
-					        <tree editable="bottom">
-					        	<field name="doc_id" />
-								<field name="document_id"/>
-								<field name="days_to_collect" />
-								<field name="notify_customer" nolabel="1"/>
-								<field name="notify_users" />
-								<field name="cowndown"/>
-								<field name="collected" readonly="1"/>
-					        </tree>
-				        </field>
-				        <field name="required_document" readonly="1"/>
-                        <button name="document_collected" string="Document Collected"
-                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" /> 
-                    </group>
+							<field name="financing_type_id" on_change="onchange_financing_type(financing_type_id)"/>
+	                        <separator string="Required Documents"/>
+					        <field name="doc_req_ids" colspan="4" nolabel="1">
+						        <tree editable="bottom">
+						        	<field name="doc_id" />
+									<field name="document_id"/>
+									<field name="days_to_collect" />
+									<field name="notify_customer" nolabel="1" domain="[('customer','=',True)]"/>
+									<field name="notify_users" />
+									<field name="cowndown" readonly="1"/>
+									<field name="collected" readonly="1"/>
+						        </tree>
+					        </field>
+					        <field name="required_document" readonly="1"/>
+	                        <button name="document_collected" string="Document Collected"
+	                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" /> 
+	                    </group>
+	                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','permit')]}">
+	                        <field name="ahj" selection="1" />
+	                        <button name="customer_appove" string="Customer Approved"
+	                            colspan="2" type="object" icon="gtk-yes" /> 
+	                    </group>
 					</page>
 				</xpath>
                 <label string="Quotation " position="attributes">

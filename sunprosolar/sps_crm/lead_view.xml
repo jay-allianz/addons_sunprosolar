@@ -157,7 +157,6 @@
 					<attribute name="string">Cell</attribute>
 				</xpath>
 				<field name="user_id" position="before">
-					<field name="ahj" selection="1" />
 					<field name="see_lead_all_note" invisible="1" />
 				</field>
 				<xpath expr="/form/sheet/group/group/field[@name='categ_ids']"
@@ -922,6 +921,15 @@
 							</field>
 						</group>
 					</page>
+					<page string="Submit Question">
+						<group col="4" colspan="4">
+							<field name="submit_que_ids" nolabel="1">
+								<tree editable="bottom">
+									<field name="name" required="1" />
+								</tree>
+							</field>
+						</group>
+					</page>
 				</xpath>
 				
 				<xpath expr="//page[@string='Lead']" position="replace">
@@ -1407,7 +1415,9 @@
 						<button name="salesteam_send_email" type="object" string="Send Mail"/>
 					</div>
 				</xpath>
-				
+				<xpath expr="//field[@name='attendee_ids']/tree/field[@name='partner_id']" position="attributes">
+					<attribute name="domain">[('customer','=',True)]</attribute>
+				</xpath>
 			</field>
 		</record>
 
