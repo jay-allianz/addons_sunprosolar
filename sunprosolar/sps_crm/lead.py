@@ -185,10 +185,18 @@ class crm_lead(osv.Model):
         res = {}
         for data in self.browse(cr, uid, ids, context):
             annual_prod = 0
-            estimate_shade = 0.0
             for line in data.solar_ids:
                 annual_prod += line.annual_solar_prod or 0
             res[data.id] = annual_prod
+        return res
+    
+    def _get_annual_solar_prod_display(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for data in self.browse(cr, uid, ids, context):
+            annual_solar_prod_display = 0
+            for line in data.solar_ids:
+                annual_solar_prod_display += line.annual_solar_prod_display or 0
+            res[data.id] = annual_solar_prod_display
         return res
     
     def _get_annual_ele_usage(self, cr, uid, ids, name, args, context=None):
@@ -441,16 +449,19 @@ class crm_lead(osv.Model):
         product_ids = product_obj.search(cr, uid, [], context=context)
         pro_id = product_ids and product_ids[0]
         for data in self.browse(cr, uid, ids, context):
-            price = 0.0
-            total_new_bill = 0.0
-            production = 0.0
-            new_bill =  0.0
-            usage = 0.0
-            count = 1
-            if data and data.loc_station_id:
-                tilt_azimuth_id = tilt_azimuth_obj.search(cr, uid, [('tilt_azimuth_id','=',data.loc_station_id.id),('tilt','=', data.faceing.id),('azimuth','=',data.tilt_degree)], context=context)
+            final_new_bill = 0.0
+            bill_new = 0.0
+            new_bill_list = []
+            flag = 0
+            for solar_line_data in data.solar_ids:
+                price = 0.0
+                new_bill =  0.0
+                count = 1
+                production = 0.0
+                usage = 0.0
+                total_new_bill = 0.0
+                tilt_azimuth_id = tilt_azimuth_obj.search(cr, uid, [('tilt_azimuth_id','=',solar_line_data.loc_station_id.id),('tilt','=', solar_line_data.faceing.id),('azimuth','=',solar_line_data.tilt_degree)], context=context)
                 if tilt_azimuth_id:
-                    tilt_azimuth_data = tilt_azimuth_obj.browse(cr, uid, tilt_azimuth_id, context=context)[0]
                     jan_production = data.jan_production
                     feb_production = data.feb_production
                     mar_production = data.mar_production
@@ -558,10 +569,15 @@ class crm_lead(osv.Model):
                         if not stage_change:
                             stage_change = 0
                         stage_changes = stage_change * usage
-                                
+                        
                         total_new_bill = delivery_subtotal + stage_changes
                         new_bill = new_bill + total_new_bill
-        return new_bill
+            new_bill_list.append(new_bill)
+            for bill in new_bill_list:
+                bill_new += bill
+                flag += 1
+            final_new_bill = bill_new / flag
+        return final_new_bill
 
     def _get_company_tier_amount(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -685,9 +701,22 @@ class crm_lead(osv.Model):
     
     def _get_monthly_production(self, cr, uid, ids, name, args, context=None):
         res = {}
-        tilt_azimuth_obj = self.pool.get('tilt.azimuth')
+        jan_production = 0.0
+        feb_production = 0.0
+        mar_production = 0.0
+        apr_production = 0.0
+        may_production = 0.0
+        jun_production = 0.0
+        jul_production = 0.0
+        aug_production = 0.0
+        sep_production = 0.0
+        oct_production = 0.0
+        nov_production = 0.0
+        dec_production = 0.0
+        line_no = 0
+        
         for data in self.browse(cr, uid, ids, context):
-            sum = 0.0
+            
             res[data.id] = {
                 'jan_production': 0.0,
                 'feb_production': 0.0,
@@ -703,49 +732,33 @@ class crm_lead(osv.Model):
                 'dec_production': 0.0,
             }
             
-            jan_production = 0.0
-            feb_production = 0.0
-            mar_production = 0.0
-            apr_production = 0.0
-            may_production = 0.0
-            jun_production = 0.0
-            jul_production = 0.0
-            aug_production = 0.0
-            sep_production = 0.0
-            oct_production = 0.0
-            nov_production = 0.0
-            dec_production = 0.0
+            for line in data.solar_ids:
+                jan_production += line.jan_production
+                feb_production += line.feb_production
+                mar_production += line.mar_production
+                apr_production += line.apr_production
+                may_production += line.may_production
+                jun_production += line.jun_production
+                jul_production += line.jul_production
+                aug_production += line.aug_production
+                sep_production += line.sep_production
+                oct_production += line.oct_production
+                nov_production += line.nov_production
+                dec_production += line.dec_production
+                line_no += 1
                 
-            if data and data.loc_station_id:
-                tilt_azimuth_id = tilt_azimuth_obj.search(cr, uid, [('tilt_azimuth_id','=',data.loc_station_id.id),('tilt','=', data.faceing.id),('azimuth','=',data.tilt_degree)],context=context)
-                if tilt_azimuth_id:
-                    tilt_azimuth_data = tilt_azimuth_obj.browse(cr, uid, tilt_azimuth_id, context=context)[0]
-                    sum = tilt_azimuth_data.jan + tilt_azimuth_data.feb + tilt_azimuth_data.mar + tilt_azimuth_data.apr + tilt_azimuth_data.may + tilt_azimuth_data.jun + tilt_azimuth_data.jul + tilt_azimuth_data.aug + tilt_azimuth_data.sep + tilt_azimuth_data.oct + tilt_azimuth_data.nov + tilt_azimuth_data.dec
-                    jan_production = (tilt_azimuth_data.jan * data.annual_solar_prod * 1000)/sum
-                    feb_production = (tilt_azimuth_data.feb * data.annual_solar_prod * 1000)/sum
-                    mar_production = (tilt_azimuth_data.mar * data.annual_solar_prod * 1000)/sum
-                    apr_production = (tilt_azimuth_data.apr * data.annual_solar_prod * 1000)/sum
-                    may_production = (tilt_azimuth_data.may * data.annual_solar_prod * 1000)/sum
-                    jun_production = (tilt_azimuth_data.jun * data.annual_solar_prod * 1000)/sum
-                    jul_production = (tilt_azimuth_data.jul * data.annual_solar_prod * 1000)/sum
-                    aug_production = (tilt_azimuth_data.aug * data.annual_solar_prod * 1000)/sum
-                    sep_production = (tilt_azimuth_data.sep * data.annual_solar_prod * 1000)/sum
-                    oct_production = (tilt_azimuth_data.oct * data.annual_solar_prod * 1000)/sum
-                    nov_production = (tilt_azimuth_data.nov * data.annual_solar_prod * 1000)/sum
-                    dec_production = (tilt_azimuth_data.dec * data.annual_solar_prod * 1000)/sum
-                            
-            res[data.id]['jan_production'] = jan_production
-            res[data.id]['feb_production'] = feb_production
-            res[data.id]['mar_production'] = mar_production
-            res[data.id]['apr_production'] = apr_production
-            res[data.id]['may_production'] = may_production
-            res[data.id]['jun_production'] = jun_production
-            res[data.id]['jul_production'] = jul_production
-            res[data.id]['aug_production'] = aug_production
-            res[data.id]['sep_production'] = sep_production
-            res[data.id]['oct_production'] = oct_production
-            res[data.id]['nov_production'] = nov_production
-            res[data.id]['dec_production'] = dec_production
+            res[data.id]['jan_production'] = jan_production/line_no
+            res[data.id]['feb_production'] = feb_production/line_no
+            res[data.id]['mar_production'] = mar_production/line_no
+            res[data.id]['apr_production'] = apr_production/line_no
+            res[data.id]['may_production'] = may_production/line_no
+            res[data.id]['jun_production'] = jun_production/line_no
+            res[data.id]['jul_production'] = jul_production/line_no
+            res[data.id]['aug_production'] = aug_production/line_no
+            res[data.id]['sep_production'] = sep_production/line_no
+            res[data.id]['oct_production'] = oct_production/line_no
+            res[data.id]['nov_production'] = nov_production/line_no
+            res[data.id]['dec_production'] = dec_production/line_no
                         
         return res
         
@@ -790,6 +803,7 @@ class crm_lead(osv.Model):
                                     string='Home'),
          'quote': fields.boolean('Had a Solar Quote?', help='Checked if customer have Solar Quotation of any other Company.'),
          'quote_info': fields.many2one('company.quotation', 'Quotation Information'),
+         'quote_desc': fields.text("Quotation Infomation"),
          'heat_home': fields.selection([('natural_gas', 'Natural Gas'), ('propane', 'Propane'), ('all_electric', 'All Electric')], 'Heat Home Technique'),
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
@@ -882,6 +896,7 @@ class crm_lead(osv.Model):
         'ptc_dc_rating': fields.function(_get_ptc_dc_rating, string='PTC-DC Rating', type='float',digits=(12,3)),
         'cec_ac_rating': fields.function(_get_cec_ac_rating, string='CEC-AC Rating', type='float',digits=(12,3)),
         'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float',digits=(12,3)),
+        'annual_solar_prod_display': fields.function(_get_annual_solar_prod_display, string='Annual Solar Production (KWh)', type='integer', digits=(12,3)),
         'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='float', digits=(12,3)),
         'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float', digits=(12,3)),
         'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Average Sun Hours', type='float'),
@@ -1350,12 +1365,12 @@ class solar_solar(osv.Model):
                 'tree_planting_equi' : 0,
                 'ave_home_powered' : 0,
                 'ave_light_bulb_powered' : 0,
+                'annual_solar_prod_display':0,
                 'annual_solar_prod' : 0,
                 'annual_ele_usage' : 0,
                 'site_avg_sun_hour' : 0,
                 'array_size' : 0,
                 'array_output' : 0,
-
             }
             stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = 0.00
             stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = None
@@ -1393,10 +1408,12 @@ class solar_solar(osv.Model):
                                 if data.estimate_shade == 0:
                                     data.estimate_shade = 100
                                 annual_solar_prod = (stc_dc_rating_amount * production  * (data.estimate_shade/100)) / 1000
+                                annual_solar_prod_display = annual_solar_prod * 1000
 #                                annual_solar_prod = ptc_dc_rating_amount * avg_sun_hour * 365 * tot_perfomance_ratio
                             if annual_solar_prod:
                                 annual_s_prod = annual_solar_prod
                                 res[data.id]['annual_solar_prod'] = annual_s_prod
+                                res[data.id]['annual_solar_prod_display'] = annual_solar_prod_display
                     if production:
                         user_obj = self.pool.get('res.users')
                         cur_user = user_obj.browse(cr, uid, uid, context=context)
@@ -1431,6 +1448,72 @@ class solar_solar(osv.Model):
                         res[data.id]['ave_home_powered'] = ave_home_powered
                         ave_light_bulb_powered = output / avg_light_bulb
                         res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
+                        
+        return res
+    
+    def _get_monthly_production_solar(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        tilt_azimuth_obj = self.pool.get('tilt.azimuth')
+        for data in self.browse(cr, uid, ids, context):
+            sum = 0.0
+            res[data.id] = {
+                'jan_production': 0.0,
+                'feb_production': 0.0,
+                'mar_production': 0.0,
+                'apr_production': 0.0,
+                'may_production': 0.0,
+                'jun_production': 0.0,
+                'jul_production': 0.0,
+                'aug_production': 0.0,
+                'sep_production': 0.0,
+                'oct_production': 0.0,
+                'nov_production': 0.0,
+                'dec_production': 0.0,
+            }
+            
+            jan_production = 0.0
+            feb_production = 0.0
+            mar_production = 0.0
+            apr_production = 0.0
+            may_production = 0.0
+            jun_production = 0.0
+            jul_production = 0.0
+            aug_production = 0.0
+            sep_production = 0.0
+            oct_production = 0.0
+            nov_production = 0.0
+            dec_production = 0.0
+                
+            if data and data.loc_station_id:
+                tilt_azimuth_id = tilt_azimuth_obj.search(cr, uid, [('tilt_azimuth_id','=',data.loc_station_id.id),('tilt','=', data.faceing.id),('azimuth','=',data.tilt_degree)],context=context)
+                if tilt_azimuth_id:
+                    tilt_azimuth_data = tilt_azimuth_obj.browse(cr, uid, tilt_azimuth_id, context=context)[0]
+                    sum = tilt_azimuth_data.jan + tilt_azimuth_data.feb + tilt_azimuth_data.mar + tilt_azimuth_data.apr + tilt_azimuth_data.may + tilt_azimuth_data.jun + tilt_azimuth_data.jul + tilt_azimuth_data.aug + tilt_azimuth_data.sep + tilt_azimuth_data.oct + tilt_azimuth_data.nov + tilt_azimuth_data.dec
+                    jan_production = (tilt_azimuth_data.jan * data.annual_solar_prod * 1000)/sum
+                    feb_production = (tilt_azimuth_data.feb * data.annual_solar_prod * 1000)/sum
+                    mar_production = (tilt_azimuth_data.mar * data.annual_solar_prod * 1000)/sum
+                    apr_production = (tilt_azimuth_data.apr * data.annual_solar_prod * 1000)/sum
+                    may_production = (tilt_azimuth_data.may * data.annual_solar_prod * 1000)/sum
+                    jun_production = (tilt_azimuth_data.jun * data.annual_solar_prod * 1000)/sum
+                    jul_production = (tilt_azimuth_data.jul * data.annual_solar_prod * 1000)/sum
+                    aug_production = (tilt_azimuth_data.aug * data.annual_solar_prod * 1000)/sum
+                    sep_production = (tilt_azimuth_data.sep * data.annual_solar_prod * 1000)/sum
+                    oct_production = (tilt_azimuth_data.oct * data.annual_solar_prod * 1000)/sum
+                    nov_production = (tilt_azimuth_data.nov * data.annual_solar_prod * 1000)/sum
+                    dec_production = (tilt_azimuth_data.dec * data.annual_solar_prod * 1000)/sum
+                            
+            res[data.id]['jan_production'] = jan_production
+            res[data.id]['feb_production'] = feb_production
+            res[data.id]['mar_production'] = mar_production
+            res[data.id]['apr_production'] = apr_production
+            res[data.id]['may_production'] = may_production
+            res[data.id]['jun_production'] = jun_production
+            res[data.id]['jul_production'] = jul_production
+            res[data.id]['aug_production'] = aug_production
+            res[data.id]['sep_production'] = sep_production
+            res[data.id]['oct_production'] = oct_production
+            res[data.id]['nov_production'] = nov_production
+            res[data.id]['dec_production'] = dec_production
                         
         return res
     
@@ -1472,10 +1555,24 @@ class solar_solar(osv.Model):
                 'ave_home_powered' : fields.function(_get_system_rating_data, string='Average Homes Powered', type='integer', multi="green_all", help="Homes Powered for One Year"),
                 'ave_light_bulb_powered' : fields.function(_get_system_rating_data, string='Average Light-bulbs Powered', type='integer', multi="green_all", help="Light-bulbs Powered for One Year"),
                 
+                'annual_solar_prod_display': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='integer', multi='rating_all', digits=(12,3)),
                 'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='float', multi='rating_all', digits=(12,3)),
                 'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all',digits=(12,3)),
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
                 'estimate_shade': fields.float('Estimated Shading'),
+                
+                'jan_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="January Production", store=True),
+                'feb_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="February Production", store=True),
+                'mar_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="March Production", store=True),
+                'apr_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="April Production", store=True),
+                'may_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="May Production", store=True),
+                'jun_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="June Production", store=True),
+                'jul_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="July Production", store=True),
+                'aug_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="Aug Production", store=True),
+                'sep_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="Sep Production", store=True),
+                'oct_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="October Production", store=True),
+                'nov_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="November Production", store=True),
+                'dec_production': fields.function(_get_monthly_production_solar, method=True, type='float', multi='monthly_production', string="December Production", store=True),
                 }
     
 
