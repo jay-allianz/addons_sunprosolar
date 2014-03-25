@@ -221,9 +221,9 @@
 								</span>
 							</group>
 							<field name="quote" />
-							<group col="4" colspan="4"
-								attrs="{'invisible':[('quote','=',False)]}">
+							<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
 								<field name="quote_info" />
+								<field name="quote_desc" nolabel="1" colspan="4" placeholder="Quoation Description"/>
 							</group>
 							<field name="heat_home" />
 							<field name="spent_money" />
@@ -591,9 +591,9 @@
 								</span>
 							</group>
 							<field name="quote" />
-							<group col="4" colspan="4"
-								attrs="{'invisible':[('quote','=',False)]}">
+							<group col="4" colspan="4" attrs="{'invisible':[('quote','=',False)]}">
 								<field name="quote_info" />
+								<field name="quote_desc" nolabel="1" colspan="4" placeholder="Quoation Description..."/>
 							</group>
 							<field name="heat_home" />
 							<field name="home_sq_foot" />
@@ -738,8 +738,9 @@
 								<field name="ptc_dc_rating" />
 								<field name="cec_ac_rating" />
 								<field name="ptc_stc_ratio" />
-								<field name="annual_solar_prod" />
-								<field name="annual_ele_usage" />
+								<field name="annual_solar_prod_display" />
+								<field name="annual_solar_prod" invisible="1"/>
+								<field name="annual_ele_usage"/>
 								<field name="site_avg_sun_hour" />
 								<group invisible= "1">
 									<field name="jan_production" />
@@ -1030,7 +1031,7 @@
 								<field name="cec_ac_rating" />
 								<field name="ptc_stc_ratio" />
 								<field name="site_avg_sun_hour" />
-								<field name="annual_solar_prod" />
+								<field name="annual_solar_prod_display" />
 								<field name="annual_ele_usage"/>
 							</group>
 							<group string="Cleaner and Greener Enviourment" colspan="2">
@@ -1411,7 +1412,7 @@
 				<xpath expr="//field[@name='user_id']" position="replace">
 					<label for="user_id"/>
 					<div>
-						<field name="user_id" groups="base.group_no_one"/>
+						<field name="user_id" groups="base.group_no_one" widget="selection"/>
 						<button name="salesteam_send_email" type="object" string="Send Mail"/>
 					</div>
 				</xpath>
