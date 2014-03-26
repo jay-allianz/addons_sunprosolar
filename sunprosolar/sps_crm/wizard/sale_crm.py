@@ -41,6 +41,8 @@ class crm_make_sale(osv.osv_memory):
         order = {}
         
         lead = lead_obj.browse(cr, uid, context.get('active_id'), context=context)
+        if not lead.utility_company_id:
+            raise osv.except_osv(_('Warning'), _('You must select Utility Company for convert the lead to opportunity!'))
         make_sale = self.browse(cr, uid, ids[0], context=context).partner_id
         partner = sale_order_obj.onchange_partner_id(cr, uid, ids, make_sale.id, context=context)
         utility_company_id = False

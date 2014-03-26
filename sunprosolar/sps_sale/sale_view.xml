@@ -191,6 +191,12 @@
 	                            colspan="2" type="object" icon="gtk-yes" /> 
 	                    </group>
 					</page>
+					<page string="Procuremets" attrs="{'invisible':[('state','!=','manual')]}">
+						<group cols="1" colspan="4">
+	                        <separator string="Procurements"/>
+					        <field name="procurement_ids" colspan="4" nolabel="1" readonly="1"/>
+	                    </group>
+					</page>
 				</xpath>
                 <label string="Quotation " position="attributes">
                     <attribute name="string">Proposal</attribute>

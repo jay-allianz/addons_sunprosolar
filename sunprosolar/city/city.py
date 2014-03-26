@@ -27,9 +27,16 @@ from openerp.osv import fields, osv
 class city(osv.Model):
 
     def name_get(self, cr, uid, ids, context=None):
+        
+        print "idssssss",ids
+        if type(ids) == type(int()):
+            ids = [ids]
+
         if not len(ids):
             return []
         res = []
+        
+        print "called",ids
         for line in self.browse(cr, uid, ids, context=context):
             name = line.name
             if line.zip:
