@@ -59,11 +59,17 @@ class doc_required(osv.Model):
     }
     
     def write(self, cr, uid, ids, vals, context=None):
+        res_partner_obj = self.pool.get('res.partner')
+        res_users_obj = self.pool.get('res.users')
         if not vals.get('document_id', None):
             return super(doc_required, self).write(cr, uid, ids, vals, context=context)
         vals.update({'collected' : True})
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
         customer = cur_rec.notify_customer
+        if not customer:
+            if vals.get('notify_customer', None):
+                notify_cust = vals.get('notify_customer', None)
+                customer = res_partner_obj.browse(cr, uid, notify_cust, context=context)
         users = cur_rec.notify_users
         send_mail_obj = self.pool.get('send.send.mail')
         obj_mail_server = self.pool.get('ir.mail_server')
@@ -80,7 +86,6 @@ class doc_required(osv.Model):
                 SUB_LINE = 'Notification for Document Upload.'
                 MSG_BODY = 'Hello ' + customer.name + ',<br/><br/>' + ' Your Document named ' + cur_rec.doc_id.name + '.<br/><br/> Have been successfully Uploaded.<br/><br/> Thank You.'
                 send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, customer.email, context=context)
-                
         if users:
             for user in users:
                 if user.email:

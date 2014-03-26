@@ -451,8 +451,10 @@ class crm_lead(osv.Model):
         for data in self.browse(cr, uid, ids, context):
             final_new_bill = 0.0
             bill_new = 0.0
+            new_bill =  0.0
             new_bill_list = []
             flag = 0
+            
             for solar_line_data in data.solar_ids:
                 price = 0.0
                 new_bill =  0.0
@@ -506,6 +508,7 @@ class crm_lead(osv.Model):
                         elif count == 12:
                             usage = dec_production
                         count += 1
+                        
                         context.update({'get_field':'summer_qty'})
                         summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not summer_qty:
@@ -731,21 +734,23 @@ class crm_lead(osv.Model):
                 'nov_production': 0.0,
                 'dec_production': 0.0,
             }
-            
-            for line in data.solar_ids:
-                jan_production += line.jan_production
-                feb_production += line.feb_production
-                mar_production += line.mar_production
-                apr_production += line.apr_production
-                may_production += line.may_production
-                jun_production += line.jun_production
-                jul_production += line.jul_production
-                aug_production += line.aug_production
-                sep_production += line.sep_production
-                oct_production += line.oct_production
-                nov_production += line.nov_production
-                dec_production += line.dec_production
-                line_no += 1
+            if data.solar_ids:
+                for line in data.solar_ids:
+                    jan_production += line.jan_production
+                    feb_production += line.feb_production
+                    mar_production += line.mar_production
+                    apr_production += line.apr_production
+                    may_production += line.may_production
+                    jun_production += line.jun_production
+                    jul_production += line.jul_production
+                    aug_production += line.aug_production
+                    sep_production += line.sep_production
+                    oct_production += line.oct_production
+                    nov_production += line.nov_production
+                    dec_production += line.dec_production
+                    line_no += 1
+            else:
+                line_no = 1
                 
             if line_no:
                 res[data.id]['jan_production'] = jan_production/line_no
@@ -804,7 +809,6 @@ class crm_lead(osv.Model):
                                     string='Home'),
          'quote': fields.boolean('Had a Solar Quote?', help='Checked if customer have Solar Quotation of any other Company.'),
          'quote_info': fields.many2one('company.quotation', 'Quotation Information'),
-         'quote_desc': fields.text("Quotation Infomation"),
          'heat_home': fields.selection([('natural_gas', 'Natural Gas'), ('propane', 'Propane'), ('all_electric', 'All Electric')], 'Heat Home Technique'),
          'home_sq_foot': fields.float('Home Sq-Footage'),
          'age_house_year': fields.integer('Age of House'),
@@ -948,6 +952,8 @@ class crm_lead(osv.Model):
             cost_rebate_obj.unlink(cr, uid, cost_rebate_ids)
         
         for data in self.browse(cr, uid, ids, context=context):
+            if not data.utility_company_id:
+                raise osv.except_osv(_('Warning'), _('You must select Utility Company for count Cost and Rebate!'))
             annual_ele_usage = 0.0
             for line in data.anual_electricity_usage_ids:
                 if line.name == datetime.datetime.now().year:
@@ -1698,6 +1704,7 @@ class company_quotation(osv.Model):
         'company_name': fields.many2one('res.company', 'Company Name'),
         'product_ids' : fields.many2many('product.product', 'product_lead_rel', 'pro_id', 'lead_id', 'Equipments', help="Select or create equipments offered by the Company."),
         'quote_amount' : fields.float('Quoted Amount'),
+        'quote_desc': fields.text("Quotation Infomation"),
         }
     
     def name_get(self, cr, uid, ids, context=None):
