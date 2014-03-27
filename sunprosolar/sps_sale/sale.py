@@ -174,7 +174,7 @@ class sale_order(osv.Model):
         project_obj = self.pool.get('project.project')
         lead_obj = self.pool.get('crm.lead')
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
-        reference = 'sale.order,' + str(cur_rec.id)
+        reference = 'sale.order,' + tools.ustr(cur_rec.id)
         lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
         if lead_id:
             lead_data = lead_obj.browse(cr, uid, lead_id,context=context)[0]
@@ -292,7 +292,7 @@ class sale_order(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         member_email_list = []
         for data in self.browse(cr, uid, ids):
-            reference = 'sale.order,' + str(data.id)
+            reference = 'sale.order,' + tools.ustr(data.id)
             lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
             for lead_data in lead_obj.browse(cr, uid, lead_id,context=context):
                 for solar_data in lead_data.solar_ids:
@@ -382,7 +382,7 @@ class sale_order(osv.Model):
                     else:
                         member_email_list.append(member.email)
 
-            reference = 'sale.order,' + str(data.id)
+            reference = 'sale.order,' + tools.ustr(data.id)
             lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
             for lead_data in lead_obj.browse(cr, uid, lead_id,context=context):
                 for solar_data in lead_data.solar_ids:
@@ -394,13 +394,13 @@ class sale_order(osv.Model):
                     product_inverter_temp = solar_data.inverter_product_id and solar_data.inverter_product_id.name
                     no_of_inverter_temp = solar_data.num_of_invertor
                     
-                    station.append(str(station_temp))
-                    tilt.append(str(tilt_temp))
-                    faceing.append(str(faceing_temp))
-                    product_module.append(str(product_module_temp))
-                    no_of_module.append(str(no_of_module_temp))
-                    product_inverter.append(str(product_inverter_temp))
-                    no_of_inverter.append(str(no_of_inverter_temp))
+                    station.append(tools.ustr(station_temp))
+                    tilt.append(tools.ustr(tilt_temp))
+                    faceing.append(tools.ustr(faceing_temp))
+                    product_module.append(tools.ustr(product_module_temp))
+                    no_of_module.append(tools.ustr(no_of_module_temp))
+                    product_inverter.append(tools.ustr(product_inverter_temp))
+                    no_of_inverter.append(tools.ustr(no_of_inverter_temp))
                     
                     solar_info = 'Station: '+ tools.ustr(station[0]) + ', Tilt/Azimuth: ' + tools.ustr(tilt[0]) + ', Facing: ' + tools.ustr(faceing[0]) + ', Module Name: ' + tools.ustr(product_module[0]) + ', Number of Module: ' + tools.ustr(no_of_module[0]) + ', Inverter Name: ' + tools.ustr(product_inverter[0]) + ', Number of Inverter: ' + tools.ustr(no_of_inverter[0])
                     
