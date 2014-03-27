@@ -26,7 +26,7 @@ import time
 import netsvc
 from datetime import date, timedelta, datetime
 import datetime
-import tools
+from openerp import tools
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
 class sale_order(osv.Model):
@@ -304,15 +304,15 @@ class sale_order(osv.Model):
                     product_inverter_temp = solar_data.inverter_product_id and solar_data.inverter_product_id.name
                     no_of_inverter_temp = solar_data.num_of_invertor
                     
-                    station.append(str(station_temp))
-                    tilt.append(str(tilt_temp))
-                    faceing.append(str(faceing_temp))
-                    product_module.append(str(product_module_temp))
-                    no_of_module.append(str(no_of_module_temp))
-                    product_inverter.append(str(product_inverter_temp))
-                    no_of_inverter.append(str(no_of_inverter_temp))
+                    station.append(tools.ustr(station_temp))
+                    tilt.append(tools.ustr(tilt_temp))
+                    faceing.append(tools.ustr(faceing_temp))
+                    product_module.append(tools.ustr(product_module_temp))
+                    no_of_module.append(tools.ustr(no_of_module_temp))
+                    product_inverter.append(tools.ustr(product_inverter_temp))
+                    no_of_inverter.append(tools.ustr(no_of_inverter_temp))
                     
-                    solar_info = 'Station: '+ str(station[0]) + ', Tilt/Azimuth: ' + str(tilt[0]) + ', Facing: ' + str(faceing[0]) + ', Module Name: ' + str(product_module[0]) + ', Number of Module: ' + str(no_of_module[0]) + ', Inverter Name: ' + str(product_inverter[0]) + ', Number of Inverter: ' + str(no_of_inverter[0]) + '.'
+                    solar_info = 'Station: '+ tools.ustr(station[0]) + ', Tilt/Azimuth: ' + tools.ustr(tilt[0]) + ', Facing: ' + tools.ustr(faceing[0]) + ', Module Name: ' + tools.ustr(product_module[0]) + ', Number of Module: ' + tools.ustr(no_of_module[0]) + ', Inverter Name: ' + tools.ustr(product_inverter[0]) + ', Number of Inverter: ' + tools.ustr(no_of_inverter[0]) + '.'
                     
                     station = []
                     tilt = []
@@ -402,7 +402,7 @@ class sale_order(osv.Model):
                     product_inverter.append(str(product_inverter_temp))
                     no_of_inverter.append(str(no_of_inverter_temp))
                     
-                    solar_info = 'Station: '+ str(station[0]) + ', Tilt/Azimuth: ' + str(tilt[0]) + ', Facing: ' + str(faceing[0]) + ', Module Name: ' + str(product_module[0]) + ', Number of Module: ' + str(no_of_module[0]) + ', Inverter Name: ' + str(product_inverter[0]) + ', Number of Inverter: ' + str(no_of_inverter[0])
+                    solar_info = 'Station: '+ tools.ustr(station[0]) + ', Tilt/Azimuth: ' + tools.ustr(tilt[0]) + ', Facing: ' + tools.ustr(faceing[0]) + ', Module Name: ' + tools.ustr(product_module[0]) + ', Number of Module: ' + tools.ustr(no_of_module[0]) + ', Inverter Name: ' + tools.ustr(product_inverter[0]) + ', Number of Inverter: ' + tools.ustr(no_of_inverter[0])
                     
                     station = []
                     tilt = []
