@@ -1456,7 +1456,7 @@
 			<field name="inherit_id" ref="base.view_company_form" />
 			<field name="arch" type="xml">
 				<field name='website' position="after">
-					<field name="auto_email_id" />
+					<field name="auto_email_id"/>
 				</field>
 				<xpath expr="//notebook/page[@string='Configuration']"
 					position="after">

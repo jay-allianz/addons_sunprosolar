@@ -95,7 +95,6 @@ class sale_order(osv.Model):
     
     _defaults = {
             'engineering': 'yes',
-            
     }
     
     def _create_pickings_and_procurements(self, cr, uid, order, order_lines, picking_id=False, context=None):
@@ -173,13 +172,19 @@ class sale_order(osv.Model):
         ana_acc_obj = self.pool.get('account.analytic.account')
         task_obj = self.pool.get('project.task')
         project_obj = self.pool.get('project.project')
+        lead_obj = self.pool.get('crm.lead')
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
+        reference = 'sale.order,' + str(cur_rec.id)
+        lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
+        if lead_id:
+            lead_data = lead_obj.browse(cr, uid, lead_id,context=context)[0]
         if not cur_rec.order_line:
             raise osv.except_osv(_('Error'), _('To generate contract you have to define order line!'))
         vals = {
             'name' : cur_rec.partner_id.name,
             'partner_id' : cur_rec.partner_id.id,
             'amount' : cur_rec.amount_total,
+            'deposit' : lead_data and lead_data.down_payment_amt,
             'sale_id': cur_rec.id,
             'contract_date': datetime.datetime.today(),
             'use_tasks' : True,

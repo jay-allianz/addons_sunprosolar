@@ -884,7 +884,7 @@ class crm_lead(osv.Model):
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
         'pbi_epbb_incentive' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
         'cost' : fields.function(_get_cost_rebate, string="Cost",type="float",multi="cost_all"),
-        'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",type="float",multi="cost_all"),
+        'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",store=True,type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
         'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
         'cost_rebate_ids' : fields.one2many( 'cost.rebate','crm_lead_id',string = 'Cost & Rebate'),

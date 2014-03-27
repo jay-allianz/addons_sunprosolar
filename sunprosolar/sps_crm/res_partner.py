@@ -28,47 +28,13 @@ class res_user(osv.Model):
     
     _inherit = "res.users"
     
-#    def login(self, cr, uid, id, login_name, password, context= None):
-#        if not context:
-#            context = {}
-#        res_users_data = self.browse(cr, uid, id, context=context)[0]
-#        if res_users_data.login == login_name and res_users_data.password == password:
-#            return id
-#        else:
-#            return False
-        
-#    def read(self, cr, uid, user_id, context= None):
-#        if not context:
-#            context = {}
-#        print "read called>>>"
-#        address = ' '
-#        partner_info = {}
-#        partner_obj = self.pool.get('res.partner')
-#        res_users_data = self.browse(cr, uid, user_id, context=context)[0]
-#        partner_id = res_users_data.partner_id.id
-#        if partner_id:
-#            partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
-#            address = str(partner_data.street) + ', ' + str(partner_data.street2) + ', '+ str(partner_data.city_id and partner_data.city_id.name or '') + ', '+str(partner_data.city_id and partner_data.city_id.state_id and partner_data.city_id.state_id.name or '') + ', '+str(partner_data.city_id and partner_data.city_id.country_id and partner_data.city_id.country_id.name or '') + ', '+str(partner_data.city_id and partner_data.city_id.zip or '')
-#           
-#            partner_info = {'id': partner_data.id,
-#                            'name': partner_data.name, 
-#                            'middle_name': partner_data.middle_name,
-#                            'last_name': partner_data.last_name,
-#                            'company': partner_data.parent_id.name,
-#                            'address':address,
-#                            'email':partner_data.email,
-#                            'mobile': partner_data.mobile,
-#                            'fax': partner_data.fax,
-#                            }
-#            return partner_info
-#        
     def read_company(self, cr, uid, user_id, context=None):
         if not context:
             context = {}
         address = ' '
         company_info = {}
         partner_obj = self.pool.get('res.partner')
-        res_users_data = self.browse(cr, uid, user_id, context=context)[0]
+        res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         if partner_id:
             partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
@@ -117,8 +83,18 @@ class res_user(osv.Model):
         result = {}
         partner_info = {}
         crm_lead_info = []
+        solar_info = {}
+        solar_info_list = []
         sale_order_info = []
         project_status = ' '
+        tilt = ' '
+        faceing  = ' '
+        module_id = None
+        module_name = ' '
+        no_of_module = 0
+        invertor_id = None
+        invertor_name = ' '
+        no_of_invertor = 0
         crm_obj = self.pool.get('crm.lead')
         partner_obj = self.pool.get('res.partner')
         sale_order_obj = self.pool.get('sale.order')
@@ -148,6 +124,18 @@ class res_user(osv.Model):
             crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
             for data in crm_data:
                 crm_lead_info.append(data.id)
+                for solar_data in data.solar_ids:
+                    tilt = solar_data.faceing.tilt or ''
+                    faceing  = solar_data.tilt_degree or ''
+                    module_id = solar_data.module_product_id and solar_data.module_product_id.id or ''
+                    module_name = solar_data.module_product_id and solar_data.module_product_id.name or ''
+                    no_of_module = solar_data.num_of_module or ''
+                    invertor_id = solar_data.inverter_product_id and solar_data.inverter_product_id.id or ''
+                    invertor_name = solar_data.inverter_product_id and solar_data.inverter_product_id.name or ''
+                    no_of_invertor = solar_data.num_of_invertor or ''
+                    solar_info = {'tilt': tilt, 'faceing': faceing, 'module_id': module_id, 'module_name':module_name, 'no_of_module':no_of_module, 'invertor_id':invertor_id, 'invertor_name':invertor_name,'no_of_invertor':no_of_invertor}
+                    solar_info_list.append(solar_info)
+                    
                 project_ids = project_obj.search(cr, uid, [('name','=',data.partner_id.name)], context=context)
                 if project_ids:
                     project_data = project_obj.browse(cr, uid, project_ids, context=context)
@@ -168,6 +156,7 @@ class res_user(osv.Model):
             result = {'partner_info': partner_info,
                       'lead_info': crm_lead_info and crm_lead_info[0] or False,
                       'sale_info': sale_order_info and sale_order_info[0] or False,
+                      'solar_info': solar_info_list,
                       'project_status': project_status}
         return result
     
@@ -187,21 +176,22 @@ class res_user(osv.Model):
             context = {}
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
-        documents = {}
-        res_users_data = self.browse(cr, uid, user_id, context=context)[0]
+
+        documents = []
+        res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
         for data in crm_data:
             for doc_data in data.doc_req_ids:
-                documents = {
+                documents.append({
                              'id': doc_data.id,
-                             'doc_name' : doc_data.doc_id.name,
-                             'doc_file' : doc_data.document_id.datas
-                }
+                             'doc_name' : doc_data.doc_id.name or '',
+                             'doc_file' : doc_data.document_id.datas or ''
+                })
         return documents
     
-    def upload_document(self, cr, uid, user_id, doc_id, doc_name, doc_file, context=None):
+    def upload_document(self, cr, uid, user_id, doc_name, doc_file, context=None):
         if not context:
             context = {}
         partner_obj = self.pool.get('res.partner')
@@ -209,6 +199,7 @@ class res_user(osv.Model):
         doc_all_obj = self.pool.get('documents.all')
         doc_obj = self.pool.get('document.required')
         attachement_obj = self.pool.get('ir.attachment')
+        new_document_id = False
         doc_all_vals = {
                         'name': doc_name
                         }
@@ -218,20 +209,19 @@ class res_user(osv.Model):
                            'datas':doc_file
                            }
         attachemnt_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
-        res_users_data = self.browse(cr, uid, user_id, context=context)[0]
+        res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if doc_all_new_id and attachemnt_id:
             vals = {
-                    'id': doc_id,
                     'crm_lead_id' : crm_ids[0],
                     'doc_id' : doc_all_new_id,
                     'document_id': attachemnt_id,
                     'partner_id': partner_id
             }
             new_document_id= doc_obj.create(cr, uid, vals, context= context)
-            crm_obj.write(cr, uid, crm_ids[0], {'doc_req_ids': [(6,0,[new_document_id])]})
+#            crm_obj.write(cr, uid, crm_ids[0], {'doc_req_ids': [(6,0,[new_document_id])]})
         if new_document_id:
             return new_document_id
         else:
@@ -242,43 +232,45 @@ class res_user(osv.Model):
             context = {}
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
-        project_photos = {}
-        res_users_data = self.browse(cr, uid, user_id, context=context)[0]
+        project_photos = []
+        res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
         for data in crm_data:
             for project_photos_data in data.project_photo_ids:
-                project_photos = {
+                project_photos.append({
                              'id': project_photos_data.id,
                              'name' : project_photos_data.name,
                              'tagline' : project_photos_data.tag_line,
                              'photo' : project_photos_data.photo
-                }
+                })
         return project_photos
         
-    def upload_project_photo(self ,cr, uid, user_id, project_photo_id, project_photo_name, project_photo_tagline, project_photo_file,  context=None):
+    def upload_project_photo(self ,cr, uid, user_id, project_photo_name, project_photo_tagline, project_photo_file, context=None):
         if not context:
             context = {}
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
         peoject_photo_obj = self.pool.get('project.photos')
-        res_users_data = self.browse(cr, uid, user_id, context=context)[0]
+        new_peoject_photo_id = False
+        res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        vals = {
-                'crm_lead_id' : crm_ids[0],
-                'name' : project_photo_name,
-                'tag_line': project_photo_tagline,
-                'photo' : project_photo_file,
-        }
-        new_peoject_photo_id= peoject_photo_obj.create(cr, uid, vals, context= context)
-        crm_obj.write(cr, uid, crm_ids[0], {'project_photo_ids': [(6,0,[new_peoject_photo_id])]})
+        if crm_ids:
+            vals = {
+                    'crm_lead_id' : crm_ids[0],
+                    'name' : project_photo_name,
+                    'tag_line': project_photo_tagline,
+                    'photo' : project_photo_file,
+            }
+            new_peoject_photo_id= peoject_photo_obj.create(cr, uid, vals, context= context)
+#        crm_obj.write(cr, uid, crm_ids[0], {'project_photo_ids': [(6,0,[new_peoject_photo_id])]})
         if new_peoject_photo_id:
             return new_peoject_photo_id
         else:
-            False
+            return False
  
  
     def upload_review(self, cr, uid, user_id, review, context= None):
@@ -378,7 +370,7 @@ class res_user(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
         mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
         email_from = mail_server_record.smtp_user
-        email_to = ['husen.daudi@serpentcs.com']#['administration@sunpro-solar.com']
+        email_to = ['administration@sunpro-solar.com']
         if not email_from:
             raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         for data in crm_data:
@@ -418,7 +410,7 @@ class res_user(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
         mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
         email_from = mail_server_record.smtp_user
-        email_to = ['husen.daudi@serpentcs.com']#['engineering@sunpro-solar.com','info@sunpro-solar.com']
+        email_to = ['engineering@sunpro-solar.com','info@sunpro-solar.com']
         if crm_data[0] and crm_data[0].user_id:
             email_to.append(crm_data[0].user_id.email)
         if not email_from:
@@ -460,7 +452,7 @@ class res_user(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
         mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
         email_from = mail_server_record.smtp_user
-        email_to = ['husen.daudi@serpentcs.com']#['info@sunpro-solar.com']
+        email_to = ['info@sunpro-solar.com']
         if not email_from:
             raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         for data in crm_data:
