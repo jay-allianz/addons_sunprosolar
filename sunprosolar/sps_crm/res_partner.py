@@ -187,6 +187,7 @@ class res_user(osv.Model):
                 documents.append({
                              'id': doc_data.id,
                              'doc_name' : doc_data.doc_id.name or '',
+                             'file_name' : doc_data.document_id.name or '',
                              'doc_file' : doc_data.document_id.datas or ''
                 })
         return documents
