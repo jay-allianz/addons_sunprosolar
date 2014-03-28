@@ -1,15 +1,16 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_crm_lead_all_tabs_description,crm.lead.all.tabs.description,model_crm_lead_all_tabs_description,sps_crm.customer,1,1,1,1
-access_solar_solar,solar.solar,model_solar_solar,sps_crm.customer,1,1,1,1
-access_document_required,document.required,model_document_required,sps_crm.customer,1,1,1,0
-access_electricity_usage,electricity.usage,model_electricity_usage,sps_crm.customer,1,1,1,1
-access_project_reviews,project.reviews,model_project_reviews,sps_crm.customer,1,1,1,1
-access_ friend_reference,friend.reference,model_friend_reference,sps_crm.customer,1,1,1,1
-access_project_photos,project.photos,model_project_photos,sps_crm.customer,1,1,1,1
-access_crm_lead_electricity_description,crm.lead.electricity.description,model_crm_lead_electricity_description,sps_crm.customer,1,1,1,1
-access_documents_all,documents.all,model_documents_all,sps_crm.customer,1,1,1,1
-access_crm_lead_home_description,crm.lead.home.description,model_crm_lead_home_description,sps_crm.customer,1,1,1,1
-access_crm_lead_system_description,crm.lead.system.description,model_crm_lead_system_description,sps_crm.customer,1,1,1,1
-access_crm_lead_accounting_description,crm.lead.accounting.description,model_crm_lead_accounting_description,sps_crm.customer,1,1,1,1
-access_crm_lead_marketing_description,crm.lead.marketing.description,model_crm_lead_marketing_description,sps_crm.customer,1,1,1,1
-access_insolation_incident_yearly,insolation.incident.yearly,model_insolation_incident_yearly,sps_crm.customer,1,0,0,0
+access_sps_state,sps.state,sps_dashboard.model_sps_state,base.group_user, 1,1,1,1
+access_doc_required,doc.required,sps_sale.model_doc_required,base.group_user,1,1,1,1
+access_financing_type,financing.type,sps_sale.model_financing_type,base.group_user,1,1,1,1
+access_tilt_tilt,tilt.tilt,model_tilt_tilt,base.group_user,1,1,1,1
+access_send_send_mail,send.send.mail,model_send_send_mail,base.group_user,1,1,1,1
+access_station_station,station.station,model_station_station,base.group_user,1,1,1,1
+access_roof_type,roof.type,model_roof_type,base.group_user,1,1,1,1
+access_level_lead,level.lead,model_level_lead,base.group_user,1,1,1,1
+access_company_quotation,company.quotation,model_company_quotation,base.group_user,1,1,1,1
+access_type_of_sale,type.of.sale,model_type_of_sale,base.group_user,1,1,1,1
+access_product_brand,product.brand,sps_product.model_product_brand,base.group_user,1,1,1,1
+access_product_invertor_brand,product.invertor.brand,sps_product.model_product_invertor_brand,base.group_user,1,1,1,1
+access_module_master,module.master,sps_product.model_module_master,base.group_user,1,1,1,1
+
+

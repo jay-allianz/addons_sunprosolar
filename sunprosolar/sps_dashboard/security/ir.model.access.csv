@@ -24,6 +24,7 @@ access_solar_solar_portal,solar.solar,sps_crm.model_solar_solar,portal.group_por
 access_document_required_portal,document.required,sps_crm.model_document_required,portal.group_portal,1,1,1,0
 access_electricity_usage_portal,electricity.usage,sps_crm.model_electricity_usage,portal.group_portal,1,1,1,1
 access_project_reviews_portal,project.reviews,sps_crm.model_project_reviews,portal.group_portal,1,1,1,1
+access_project_cash_bonus_portal,cash.bonus,sps_crm.model_cash_bonus,portal.group_portal,1,1,1,1
 access_project_submit_question,submit.question,sps_crm.model_submit_question,portal.group_portal,1,1,1,1
 access_ friend_reference_portal,friend.reference,sps_crm.model_friend_reference,portal.group_portal,1,1,1,1
 access_project_photos_portal,project.photos,sps_crm.model_project_photos,portal.group_portal,1,1,1,1

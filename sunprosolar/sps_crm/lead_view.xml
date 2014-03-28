@@ -323,7 +323,7 @@
 							<field name="annual_income" attrs="{'invisible':[('qualified','=',False)]}" />
 							<field name="tax_liability" attrs="{'invisible':[('qualified','=',False)]}" />
 							<field name="credit_source" attrs="{'invisible':[('qualified','=',False)]}" />
-							<field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}" />
+<!--							<field name="property_tax" attrs="{'invisible':[('qualified','=',False)]}" />  -->
 						</group>
 						<field name="see_lead_marketing_note" invisible="1" />
 						<separator string="Appointments" colspan="4" />
@@ -888,13 +888,17 @@
 							<field name="project_photo_ids" nolabel="1">
 								<form>
 									<field name="name" required="1" />
-									<field name="photo" widget="image" required="1" />
+									<field name="photo" widget="image" filename="photo_fname" required="1" />
 									<field name="tag_line" required="1" />
+									<field name="photo_fname" invisible="1" on_change="onchange_photo_fname(photo_fname)"/>
 								</form>
 								<tree>
 									<field name="name" required="1" />
 									<field name="photo" widget="image" required="1" />
 									<field name="tag_line" required="1" />
+									<field name= "use_photo" invisible="1"/>
+									<button name="use_project_photo" string="Use Photo"
+                            		colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('use_photo','=',True)]}"/>
 								</tree>
 							</field>
 						</group>
@@ -904,6 +908,12 @@
 							<field name="project_review_ids" nolabel="1">
 								<tree editable="bottom">
 									<field name="name" required="1" />
+									<field name="use_review_website" invisible="1"/>
+									<field name="use_review_Marketing" invisible="1"/>
+									<button name="use_project_review_website" string="Use Review for Website"
+                            		colspan="2" type="object" icon="gtk-yes" attrs="{'invisible':[('use_review_website','=',True)]}"/>
+									<button name="use_project_review_marketing" string="Use Review for Marketing Materials"
+                            		colspan="2" type="object" icon="gtk-go-forward" attrs="{'invisible':[('use_review_Marketing','=',True)]}"/>
 								</tree>
 							</field>
 						</group>
@@ -1351,6 +1361,22 @@
 					<separator string="Required Documents"/>
 					<field name="document_ids" colspan="4" nolabel="1"/>
 				</xpath>
+				<xpath expr="//page[@string='Accounting']" position='after'>
+					<page string="Cash Bonus">
+						<group col="4" colspan="4">
+							<field name="cash_bonus_ids" nolabel="1" readonly= "1" clospan="4">
+								<tree>
+									<field name="name"/>
+									<field name="cash"/>
+								</tree>
+							</field>
+							<newline/>
+							<group class="oe_subtotal_footer oe_right" colspan="2">
+								<field name= "total_bonus"/>
+							</group>
+						</group>
+					</page>
+				</xpath>
 			</field>
 		</record>
 		
@@ -1457,6 +1483,9 @@
 			<field name="arch" type="xml">
 				<field name='website' position="after">
 					<field name="auto_email_id"/>
+					<field name="admin_email_id"/>
+					<field name="engineering_email_id"/>
+					<field name="info_email_id"/>
 				</field>
 				<xpath expr="//notebook/page[@string='Configuration']"
 					position="after">
@@ -1510,6 +1539,17 @@
                 </field>
             </field>
         </record>
+        
+		<record model="ir.ui.view" id="view_attachment_form_inherit">
+			<field name="name">ir.attachment.inherited</field>
+			<field name="model">ir.attachment</field>
+			<field name="inherit_id" ref="base.view_attachment_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='datas_fname']" position="attributes">
+					<attribute name="on_change">onchange_datas_fname(datas_fname)</attribute>
+				</xpath>
+			</field>
+		</record>
 
 	</data>
 </openerp>

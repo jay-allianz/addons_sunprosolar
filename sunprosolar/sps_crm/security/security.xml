@@ -10,8 +10,10 @@
         	<field name="groups" eval="[(4, ref('portal.group_portal'))]"/>
 		</record>
 							-->
-        <record id="customer" model="res.groups">
+        <!--
+								<record id="customer" model="res.groups">
                 <field name="name">SPS Customer</field>
         </record>
+								-->
     </data>
 </openerp>

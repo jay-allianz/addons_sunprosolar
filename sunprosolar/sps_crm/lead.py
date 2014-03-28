@@ -1380,7 +1380,6 @@ class solar_solar(osv.Model):
                 'array_output' : 0,
             }
             stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = 0.00
-            stc_dc_rating_amount = ptc_dc_rating_amount = cec_ac_rating_amount = ptc_stc_ratio_amount = None
             if data.module_product_id.pv_module_power_stc:
                 stc_dc_rating_amount = data.num_of_module * (data.module_product_id.pv_module_power_stc / 1000)
             if data.module_product_id.module_ptc_rating:
@@ -1786,6 +1785,13 @@ class project_project(osv.Model):
                     self.write(cr, uid, [project_id], {'members': member_list})
         return project_id
 
+class ir_attachment(osv.Model):
+    _inherit = "ir.attachment"
+    
+    def onchange_datas_fname(self, cr, uid, ids, datas_fname, context=None):
+        values = {}
+        values = {"name": datas_fname}
+        return {'value' : values}
     
 class document_required(osv.Model):
     
@@ -1848,6 +1854,15 @@ class res_partner(osv.Model):
     """ Model for Partner. """
     _inherit = "res.partner"
     
+    def _get_total_bonus(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for data in self.browse(cr, uid, ids, context):
+            total_bonus = 0.0
+            for line in data.cash_bonus_ids:
+                total_bonus += line.cash
+            res[data.id] = total_bonus
+        return res
+    
     _columns = {
         'is_utility_company' : fields.boolean("Is a Utility Company?"),
         'spouse': fields.many2one('res.partner', string='Secondary Customer', help="Secondary Customer (spouse) in case he/she exist."),
@@ -1856,6 +1871,8 @@ class res_partner(osv.Model):
         'document_ids': fields.many2many('documents.all', 'company_document_rel', 'partner_id', 'document_id', 'Required Documents'),
         'from_zip': fields.char('Zip (From)'),
         'to_zip' : fields.char('Zip (To)'),
+        'cash_bonus_ids' : fields.one2many('cash.bonus','res_partner_id','Cash Bonus'),
+        'total_bonus' : fields.function(_get_total_bonus,string="Toatal Bonus", type = "float", method= True),
         'zip_ids' : fields.many2many('city.city','city_res_part_rel',"city_id","res_part_id","Zip"),
     }
     
@@ -1977,11 +1994,70 @@ class project_photos(osv.Model):
     
     _name = "project.photos"
     
+    def send_email(self, cr, uid, message, mail_server_id, context):
+        '''
+           This method sends mail using information given in message 
+        '''
+        obj_mail_server = self.pool.get('ir.mail_server')
+        obj_mail_server.send_email(cr, uid, message=message, mail_server_id=mail_server_id, context=context)
+    
+    def use_project_photo(self, cr ,uid, ids, context=None):
+        if not context:
+            context = {}
+        partner_obj = self.pool.get('res.partner')
+        cash_bonus_obj = self.pool.get('cash.bonus')
+        user_obj = self.pool.get('res.users')
+        user_rec = user_obj.browse(cr, uid, uid, context=context)
+        project_photo_data = self.browse(cr, uid, ids, context=context)[0]
+        partner_data = partner_obj.browse(cr, uid, project_photo_data.crm_lead_id.partner_id.id, context=context)
+        vals={'name': 'Cash Bonus for picture used in marketing or for SunPro Solar website!', 'cash': 5, 'res_partner_id':partner_data.id}
+        cash_bonus_create_id = cash_bonus_obj.create(cr, uid, vals, context= context)
+        self.write(cr, uid, ids, {'use_photo': True}, context=context)
+        
+        obj_mail_server = self.pool.get('ir.mail_server')
+        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+        if not mail_server_ids:
+            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+        email_from = mail_server_record.smtp_user
+        email_to = [user_rec.company_id and user_rec.company_id.info_email_id or 'info@sunpro-solar.com']
+        if not email_from:
+            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+        subject_line = 'Customer ' + tools.ustr(partner_data.name or '') + ' you get Cash Bonus of $5 for project picture.'
+        message_body = 'Hello,<br/><br/>Photo '+ project_photo_data.name +' is used for picture used in marketing or for SunPro Solar website!.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(partner_data.name) + '<br/><br/>Last Name : ' + tools.ustr(partner_data.last_name) + '<br/><br/>Address : '+ tools.ustr(partner_data.street) + ', ' + tools.ustr(partner_data.street2) + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.name or '') + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.state_id and partner_data.city_id.state_id.name or '') + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.country_id and partner_data.city_id.country_id.name or '') + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(partner_data.email) + '<br/><br/>Mobile : ' + tools.ustr(partner_data.mobile) + '<br/><br/>Photo Information : <br/><br/>Photo Name:'+ project_photo_data.name +'<br/><br/> Photo Tag line:'+ project_photo_data.tag_line +'<br/><br/> Thank You.'
+        message_hrmanager = obj_mail_server.build_email(
+        email_from=email_from,
+        email_to=email_to,
+        subject=subject_line,
+        body=message_body,
+        body_alternative=message_body,
+        email_cc=None,
+        email_bcc=None,
+        attachments=None,
+        references=None,
+        object_id=None,
+        subtype='html',
+        subtype_alternative=None,
+        headers=None)
+        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        return True
+    
+    def onchange_photo_fname(self, cr, uid, ids, photo_fname, context=None):
+        values = {}
+        values = {"name": photo_fname}
+        return {'value' : values}
+    
     _columns = {
         'name' : fields.char('Name'),
         'photo' : fields.binary("Photo"),
+        'photo_fname':fields.char('File Name',size=256),
         'tag_line' : fields.char('Tagline'),
+        'use_photo' : fields.boolean("Use Photo"),
         'crm_lead_id' : fields.many2one("crm.lead", "Lead")
+    }
+    
+    _defaults = {
+        'use_photo' : False
     }
     
     def create(self, cr, uid, vals, context=None):
@@ -2032,6 +2108,9 @@ class res_company(osv.Model):
     
     _columns = {
         'auto_email_id' : fields.char("Auto Email ID"),
+        'admin_email_id' : fields.char("Admin Email id"),
+        'engineering_email_id' : fields.char("Engineering Email id :"),
+        'info_email_id' : fields.char("Info Email id :"),
         'avg_co2_ele': fields.float("Average CO2 emitted to produce Electricity(lbs)"),
         'annual_equvi_tree': fields.float("Annual offset of One Growing Tree(lbs)"),
         'years_40_offset_tree': fields.function(_get_years_40_offset_tree, type="float", string="40 Years Offset of One Growing Tree(lbs)"),
@@ -2103,8 +2182,34 @@ class project_reviews(osv.Model):
     
     _name = "project.reviews"
     
+    def use_project_review_website(self, cr ,uid, ids, context=None):
+        if not context:
+            context = {}
+        partner_obj = self.pool.get('res.partner')
+        cash_bonus_obj = self.pool.get('cash.bonus')
+        review_data = self.browse(cr, uid, ids, context=context)[0]
+        partner_data = partner_obj.browse(cr, uid, review_data.crm_lead_id.partner_id.id, context=context)
+        vals={'name': 'Cash bonus for your review is used on SunPro Solar\'s Website!', 'cash': 25, 'res_partner_id':partner_data.id}
+        cash_bonus_create_id = cash_bonus_obj.create(cr, uid, vals, context= context)
+        self.write(cr, uid, ids, {'use_review_website': True}, context=context)
+        return True
+    
+    def use_project_review_marketing(self, cr ,uid, ids, context=None):
+        if not context:
+            context = {}
+        partner_obj = self.pool.get('res.partner')
+        cash_bonus_obj = self.pool.get('cash.bonus')
+        review_data = self.browse(cr, uid, ids, context=context)[0]
+        partner_data = partner_obj.browse(cr, uid, review_data.crm_lead_id.partner_id.id, context=context)
+        vals={'name': 'Cash bonus for your for review is used for other marketing material.', 'cash': 100, 'res_partner_id':partner_data.id}
+        cash_bonus_create_id = cash_bonus_obj.create(cr, uid, vals, context= context)
+        self.write(cr, uid, ids, {'use_review_Marketing': True}, context=context)
+        return True
+    
     _columns = {
         'name' : fields.char("Name"),
+        'use_review_website': fields.boolean('Use Review for website'),
+        'use_review_Marketing': fields.boolean('Use Review for Marketing Material'),
         'crm_lead_id' : fields.many2one("crm.lead", "Lead"),
     }
     
@@ -2134,6 +2239,17 @@ class submit_question(osv.Model):
                 'crm_lead_id' : fields.many2one("crm.lead", "Lead"),
     }
     
+class cash_bonus(osv.Model):
+    
+    _name = "cash.bonus"
+    
+    _columns = {
+                'name' : fields.text("Tag line"),
+                'cash' : fields.float('Cash'),
+                'res_partner_id' : fields.many2one("res.partner", "Partner"),
+    }
+    
+    
 class friend_reference(osv.Model):
     
     _name = "friend.reference"
@@ -2154,7 +2270,7 @@ class friend_reference(osv.Model):
         
         user_obj = self.pool.get('res.users')
         user_rec = user_obj.browse(cr, uid, uid, context=context)
-        auto_email_id = user_rec.company_id.auto_email_id
+        auto_email_id = user_rec.company_id.info_email_id
         friend_email_id = vals.get('email')
         fname = vals.get('name')
         lname = vals.get('lname')
