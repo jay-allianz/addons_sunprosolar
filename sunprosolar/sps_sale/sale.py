@@ -167,12 +167,49 @@ class sale_order(osv.Model):
         '''
         obj_mail_server = self.pool.get('ir.mail_server')
         obj_mail_server.send_email(cr, uid, message=message, mail_server_id=mail_server_id, context=context)
+        
+    def change_sent_customer(self, cr, uid, ids, context=None):
+        contract_obj = self.pool.get('account.analytic.account')
+        
+        schedule_mail_object = self.pool.get('mail.message')
+        data_obj = self.pool.get('ir.model.data')
+        group_object = self.pool.get('res.groups')
+        obj_mail_server = self.pool.get('ir.mail_server')
+        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+        if not mail_server_ids:
+            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+        email_from = mail_server_record.smtp_user
+        if not email_from:
+            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+        member_email_list=[]
+        for data in self.browse(cr, uid, ids):
+            member_email_list.append(data.partner_id.email)
+                
+            message_body = 'Hello, ' + data.partner_id.name + '<br/><br/>Changes done in your Contract ' + data.project_id.name + '.<br/><br/>Contract Information<br/><br/>Contract ID : ' + tools.ustr(data.project_id.contract_id) + '<br/><br/>Contract Date : ' + tools.ustr(data.project_id.contract_date) + '<br/><br/>Contract Amount : ' + tools.ustr(data.project_id.amount) + '<br/><br/>Deposite Amount : ' + tools.ustr(data.project_id.deposit) + '<br/><br/> Thank You.'
+        message_hrmanager  = obj_mail_server.build_email(
+            email_from=email_from, 
+            email_to=member_email_list, 
+            subject='Changes done in your Contract', 
+            body=message_body, 
+            body_alternative=message_body, 
+            email_cc=None, 
+            email_bcc=None, 
+            attachments=None, 
+            references = None, 
+            object_id=None, 
+            subtype='html', 
+            subtype_alternative=None, 
+            headers=None)
+        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        return True
 
     def contract_generate(self, cr, uid, ids, context=None):
         ana_acc_obj = self.pool.get('account.analytic.account')
         task_obj = self.pool.get('project.task')
         project_obj = self.pool.get('project.project')
         lead_obj = self.pool.get('crm.lead')
+        lead_data = False
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
         reference = 'sale.order,' + tools.ustr(cur_rec.id)
         lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
@@ -184,7 +221,7 @@ class sale_order(osv.Model):
             'name' : cur_rec.partner_id.name,
             'partner_id' : cur_rec.partner_id.id,
             'amount' : cur_rec.amount_total,
-            'deposit' : lead_data and lead_data.down_payment_amt,
+            'deposit' : lead_data and lead_data.down_payment_amt or 0.0,
             'sale_id': cur_rec.id,
             'contract_date': datetime.datetime.today(),
             'use_tasks' : True,
@@ -234,7 +271,8 @@ class sale_order(osv.Model):
         if not cur_rec.financing_type_id :
             raise osv.except_osv(_('Warning !'),_("Please select the \'Financing Type\' for Document collection."))
         elif cur_rec.required_document == False:
-            raise osv.except_osv(_('Warning !'),_("Please select collect Required Documents."))
+            if cur_rec.doc_req_ids:
+                raise osv.except_osv(_('Warning !'),_("Please select collect Required Documents."))
         self.write(cr, uid, ids, {'state': 'financing_type'})
         return True
     
@@ -330,9 +368,8 @@ class sale_order(osv.Model):
                         raise osv.except_osv(_('Warning'), _('%s team member have no email defined !' % member.name))
                     else:
                         member_email_list.append(member.email)
-            
             message_body = 'Hello,<br/><br/>Project Notification.<br/><br/>Customer Information<br/><br/>Name : ' + tools.ustr(data.partner_id.name) + '<br/><br/>Email : ' + tools.ustr(data.partner_id.email) + '<br/><br/>Phone : ' + tools.ustr(data.partner_id.phone) +'<br/><br/>Solar Information<br/><br/>'+ solar_info +' <br/><br/> Thank You.'
-        message_hrmanager = obj_mail_server.build_email(
+            message_hrmanager = obj_mail_server.build_email(
             email_from=email_from,
             email_to=member_email_list,
             subject='Project Notification',

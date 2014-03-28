@@ -76,6 +76,22 @@ class res_user(osv.Model):
                             }
         return partner_info
     
+    def customer_accept_plan(self,cr,uid, user_id, context=None):
+        if not context:
+            context = {}
+        partner_obj = self.pool.get('res.partner')
+        sale_order_obj = self.pool.get('sale.order')
+        
+        res_users_data = self.browse(cr, uid, user_id, context=context)
+        partner_id = res_users_data.partner_id.id
+        sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
+        sale_data = sale_order_obj.browse(cr, uid, sale_order_ids, context=context)
+        for data in sale_data:
+            if data.state == 'permit':
+                sale_order_obj.write(cr, uid, sale_order_ids, {'state': 'city'},context=context)
+        return True
+            
+    
     def get_all_information(self, cr, uid, user_id, context= None):
         if not context:
             context = {}
@@ -122,6 +138,7 @@ class res_user(osv.Model):
                             }
             crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+            bill_saving=0
             for data in crm_data:
                 crm_lead_info.append(data.id)
                 for solar_data in data.solar_ids:
@@ -135,6 +152,8 @@ class res_user(osv.Model):
                     no_of_invertor = solar_data.num_of_invertor or ''
                     solar_info = {'tilt': tilt, 'faceing': faceing, 'module_id': module_id, 'module_name':module_name, 'no_of_module':no_of_module, 'invertor_id':invertor_id, 'invertor_name':invertor_name,'no_of_invertor':no_of_invertor}
                     solar_info_list.append(solar_info)
+                for cost_rebate in data.cost_rebate_ids:
+                    bill_saving += cost_rebate.elec_bill_savings
                     
                 project_ids = project_obj.search(cr, uid, [('name','=',data.partner_id.name)], context=context)
                 if project_ids:
@@ -147,7 +166,7 @@ class res_user(osv.Model):
                         project_status = sale_data[0].state
                     else:
                         project_status = data.stage_id and data.stage_id.name or 'draft'
-                
+            new_info = {'year': data.number_of_years, 'cars_off_roads':data.cars_off_roads, 'tree_planting_equi':data.tree_planting_equi, 'co2_offset_pounds':data.co2_offset_pounds, 'bill_saving':bill_saving}    
             sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             sale_order_data = sale_order_obj.browse(cr, uid, sale_order_ids, context= context)
             for sale_data in sale_order_data:
@@ -157,7 +176,10 @@ class res_user(osv.Model):
                       'lead_info': crm_lead_info and crm_lead_info[0] or False,
                       'sale_info': sale_order_info and sale_order_info[0] or False,
                       'solar_info': solar_info_list,
-                      'project_status': project_status}
+                      'project_status': project_status,
+                      'new_info':new_info,
+                      
+                      }
         return result
     
     def update_customer_information(self, cr, uid, user_id, name, middle_name, last_name, street, street2, city_id, email, mobile, phone, fax, context = None):
@@ -167,7 +189,6 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         if res_users_data.partner_id:
-            partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
             partner_obj.write(cr, uid, partner_id, {'name': name, 'middle_name': middle_name, 'last_name': last_name, 'street': street, 'street2':street2, 'city_id': city_id, 'email':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
         return True
     
@@ -222,7 +243,7 @@ class res_user(osv.Model):
                     'partner_id': partner_id
             }
             new_document_id= doc_obj.create(cr, uid, vals, context= context)
-#            crm_obj.write(cr, uid, crm_ids[0], {'doc_req_ids': [(6,0,[new_document_id])]})
+#            crm_obj.write(cr, uid, crm_ids, {'doc_req_ids': [(6,0,[new_document_id])]})
         if new_document_id:
             return new_document_id
         else:
@@ -267,7 +288,7 @@ class res_user(osv.Model):
                     'photo' : project_photo_file,
             }
             new_peoject_photo_id= peoject_photo_obj.create(cr, uid, vals, context= context)
-#        crm_obj.write(cr, uid, crm_ids[0], {'project_photo_ids': [(6,0,[new_peoject_photo_id])]})
+#        crm_obj.write(cr, uid, crm_ids, {'project_photo_ids': [(6,0,[new_peoject_photo_id])]})
         if new_peoject_photo_id:
             return new_peoject_photo_id
         else:
@@ -291,7 +312,7 @@ class res_user(osv.Model):
                     'name' : review
             }
             new_review_id= review_obj.create(cr, uid, vals, context= context)
-#        crm_obj.write(cr, uid, crm_ids[0], {'project_review_ids': [(6,0,[new_review_id])]})
+#        crm_obj.write(cr, uid, crm_ids, {'project_review_ids': [(6,0,[new_review_id])]})
         if new_review_id:
             return new_review_id
         else:
@@ -317,7 +338,7 @@ class res_user(osv.Model):
                    'crm_lead_id' : crm_ids[0]
             }
             new_ref_id= ref_obj.create(cr, uid, vals, context= context)
-#        crm_obj.write(cr, uid, crm_ids[0], {'friend_refer_ids': [(6,0,[new_ref_id])]})
+#        crm_obj.write(cr, uid, crm_ids, {'friend_refer_ids': [(6,0,[new_ref_id])]})
         if new_ref_id:
             return new_ref_id
         else:
@@ -340,7 +361,7 @@ class res_user(osv.Model):
                    'crm_lead_id' : crm_ids[0]
             }
             new_ref_id= ref_obj.create(cr, uid, vals, context= context)
-#        crm_obj.write(cr, uid, crm_ids[0], {'submit_que_ids': [(6,0,[new_ref_id])]})
+#        crm_obj.write(cr, uid, crm_ids, {'submit_que_ids': [(6,0,[new_ref_id])]})
         if new_ref_id:
             return new_ref_id
         else:
@@ -359,6 +380,7 @@ class res_user(osv.Model):
             context = {}
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
+        email_to = []
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
@@ -371,7 +393,7 @@ class res_user(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
         mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
         email_from = mail_server_record.smtp_user
-        email_to = ['administration@sunpro-solar.com']
+        email_to = [res_users_data.company_id and res_users_data.company_id.admin_email_id or 'administration@sunpro-solar.com']
         if not email_from:
             raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         for data in crm_data:
@@ -399,6 +421,7 @@ class res_user(osv.Model):
             context = {}
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
+        email_to = []
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
@@ -411,7 +434,8 @@ class res_user(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
         mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
         email_from = mail_server_record.smtp_user
-        email_to = ['engineering@sunpro-solar.com','info@sunpro-solar.com']
+        email_to.append(res_users_data.company_id and res_users_data.company_id.engineering_email_id or 'engineering@sunpro-solar.com')
+        email_to.append(res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com')
         if crm_data[0] and crm_data[0].user_id:
             email_to.append(crm_data[0].user_id.email)
         if not email_from:
@@ -441,6 +465,7 @@ class res_user(osv.Model):
             context = {}
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
+        email_to = []
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
@@ -453,7 +478,7 @@ class res_user(osv.Model):
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
         mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
         email_from = mail_server_record.smtp_user
-        email_to = ['info@sunpro-solar.com']
+        email_to = [res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com']
         if not email_from:
             raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         for data in crm_data:
