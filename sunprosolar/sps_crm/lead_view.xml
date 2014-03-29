@@ -885,7 +885,9 @@
 					</page>
 					<page string="Project Photos">
 						<group col="4" colspan="4">
-							<field name="project_photo_ids" nolabel="1">
+							<field name="intial_photo" widget="image"/>
+							<field name="final_photo" widget="image"/>
+							<field name="project_photo_ids" nolabel="1" colspan="4">
 								<form>
 									<field name="name" required="1" />
 									<field name="photo" widget="image" filename="photo_fname" required="1" />

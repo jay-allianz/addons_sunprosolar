@@ -40,6 +40,7 @@ access_product_product,product.product,product.model_product_product,portal.grou
 access_account_analytic_journal_sps,account.analytic.journal,account.model_account_analytic_journal,portal.group_portal,1,1,1,1
 access_product_template_sps,product.template,product.model_product_template,portal.group_portal,1,1,1,1
 access_tilt_azimuth_sps,tilt.azimuth,sps_crm.model_tilt_azimuth,portal.group_portal,1,1,1,1
+access_tilt_tilt_sps,tilt.tilt,sps_crm.model_tilt_tilt,portal.group_portal,1,1,1,1
 access_product_supplierinfo_sps,product.supplierinfo,product.model_product_supplierinfo,portal.group_portal,1,1,1,1
 access_product_packaging_sps,product.packaging,product.model_product_packaging,portal.group_portal,1,1,1,1
 access_stock_warehouse_sps,stock.warehouse,stock.model_stock_warehouse,portal.group_portal,1,1,1,1
