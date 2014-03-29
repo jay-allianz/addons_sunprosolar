@@ -39,6 +39,7 @@
         'crm_report_view.xml',
         'station_view.xml',
         'sequence.xml',
+        'email_template_data.xml',
         'wizard/crm_lead_to_opportunity_view.xml',
         'wizard/import_utility_company_view.xml'
     ],

@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<openerp>
+
+    <!-- request_detailed email template -->
+    <data>
+        <!--Email template -->
+        <record id="request_detailed" model="email.template">
+            <field name="name">Request Detailed Email Templates</field>
+            <field name="email_from">${object.user_id.email or object.company_id.email or 'noreply@localhost'}</field>
+            <field name="subject">'Customer ' + tools.ustr(object.partner_id and object.partner_id.name or '') + '.'</field>
+            <field name="email_recipients">${object.partner_id.id}</field>
+            <field name="model_id" ref="sps_crm.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name"> </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Hello,</p>
+
+    <p>There is a customer requesting a detailed status of their current project </p>
+    
+    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+       &nbsp;&nbsp;<strong>Customer Information</strong><br/>
+       &nbsp;&nbsp;First Name : <strong>${object.contact_name}</strong><br />
+       &nbsp;&nbsp;Last Name: <strong>${object.last_name}</strong><br />
+       &nbsp;&nbsp;Address:  ${object.street}, ${object.street2}, ${object.city_id or object.city_id.name or ''}, ${object.city_id or object.state_id.name or ''}, ${object.city_id or object.country_id.name or ''}, ${object.city_id or object.country_id.zip or ''}<br />
+       &nbsp;&nbsp;Email: <strong>${object.email}</strong><br />
+       &nbsp;&nbsp;Mobile: <strong>${object.mobile}</strong><br />
+       &nbsp;&nbsp;Mobile: <strong>Thank you.</strong><br />
+            message_hrmanager = obj_mail_server.build_email
+    </p>  
+</div>
+            ]]></field>
+        </record>
+    </data>
+</openerp>

@@ -30,7 +30,7 @@
     'depends': ['base','sps_crm','sale_stock'],
     'data': [
         'sale_view.xml',
-        'document_view.xml'
+        'document_view.xml',
     ],
     'installable': True,
     'application': True,

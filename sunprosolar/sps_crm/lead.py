@@ -910,6 +910,8 @@ class crm_lead(osv.Model):
         'friend_refer_ids' : fields.one2many('friend.reference', 'crm_lead_id', "Friend References"),
         'submit_que_ids' : fields.one2many('submit.question', 'crm_lead_id', "Submit Question"),
         'reg_no' : fields.char('Registration Number.'),
+        'intial_photo': fields.binary('Initial Photo'),
+        'final_photo':fields.binary('Final Photo'),
         
         'jan_production': fields.function(_get_monthly_production, method=True, type='float', multi='monthly_production', string="January Production", store=True),
         'feb_production': fields.function(_get_monthly_production, method=True, type='float', multi='monthly_production', string="February Production", store=True),
@@ -933,6 +935,7 @@ class crm_lead(osv.Model):
             'lead_date': fields.date.context_today,
             'reg_no': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'crm.lead'),
     }
+    
     
     def calculate_table(self, cr, uid, ids, context=None):
         result = {}
