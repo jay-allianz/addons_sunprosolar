@@ -1021,7 +1021,7 @@ class crm_lead(osv.Model):
                 prev_new_bill = prev_new_bill - (prev_new_bill*data.pv_kw_decline)
                 elec_bill_savings = prev_pv_energy * grid_energy_rate * math.pow(( 1 + data.grid_rate_increase_by ),year)  
             result[data.id] = res#
-        return result
+        return True
     
     def on_change_notifiy_customer(self, cr, uid, ids, notify_customer, context=None):
         if notify_customer == True:
