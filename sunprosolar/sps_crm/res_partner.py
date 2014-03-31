@@ -440,127 +440,171 @@ class res_user(osv.Model):
     def request_detailed(self, cr, uid, user_id, context= None):
         if not context:
             context = {}
-        partner_obj = self.pool.get('res.partner')
-        crm_obj = self.pool.get('crm.lead')
-        email_to = []
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         res_users_data = self.browse(cr, uid, user_id, context=context)
-        partner_id = res_users_data.partner_id.id
-        partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
-        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
         
-        obj_mail_server = self.pool.get('ir.mail_server')
-        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-        if not mail_server_ids:
-            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-        email_from = mail_server_record.smtp_user
-        email_to = [res_users_data.company_id and res_users_data.company_id.admin_email_id or 'administration@sunpro-solar.com']
-        if not email_from:
-            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-        for data in crm_data:
-            subject_line = 'Customer ' + tools.ustr(data.partner_id and data.partner_id.name or '') + '.'
-            message_body = 'Hello,<br/><br/>There is a customer requesting a detailed status of their current project.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : '+ tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', '+ tools.ustr(data.city_id and data.city_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.state_id and data.city_id.state_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.country_id and data.city_id.country_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
-            message_hrmanager = obj_mail_server.build_email(
-            email_from=email_from,
-            email_to=email_to,
-            subject=subject_line,
-            body=message_body,
-            body_alternative=message_body,
-            email_cc=None,
-            email_bcc=None,
-            attachments=None,
-            references=None,
-            object_id=None,
-            subtype='html',
-            subtype_alternative=None,
-            headers=None)
-            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'request_detailed', context=context)
+        template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
+        template_values.update({'email_to': res_users_data.company_id and res_users_data.company_id.admin_email_id or 'administration@sunpro-solar.com'})
+        msg_id = mail_mail.create(cr, uid, template_values, context=context)
+        mail_mail.send(cr, uid, [msg_id], context=context)
         return True
     
     def query_generated(self, cr, uid, user_id, context= None):
         if not context:
             context = {}
-        partner_obj = self.pool.get('res.partner')
-        crm_obj = self.pool.get('crm.lead')
-        email_to = []
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         res_users_data = self.browse(cr, uid, user_id, context=context)
-        partner_id = res_users_data.partner_id.id
-        partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
-        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
         
-        obj_mail_server = self.pool.get('ir.mail_server')
-        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-        if not mail_server_ids:
-            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-        email_from = mail_server_record.smtp_user
-        email_to.append(res_users_data.company_id and res_users_data.company_id.engineering_email_id or 'engineering@sunpro-solar.com')
-        email_to.append(res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com')
-        if crm_data[0] and crm_data[0].user_id:
-            email_to.append(crm_data[0].user_id.email)
-        if not email_from:
-            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-        for data in crm_data:
-            subject_line = 'Customer ' + tools.ustr(data.partner_id and data.partner_id.name or '') + '.'
-            message_body = 'Hello,<br/><br/>There is a customer have issues with the proposed layout and need to be contacted before the job moves forward.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : '+ tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', '+ tools.ustr(data.city_id and data.city_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.state_id and data.city_id.state_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.country_id and data.city_id.country_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
-            message_hrmanager = obj_mail_server.build_email(
-            email_from=email_from,
-            email_to=email_to,
-            subject=subject_line,
-            body=message_body,
-            body_alternative=message_body,
-            email_cc=None,
-            email_bcc=None,
-            attachments=None,
-            references=None,
-            object_id=None,
-            subtype='html',
-            subtype_alternative=None,
-            headers=None)
-            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'query_generated', context=context)
+        template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
+        email_to_list = [res_users_data.company_id and res_users_data.company_id.engineering_email_id or 'engineering@sunpro-solar.com',res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com']
+        for email_to in email_to_list:
+            template_values.update({'email_to': email_to})
+            msg_id = mail_mail.create(cr, uid, template_values, context=context)
+            mail_mail.send(cr, uid, [msg_id], context=context)
         return True
-
+    
     def request_contact(self, cr, uid, user_id, context= None):
         if not context:
             context = {}
-        partner_obj = self.pool.get('res.partner')
-        crm_obj = self.pool.get('crm.lead')
-        email_to = []
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         res_users_data = self.browse(cr, uid, user_id, context=context)
-        partner_id = res_users_data.partner_id.id
-        partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
-        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
         
-        obj_mail_server = self.pool.get('ir.mail_server')
-        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-        if not mail_server_ids:
-            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-        email_from = mail_server_record.smtp_user
-        email_to = [res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com']
-        if not email_from:
-            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-        for data in crm_data:
-            subject_line = 'Customer ' + tools.ustr(data.partner_id and data.partner_id.name or '') + '.'
-            message_body = 'Hello,<br/><br/>There is a customer requesting to contact.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : '+ tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', '+ tools.ustr(data.city_id and data.city_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.state_id and data.city_id.state_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.country_id and data.city_id.country_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
-            message_hrmanager = obj_mail_server.build_email(
-            email_from=email_from,
-            email_to=email_to,
-            subject=subject_line,
-            body=message_body,
-            body_alternative=message_body,
-            email_cc=None,
-            email_bcc=None,
-            attachments=None,
-            references=None,
-            object_id=None,
-            subtype='html',
-            subtype_alternative=None,
-            headers=None)
-            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'request_contact', context=context)
+        template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
+        template_values.update({'email_to': res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com'})
+        msg_id = mail_mail.create(cr, uid, template_values, context=context)
+        mail_mail.send(cr, uid, [msg_id], context=context)
         return True
+    
+    #    def request_detailed(self, cr, uid, user_id, context= None):
+#        if not context:
+#            context = {}
+#        partner_obj = self.pool.get('res.partner')
+#        crm_obj = self.pool.get('crm.lead')
+#        email_to = []
+#        res_users_data = self.browse(cr, uid, user_id, context=context)
+#        partner_id = res_users_data.partner_id.id
+#        partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
+#        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+#        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+#        
+#        obj_mail_server = self.pool.get('ir.mail_server')
+#        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+#        if not mail_server_ids:
+#            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+#        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+#        email_from = mail_server_record.smtp_user
+#        email_to = [res_users_data.company_id and res_users_data.company_id.admin_email_id or 'administration@sunpro-solar.com']
+#        if not email_from:
+#            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+#        for data in crm_data:
+#            subject_line = 'Customer ' + tools.ustr(data.partner_id and data.partner_id.name or '') + '.'
+#            message_body = 'Hello,<br/><br/>There is a customer requesting a detailed status of their current project.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : '+ tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', '+ tools.ustr(data.city_id and data.city_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.state_id and data.city_id.state_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.country_id and data.city_id.country_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
+#            message_hrmanager = obj_mail_server.build_email(
+#            email_from=email_from,
+#            email_to=email_to,
+#            subject=subject_line,
+#            body=message_body,
+#            body_alternative=message_body,
+#            email_cc=None,
+#            email_bcc=None,
+#            attachments=None,
+#            references=None,
+#            object_id=None,
+#            subtype='html',
+#            subtype_alternative=None,
+#            headers=None)
+#            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+#        return True
+    
+#    def query_generated(self, cr, uid, user_id, context= None):
+#        if not context:
+#            context = {}
+#        partner_obj = self.pool.get('res.partner')
+#        crm_obj = self.pool.get('crm.lead')
+#        email_to = []
+#        res_users_data = self.browse(cr, uid, user_id, context=context)
+#        partner_id = res_users_data.partner_id.id
+#        partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
+#        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+#        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+#        
+#        obj_mail_server = self.pool.get('ir.mail_server')
+#        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+#        if not mail_server_ids:
+#            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+#        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+#        email_from = mail_server_record.smtp_user
+#        email_to.append(res_users_data.company_id and res_users_data.company_id.engineering_email_id or 'engineering@sunpro-solar.com')
+#        email_to.append(res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com')
+#        if crm_data[0] and crm_data[0].user_id:
+#            email_to.append(crm_data[0].user_id.email)
+#        if not email_from:
+#            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+#        for data in crm_data:
+#            subject_line = 'Customer ' + tools.ustr(data.partner_id and data.partner_id.name or '') + '.'
+#            message_body = 'Hello,<br/><br/>There is a customer have issues with the proposed layout and need to be contacted before the job moves forward.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : '+ tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', '+ tools.ustr(data.city_id and data.city_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.state_id and data.city_id.state_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.country_id and data.city_id.country_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
+#            message_hrmanager = obj_mail_server.build_email(
+#            email_from=email_from,
+#            email_to=email_to,
+#            subject=subject_line,
+#            body=message_body,
+#            body_alternative=message_body,
+#            email_cc=None,
+#            email_bcc=None,
+#            attachments=None,
+#            references=None,
+#            object_id=None,
+#            subtype='html',
+#            subtype_alternative=None,
+#            headers=None)
+#            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+#        return True
+
+#    def request_contact(self, cr, uid, user_id, context= None):
+#        if not context:
+#            context = {}
+#        partner_obj = self.pool.get('res.partner')
+#        crm_obj = self.pool.get('crm.lead')
+#        email_to = []
+#        res_users_data = self.browse(cr, uid, user_id, context=context)
+#        partner_id = res_users_data.partner_id.id
+#        partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
+#        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+#        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+#        
+#        obj_mail_server = self.pool.get('ir.mail_server')
+#        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+#        if not mail_server_ids:
+#            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+#        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+#        email_from = mail_server_record.smtp_user
+#        email_to = [res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com']
+#        if not email_from:
+#            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+#        for data in crm_data:
+#            subject_line = 'Customer ' + tools.ustr(data.partner_id and data.partner_id.name or '') + '.'
+#            message_body = 'Hello,<br/><br/>There is a customer requesting to contact.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(data.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(data.last_name) + '<br/><br/>Address : '+ tools.ustr(data.street) + ', ' + tools.ustr(data.street2) + ', '+ tools.ustr(data.city_id and data.city_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.state_id and data.city_id.state_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.country_id and data.city_id.country_id.name or '') + ', '+ tools.ustr(data.city_id and data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(data.email_from) + '<br/><br/>Mobile : ' + tools.ustr(data.mobile) + '<br/><br/> Thank You.'
+#            message_hrmanager = obj_mail_server.build_email(
+#            email_from=email_from,
+#            email_to=email_to,
+#            subject=subject_line,
+#            body=message_body,
+#            body_alternative=message_body,
+#            email_cc=None,
+#            email_bcc=None,
+#            attachments=None,
+#            references=None,
+#            object_id=None,
+#            subtype='html',
+#            subtype_alternative=None,
+#            headers=None)
+#            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+#        return True
     
     
