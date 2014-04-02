@@ -162,6 +162,14 @@ class res_user(osv.Model):
         partner_obj = self.pool.get('res.partner')
         sale_order_obj = self.pool.get('sale.order')
         project_obj = self.pool.get('project.project')
+        user_obj = self.pool.get('res.users')
+        
+        user_rec = user_obj.browse(cr, uid, uid, context=context)
+        auto_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
+        admin_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
+        engineering_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
+        care_maintance = user_rec.company_id and user_rec.company_id.care_maintance or ''
+        
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         if res_users_data.partner_id:
@@ -182,10 +190,11 @@ class res_user(osv.Model):
                             'mobile': res_users_data.partner_id.mobile or '',
                             'fax': res_users_data.partner_id.fax or '',
                             'login': res_users_data.login or '',
+                            'monitoring_website' : res_users_data.website or ''
                             }
             crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
-            bill_saving=0
+            bill_saving = 0
             for data in crm_data:
                 if data.intial_photo:
                     intial_photo = data.intial_photo
@@ -215,7 +224,6 @@ class res_user(osv.Model):
                     solar_info_list.append(solar_info)
                 for cost_rebate in data.cost_rebate_ids:
                     bill_saving += cost_rebate.elec_bill_savings
-                    
                 project_ids = project_obj.search(cr, uid, [('name','=',data.partner_id.name)], context=context)
                 if project_ids:
                     project_data = project_obj.browse(cr, uid, project_ids, context=context)
@@ -227,7 +235,7 @@ class res_user(osv.Model):
                         project_status = sale_data[0].state
                     else:
                         project_status = data.stage_id and data.stage_id.name or 'draft'
-            new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,'year': data.number_of_years, 'cars_off_roads':data.cars_off_roads, 'tree_planting_equi':data.tree_planting_equi, 'co2_offset_pounds':data.co2_offset_pounds, 'bill_saving':bill_saving}    
+            new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,'year': data.number_of_years, 'cars_off_roads':data.cars_off_roads*data.number_of_years, 'tree_planting_equi':data.tree_planting_equi*data.number_of_years, 'co2_offset_pounds':data.co2_offset_pounds*data.number_of_years, 'bill_saving':bill_saving}    
             sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             sale_order_data = sale_order_obj.browse(cr, uid, sale_order_ids, context= context)
             for sale_data in sale_order_data:
@@ -240,7 +248,10 @@ class res_user(osv.Model):
                       'solar_info': solar_info_list,
                       'project_status': project_status,
                       'new_info':new_info,
-                      
+                      'auto_email_id':auto_email_id,
+                      'admin_email_id':admin_email_id,
+                      'engineering_email_id':engineering_email_id,
+                      'care_maintance': care_maintance
                       }
         return result
     
@@ -248,10 +259,19 @@ class res_user(osv.Model):
         if not context:
             context = {}
         partner_obj = self.pool.get('res.partner')
+        crm_obj = self.pool.get('crm.lead')
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
+        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+        
         if res_users_data.partner_id:
             partner_obj.write(cr, uid, partner_id, {'name': name, 'middle_name': middle_name, 'last_name': last_name, 'street': street, 'street2':street2, 'city_id': city_id, 'email':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
+        for data in crm_data:
+            if data.type == 'lead':
+                crm_obj.write(cr, uid, crm_ids, {'contact_name': name, 'last_name': last_name, 'street': street, 'street2':street2, 'city_id': city_id, 'email':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
+            if data.type == 'opportunity':
+                crm_obj.write(cr, uid, crm_ids, { 'contact_name': name,'street': street, 'street2':street2, 'city_id': city_id, 'email_from':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
         return True
     
     def get_all_document(self, cr, uid, user_id, context = None):

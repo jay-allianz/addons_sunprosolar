@@ -26,7 +26,7 @@ access_electricity_usage_portal,electricity.usage,sps_crm.model_electricity_usag
 access_project_reviews_portal,project.reviews,sps_crm.model_project_reviews,portal.group_portal,1,1,1,1
 access_project_cash_bonus_portal,cash.bonus,sps_crm.model_cash_bonus,portal.group_portal,1,1,1,1
 access_project_submit_question,submit.question,sps_crm.model_submit_question,portal.group_portal,1,1,1,1
-access_ friend_reference_portal,friend.reference,sps_crm.model_friend_reference,portal.group_portal,1,1,1,1
+access_friend_reference_portal,friend.reference,sps_crm.model_friend_reference,portal.group_portal,1,1,1,1
 access_project_photos_portal,project.photos,sps_crm.model_project_photos,portal.group_portal,1,1,1,1
 access_crm_lead_electricity_description_portal,crm.lead.electricity.description,sps_crm.model_crm_lead_electricity_description,portal.group_portal,1,1,1,1
 access_documents_all_portal,documents.all,sps_crm.model_documents_all,portal.group_portal,1,1,1,1
@@ -40,7 +40,7 @@ access_product_product,product.product,product.model_product_product,portal.grou
 access_account_analytic_journal_sps,account.analytic.journal,account.model_account_analytic_journal,portal.group_portal,1,1,1,1
 access_product_template_sps,product.template,product.model_product_template,portal.group_portal,1,1,1,1
 access_tilt_azimuth_sps,tilt.azimuth,sps_crm.model_tilt_azimuth,portal.group_portal,1,1,1,1
-access_tilt_tilt_sps,tilt.tilt,sps_crm.model_tilt_tilt,portal.group_portal,1,1,1,1
+access_tilt_tilt_sps_portal,tilt.tilt,sps_crm.model_tilt_tilt,portal.group_portal,1,1,1,1
 access_product_supplierinfo_sps,product.supplierinfo,product.model_product_supplierinfo,portal.group_portal,1,1,1,1
 access_product_packaging_sps,product.packaging,product.model_product_packaging,portal.group_portal,1,1,1,1
 access_stock_warehouse_sps,stock.warehouse,stock.model_stock_warehouse,portal.group_portal,1,1,1,1
@@ -59,3 +59,26 @@ access_product_pricelist_user,product.pricelist.user,product.model_product_price
 access_product_pricelist_version_user,product.pricelist.version.user,product.model_product_pricelist_version,portal.group_portal,1,0,0,0
 access_product_pricelist_item_user,product.pricelist.item.user,product.model_product_pricelist_item,portal.group_portal,1,0,0,0
 access_crm_meeting_sps,crm.meting,base_calendar.model_crm_meeting,portal.group_portal,1,1,1,1
+access_mail_mail_sps,mail.mail,mail.model_mail_mail,portal.group_portal,1,1,1,1
+access_email_template_sps,email.template,email_template.model_email_template,portal.group_portal,1,1,1,1
+access_mail_followers_sps,mail.followers,mail.model_mail_followers,portal.group_portal,1,1,1,1
+access_mail_message_subtype_sps,mail.message.subtype,mail.model_mail_message_subtype,portal.group_portal,1,1,1,1
+access_mail_message_sps,mail.message,mail.model_mail_message,portal.group_portal,1,1,1,1
+access_mail_thread_sps,mail.thread,mail.model_mail_thread,portal.group_portal,1,1,1,1
+access_cost_rebate,cost.rebate,sps_crm.model_cost_rebate,portal.group_portal,1,1,1,1
+access_sps_state_sps,sps.state,model_sps_state,base.group_user,1,1,1,1
+access_doc_required_sps,doc.required,sps_sale.model_doc_required,base.group_user,1,1,1,1
+access_financing_type_sps,financing.type,sps_sale.model_financing_type,base.group_user,1,1,1,1
+access_tilt_tilt_sps,tilt.tilt,sps_crm.model_tilt_tilt,base.group_user,1,1,1,1
+access_send_send_mail_sps,send.send.mail,sps_crm.model_send_send_mail,base.group_user,1,1,1,1
+access_station_station_sps,station.station,sps_crm.model_station_station,base.group_user,1,1,1,1
+access_roof_type_sps,roof.type,sps_crm.model_roof_type,base.group_user,1,1,1,1
+access_level_lead_sps,level.lead,sps_crm.model_level_lead,base.group_user,1,1,1,1
+access_company_quotation_sps,company.quotation,sps_crm.model_company_quotation,base.group_user,1,1,1,1
+access_type_of_sale_sps,type.of.sale,sps_crm.model_type_of_sale,base.group_user,1,1,1,1
+access_product_brand_sps,product.brand,sps_product.model_product_brand,base.group_user,1,1,1,1
+access_product_invertor_brand_sps,product.invertor.brand,sps_product.model_product_invertor_brand,base.group_user,1,1,1,1
+access_module_master_sps,module.master,sps_product.model_module_master,base.group_user,1,1,1,1
+access_edi_edi_sps,edi.edi,edi.model_edi_edi,base.group_user,1,1,1,1
+access_document_storage_sps,document.storage,document.model_document_storage,base.group_user,1,1,1,1
+access_base_action_rule_sps,base.action.rule.lead.test,base_action_rule.model_base_action_rule_lead_test,base.group_user,1,1,1,1

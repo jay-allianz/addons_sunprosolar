@@ -35,7 +35,7 @@
                   <tr>
                      <td>
                        <barCode code="Code128" x="0.0cm" y="0.0cm" quiet="0" style="barcode" barWidth="0.25" barHeight="20">
-                              [[o.partner_id.name]] [[product_get(o.order_line)]]</barCode>
+                              [[ o.partner_id.name ]] [[ product_get(o.order_line) ]]</barCode>
                      </td>
                   </tr>
                </blockTable>

@@ -2240,7 +2240,7 @@
                             <para style="P1">□ Combination: See Financing type</para>
                         </td>
                         <td><para style="P1">TOTAL DUE</para></td>
-                        <td><para style="P1">[[ s.project_id and s.project_id.amount or 0 - s.project_id and s.project_id.deposit or 0]]</para></td>
+                        <td><para style="P1">[[ (s.project_id and s.project_id.amount or 0) - (s.project_id and s.project_id.deposit or 0) ]]</para></td>
                         <td><para style="P1"></para></td>
                         <td><para style="P1">ESTIMATED START DATE: [[ s.project_id.date_start or '' ]]</para></td>
                     </tr>

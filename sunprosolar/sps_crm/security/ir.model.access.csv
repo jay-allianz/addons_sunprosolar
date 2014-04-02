@@ -12,5 +12,3 @@ access_type_of_sale,type.of.sale,model_type_of_sale,base.group_user,1,1,1,1
 access_product_brand,product.brand,sps_product.model_product_brand,base.group_user,1,1,1,1
 access_product_invertor_brand,product.invertor.brand,sps_product.model_product_invertor_brand,base.group_user,1,1,1,1
 access_module_master,module.master,sps_product.model_module_master,base.group_user,1,1,1,1
-
-

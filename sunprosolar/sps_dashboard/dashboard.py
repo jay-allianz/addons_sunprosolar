@@ -85,7 +85,7 @@ class sps_dashboard(osv.Model):
     
     _columns = {
         'name' : fields.char('Name', size='128'),
-        'partner_id' : fields.many2one('res.partner', 'Customer'),       
+        'partner_id' : fields.many2one('res.partner', 'Customer'),
         'state': fields.selection(AVAILABLE_STATES, 'Order Status', readonly=True),
         'state_id': fields.function(_get_state, type='many2one', relation='sps.state', string='State', store=True),
         'nbr': fields.integer('Number of Records', readonly=True),

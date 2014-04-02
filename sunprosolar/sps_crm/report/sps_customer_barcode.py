@@ -33,9 +33,13 @@ class customer_barcode(report_sxw.rml_parse):
         })
         
     def _product_get(self, order_line):
-        result= order_line.product_id.name
+        print "Order Line", order_line
+        result = False
+        if order_line:
+            result = order_line.product_id.name
         for product in order_line:
             result += product.product_id.name
+        print "Result", result
         return result
     
 report_sxw.report_sxw('report.customer.sale.barcode', 'sale.order', 'addons/sps_crm/report/sps_customer_barcode.rml', parser=customer_barcode, header=False)
