@@ -235,7 +235,17 @@ class res_user(osv.Model):
                         project_status = sale_data[0].state
                     else:
                         project_status = data.stage_id and data.stage_id.name or 'draft'
-            new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,'year': data.number_of_years, 'cars_off_roads':data.cars_off_roads*data.number_of_years, 'tree_planting_equi':data.tree_planting_equi*data.number_of_years, 'co2_offset_pounds':data.co2_offset_pounds*data.number_of_years, 'bill_saving':bill_saving}    
+            new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,
+                        'year': data.number_of_years,
+                        'cars_off_roads':data.cars_off_roads*data.number_of_years,
+                        'tree_planting_equi':data.tree_planting_equi*data.number_of_years,
+                        'co2_offset_pounds':data.co2_offset_pounds*data.number_of_years,
+                        'bill_saving':bill_saving,
+                        'auto_email_id':auto_email_id,
+                        'admin_email_id':admin_email_id,
+                        'engineering_email_id':engineering_email_id,
+                        'care_maintance': care_maintance
+                        }    
             sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             sale_order_data = sale_order_obj.browse(cr, uid, sale_order_ids, context= context)
             for sale_data in sale_order_data:
@@ -248,10 +258,6 @@ class res_user(osv.Model):
                       'solar_info': solar_info_list,
                       'project_status': project_status,
                       'new_info':new_info,
-                      'auto_email_id':auto_email_id,
-                      'admin_email_id':admin_email_id,
-                      'engineering_email_id':engineering_email_id,
-                      'care_maintance': care_maintance
                       }
         return result
     
