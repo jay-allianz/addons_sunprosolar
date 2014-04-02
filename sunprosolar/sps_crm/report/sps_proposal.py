@@ -44,6 +44,7 @@ class proposal_report(report_sxw.rml_parse):
     tree_planting_equi = 0.0
     first_year_saving = 0.0
     co2_emission = 0
+    total_saving = 0
     def __init__(self, cr, uid, name, context=None):
         super(proposal_report, self).__init__(cr, uid, name, context=context)
         self.count = 0.0
@@ -161,6 +162,7 @@ class proposal_report(report_sxw.rml_parse):
         tilt_azimuth_obj = self.pool.get('tilt.azimuth')
         reference = 'sale.order,' + str(id)
         lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
+        pro_data = []
         usage_data = False
         if lead_id:
             usage_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].anual_electricity_usage_ids
@@ -189,16 +191,13 @@ class proposal_report(report_sxw.rml_parse):
         if lead_id:
             production_data = lead_obj.browse(self.cr, self.uid, lead_id)[0]
         
-        if production_data and production_data.loc_station_id:
-            tilt_azimuth_id = tilt_azimuth_obj.search(self.cr, self.uid, [('tilt_azimuth_id','=',production_data.loc_station_id.id),('tilt','=', production_data.faceing.id),('azimuth','=',production_data.tilt_degree)])
-            if tilt_azimuth_id:
-                tilt_azimuth_data = tilt_azimuth_obj.browse(self.cr, self.uid, tilt_azimuth_id)[0]
-                pro_data = [("Jan", production_data.jan_production), ("Feb", production_data.feb_production),
-                            ("Mar", production_data.mar_production), ("Apr", production_data.apr_production),
-                            ("May", production_data.may_production), ("Jun", production_data.jun_production),
-                            ("Jul", production_data.jul_production), ("Aug", production_data.aug_production),
-                            ("Sep", production_data.sep_production), ("Oct", production_data.oct_production),
-                            ("Nov", production_data.nov_production), ("Dec", production_data.dec_production)]
+        if production_data:
+            pro_data = [("Jan", production_data.jan_production), ("Feb", production_data.feb_production),
+                        ("Mar", production_data.mar_production), ("Apr", production_data.apr_production),
+                        ("May", production_data.may_production), ("Jun", production_data.jun_production),
+                        ("Jul", production_data.jul_production), ("Aug", production_data.aug_production),
+                        ("Sep", production_data.sep_production), ("Oct", production_data.oct_production),
+                        ("Nov", production_data.nov_production), ("Dec", production_data.dec_production)]
         ar = area.T(size=(600, 300),
                     y_grid_interval=200, 
                     x_coord = category_coord.T(data, 0),

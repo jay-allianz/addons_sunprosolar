@@ -473,8 +473,8 @@
                 
             </field>
         </record>
-
-							-->
+       -->
+       
 		<!-- Opportunities Form View -->
 		<record id="view_sun_crm_opp_form" model="ir.ui.view">
 			<field name="name">crm.opp.form</field>
@@ -484,6 +484,9 @@
 				<field name="phone" position="after">
 					<button name="openMap" string="Google Map" type="object"
 						help="It will open google map for the above address." />
+				</field>
+				<field name="stage_id" position="attributes">
+					<attribute name="states">draft,open,cancel</attribute>
 				</field>
 				<field name="partner_id" position="attributes">
 					<attribute name="domain">[('customer','=',True)]</attribute>
@@ -885,8 +888,8 @@
 					</page>
 					<page string="Project Photos">
 						<group col="4" colspan="4">
-							<field name="intial_photo" widget="image"/>
-							<field name="final_photo" widget="image"/>
+							<field name="intial_photo" widget="image" class="oe_left oe_avatar"/>
+							<field name="final_photo" widget="image" class="oe_left oe_avatar"/>
 							<field name="project_photo_ids" nolabel="1" colspan="4">
 								<form>
 									<field name="name" required="1" />
@@ -1488,6 +1491,7 @@
 					<field name="admin_email_id"/>
 					<field name="engineering_email_id"/>
 					<field name="info_email_id"/>
+					<field name="care_maintance"/>
 				</field>
 				<xpath expr="//notebook/page[@string='Configuration']"
 					position="after">

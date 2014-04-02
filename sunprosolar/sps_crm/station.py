@@ -200,7 +200,7 @@ class electricity_usage(osv.Model):
         'type' : 'yearly',
     }
     
-class cost_rebate(osv.TransientModel):
+class cost_rebate(osv.Model):
     _name = "cost.rebate"
     
     _columns = {

@@ -27,6 +27,7 @@
 
         <record id="portal_sale.portal_personal_contact" model="ir.rule">
             <field name="domain_force">['|',('partner_id','=',user.partner_id.id), ('message_follower_ids','in',[user.partner_id.id])]</field>
+            <field eval="0" name="perm_write"/>
         </record>
     </data>
 

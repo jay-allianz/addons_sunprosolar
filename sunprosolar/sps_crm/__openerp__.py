@@ -32,8 +32,8 @@
         'crm_lead_demo.xml',
     ],
     'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv',
+#        'security/security.xml',
+#        'security/ir.model.access.csv',
         'lead_view.xml',
         'crm_data.xml',
         'crm_report_view.xml',
