@@ -2115,6 +2115,7 @@ class res_company(osv.Model):
         'engineering_email_id' : fields.char("Engineering Email ID", help="Engineering Email Id is used when Query generated"),
         'info_email_id' : fields.char("Info Email ID", help="Info Email Id is used when Query generated or customer request to contact"),
         'care_maintance' : fields.binary("Care & Maintenance"),
+        'care_maintance_fname' : fields.char('Care Maintanance file name'),
         'avg_co2_ele': fields.float("Average CO2 emitted to produce Electricity(lbs)"),
         'annual_equvi_tree': fields.float("Annual offset of One Growing Tree(lbs)"),
         'years_40_offset_tree': fields.function(_get_years_40_offset_tree, type="float", string="40 Years Offset of One Growing Tree(lbs)"),
