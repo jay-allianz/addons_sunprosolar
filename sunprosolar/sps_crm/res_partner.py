@@ -167,15 +167,14 @@ class res_user(osv.Model):
         project_obj = self.pool.get('project.project')
         user_obj = self.pool.get('res.users')
         
-        user_rec = user_obj.browse(cr, uid, uid, context=context)
-        auto_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
-        admin_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
-        engineering_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
-        care_maintance = user_rec.company_id and user_rec.company_id.care_maintance or ''
-        for links in user_rec.company_id and user_rec.company_id.monitoring_links:
+        res_users_data = self.browse(cr, uid, user_id, context=context)
+        auto_email_id = res_users_data.company_id and res_users_data.company_id.auto_email_id or ''
+        admin_email_id = res_users_data.company_id and res_users_data.company_id.auto_email_id or ''
+        engineering_email_id = res_users_data.company_id and res_users_data.company_id.auto_email_id or ''
+        care_maintance = res_users_data.company_id and res_users_data.company_id.care_maintance or ''
+        for links in res_users_data.company_id and res_users_data.company_id.monitoring_links:
             monitoring_links_list.append({'name': links.name, 'link': links.link})
         
-        res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         if res_users_data.partner_id:
             partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
@@ -299,12 +298,12 @@ class res_user(osv.Model):
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
         for data in crm_data:
-            for doc_data in data.doc_req_ids:
+            for doc_data in data.attachment_ids:
                 documents.append({
                              'id': doc_data.id,
-                             'doc_name' : doc_data.doc_id.name or '',
-                             'file_name' : doc_data.document_id.name or '',
-                             'doc_file' : doc_data.document_id.datas or ''
+                             'doc_name' : doc_data.name or '',
+                             'file_name' : doc_data.store_fname or '',
+                             'doc_file' : doc_data.db_datas or ''
                 })
         return documents
     
@@ -312,45 +311,35 @@ class res_user(osv.Model):
         if not context:
             context = {}
         res_users_data = self.browse(cr, uid, user_id, context=context)
-        return {'care_maintance': res_users_data.company_id.care_maintance or False} 
-    
+        return {'file_name': res_users_data.company_id.care_maintance_fname,'care_maintance': res_users_data.company_id.care_maintance or False} 
     
     def upload_document(self, cr, uid, user_id, doc_name, doc_file, context=None):
         if not context:
             context = {}
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
-        doc_all_obj = self.pool.get('documents.all')
-        doc_obj = self.pool.get('document.required')
         attachement_obj = self.pool.get('ir.attachment')
         new_document_id = False
-        doc_all_vals = {
-                        'name': doc_name
-                        }
-        doc_all_new_id = doc_all_obj.create(cr, uid, doc_all_vals, context=context)
-        vals_attachment = {
-                           'name': doc_name,
-                           'datas':doc_file
-                           }
-        attachemnt_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
+        attachment_existing_ids = []
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
-        partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        if doc_all_new_id and attachemnt_id:
-            vals = {
-                    'crm_lead_id' : crm_ids[0],
-                    'doc_id' : doc_all_new_id,
-                    'document_id': attachemnt_id,
-                    'partner_id': partner_id
+        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+        for data in crm_data:
+            for attach_id in data.attachment_ids:
+                attachment_existing_ids.append(attach_id.id)
+            vals_attachment = {
+                        'name': doc_name,
+                        'db_datas':doc_file
             }
-            new_document_id= doc_obj.create(cr, uid, vals, context= context)
-#            crm_obj.write(cr, uid, crm_ids, {'doc_req_ids': [(6,0,[new_document_id])]})
+            new_attachment_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
+            attachment_existing_ids.append(new_attachment_id)
+        crm_obj.write(cr, uid, crm_ids, {'attachment_ids':[(6, 0, attachment_existing_ids)]})
         if new_document_id:
             return new_document_id
         else:
             False
-            
+    
     def get_project_photo(self, cr, uid, user_id, context = None):
         if not context:
             context = {}
