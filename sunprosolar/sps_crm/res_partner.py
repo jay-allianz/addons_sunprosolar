@@ -142,6 +142,7 @@ class res_user(osv.Model):
             context = {}
         address = ' '
         result = {}
+        new_info = {}
         partner_info = {}
         crm_lead_info = []
         solar_info = {}
@@ -193,9 +194,9 @@ class res_user(osv.Model):
                             'monitoring_website' : res_users_data.website or ''
                             }
             crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-            crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
-            bill_saving = 0
-            for data in crm_data:
+            if crm_ids:
+                data = crm_obj.browse(cr, uid, crm_ids, context=context)[0]
+                bill_saving = 0
                 if data.intial_photo:
                     intial_photo = data.intial_photo
                 else:
@@ -235,7 +236,7 @@ class res_user(osv.Model):
                         project_status = sale_data[0].state
                     else:
                         project_status = data.stage_id and data.stage_id.name or 'draft'
-            new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,
+                new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,
                         'year': data.number_of_years,
                         'cars_off_roads':data.cars_off_roads*data.number_of_years,
                         'tree_planting_equi':data.tree_planting_equi*data.number_of_years,
