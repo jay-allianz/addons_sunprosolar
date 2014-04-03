@@ -903,7 +903,7 @@ class crm_lead(osv.Model):
         'ptc_stc_ratio': fields.function(_get_ptc_stc_ratio, string='PTC STC Ratio', type='float',digits=(12,3)),
         'annual_solar_prod_display': fields.function(_get_annual_solar_prod_display, string='Annual Solar Production (KWh)', type='integer', digits=(12,3)),
         'annual_solar_prod': fields.function(_get_annual_solar_prod, string='Annual Solar Production (KWh)', type='float', digits=(12,3)),
-        'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='float', digits=(12,3)),
+        'annual_ele_usage': fields.function(_get_annual_ele_usage, string='Annual Electricity Usage (KWh)', type='integer'),
         'site_avg_sun_hour': fields.function(_get_site_avg_sun_hour, string='Site Average Sun Hours', type='float'),
         'project_photo_ids' : fields.one2many('project.photos', 'crm_lead_id', "Project Photos"),
         'project_review_ids' : fields.one2many('project.reviews', 'crm_lead_id', "Project Reviews"),
@@ -1566,7 +1566,7 @@ class solar_solar(osv.Model):
                 
                 'annual_solar_prod_display': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='integer', multi='rating_all', digits=(12,3)),
                 'annual_solar_prod': fields.function(_get_system_rating_data, string='Annual Solar Production(KWh)', type='float', multi='rating_all', digits=(12,3)),
-                'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='float', multi='rating_all',digits=(12,3)),
+                'annual_ele_usage': fields.function(_get_system_rating_data, string='Annual Electricity Usage(KWh)', type='integer', multi='rating_all'),
                 'site_avg_sun_hour': fields.function(_get_system_rating_data, string='Site Avarage Sun Hours', type='float', multi='rating_all'),
                 'estimate_shade': fields.float('Estimated Shading'),
                 
