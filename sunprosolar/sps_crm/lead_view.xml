@@ -1493,6 +1493,20 @@
 					<field name="info_email_id"/>
 					<field name="care_maintance"/>
 				</field>
+				<xpath expr="//group[@string='Bank Accounts']" position="before">
+					<group string="Link to Monitor">
+						<field name="monitoring_links" nolabel="1" colspan="4">
+							<tree> 
+								<field name="name"/>
+								<field name="link" widget="url"/>
+							</tree>
+							<form>
+								<field name="name"/>
+								<field name="link" widget="url"/>
+							</form>
+						</field>
+					</group>
+				</xpath>
 				<xpath expr="//notebook/page[@string='Configuration']"
 					position="after">
 					<page string="Equivalencies and Value Factors">

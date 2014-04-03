@@ -45,6 +45,7 @@ access_product_supplierinfo_sps,product.supplierinfo,product.model_product_suppl
 access_product_packaging_sps,product.packaging,product.model_product_packaging,portal.group_portal,1,1,1,1
 access_stock_warehouse_sps,stock.warehouse,stock.model_stock_warehouse,portal.group_portal,1,1,1,1
 access_stock_location_sps,stock.location,stock.model_stock_location,portal.group_portal,1,1,1,1
+access_monitoring_links_sps,monitoring.links,sps_crm.model_monitoring_links,portal.group_portal,1,1,1,1
 access_product_uom_categ_user,product.uom.categ.user,product.model_product_uom_categ,portal.group_portal,1,0,0,0
 access_product_uom_user,product.uom.user,product.model_product_uom,portal.group_portal,1,0,0,0
 access_product_ul_user,product.ul.user,product.model_product_ul,portal.group_portal,1,0,0,0
@@ -82,3 +83,4 @@ access_module_master_sps,module.master,sps_product.model_module_master,base.grou
 access_edi_edi_sps,edi.edi,edi.model_edi_edi,base.group_user,1,1,1,1
 access_document_storage_sps,document.storage,document.model_document_storage,base.group_user,1,1,1,1
 access_base_action_rule_sps,base.action.rule.lead.test,base_action_rule.model_base_action_rule_lead_test,base.group_user,1,1,1,1
+access_monitoring_links,monitoring.links,sps_crm.model_monitoring_links,base.group_user,1,1,1,1

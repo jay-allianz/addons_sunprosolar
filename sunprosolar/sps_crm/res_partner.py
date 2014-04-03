@@ -158,6 +158,8 @@ class res_user(osv.Model):
         no_of_module = 0
         invertor_id = None
         invertor_name = ' '
+        monitoring_links_list = []
+        monitoring_links = {}
         no_of_invertor = 0
         crm_obj = self.pool.get('crm.lead')
         partner_obj = self.pool.get('res.partner')
@@ -170,6 +172,8 @@ class res_user(osv.Model):
         admin_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
         engineering_email_id = user_rec.company_id and user_rec.company_id.auto_email_id or ''
         care_maintance = user_rec.company_id and user_rec.company_id.care_maintance or ''
+        for links in user_rec.company_id and user_rec.company_id.monitoring_links:
+            monitoring_links_list.append({'name': links.name, 'link': links.link})
         
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
@@ -191,7 +195,6 @@ class res_user(osv.Model):
                             'mobile': res_users_data.partner_id.mobile or '',
                             'fax': res_users_data.partner_id.fax or '',
                             'login': res_users_data.login or '',
-                            'monitoring_website' : res_users_data.website or ''
                             }
             crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             if crm_ids:
@@ -245,8 +248,11 @@ class res_user(osv.Model):
                         'auto_email_id':auto_email_id,
                         'admin_email_id':admin_email_id,
                         'engineering_email_id':engineering_email_id,
-                        'care_maintance': care_maintance
-                        }    
+                        'average_sun_hour':data.site_avg_sun_hour,
+                        'annual_production':data.annual_solar_prod_display,
+                        'zip':res_users_data.partner_id.city_id and res_users_data.partner_id.city_id.zip or '',
+                        'monitoring_links':monitoring_links_list
+                        }
             sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             sale_order_data = sale_order_obj.browse(cr, uid, sale_order_ids, context= context)
             for sale_data in sale_order_data:
@@ -301,6 +307,13 @@ class res_user(osv.Model):
                              'doc_file' : doc_data.document_id.datas or ''
                 })
         return documents
+    
+    def get_care_maintenance(self, cr, uid, user_id, context=None):
+        if not context:
+            context = {}
+        res_users_data = self.browse(cr, uid, user_id, context=context)
+        return {'care_maintance': res_users_data.company_id.care_maintance or False} 
+    
     
     def upload_document(self, cr, uid, user_id, doc_name, doc_file, context=None):
         if not context:
