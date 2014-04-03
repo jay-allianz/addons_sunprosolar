@@ -104,16 +104,10 @@
 					</attribute>
 					<attribute name="class">oe_highlight</attribute>
 				</button>
-				<button name="print_quotation" string="Print" type="object"
-					position="attributes">
+				<button name="print_quotation" string="Print" type="object" position="attributes">
 					<attribute name="states">contract_generated,follow_up,contract_signed,permit,city,permit_pack,drawing,project_management_notified,financing_type,site_inspection,assign_financing_incharge,progress
 					</attribute>
 				</button>
-			<!--
-				<xpath expr="/form/header/field[@name='state']" position="attributes">
-					<attribute name="statusbar_visible">draft,sent,contract_generated,follow_up,contract_signed,city,permit_pack,drawing,permit,project_management_notified,financing_type,assign_financing_incharge,site_inspection,progress</attribute>
-				</xpath>   
-			-->
 				<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="after">
 					<field name="no_module"/>
 					<field name="no_inverter"/>
@@ -173,7 +167,7 @@
 							</div>
 						</group>
 					</page>
-					<page string="Financing Type" attrs="{'invisible':[('state','!=','financing_type'),('state','!=','project_management_notified'),('state','!=','permit')]}">
+					<page string="Financing Type" attrs="{'invisible':[('state','!=','financing_type'),('state','!=','project_management_notified')]}">
 						<group cols="4" colspan="4" attrs="{'invisible':[('state','!=','financing_type')]}">
 							<label for="incharge_user_id"/>
 							<div>
@@ -199,7 +193,9 @@
 	                        <button name="document_collected" string="Document Collected"
 	                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" /> 
 	                    </group>
-	                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','permit')]}">
+					</page>
+					<page string="Customer Approval" attrs="{'invisible':[('state','!=','permit')]}">
+	                    <group cols="1" colspan="4">
 	                        <field name="ahj" selection="1" />
 	                        <button name="customer_appove" string="Customer Approved"
 	                            colspan="2" type="object" icon="gtk-yes" /> 

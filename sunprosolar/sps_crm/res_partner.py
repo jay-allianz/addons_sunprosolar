@@ -82,6 +82,8 @@ class res_user(osv.Model):
             context = {}
         partner_obj = self.pool.get('res.partner')
         sale_order_obj = self.pool.get('sale.order')
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
@@ -90,6 +92,14 @@ class res_user(osv.Model):
         for data in sale_data:
             if data.state == 'permit':
                 sale_order_obj.write(cr, uid, sale_order_ids, {'state': 'city'},context=context)
+                
+                template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'customer_accept_plan', context=context)
+                template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
+                email_to_list = [res_users_data.company_id and res_users_data.company_id.engineering_email_id or 'engineering@sunpro-solar.com',res_users_data.company_id and res_users_data.company_id.admin_email_id or 'administration@sunpro-solar.com']
+                for email_to in email_to_list:
+                    template_values.update({'email_to': email_to})
+                    msg_id = mail_mail.create(cr, uid, template_values, context=context)
+                    mail_mail.send(cr, uid, [msg_id], context=context)
         return True
     
     def get_user_manual(self, cr, uid, user_id, context=None):
@@ -216,7 +226,26 @@ class res_user(osv.Model):
                 crm_lead_info.append(data.id)
                 for solar_data in data.solar_ids:
                     tilt = solar_data.faceing.tilt or ''
-                    faceing  = solar_data.tilt_degree or ''
+                    
+                    if solar_data.tilt_degree == 's':
+                        faceing='South'
+                    elif solar_data.tilt_degree == 'n':
+                        faceing='North'
+                    elif solar_data.tilt_degree == 'ne':
+                        faceing='North-East'
+                    elif solar_data.tilt_degree == 'e':
+                        faceing='East'
+                    elif solar_data.tilt_degree == 'se':
+                        faceing='South-East'
+                    elif solar_data.tilt_degree == 'sw':
+                        faceing='South-West'
+                    elif solar_data.tilt_degree == 'w':
+                        faceing='West'
+                    elif solar_data.tilt_degree == 'nw':
+                        faceing='North-West'
+                    else:
+                        faceing = or ''
+                    
                     module_id = solar_data.module_product_id and solar_data.module_product_id.id or ''
                     module_name = solar_data.module_product_id and solar_data.module_product_id.name or ''
                     no_of_module = solar_data.num_of_module or ''
