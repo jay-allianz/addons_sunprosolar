@@ -45,7 +45,7 @@ class crm_lead(osv.Model):
             'user_id': lead.user_id.id,
             'comment': lead.description,
             'section_id': lead.section_id.id or False,
-            'parent_id': lead.utility_company_id.id or False,
+            'parent_id': False,
             'phone': lead.phone,
             'mobile': lead.mobile,
             'email': tools.email_split(lead.email_from) and tools.email_split(lead.email_from)[0] or False,
@@ -58,8 +58,9 @@ class crm_lead(osv.Model):
             'city': lead.city,
             'country_id': lead.country_id and lead.country_id.id or False,
             'state_id': lead.state_id and lead.state_id.id or False,
-            'is_company': is_company,
-            'type': 'contact'
+            'is_company': True,
+            'type': 'contact',
+            'customer':True,
         }
         partner = partner.create(cr, uid, vals, context=context)
         return partner
