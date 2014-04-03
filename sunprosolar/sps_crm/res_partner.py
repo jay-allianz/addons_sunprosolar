@@ -244,7 +244,7 @@ class res_user(osv.Model):
                     elif solar_data.tilt_degree == 'nw':
                         faceing='North-West'
                     else:
-                        faceing = or ''
+                        faceing = ''
                     
                     module_id = solar_data.module_product_id and solar_data.module_product_id.id or ''
                     module_name = solar_data.module_product_id and solar_data.module_product_id.name or ''
