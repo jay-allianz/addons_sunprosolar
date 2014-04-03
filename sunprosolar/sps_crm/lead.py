@@ -2110,10 +2110,10 @@ class res_company(osv.Model):
         return res
     
     _columns = {
-        'auto_email_id' : fields.char("Auto Email ID"),
-        'admin_email_id' : fields.char("Admin Email id"),
-        'engineering_email_id' : fields.char("Engineering Email id"),
-        'info_email_id' : fields.char("Info Email id"),
+        'auto_email_id' : fields.char("Auto Email ID", help= "Auto Email ID is used when project photo is uploaded, Project Review is received, Friend Reference is added"),
+        'admin_email_id' : fields.char("Admin Email ID", help="Admin Email Id is used when customer request details"),
+        'engineering_email_id' : fields.char("Engineering Email ID", help="Engineering Email Id is used when Query generated"),
+        'info_email_id' : fields.char("Info Email ID", help="Info Email Id is used when Query generated or customer request to contact"),
         'care_maintance' : fields.binary("Care & Maintenance"),
         'avg_co2_ele': fields.float("Average CO2 emitted to produce Electricity(lbs)"),
         'annual_equvi_tree': fields.float("Annual offset of One Growing Tree(lbs)"),
@@ -2128,6 +2128,7 @@ class res_company(osv.Model):
         'emmision_gas': fields.float("Emissions from a Gallon of Gas(lbs)"),
         'fedral_tax':fields.float('Fedral Tax'),
         'sales_tax':fields.float('Sales Tax'),
+        'monitoring_links' : fields.one2many('monitoring.links','res_company_id',"Monitoring Links")
     }
     
     _defaults = {
@@ -2142,6 +2143,16 @@ class res_company(osv.Model):
         'medium_pollusion':1.1,
         'avg_yearly_miles':15000
     }
+    
+class monitoring_links(osv.Model):
+    
+    _name="monitoring.links"
+    
+    _columns = {
+                'name': fields.char("Name"),
+                'link': fields.char("Link"),
+                'res_company_id': fields.many2one('res.company','Company')
+                }
     
 class SendMail(osv.Model):
     
