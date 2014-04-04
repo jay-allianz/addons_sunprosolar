@@ -17,6 +17,7 @@
 		</record>
 		
 		<!-- Schedular for cowndown-->
+		<!--
 		<record id="ir_cron_cowndown_schedule" model="ir.cron">
             <field name="name">Cowndown Conter for Document</field>
             <field name="interval_number">1</field>
@@ -27,6 +28,7 @@
             <field eval="'_get_count_down'" name="function" />
             <field eval="" name="args" />
         </record>
+		-->
         
 		<!--Required Doc Search View -->
 		<record model="ir.ui.view" id="doc_required_search">

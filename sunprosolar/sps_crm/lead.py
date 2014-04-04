@@ -703,6 +703,21 @@ class crm_lead(osv.Model):
                             self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
         return True
     
+    def onchange_attachment_ids(self, cr, uid, ids, attachment_ids, context=None):
+        values = {}
+        if not context:
+            context = {}
+        user_obj = self.pool.get('res.users')
+        user_rec = user_obj.browse(cr, uid, uid, context=context)
+        auto_email_id = user_rec.company_id.auto_email_id
+        
+        send_mail_obj = self.pool.get('send.send.mail')
+        NO_REC_MSG = 'No Auto email ID defined in Company Configuration !'
+        SUB_LINE = 'Notification For uploded attachment.'
+        MSG_BODY = 'Hello Admin,<br/>' + user_rec.name + ' uploaded a attachment.' + '<br/><br/>The attached file is successfully Uploded.<br/><br/> Thank You.'
+        send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, auto_email_id, context=context)
+        return {'value' : values}
+    
     def _get_monthly_production(self, cr, uid, ids, name, args, context=None):
         res = {}
         jan_production = 0.0
@@ -877,7 +892,7 @@ class crm_lead(osv.Model):
         'rebate':fields.float("Rebate"),
         'srec':fields.float('SREC/kwh'),
         'number_of_years':fields.integer('Number Of Years'),
-        'replace_inverter_every':fields.float('Replace Inverter Every(Years)'),
+        'replace_inverter_every':fields.integer('Replace Inverter Every(Years)'),
         'replace_inverter_over_loan_period' : fields.integer("Replace Inverter Over Loan Period"),
         'inverter_cost' : fields.function(_get_cost_rebate, string="Inverter Cost",type="float",multi="cost_all"),
         'array_output' : fields.function(_get_output, string='Solar Array Output', type='float'),
@@ -913,6 +928,7 @@ class crm_lead(osv.Model):
         'reg_no' : fields.char('Registration Number.'),
         'intial_photo': fields.binary('Initial Photo'),
         'final_photo':fields.binary('Final Photo'),
+        'referred_by': fields.many2one("res.partner", "Referred By",help= "Referred by which Customer"),
         
         'jan_production': fields.function(_get_monthly_production, method=True, type='float', multi='monthly_production', string="January Production", store=True),
         'feb_production': fields.function(_get_monthly_production, method=True, type='float', multi='monthly_production', string="February Production", store=True),
@@ -992,13 +1008,15 @@ class crm_lead(osv.Model):
                 annual_ele_usage_temp = 1
             else:
                 annual_ele_usage_temp = data.annual_ele_usage
+            replace_inverter_every_year = data.replace_inverter_every
             for yr in range(data.number_of_years):
                 year = yr + 1
                 if year >= 15:
                     yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings
                 else:
                     yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings + 5000
-                
+                if year % replace_inverter_every_year == 0:
+                    yearly_payout += data.inverter_cost
                 vals = {
                     'year':year,
                     'old_bill':prev_old_bill,
@@ -1704,7 +1722,7 @@ class company_quotation(osv.Model):
     _rec_name = "company_name"
     
     _columns = {
-        'company_name': fields.many2one('res.company', 'Company Name'),
+        'company_name': fields.many2one('res.partner', 'Company Name'),
         'product_ids' : fields.many2many('product.product', 'product_lead_rel', 'pro_id', 'lead_id', 'Equipments', help="Select or create equipments offered by the Company."),
         'quote_amount' : fields.float('Quoted Amount'),
         'quote_desc': fields.text("Quotation Infomation"),
@@ -1797,6 +1815,10 @@ class ir_attachment(osv.Model):
         values = {"name": datas_fname}
         return {'value' : values}
     
+    _columns = {
+        'visible_user' : fields.boolean('Visible to User')
+    }
+    
 class document_required(osv.Model):
     
     _name = "document.required"
@@ -1878,6 +1900,7 @@ class res_partner(osv.Model):
         'cash_bonus_ids' : fields.one2many('cash.bonus','res_partner_id','Cash Bonus'),
         'total_bonus' : fields.function(_get_total_bonus,string="Toatal Bonus", type = "float", method= True),
         'zip_ids' : fields.many2many('city.city','city_res_part_rel',"city_id","res_part_id","Zip"),
+        'competitor':fields.boolean('Competitor')
     }
     
     def openMap(self, cr, uid, ids, context=None):
@@ -2255,6 +2278,24 @@ class submit_question(osv.Model):
                 'name' : fields.text("Question"),
                 'crm_lead_id' : fields.many2one("crm.lead", "Lead"),
     }
+    
+    def create(self, cr, uid, vals, context=None):
+        res = super(submit_question, self).create(cr, uid, vals, context=context)
+        
+        if not context:
+            context = {}
+        
+        user_obj = self.pool.get('res.users')
+        user_rec = user_obj.browse(cr, uid, uid, context=context)
+        auto_email_id = user_rec.company_id.auto_email_id
+        
+        send_mail_obj = self.pool.get('send.send.mail')
+        NO_REC_MSG = 'No Auto email ID defined in Company Configuration !'
+        SUB_LINE = 'Notification For Submit Question.'
+        MSG_BODY = 'Hello Admin,<br/>' + user_rec.name + ' uploaded a Question.' + '<br/><br/>The Question is successfully Submited.<br/><br/> Thank You.'
+        send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, auto_email_id, context=context)
+        
+        return res
     
 class cash_bonus(osv.Model):
     
