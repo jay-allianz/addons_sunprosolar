@@ -328,12 +328,11 @@ class res_user(osv.Model):
         crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
         for data in crm_data:
             for doc_data in data.attachment_ids:
-                documents.append({
-                             'id': doc_data.id,
-                             'doc_name' : doc_data.name or '',
-                             'file_name' : doc_data.store_fname or '',
-                             'doc_file' : doc_data.db_datas or ''
-                })
+                if doc_data.visible_user == True:
+                    documents.append({
+                                 'file_name' : doc_data.name or '',
+                                 'doc_file' : doc_data.db_datas or ''
+                    })
         return documents
     
     def get_care_maintenance(self, cr, uid, user_id, context=None):
@@ -458,7 +457,16 @@ class res_user(osv.Model):
                    'crm_lead_id' : crm_ids[0]
             }
             new_ref_id= ref_obj.create(cr, uid, vals, context= context)
-#        crm_obj.write(cr, uid, crm_ids, {'friend_refer_ids': [(6,0,[new_ref_id])]})
+            
+        crm_vals ={
+            'name': 'Lead for ' + name + ' ' + lname,
+            'contact_name' : name,
+            'last_name' : lname,
+            'email_from' : email,
+            'phone' : phone,
+            'referred_by' : partner_id
+        }
+        crm_obj.create(cr, uid, crm_vals, context=context)
         if new_ref_id:
             return new_ref_id
         else:

@@ -147,6 +147,9 @@
 					<field name="last_name" placeholder="Last Name"
 						attrs="{'required':[('partner_is_company','=',False)],'invisible':[('partner_is_company','=',True)]}" />
 				</field>
+				<field name="user_id" position="before">
+					<field name="referred_by" />
+				</field>
 				<xpath expr="//field[@name='phone']" position="attributes">
 					<attribute name="required">1</attribute>
 				</xpath>
@@ -175,6 +178,9 @@
 					<button name="openMap" string="Google Map" type="object"
 						help="It will open google map for the above address." />
 				</field>
+				<xpath expr="//page[@string='Extra Info']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
 				<xpath expr="//form/sheet/notebook/page[@string='Internal Notes']"
 					position="before">
 					<page string="Viewing All Notes">
@@ -362,7 +368,7 @@
 						</group>
 					</page>
 					<page string="Attachments">
-						<field name="attachment_ids" nolabel="1" colspan="4" />
+						<field name="attachment_ids" nolabel="1" colspan="4" on_change="onchange_attachment_ids(attachment_ids)" />
 					</page>
 					<page string="Viewing Home Notes"
 						attrs="{'invisible':[('see_lead_home_note','=',False)]}">
@@ -705,7 +711,7 @@
 						</group>
 					</page>
 					<page string="Attachments">
-						<field name="attachment_ids" nolabel="1" colspan="4" />
+						<field name="attachment_ids" nolabel="1" colspan="4" on_change="onchange_attachment_ids(attachment_ids)"/>
 					</page>
 					<page string="Solar">
 						<separator string="Solar Information" />
@@ -1122,7 +1128,7 @@
 				<form string="Company Quotation Form" version="7.0">
 					<sheet>
 						<group col="4" colspan="4">
-							<field name="company_name" required="1" />
+							<field name="company_name" required="1" domain="[('competitor','=',True)]"/>
 							<newline />
 							<separator string="Equipments" colspan="4" />
 							<field name="product_ids" nolabel="1" colspan="4" />
@@ -1360,6 +1366,9 @@
                      <field name="from_zip" attrs="{'invisible':[('is_utility_company','=',False)]}" />
                      <field name="to_zip" attrs="{'invisible':[('is_utility_company','=',False)]}"/>
 				</field>
+				<field name="supplier" position="after">
+					<field name="competitor"/>
+				</field>
 				<xpath expr="/form/sheet/group" position="after" attrs="{'invisible':[('is_utility_company','=',False)]}">
 				    <separator string="ZIP" />
 					<field name="zip_ids" colspan="4" nolabel="1"/><newline/>
@@ -1569,7 +1578,10 @@
 				<xpath expr="//field[@name='datas_fname']" position="attributes">
 					<attribute name="on_change">onchange_datas_fname(datas_fname)</attribute>
 				</xpath>
-			</field>
+				<field name="user_id" position="after">
+                    <field name="visible_user"/>
+                </field>
+            </field>
 		</record>
 
 	</data>

@@ -26,22 +26,38 @@ from dateutil.relativedelta import relativedelta
     
 class doc_required(osv.Model):
     
-    def _get_count_down(self, cr, uid, context=None):
+#    def _get_count_down(self, cr, uid, context=None):
+#        res = {}
+#        count = 0
+#        doc_ids = self.search(cr, uid, [], context=context)
+#        for id in doc_ids:
+#            doc_data = self.browse(cr, uid, id, context=context)
+#            days_to_collect = doc_data.days_to_collect
+#            end_date = datetime.datetime.strptime(doc_data.create_date , '%Y-%m-%d %H:%M:%S')
+#            start_date =  datetime.datetime.today()
+#            difference_in_days = relativedelta(end_date, start_date).days
+#            if days_to_collect >= difference_in_days:
+#                count = days_to_collect- difference_in_days
+#            else:
+#                count = 0
+#            self.write(cr, uid, doc_ids, {'cowndown':count}, context=context)
+#        return True
+    
+    def _get_count_down(self, cr, uid, ids, name, args, context=None):
         res = {}
         count = 0
-        doc_ids = self.search(cr, uid, [], context=context)
-        for id in doc_ids:
-            doc_data = self.browse(cr, uid, id, context=context)
-            days_to_collect = doc_data.days_to_collect
-            end_date = datetime.datetime.strptime(doc_data.create_date , '%Y-%m-%d %H:%M:%S')
+        for data in self.browse(cr, uid, ids, context):
+            days_to_collect = data.days_to_collect
+            end_date = datetime.datetime.strptime(data.create_date , '%Y-%m-%d %H:%M:%S')
             start_date =  datetime.datetime.today()
-            difference_in_days = relativedelta(end_date, start_date).days
+            difference_in_days = (end_date-start_date).days
             if days_to_collect >= difference_in_days:
                 count = days_to_collect- difference_in_days
             else:
                 count = 0
-            self.write(cr, uid, doc_ids, {'cowndown':count}, context=context)
-        return True
+            res[data.id] = count
+        return res
+     
     
     _name="doc.required"
     
@@ -54,8 +70,8 @@ class doc_required(osv.Model):
         'days_to_collect': fields.integer("Days to Collect"),
         'notify_customer': fields.many2one("res.partner","Notify Customer when Collected"),
         'notify_users': fields.many2many("res.users", "part_document_rel", "part_id", 'document_id',"Notify Users When Collected"),
-        'cowndown':fields.integer("Countdown Counter", help="Remaining days for each document collection"),
-#        'cowndown':fields.function(_get_count_down, method=True, store=True, string="Countdown Counter", type="integer", help="Remaining days for each document collection"),
+#        'cowndown':fields.integer("Countdown Counter", help="Remaining days for each document collection"),
+        'cowndown':fields.function(_get_count_down, method=True, string="Countdown Counter", type="integer", help="Remaining days for each document collection"),
     }
     
     def write(self, cr, uid, ids, vals, context=None):

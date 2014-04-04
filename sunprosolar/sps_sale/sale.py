@@ -58,6 +58,22 @@ class sale_order(osv.Model):
                 values = {'doc_req_ids' : doc_ids or False}
         return {'value' : values}
     
+    def _get_delay_days(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        count = 0
+        for data in self.browse(cr, uid, ids, context):
+            if data.contract_signing_date != False and data.inspection_done_date != False:
+                contract_signing_date = datetime.datetime.strptime(data.contract_signing_date , '%Y-%m-%d %H:%M:%S')
+                inspection_done_date = datetime.datetime.strptime(data.inspection_done_date , '%Y-%m-%d %H:%M:%S')
+                if inspection_done_date != False:
+                    difference_in_days = (inspection_done_date-contract_signing_date).days
+                    if difference_in_days >= 3:
+                        count = difference_in_days- 3
+                    else:
+                        count = 0
+            res[data.id] = count
+        return res
+    
     _columns = {
           'contract_id' : fields.many2one('account.analytic.account', 'Contract'),
           'color': fields.integer('Color Index'),
@@ -86,7 +102,8 @@ class sale_order(osv.Model):
          'confirm_original': fields.selection([('no_changes', 'No changes'), ('change', 'Changes Made')], 'Confirmation of original Design'),
          'contract_signing_date' : fields.datetime('Contract Signing Date'),
          'inspection_done_date' : fields.datetime('Inspection Done Date'),
-         'insp_after_72_hour' : fields.boolean('Inspection After 72 Hours '),
+         'insp_after_72_hour' : fields.boolean('Inspection within 72 Hours '),
+         'delay_days' : fields.function(_get_delay_days,type="integer",method=True,string='Delay Days'),
          'financing_type_id' : fields.many2one('financing.type','Financing Type'),
          'incharge_user_id' : fields.many2one('res.users','Financing In-Charge'),
          'procurement_ids': fields.one2many('procurement.order','sale_order_id','Procurements Created'),
@@ -288,11 +305,15 @@ class sale_order(osv.Model):
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
         done_within_72 = False
         if cur_rec:
-            cont_should_sign_date = datetime.datetime.now()-timedelta(days=3)
-            cont_actual_sign_date = datetime.datetime.strptime(cur_rec.contract_signing_date, DEFAULT_SERVER_DATETIME_FORMAT)
-            if cont_actual_sign_date < cont_should_sign_date :
+            contract_sign = datetime.datetime.strptime(cur_rec.contract_signing_date , '%Y-%m-%d %H:%M:%S')
+            inspection_date = datetime.datetime.now()
+            diffrance_in_days = (inspection_date-contract_sign).days
+            if diffrance_in_days < 3:
                 done_within_72 = True
-        self.write(cr, uid, ids, {'inspection_done_date':cur_time,'insp_after_72_hour' : done_within_72,'state': 'permit'})
+                self.write(cr, uid, ids, {'insp_after_72_hour' : done_within_72})
+#            cont_should_sign_date = datetime.datetime.now()-timedelta(days=3)
+#            cont_actual_sign_date = datetime.datetime.strptime(cur_rec.contract_signing_date, DEFAULT_SERVER_DATETIME_FORMAT)
+        self.write(cr, uid, ids, {'inspection_done_date':cur_time,'state': 'permit'})
         return True
     
     def is_inspection_done_in_72_hours(self, cr, uid, automatic=False, use_new_cursor=False, context=None):

@@ -29,6 +29,7 @@
     """,
     'depends': ['base','sps_crm','sale_stock'],
     'data': [
+        'security/security.xml',
         'sale_view.xml',
         'document_view.xml',
     ],

@@ -99,9 +99,13 @@
 			<field name="model">sale.order</field>
 			<field name="inherit_id" ref="sale.view_order_form" />
 			<field name="arch" type="xml">
-				<button name="action_button_confirm" position="attributes">
-					<attribute name="states">contract_generated,follow_up,contract_signed,permit,assign_financing_incharge,city,permit_pack,drawing,project_management_notified,financing_type,site_inspection,progress
-					</attribute>
+				<button name="action_button_confirm" states="draft" position="attributes">
+					<attribute name="states">draft,contract_generated,contract_signed,project_management_notified,financing_type,assign_financing_incharge,site_inspection,permit</attribute>
+					<attribute name="groups">sps_sale.procurement_manager_sps</attribute>
+					<attribute name="class">oe_highlight</attribute>
+				</button>
+				<button name="action_button_confirm" states="sent" position="attributes">
+					<attribute name="states">sent,city,permit_pack,drawing,progress"</attribute>
 					<attribute name="class">oe_highlight</attribute>
 				</button>
 				<button name="print_quotation" string="Print" type="object" position="attributes">
@@ -146,12 +150,15 @@
                     </group>
                     <newline/>
                     <group>
-					<field name="contract_signing_date"/>
-						<field name="inspection_done_date"/>
-						<group cols="2" colspan="4">
-							<field name="insp_after_72_hour" readonly="1" />
-						</group>
-					</group>
+                        <group>
+                            <field name="contract_signing_date"/>
+					        <field name="inspection_done_date"/>
+                        </group>
+                        <group>
+                            <field name="insp_after_72_hour" readonly="1" />
+							<field name="delay_days"/>
+                        </group>
+                    </group>
                 </xpath>
 				<xpath expr="//page[@string='Other Information']" position="after">
 					<page string="Permit Design Data"
@@ -172,7 +179,7 @@
 							<label for="incharge_user_id"/>
 							<div>
 								<field name="incharge_user_id" colspan="2"/>
-								<button name="assign_professional" type="object" string="Assigned Financing Professionals" class="oe_highlight" icon="gtk-yes"/>
+								<button name="assign_professional" type="object" string="Assigned Financing Professional" class="oe_highlight" icon="gtk-yes"/>
 							</div>
 						</group>
 						<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','project_management_notified')]}">
@@ -190,7 +197,7 @@
 						        </tree>
 					        </field>
 					        <field name="required_document" readonly="1"/>
-	                        <button name="document_collected" string="Document Collected"
+	                        <button name="document_collected" string="Next Stage"
 	                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" /> 
 	                    </group>
 					</page>
