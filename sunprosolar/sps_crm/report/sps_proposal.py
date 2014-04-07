@@ -282,6 +282,7 @@ class proposal_report(report_sxw.rml_parse):
         reference = 'sale.order,' + str(id)
         lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         cur_user = user_obj.browse(self.cr, self.uid, self.uid)
+        sale_order_data = self.pool.get('sale.order').browse(self.cr, self.uid, id)
         lead_data = []
         crm_lead = False
         self.number_of_years = self.cars_off_roads = self.tree_planting_equi = self.co2_emission = self.gas_equi = self.avg_home_powered = self.avg_light_bulb_powered = self.miles_driven = self.rebate_amt = 0
@@ -302,11 +303,7 @@ class proposal_report(report_sxw.rml_parse):
         self.new_bill_total = 0
         self.bill_saving_total = 0
         flag = True
-        self.grand_total = 0
-        if crm_lead:
-            for solar in crm_lead.solar_ids:
-                total_amt = solar.module_product_id.cost_per_stc_watt + solar.module_product_id.labor_per_stc_watt + solar.module_product_id.materials_per_stc
-                self.grand_total += total_amt*solar.stc_dc_rating
+        self.grand_total = sale_order_data.amount_total
         self.srec_total = 0
         self.incentive_total = 0
         self.total_saving = 0
