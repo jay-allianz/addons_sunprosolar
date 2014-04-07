@@ -359,10 +359,13 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
-        vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'sale_order_id': sale_order_ids[0]}
-        new_calender_id = calender_obj.create(cr, uid, vals, context=context)
-        if new_calender_id:
-            return new_calender_id
+        if sale_order_ids:
+            vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'sale_order_id': sale_order_ids[0]}
+            new_calender_id = calender_obj.create(cr, uid, vals, context=context)
+            if new_calender_id:
+                return new_calender_id
+            else:
+                return False
         else:
             return False
         
