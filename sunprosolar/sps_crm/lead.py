@@ -1951,8 +1951,8 @@ class crm_meeting(osv.Model):
             res['value'].update({'schedule_appointment': start_date})
         return res    
     
-    def create(self, cr, uid, ids, context=None):
-        res = super(crm_meeting, self).create(cr, uid, ids, context=context)
+    def create(self, cr, uid, vals, context=None):
+        res = super(crm_meeting, self).create(cr, uid, vals, context=context)
         if context.get('default_opportunity_id'):
             crm_case_stage_obj = self.pool.get('crm.case.stage')
             opo_obj = self.pool.get('crm.lead')

@@ -2,6 +2,18 @@
 <openerp>
 	<data>
 		
+		<record model="ir.ui.view" id="view_inherited_event_form_view">
+			<field name="name">inherited.calendar.event.view</field>
+			<field name="model">calendar.event</field>
+			<field name="inherit_id" ref="base_calendar.event_form_view" />
+			<field name="arch" type="xml">
+				<field name="recurrency" position="after">.
+					<newline/>
+					<field name="status"/>
+				</field>
+			</field>
+		</record>
+
 		<record model="ir.ui.view" id="sale_order_kanban_view_leads">
 			<field name="name">Sale Order Kanban</field>
 			<field name="model">sale.order</field>
@@ -99,13 +111,18 @@
 			<field name="model">sale.order</field>
 			<field name="inherit_id" ref="sale.view_order_form" />
 			<field name="arch" type="xml">
+				<field name="name" position="after">
+					 <div class="oe_right oe_button_box" name="buttons">
+                        <button name="%(base_calendar.action_view_event)d" string="Events" type="action" class="oe_highlight"/>
+                    </div>
+				</field>
 				<button name="action_button_confirm" states="draft" position="attributes">
-					<attribute name="states">draft,contract_generated,contract_signed,project_management_notified,financing_type,assign_financing_incharge,site_inspection,permit</attribute>
+					<attribute name="states">draft,sent,contract_generated,contract_signed,project_management_notified,financing_type,assign_financing_incharge,site_inspection,permit</attribute>
 					<attribute name="groups">sps_sale.procurement_manager_sps</attribute>
 					<attribute name="class">oe_highlight</attribute>
 				</button>
 				<button name="action_button_confirm" states="sent" position="attributes">
-					<attribute name="states">sent,city,permit_pack,drawing,progress"</attribute>
+					<attribute name="states">city,permit_pack,drawing,progress,manual"</attribute>
 					<attribute name="class">oe_highlight</attribute>
 				</button>
 				<button name="print_quotation" string="Print" type="object" position="attributes">
@@ -161,6 +178,12 @@
                     </group>
                 </xpath>
 				<xpath expr="//page[@string='Other Information']" position="after">
+					<page string="Events">
+						<field name="event_ids" nolabel="1" colspan="4"/>
+					</page>
+					<page string="Documents">
+						<field name="attachment_ids" nolabel="1" colspan="4" />
+					</page>
 					<page string="Permit Design Data"
 						attrs="{'invisible':[('state','=','draft'),('state','=','sent'),('state','=','contract_generated'),('state','=','follow_up'),('state','=','contract_signed'),('state','=','project_management_notified'),('state','=','manual'),('state','=','financing_type')]}">
 						<group col="4" colspan="4">

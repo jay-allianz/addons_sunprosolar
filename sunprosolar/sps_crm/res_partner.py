@@ -325,8 +325,8 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
-        for data in crm_data:
+        if crm_ids:
+            data = crm_obj.browse(cr, uid, crm_ids, context=context)[0]
             for doc_data in data.attachment_ids:
                 if doc_data.visible_user == True:
                     documents.append({
@@ -335,9 +335,41 @@ class res_user(osv.Model):
                     })
         return documents
     
+    def get_event(self, cr, uid, user_id, context=None):
+        if not context:
+            context = {}
+        event_dict = {}
+        event_list=[]
+        sale_order_obj = self.pool.get('sale.order')
+        res_users_data = self.browse(cr, uid, user_id, context=context)
+        partner_id = res_users_data.partner_id.id
+        sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
+        sale_data = sale_order_obj.browse(cr, uid, sale_order_ids, context=context)
+        for data in sale_data:
+            for event in data.event_ids:
+                event_dict = {'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.status}
+                event_list.append(event_dict)
+        return event_list
+    
+    def add_event(self, cr, uid, user_id, event_name, start_date, end_date, status, context=None):
+        if not context:
+            context = {}
+        sale_order_obj = self.pool.get('sale.order')
+        calender_obj = self.pool.get('calendar.event')
+        res_users_data = self.browse(cr, uid, user_id, context=context)
+        partner_id = res_users_data.partner_id.id
+        sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
+        vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'sale_order_id': sale_order_ids[0]}
+        new_calender_id = calender_obj.create(cr, uid, vals, context=context)
+        if new_calender_id:
+            return new_calender_id
+        else:
+            return False
+        
     def get_care_maintenance(self, cr, uid, user_id, context=None):
         if not context:
             context = {}
+            
         res_users_data = self.browse(cr, uid, user_id, context=context)
         return {'file_name': res_users_data.company_id.care_maintance_fname,'care_maintance': res_users_data.company_id.care_maintance or False} 
     
