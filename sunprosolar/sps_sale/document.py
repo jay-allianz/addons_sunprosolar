@@ -48,9 +48,13 @@ class doc_required(osv.Model):
         count = 0
         for data in self.browse(cr, uid, ids, context):
             days_to_collect = data.days_to_collect
-            end_date = datetime.datetime.strptime(data.create_date , '%Y-%m-%d %H:%M:%S')
-            start_date =  datetime.datetime.today()
-            difference_in_days = (end_date-start_date).days
+            create_date = datetime.datetime.strptime(data.create_date , '%Y-%m-%d %H:%M:%S')
+            date_create = create_date.strftime('%Y-%m-%d')
+            end_date = datetime.datetime.strptime(date_create , '%Y-%m-%d')
+            today_date =  datetime.datetime.today()
+            date_today = today_date.strftime('%Y-%m-%d')
+            start_date = datetime.datetime.strptime(date_today , '%Y-%m-%d')
+            difference_in_days = (start_date-end_date).days
             if days_to_collect >= difference_in_days:
                 count = days_to_collect- difference_in_days
             else:

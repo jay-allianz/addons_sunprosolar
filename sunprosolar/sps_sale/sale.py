@@ -29,6 +29,30 @@ import datetime
 from openerp import tools
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
+class calendar_event(osv.Model):
+    
+    _inherit = "calendar.event"
+    
+    _columns = {
+          'status': fields.selection([
+            ('available', 'Available'),
+            ('not_available', 'Not Available'),
+            ('working_hours', 'Working Hours'),
+            ], 'Status'),
+         'sale_order_id' : fields.many2one('sale.order','sale order'),
+    }
+    
+#    _defaults = {
+#        'state' : 'available'
+#    }
+
+    def create(self, cr, uid, vals, context=None):
+        res = super(calendar_event, self).create(cr, uid, vals, context=context)
+        sale_order_obj = self.pool.get('sale.order')
+        if context.get('active_ids'):
+            sale_order_obj.write(cr, uid, context.get('active_ids'), {'event_ids': [(4,res)]})
+        return res
+
 class sale_order(osv.Model):
 
     _inherit = "sale.order"
@@ -106,8 +130,10 @@ class sale_order(osv.Model):
          'delay_days' : fields.function(_get_delay_days,type="integer",method=True,string='Delay Days'),
          'financing_type_id' : fields.many2one('financing.type','Financing Type'),
          'incharge_user_id' : fields.many2one('res.users','Financing In-Charge'),
+         'attachment_ids': fields.many2many('ir.attachment', 'sale_attachment_sps_rel', 'sale_order', 'attachmenr_id', 'Attachments'),
          'procurement_ids': fields.one2many('procurement.order','sale_order_id','Procurements Created'),
          'ahj': fields.selection([('structural', 'Structural'), ('electrical', 'Electrical')], 'AHJ', help="Authority Having Jurisdiction"),
+         'event_ids' : fields.one2many('calendar.event','sale_order_id','Events')
     }
     
     _defaults = {
@@ -489,7 +515,7 @@ class sale_order(osv.Model):
         self.write(cr, uid, ids, {'state': 'site_inspection'})
         return True
     
-class financing_type(osv.osv):
+class financing_type(osv.Model):
     
     _name = "financing.type"
     
