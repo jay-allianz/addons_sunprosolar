@@ -1185,23 +1185,19 @@ class crm_lead(osv.Model):
             annual_production = data.annual_solar_prod_display
             annual_usage =  data.annual_ele_usage
             for yr in range(data.number_of_years):
+                if data.insentive_type == 'pbi':
+                    incentive = prev_pv_energy * 1000 * data.pbi_epbb_incentive
+                else:
+                    incentive = (prev_pv_energy * data.pbi_epbb_incentive)/1000
+                
                 prev_new_bill = self._get_new_bill(cr, uid, ids, annual_usage, annual_production, context=context)
                 year = yr + 1
-                if year >= 15:
-#                    yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings
-                    yearly_payout = data.down_payment_amt  + (prev_old_bill - prev_new_bill) - (prev_pv_energy * 1000 * data.srec) - (prev_pv_energy * 1000 * data.pbi_epbb_incentive) - depriciation_savings
-                else:
-#                    yearly_payout = data.down_payment_amt + 7428 + (prev_old_bill - elec_bill_savings) - (prev_pv_energy * data.srec) - (prev_pv_energy * data.pbi_epbb_incentive) - depriciation_savings + 5000
-                    yearly_payout = data.down_payment_amt + (prev_old_bill - prev_new_bill) - (prev_pv_energy * 1000 * data.srec) - (prev_pv_energy * 1000 * data.pbi_epbb_incentive) - depriciation_savings + 5000
+                yearly_payout = data.down_payment_amt  + prev_new_bill - (prev_pv_energy * 1000 * data.srec) - incentive
                 if replace_inverter_every_year != 0:
                     if year % replace_inverter_every_year == 0:
                         yearly_payout += data.inverter_cost
 #                if year == 1:
 #                    prev_pv_energy = int(prev_pv_energy)
-                if data.insentive_type == 'pbi':
-                    incentive = prev_pv_energy * 1000 * data.pbi_epbb_incentive
-                else:
-                    incentive = (prev_pv_energy * data.pbi_epbb_incentive)/1000
                     
                 vals = {
                     'year':year,
@@ -1219,7 +1215,7 @@ class crm_lead(osv.Model):
                     'crm_lead_id': data.id
                 }
                 if year <= data.loan_period:
-                    yearly_payout += loan_installment
+                    yearly_payout += (loan_installment - depriciation_savings)
                     vals.update({'depriciation' : depriciation, 'depriciation_savings' : depriciation_savings, 'yearly_payout' : yearly_payout, 'loan_installment':loan_installment})
                 res.append(cost_rebate_obj.create(cr, uid, vals,context=context))
                 prev_pv_energy = prev_pv_energy * (1 - data.pv_kw_decline)
