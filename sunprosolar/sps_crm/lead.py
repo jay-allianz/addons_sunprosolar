@@ -479,7 +479,6 @@ class crm_lead(osv.Model):
                         stage_changes = stage_change * usage
                         
                         total_old_bill = round(delivery_subtotal + stage_changes,1)
-                        print "total_old_bill>>>>",total_old_bill
                         old_bill = old_bill + total_old_bill
         return old_bill
     
@@ -507,6 +506,9 @@ class crm_lead(osv.Model):
             if data.utility_company_id and data.utility_company_id.property_product_pricelist:
                 context.update({'get_field':'summer_qty'})
                 summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                context.update({'get_field':'winter_qty'})
+                winter_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+
                 if data.anual_electricity_usage_ids :
                     year = data.anual_electricity_usage_ids[0].name
                     if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
@@ -516,11 +518,13 @@ class crm_lead(osv.Model):
                     
                     for days in month_list:
 #                    usage = monthly_electric_usage
-                        context.update({'get_field':'summer_qty'})
-                        summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not summer_qty:
                             summer_qty = 0
-                        basline = summer_qty * days
+                        if count in [1,2,3,4,5,10,11,12]:
+                            basline = winter_qty * days
+                        else:
+                            basline = summer_qty * days
+                        count += 1
                         over_basline1 = basline * 0.3
                         over_basline2 = basline * 0.7
                         
@@ -1192,7 +1196,9 @@ class crm_lead(osv.Model):
                 
                 prev_new_bill = self._get_new_bill(cr, uid, ids, annual_usage, annual_production, context=context)
                 year = yr + 1
-                yearly_payout = data.down_payment_amt  + prev_new_bill - (prev_pv_energy * 1000 * data.srec) - incentive
+                yearly_payout = prev_new_bill - (prev_pv_energy * 1000 * data.srec) - incentive
+                if year == 1:
+                    yearly_payout += data.down_payment_amt
                 if replace_inverter_every_year != 0:
                     if year % replace_inverter_every_year == 0:
                         yearly_payout += data.inverter_cost
