@@ -148,7 +148,7 @@
 						attrs="{'required':[('partner_is_company','=',False)],'invisible':[('partner_is_company','=',True)]}" />
 				</field>
 				<field name="user_id" position="before">
-					<field name="referred_by" />
+					<field name="referred_by" domain="[('customer','=',True)]"/>
 				</field>
 				<xpath expr="//field[@name='phone']" position="attributes">
 					<attribute name="required">1</attribute>
@@ -504,6 +504,9 @@
 						<field name="street2" />
 						<field name="city_id" on_change="on_change_station_and_utility(city_id)"/>
 					</div>
+				</field>
+				<field name="user_id" position="before">
+					<field name="referred_by" domain="[('customer','=',True)]"/>
 				</field>
 				<xpath expr="//button[@string='Meeting']" position="attributes">
 					<attribute name="class">oe_highlight</attribute>

@@ -72,17 +72,27 @@ class crm_lead(osv.Model):
             utility_company_obj = self.pool.get('res.partner')
             city = self.pool.get('city.city').browse(cr, uid, city_id, context=context)
             utility_ids = utility_company_obj.search(cr, uid, [('is_utility_company','=',1),('from_zip','<=',int(city.zip)),('to_zip','>=',int(city.zip))], context=context)
-            station_ids = station_obj.search(cr, uid, [], context=context)
+            station_ids = station_obj.search(cr, uid, [('from_zip','<=',int(city.zip)),('to_zip','>=',int(city.zip))], context=context)
+            if station_ids:
+                station_data = station_obj.browse(cr, uid, station_ids, context=context)
+                for s_data in station_data:
+                    values = {'loc_station_id' : s_data.id or False}
             if not station_ids:
                 raise osv.except_osv(_('Warning'), _('Station is not defined!'))
-            station_data = station_obj.browse(cr, uid, station_ids, context=context)
-            if utility_ids:
-                u_company = utility_ids[0]
+            if not utility_ids:
+                utility_ids = utility_company_obj.search(cr, uid, [], context=context)
+                utility_data = utility_company_obj.browse(cr, uid, utility_ids, context=context)
+                for u_data in utility_data:
+                    if u_data.zip_ids:
+                        for zip_id in u_data.zip_ids:
+                            if city_id == zip_id.id:
+                                for data in station_data:
+                                    values.update({'utility_company_id' : u_data.id or False})
+            else:
                 utility_company_data = utility_company_obj.browse(cr, uid, utility_ids, context=context)
                 for u_data in utility_company_data:
                     for data in station_data:
-                        values = {'utility_company_id' : u_data.id or False,
-                                   'loc_station_id' : data.id or False}
+                        values.update({'utility_company_id' : u_data.id or False})
         return {'value' : values}
 
     def on_change_partner(self, cr, uid, ids, partner_id, context=None):
@@ -1394,12 +1404,19 @@ class crm_lead(osv.Model):
         if not context:
             context = {}
         type_context = context.get('default_type')
+        partner_obj = self.pool.get('res.partner')
+        cash_bonus_obj = self.pool.get('cash.bonus')
         if type_context == 'opportunity':
             crm_case_stage_obj = self.pool.get('crm.case.stage')
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Initial Contact')])
             vals.update({'stage_id': stage_id[0]})
             return super(crm_lead, self).create(cr, uid, vals, context=context)
         res = super(crm_lead, self).create(cr, uid, vals, context=context)
+        crm_data = self.browse(cr, uid, res, context=context)
+        if crm_data.referred_by:
+            partner_data = partner_obj.browse(cr, uid, crm_data.referred_by.id, context=context)
+            vals={'name': 'Cash Bonus for getting lead from your referance!', 'cash': 10, 'res_partner_id':crm_data.referred_by.id}
+            cash_bonus_create_id = cash_bonus_obj.create(cr, uid, vals, context= context)
         if res and vals and vals.get('home_note'):
             self.pool.get('crm.lead.home.description').create(cr, uid, {
                                                                 'home_id': res,
@@ -2143,9 +2160,26 @@ class crm_meeting(osv.Model):
     
     def create(self, cr, uid, vals, context=None):
         res = super(crm_meeting, self).create(cr, uid, vals, context=context)
+        partner_obj = self.pool.get('res.partner')
+        cash_bonus_obj = self.pool.get('cash.bonus')
+        opo_obj = self.pool.get('crm.lead')
+        appointment_data = self.browse(cr, uid, res, context=context)
+        if appointment_data.crm_id:
+            crm_data = opo_obj.browse(cr, uid, appointment_data.crm_id.id, context=context)
+        else:
+            if context.get('default_opportunity_id'):
+                crm_data = opo_obj.browse(cr, uid, context.get('default_opportunity_id'), context=context)
+        if crm_data:
+            if crm_data.referred_by:
+                partner_data = partner_obj.browse(cr, uid, crm_data.referred_by.id, context=context)
+                vals={'name': 'Cash Bonus for appointment from your referance!', 'cash': 50, 'res_partner_id':crm_data.referred_by.id}
+                cash_bonus_obj.create(cr, uid, vals, context= context)
+            if crm_data.partner_id:
+                partner_customer_data = partner_obj.browse(cr, uid, crm_data.partner_id.id, context=context)
+                vals={'name': 'Cash Bonus for your appointment!', 'cash': 50, 'res_partner_id':crm_data.partner_id.id}
+                cash_bonus_obj.create(cr, uid, vals, context= context)
         if context.get('default_opportunity_id'):
             crm_case_stage_obj = self.pool.get('crm.case.stage')
-            opo_obj = self.pool.get('crm.lead')
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Appointment Setup')])
             opo_obj.write(cr, uid, [context.get('default_opportunity_id')], {'stage_id': stage_id[0],'appointment_ids': [(6,0,[res])]})
         return res
