@@ -302,11 +302,29 @@ class sale_order(osv.Model):
         return True
     
     def contract_sign(self, cr, uid, ids, context=None):
+        lead_obj = self.pool.get('crm.lead')
+        partner_obj = self.pool.get('res.partner')
+        cash_bonus_obj = self.pool.get('cash.bonus')
         cur_time = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         self.write(cr, uid, ids, {'state': 'contract_signed', 'contract_signing_date':cur_time})
         proj_id = self.browse(cr, uid, ids, context=context)[0].project_id.id
         ana_acc_obj = self.pool.get('account.analytic.account')
         ana_acc_obj.write(cr, uid, [proj_id], {'contract_date' : cur_time})
+        
+        for data in self.browse(cr, uid, ids, context=context):
+            reference = 'sale.order,' + tools.ustr(data.id)
+            lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
+            print "lead_id::::::",lead_id
+            for lead_data in lead_obj.browse(cr, uid, lead_id,context=context):
+                print "lead_data::::",lead_data
+                if lead_data.referred_by:
+                    partner_data = partner_obj.browse(cr, uid, lead_data.referred_by.id, context=context)
+                    vals={'name': 'Cash Bonus for contract signed from your referance!', 'cash': 500, 'res_partner_id':lead_data.referred_by.id}
+                    cash_bonus_obj.create(cr, uid, vals, context= context)
+                if data.partner_id:
+                    partner_data = partner_obj.browse(cr, uid, data.partner_id.id, context=context)
+                    vals={'name': 'Cash Bonus for your contract signed!', 'cash': 100, 'res_partner_id':data.partner_id.id}
+                    cash_bonus_obj.create(cr, uid, vals, context= context)
         return True
     
     def document_collected(self, cr, uid, ids, context=None):
