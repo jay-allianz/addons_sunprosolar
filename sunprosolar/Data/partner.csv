@@ -1,25 +1,25 @@
-id,name
-Sun_01,ABABA BOLT
-Sun_02,Allied Building Supply
-Sun_03,CED
-Sun_04,Home Depot
-Sun_05,Lowes
-Sun_06,Roofing Wholesale
-Sun_07,Soligent
-Sun_08,SMA
-Sun_09,Solectra
-Sun_10,Midnight Solar Inc
-Sun_11,Inverter
-Sun_12,Sunpower
-Sun_13,Xantrex
-Sun_14,Dottie
-Sun_15,AI
-Sun_16,Bridgeport
-Sun_17,Nimbus
-Sun_18,Polaris
-Sun_19,Bell Outdoor
-Sun_20,SMK
-Sun_21,Enphase
-Sun_22,J & R MUSIC
-Sun_23,BEST BUY
-Sun_24,PRO SOLAR
+id,name,customer
+Sun_01,ABABA BOLT,1
+Sun_02,Allied Building Supply,1
+Sun_03,CED,1
+Sun_04,Home Depot,1
+Sun_05,Lowes,1
+Sun_06,Roofing Wholesale,1
+Sun_07,Soligent,1
+Sun_08,SMA,1
+Sun_09,Solectra,1
+Sun_10,Midnight Solar Inc,1
+Sun_11,Inverter,1
+Sun_12,Sunpower,1
+Sun_13,Xantrex,1
+Sun_14,Dottie,1
+Sun_15,AI,1
+Sun_16,Bridgeport,1
+Sun_17,Nimbus,1
+Sun_18,Polaris,1
+Sun_19,Bell Outdoor,1
+Sun_20,SMK,1
+Sun_21,Enphase,1
+Sun_22,J & R MUSIC,1
+Sun_23,BEST BUY,1
+Sun_24,PRO SOLAR,1
