@@ -25,6 +25,8 @@ import datetime
 from openerp.report import report_sxw
 from pychart import *
 import tempfile
+import math
+
 class proposal_report(report_sxw.rml_parse):
     bar_out_filename = tempfile.mktemp(suffix=".png", prefix="bar1")
     pie_out_filename = tempfile.mktemp(suffix=".png", prefix="pie")
@@ -85,7 +87,12 @@ class proposal_report(report_sxw.rml_parse):
             'get_lead_street2':self._lead_street2,
             'get_lead_city_id':self._lead_city_id,
             'get_count' : self.get_count,
-            'set_count' : self.set_count
+            'set_count' : self.set_count,
+            'format_old_bill_value' : self.format_old_bill_value,
+            'format_new_bill_value' : self.format_new_bill_value,
+            'format_bill_saving_value': self.format_bill_saving_value,
+            'format_srecs_value': self.format_srecs_value,
+            'format_payout_value': self.format_payout_value
         })
         
     def get_count(self):
@@ -233,7 +240,22 @@ class proposal_report(report_sxw.rml_parse):
             ar.draw(can)
             can.close()
             return True
-        
+    
+    def format_old_bill_value(self, old_bill):
+        return int(old_bill)
+    
+    def format_new_bill_value(self, new_bill):
+        return int(new_bill)
+    
+    def format_bill_saving_value(self, bill_saving):
+        return int(bill_saving)
+    
+    def format_srecs_value(self, srecs):
+        return int(srecs)
+    
+    def format_payout_value(self, payout):
+        return int(payout)
+    
     def _get_old_bill_total(self):
         return self.old_bill_total
     
@@ -298,7 +320,7 @@ class proposal_report(report_sxw.rml_parse):
             self.avg_home_powered = crm_lead.ave_home_powered * crm_lead.number_of_years
             self.avg_light_bulb_powered = crm_lead.ave_light_bulb_powered * crm_lead.number_of_years
             self.miles_driven = cur_user.company_id.avg_yearly_miles * crm_lead.number_of_years
-            self.rebate_amt = crm_lead.rebate_amt
+            self.rebate_amt = round(crm_lead.rebate_amt)
         self.old_bill_total = 0
         self.new_bill_total = 0
         self.bill_saving_total = 0
@@ -312,11 +334,11 @@ class proposal_report(report_sxw.rml_parse):
                 if flag:
                     self.first_year_saving = cost_rebate.elec_bill_savings
                     flag = False
-                self.old_bill_total += cost_rebate.old_bill
-                self.new_bill_total += cost_rebate.new_bill
-                self.bill_saving_total += cost_rebate.elec_bill_savings
+                self.old_bill_total += round(cost_rebate.old_bill)
+                self.new_bill_total += round(cost_rebate.new_bill)
+                self.bill_saving_total += round(cost_rebate.elec_bill_savings)
                 self.pv_energy_total += cost_rebate.pv_energy
-                self.total_saving += cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings
+                self.total_saving += round(cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings)
                 self.srec_total += cost_rebate.srecs
                 self.incentive_total += cost_rebate.incentives
         self.net_system_cost = self.grand_total - self.srec_total - self.incentive_total

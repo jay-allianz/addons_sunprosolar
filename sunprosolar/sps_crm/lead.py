@@ -349,12 +349,6 @@ class crm_lead(osv.Model):
         for data in self.browse(cr, uid, ids, context):
             
             if data.utility_company_id and data.utility_company_id.property_product_pricelist:
-                context.update({'get_field':'summer_qty'})
-                summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                context.update({'get_field':'winter_qty'})
-                winter_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-
-                
                 if data.anual_electricity_usage_ids :
                     year = data.anual_electricity_usage_ids[0].name
                     if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
@@ -391,6 +385,10 @@ class crm_lead(osv.Model):
                                 usage = data.anual_electricity_usage_ids[0].dec
                         
                         year += 1
+                        context.update({'get_field':'summer_qty'})
+                        summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        context.update({'get_field':'winter_qty'})
+                        winter_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not summer_qty:
                             summer_qty = 0
                         if count in [1,2,3,4,5,10,11,12]:
@@ -486,149 +484,164 @@ class crm_lead(osv.Model):
                         stage_change = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not stage_change:
                             stage_change = 0
-                        stage_changes = stage_change * usage
+                        if count in [1,2,3,4,5,10,11,12]:
+                            stage_changes = round(stage_change * usage)
+                        else:
+                            stage_changes = stage_change * usage
                         
-                        total_old_bill = round(delivery_subtotal + stage_changes,1)
+#                        stage_changes = stage_change * usage
+                        
+                        total_old_bill = delivery_subtotal + stage_changes
                         old_bill = old_bill + total_old_bill
         return old_bill
     
-    def _get_new_bill(self, cr, uid, ids, annual_usage, annual_production, context=None):
+    def _get_new_bill(self, cr, uid, ids, old_bill, annual_usage, annual_production, context=None):
         res = {}
-        pricelist_obj = self.pool.get('product.pricelist')
-        product_obj = self.pool.get('product.product')
-        tilt_azimuth_obj = self.pool.get('tilt.azimuth')
-        product_ids = product_obj.search(cr, uid, [], context=context)
-        pro_id = product_ids and product_ids[0]
-        price = 0.0
-        usage = 0.0
-        count = 1
-        final_new_bill = 0.0
-        new_bill = 0.0
-        total_winter_usage = 0.0
-        total_summer_usage = 0.0
-        winter_usage = 0.0
-        summer_usage = 0.0
-            
         for data in self.browse(cr, uid, ids, context):
-            usage = (annual_usage - annual_production) /12
-#            monthly_electric_usage = electric_usage_per_year/12
-            
-            if data.utility_company_id and data.utility_company_id.property_product_pricelist:
-                context.update({'get_field':'summer_qty'})
-                summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                context.update({'get_field':'winter_qty'})
-                winter_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-
-                if data.anual_electricity_usage_ids :
-                    year = data.anual_electricity_usage_ids[0].name
-                    if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
-                        month_list = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-                    else:
-                        month_list = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-                    
-                    for days in month_list:
-#                    usage = monthly_electric_usage
-                        if not summer_qty:
-                            summer_qty = 0
-                        if count in [1,2,3,4,5,10,11,12]:
-                            basline = winter_qty * days
-                        else:
-                            basline = summer_qty * days
-                        count += 1
-                        over_basline1 = basline * 0.3
-                        over_basline2 = basline * 0.7
-                        
-                        context.update({'get_field':'daily_meter_charges'})
-                        daily_meter_charge = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not daily_meter_charge:
-                            daily_meter_charge = 0
-                        basic_charge = daily_meter_charge * days
-                            
-                        context.update({'get_field':'tier1'})
-                        tier1 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not tier1:
-                            tier1 = 0
-                        temp_base_line_summer = usage - basline
-                        if temp_base_line_summer <= 0:
-                            base_line_summer = round(usage * tier1,2)
-                        else:
-                            base_line_summer = round(basline * tier1,2)
-    #                       base_line_summer = days * 13.5 * tier1
-                            
-                        context.update({'get_field':'off_peak_tier2'})
-                        peak_tier2 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not peak_tier2:
-                            peak_tier2 = 0
-                        temp_over_base_line1_1 = usage - (basline + over_basline1)
-                        if temp_base_line_summer<= 0:
-                            over_base_line1_1 = 0.0
-                        else:
-                            if temp_over_base_line1_1 <= 0:
-                                over_base_line1_1 = round((usage -basline) * peak_tier2,2)
-                            else:
-                                over_base_line1_1 = round(over_basline1 * peak_tier2,2)
-    #                        over_base_line1_1 = over_basline1 * peak_tier2
-                            
-                        context.update({'get_field':'part_peak_tier3'})
-                        peak_tier3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not peak_tier3:
-                            peak_tier3 = 0
-                        temp_over_base_line1_2 = usage - (basline + over_basline1 + over_basline2)
-                        if temp_over_base_line1_1 <= 0:
-                            over_base_line1_2 = 0.0
-                        else:
-                            if temp_over_base_line1_2 <= 0:
-                                over_base_line1_2 = round((usage - basline - over_basline1) * peak_tier3,2)
-                            else:
-                                over_base_line1_2 = round(over_basline2 * peak_tier3,2)
-    #                        over_base_line1_2 = over_basline2 * peak_tier3
-                            
-                        context.update({'get_field':'peak_tier4'})
-                        peak_tier4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not peak_tier4:
-                            peak_tier4 = 0
-    #                        temp_over_base_line1_3 = usage - (basline + over_basline1 + over_basline2 + basline)
-                        if temp_over_base_line1_2 <=0:
-                            over_base_line1_3 = 0.0
-                        else:
-                            over_base_line1_3 = round((usage - basline - over_basline1 - over_basline2 )*peak_tier4,2)
-                            
-                        context.update({'get_field':'surcharge_3'})
-                        surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not surcharge3:
-                            surcharge3 = 0
-                            
-                        context.update({'get_field':'surcharge_4'})
-                        surcharge4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not surcharge4:
-                            surcharge4 = 0
-                            
-                        context.update({'get_field':'surcharge_5'})
-                        surcharge5 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not surcharge5:
-                            surcharge5 = 0
-                            
-                        context.update({'get_field':'surcharge_6'})
-                        surcharge6 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not surcharge6:
-                            surcharge6 = 0
-                            
-                        context.update({'get_field':'rate_stablization'})
-                        rate_stablization = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not rate_stablization:
-                            rate_stablization = 0
-                        delivery_subtotal = basic_charge + base_line_summer + over_base_line1_1 + over_base_line1_2 + over_base_line1_3 + surcharge3 + surcharge4 + surcharge5 + surcharge6 + rate_stablization
-                            
-                        context.update({'get_field':'stage_changes'})
-                        stage_change = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
-                        if not stage_change:
-                            stage_change = 0
-                        stage_changes = stage_change * usage
-                        
-                        new_bill = round(delivery_subtotal + stage_changes,1)
-                        final_new_bill += new_bill
-        return final_new_bill
+            yearly_ele_usage = (annual_usage - annual_production)
+            new_bill = (yearly_ele_usage/annual_usage)*old_bill
+        return new_bill
     
+#     New bill last calculation
+#    def _get_new_bill(self, cr, uid, ids, annual_usage, annual_production, context=None):
+#        res = {}
+#        pricelist_obj = self.pool.get('product.pricelist')
+#        product_obj = self.pool.get('product.product')
+#        tilt_azimuth_obj = self.pool.get('tilt.azimuth')
+#        product_ids = product_obj.search(cr, uid, [], context=context)
+#        pro_id = product_ids and product_ids[0]
+#        price = 0.0
+#        usage = 0.0
+#        count = 1
+#        final_new_bill = 0.0
+#        new_bill = 0.0
+#        total_winter_usage = 0.0
+#        total_summer_usage = 0.0
+#        winter_usage = 0.0
+#        summer_usage = 0.0
+#            
+#        for data in self.browse(cr, uid, ids, context):
+#            usage = (annual_usage - annual_production) /12
+##            monthly_electric_usage = electric_usage_per_year/12
+#            
+#            if data.utility_company_id and data.utility_company_id.property_product_pricelist:
+#                context.update({'get_field':'summer_qty'})
+#                summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                context.update({'get_field':'winter_qty'})
+#                winter_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#
+#                if data.anual_electricity_usage_ids :
+#                    year = data.anual_electricity_usage_ids[0].name
+#                    if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
+#                        month_list = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+#                    else:
+#                        month_list = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+#                    
+#                    for days in month_list:
+##                    usage = monthly_electric_usage
+#                        if not summer_qty:
+#                            summer_qty = 0
+#                        if count in [1,2,3,4,5,10,11,12]:
+#                            basline = winter_qty * days
+#                        else:
+#                            basline = summer_qty * days
+#                        count += 1
+#                        over_basline1 = basline * 0.3
+#                        over_basline2 = basline * 0.7
+#                        
+#                        context.update({'get_field':'daily_meter_charges'})
+#                        daily_meter_charge = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not daily_meter_charge:
+#                            daily_meter_charge = 0
+#                        basic_charge = daily_meter_charge * days
+#                            
+#                        context.update({'get_field':'tier1'})
+#                        tier1 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not tier1:
+#                            tier1 = 0
+#                        temp_base_line_summer = usage - basline
+#                        if temp_base_line_summer <= 0:
+#                            base_line_summer = round(usage * tier1,2)
+#                        else:
+#                            base_line_summer = round(basline * tier1,2)
+#    #                       base_line_summer = days * 13.5 * tier1
+#                            
+#                        context.update({'get_field':'off_peak_tier2'})
+#                        peak_tier2 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not peak_tier2:
+#                            peak_tier2 = 0
+#                        temp_over_base_line1_1 = usage - (basline + over_basline1)
+#                        if temp_base_line_summer<= 0:
+#                            over_base_line1_1 = 0.0
+#                        else:
+#                            if temp_over_base_line1_1 <= 0:
+#                                over_base_line1_1 = round((usage -basline) * peak_tier2,2)
+#                            else:
+#                                over_base_line1_1 = round(over_basline1 * peak_tier2,2)
+#    #                        over_base_line1_1 = over_basline1 * peak_tier2
+#                            
+#                        context.update({'get_field':'part_peak_tier3'})
+#                        peak_tier3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not peak_tier3:
+#                            peak_tier3 = 0
+#                        temp_over_base_line1_2 = usage - (basline + over_basline1 + over_basline2)
+#                        if temp_over_base_line1_1 <= 0:
+#                            over_base_line1_2 = 0.0
+#                        else:
+#                            if temp_over_base_line1_2 <= 0:
+#                                over_base_line1_2 = round((usage - basline - over_basline1) * peak_tier3,2)
+#                            else:
+#                                over_base_line1_2 = round(over_basline2 * peak_tier3,2)
+#    #                        over_base_line1_2 = over_basline2 * peak_tier3
+#                            
+#                        context.update({'get_field':'peak_tier4'})
+#                        peak_tier4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not peak_tier4:
+#                            peak_tier4 = 0
+#    #                        temp_over_base_line1_3 = usage - (basline + over_basline1 + over_basline2 + basline)
+#                        if temp_over_base_line1_2 <=0:
+#                            over_base_line1_3 = 0.0
+#                        else:
+#                            over_base_line1_3 = round((usage - basline - over_basline1 - over_basline2 )*peak_tier4,2)
+#                            
+#                        context.update({'get_field':'surcharge_3'})
+#                        surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not surcharge3:
+#                            surcharge3 = 0
+#                            
+#                        context.update({'get_field':'surcharge_4'})
+#                        surcharge4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not surcharge4:
+#                            surcharge4 = 0
+#                            
+#                        context.update({'get_field':'surcharge_5'})
+#                        surcharge5 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not surcharge5:
+#                            surcharge5 = 0
+#                            
+#                        context.update({'get_field':'surcharge_6'})
+#                        surcharge6 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not surcharge6:
+#                            surcharge6 = 0
+#                            
+#                        context.update({'get_field':'rate_stablization'})
+#                        rate_stablization = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not rate_stablization:
+#                            rate_stablization = 0
+#                        delivery_subtotal = basic_charge + base_line_summer + over_base_line1_1 + over_base_line1_2 + over_base_line1_3 + surcharge3 + surcharge4 + surcharge5 + surcharge6 + rate_stablization
+#                            
+#                        context.update({'get_field':'stage_changes'})
+#                        stage_change = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+#                        if not stage_change:
+#                            stage_change = 0
+#                        stage_changes = stage_change * usage
+#                        
+#                        new_bill = round(delivery_subtotal + stage_changes,1)
+#                        final_new_bill += new_bill
+#        return final_new_bill
+    
+    
+#    New bill first calculation
 #    def _get_new_bill(self, cr, uid, ids, context=None):
 #        res = {}
 #        pricelist_obj = self.pool.get('product.pricelist')
@@ -1204,11 +1217,11 @@ class crm_lead(osv.Model):
                 else:
                     incentive = (prev_pv_energy * data.pbi_epbb_incentive)/1000
                 
-                prev_new_bill = self._get_new_bill(cr, uid, ids, annual_usage, annual_production, context=context)
+                prev_new_bill = self._get_new_bill(cr, uid, ids, prev_old_bill, annual_usage, annual_production, context=context)
                 year = yr + 1
                 yearly_payout = prev_new_bill - (prev_pv_energy * 1000 * data.srec) - incentive
-                if year == 1:
-                    yearly_payout += data.down_payment_amt
+#                if year == 1:
+#                    yearly_payout += data.down_payment_amt
                 if replace_inverter_every_year != 0:
                     if year % replace_inverter_every_year == 0:
                         yearly_payout += data.inverter_cost
@@ -1237,7 +1250,7 @@ class crm_lead(osv.Model):
                 prev_pv_energy = prev_pv_energy * (1 - data.pv_kw_decline)
                 prev_old_bill = prev_old_bill * ( 1 + data.grid_rate_increase_by)
                 annual_production = annual_production * (1 - data.pv_kw_decline)
-                annual_usage =  annual_usage * ( 1 + data.grid_rate_increase_by)
+#                annual_usage =  annual_usage * ( 1 + data.grid_rate_increase_by)
                 
             result[data.id] = res#
         return True
