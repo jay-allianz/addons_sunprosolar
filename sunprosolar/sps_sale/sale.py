@@ -541,7 +541,13 @@ class financing_type(osv.Model):
         'name' : fields.char('Name'),
         'description': fields.text('Description'),
         'document_ids' : fields.many2many('documents.all','document_financing_type_rel','fin_type_id','doc_id','Documents'),
+        'interest_rate': fields.float('Interest Rate')
     }
+    
+    _defaults ={
+        'interest_rate' : 0.0
+                
+        }
     
 class procurement_order(osv.Model):
     
@@ -581,7 +587,6 @@ class account_analytic_account(osv.Model):
             'type_install': fields.selection([('PV','PV'),('Pool','POOL'),('Hot Water','HOT WATER'),('Other','OTHER')],"Type of Install"),
         }
     
-
 class sale_order_line(osv.Model):
     _inherit = 'sale.order.line'
     
@@ -616,3 +621,22 @@ class sale_order_line(osv.Model):
             wf_service.trg_write(uid, 'sale.order', sale_id, cr)
         return create_ids
 
+class crm_lead(osv.Model):
+    
+    _inherit="crm.lead"
+     
+    def onchange_financing_type_opp(self, cr, uid, ids, finance_type, context=None):
+        values = {}
+        if not ids:
+            return {'value': {}}
+        ftype_obj = self.pool.get('financing.type')
+        
+        if finance_type:
+            interest_rate = ftype_obj.browse(cr, uid, finance_type).interest_rate
+            values = {'loan_interest_rate' : interest_rate}
+            
+        return {'value' : values}
+     
+    _columns = {
+            'finance_type': fields.many2one('financing.type', 'Finacing Type'),
+    }

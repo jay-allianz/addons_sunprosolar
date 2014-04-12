@@ -13,6 +13,22 @@
 				</field>
 			</field>
 		</record>
+		
+		<record model="ir.ui.view" id="view_inherited_view_sun_crm_opp_form">
+			<field name="name">inherited.res.partner.view.buttons</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="sps_crm.view_sun_crm_opp_form" />
+			<field name="arch" type="xml">
+				<!--
+				<xpath expr="//field[@name='loan_interest_rate']" position="attributes">
+				    <attribute name="readonly">1</attribute>
+				</xpath>
+				-->
+				<field name="loan_period" position="before">
+					<field name="finance_type" on_change="onchange_financing_type_opp(finance_type)"/>
+				</field>
+			</field>
+		</record>
 
 		<record model="ir.ui.view" id="sale_order_kanban_view_leads">
 			<field name="name">Sale Order Kanban</field>
@@ -338,6 +354,7 @@
 				<form string='Financing Type' version='7.0'>
 					<group>
 						<field name="name" string="Name" required="1" />
+						<field name="interest_rate"/>
 						<separator string="Financing Documents"/>
 						<field name="document_ids" nolabel="1" colspan="4" domain="[('finace_type','=','False')]"/>
 						<separator string="Description"/>
@@ -346,5 +363,31 @@
 				</form>
 			</field>
 		</record>
+		
+		<!--Financing Type Tree View -->
+		<record model="ir.ui.view" id="financing_type_tree">
+			<field name="name">financing_type_Tree</field>
+			<field name="model">financing.type</field>
+			<field name="arch" type="xml">
+				<tree string="Financing Type">
+					<field name="name" />
+					<field name="interest_rate" />
+					<field name="description" />
+				</tree>
+			</field>
+		</record>
+
+		<!--Financing Type -->
+		<record id="action_financing_type" model="ir.actions.act_window">
+			<field name="name">Financing Type</field>
+			<field name="res_model">financing.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="action_financing_type" id="menu_financing_type" 
+			parent="base.menu_crm_config_lead" string="Financing Type" sequence="15" />
+		
+
 	</data>
 </openerp>
