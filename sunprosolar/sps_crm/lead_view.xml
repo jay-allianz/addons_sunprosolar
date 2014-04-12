@@ -545,8 +545,8 @@
 				</field>
 				<xpath expr="/form/sheet/notebook/page[@string='Lead']/group/group/field[@name='fax']" position="after">
 					<field name="property" />
-					<field name="insentive_type" />
-					<field name="sci_step" />
+					<field name="insentive_type"/>
+					<field name="sci_step"/>
 				</xpath>
 				<xpath expr="//notebook/page[@string='Lead']/group/group/div/div[@class='address_format']"
 					position="replace">
@@ -795,7 +795,7 @@
 	                            </group>
 	                            <group string="Loan" col="2" colspan="2">
 	                                  <field name="loan_period" />
-	                                  <field name="loan_interest_rate" />
+	                                  <field name="loan_interest_rate"/>
 	                                  <field name="loan_amt" readonly="1" />
 	                                  <field name="down_payment" />
 	                                  <field name="down_payment_amt" readonly="1" />
@@ -812,9 +812,9 @@
                             </group>
                             <group string="Incentives" col="2" colspan="2">
                                   <field name="property" />
-							      <field name="insentive_type" />
-							      <field name="sci_step" />
-                                  <field name="pbi_epbb_incentive" />
+							      <field name="insentive_type" on_change="onchange_insentive_type(insentive_type, sci_step)"/>
+								  <field name="sci_step" on_change="onchange_insentive_type(insentive_type, sci_step)"/>
+                                  <field name="pbi_epbb_incentive"/>
                                   <field name="rebate" />
 							      <field name="rebate_amt" readonly="1" />
 							      <field name="srec" />
@@ -1336,6 +1336,64 @@
 
 		<menuitem action="action_level_lead" id="menu_level_lead"
 			parent="base.menu_crm_config_lead" string="Level of Lead" sequence="13" />
+		
+		<!-- Incentive Search View -->
+		<record model="ir.ui.view" id="incentive_search">
+			<field name="name">incentive__Search</field>
+			<field name="model">incentive.incentive</field>
+			<field name="arch" type="xml">
+				<search string="Level Lead Search">
+					<field name="incentive_type" />
+					<field name="incentive_steps" />
+					<field name="inscentive_digits" />
+				</search>
+			</field>
+		</record>
+
+		<!-- Incentive Form View -->
+		<record model="ir.ui.view" id="incentive_form">
+			<field name="name">incentive_Form</field>
+			<field name="model">incentive.incentive</field>
+			<field name="arch" type="xml">
+				<form string="Level Lead Form" version="7.0">
+					<sheet>
+						<group col="2" colspan="2">
+							<field name="incentive_type" required="1"/>
+							<field name="incentive_steps" required="1"/>
+							<field name="inscentive_digits" required="1"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Incentive Tree View -->
+		<record model="ir.ui.view" id="incentive_tree">
+			<field name="name">incentive_Tree</field>
+			<field name="model">incentive.incentive</field>
+			<field name="arch" type="xml">
+				<tree string="Level Lead Tree">
+					<field name="incentive_type" />
+					<field name="incentive_steps" />
+					<field name="inscentive_digits" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Incentive -->
+		<record id="action_incentive" model="ir.actions.act_window">
+			<field name="name">Incentives</field>
+			<field name="res_model">incentive.incentive</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="action_incentive" id="menu_incentive" 
+			parent="base.menu_crm_config_lead" string="Incentives" sequence="14" />
+
+
+
+
 
 		<!-- Customer Information Form View -->
 		<record model="ir.ui.view" id="view_customer_form">

@@ -27,6 +27,30 @@ import time
 import tools
 from openerp import SUPERUSER_ID
 
+class insentive_type(osv.Model):
+    _name = 'incentive.type'
+    
+    _columns ={
+        'name': fields.char("Name")
+    }
+    
+class incentive_steps(osv.Model):
+    _name= "incentive.steps"
+    
+    _columns= {
+        'name': fields.char("Name")
+    }
+    
+class incentive_incentive(osv.Model):
+    _name="incentive.incentive"
+    
+    _columns = {
+        'incentive_type': fields.many2one('incentive.type','Incentive Type'),
+        'incentive_steps' : fields.many2one('incentive.steps', 'Incentive Steps'),
+        'inscentive_digits': fields.float('Inscentive', digits=(12,6))
+    }
+
+
 class type_of_sale(osv.Model):
 
     _name = "type.of.sale"
@@ -839,28 +863,28 @@ class crm_lead(osv.Model):
             }
         return result
     
-    def _get_pbi_epbb_incentive(self, cr, uid, ids, name, args, context=None):
-        result = {}
-        epbb_resi = {1:0.0,2:2.50,3:2.20,4:1.90,5:1.55,6:1.10,7:0.65,8:0.35,9:0.25,10:0.20}
-        epbb_comm = {1:0.0,2:2.50,3:2.20,4:1.90,5:1.55,6:1.10,7:0.65,8:0.35,9:0.25,10:0.20}
-        epbb_non_pro = {1:0.0,2:3.25,3:2.95,4:2.65,5:2.30,6:1.85,7:1.40,8:1.10,9:0.90,10:0.70}
-        epbb = {'residential':epbb_resi,'commercial':epbb_comm,'non_profit':epbb_non_pro}
-        pbi_resi = {1:0.0,2:0.39,3:0.34,4:0.26,5:0.22,6:0.15,7:0.09,8:0.05,9:0.03,10:0.03}
-        pbi_comm = {1:0.0,2:0.39,3:0.34,4:0.26,5:0.22,6:0.15,7:0.09,8:0.05,9:0.03,10:0.03}
-        pbi_non_pro = {1:0.0,2:0.50,3:0.46,4:0.37,5:0.32,6:0.26,7:0.19,8:0.15,9:0.12,10:0.09}
-        pbi = {'residential':pbi_resi,'commercial':pbi_comm,'non_profit':pbi_non_pro}
-        insentive_data = {'epbb':epbb,'pbi':pbi}
-        pbi_epbb_incentive = 0.0
-        for data in self.browse(cr, uid, ids, context):
-            if data.insentive_type:
-                epbb_or_pbi = insentive_data.get(data.insentive_type,{})
-                if data.property:
-                    res_com_pro = epbb_or_pbi.get(data.property,{})
-                    if data.sci_step:
-                        pbi_epbb_incentive = res_com_pro.get(data.sci_step,0.0)
-            result[data.id] = pbi_epbb_incentive
-        return result
-    
+#    def _get_pbi_epbb_incentive(self, cr, uid, ids, name, args, context=None):
+#        result = {}
+#        epbb_resi = {1:0.0,2:2.50,3:2.20,4:1.90,5:1.55,6:1.10,7:0.65,8:0.35,9:0.25,10:0.20}
+#        epbb_comm = {1:0.0,2:2.50,3:2.20,4:1.90,5:1.55,6:1.10,7:0.65,8:0.35,9:0.25,10:0.20}
+#        epbb_non_pro = {1:0.0,2:3.25,3:2.95,4:2.65,5:2.30,6:1.85,7:1.40,8:1.10,9:0.90,10:0.70}
+#        epbb = {'residential':epbb_resi,'commercial':epbb_comm,'non_profit':epbb_non_pro}
+#        pbi_resi = {1:0.0,2:0.39,3:0.34,4:0.26,5:0.22,6:0.15,7:0.09,8:0.05,9:0.03,10:0.03}
+#        pbi_comm = {1:0.0,2:0.39,3:0.34,4:0.26,5:0.22,6:0.15,7:0.09,8:0.05,9:0.03,10:0.03}
+#        pbi_non_pro = {1:0.0,2:0.50,3:0.46,4:0.37,5:0.32,6:0.26,7:0.19,8:0.15,9:0.12,10:0.09}
+#        pbi = {'residential':pbi_resi,'commercial':pbi_comm,'non_profit':pbi_non_pro}
+#        insentive_data = {'epbb':epbb,'pbi':pbi}
+#        pbi_epbb_incentive = 0.0
+#        for data in self.browse(cr, uid, ids, context):
+#            if data.insentive_type:
+#                epbb_or_pbi = insentive_data.get(data.insentive_type,{})
+#                if data.property:
+#                    res_com_pro = epbb_or_pbi.get(data.property,{})
+#                    if data.sci_step:
+#                        pbi_epbb_incentive = res_com_pro.get(data.sci_step,0.0)
+#            result[data.id] = pbi_epbb_incentive
+#        return result
+#    
     def run_lead_days(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
         lead_ids = self.search(cr, uid, [('type','=','lead')], context=context)
         if lead_ids:
@@ -918,6 +942,18 @@ class crm_lead(osv.Model):
         send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, auto_email_id, context=context)
         return {'value' : values}
     
+    def onchange_insentive_type(self, cr, uid, ids, insentive_type, sci_step, context=None):
+        values = {}
+        if not context:
+            context = {}
+        incentive_obj = self.pool.get('incentive.incentive')
+        if insentive_type and sci_step:
+            insentive_ids = incentive_obj.search(cr, uid, [('incentive_type', '=', insentive_type),('incentive_steps','=',sci_step)], context=context)
+            if insentive_ids:
+                incentive_data = incentive_obj.browse(cr, uid, insentive_ids, context=context)
+                values = {'pbi_epbb_incentive' : incentive_data[0].inscentive_digits or 0.0}
+        return {'value' : values}
+        
     def _get_monthly_production(self, cr, uid, ids, name, args, context=None):
         res = {}
         jan_production = 0.0
@@ -983,6 +1019,8 @@ class crm_lead(osv.Model):
                 res[data.id]['dec_production'] = dec_production/line_no
                         
         return res
+    
+    
         
     _columns = {
          'last_name': fields.char('Last Name', size=32),
@@ -990,19 +1028,21 @@ class crm_lead(osv.Model):
          'lead_date': fields.date('Date', required=True),
          'lead_days': fields.integer('Lead Days'),
          'property': fields.selection([('commercial', 'Commercial'), ('residential', 'Residential'), ('non_profit', 'None Profit')], 'Property', help="Which type of Property?"),
-         'insentive_type' : fields.selection([('epbb','EPBB'),('pbi','PBI')],'Insentive Type'),
-         'sci_step' : fields.selection([
-                        (1,'Step 1'),
-                        (2,'Step 2'),
-                        (3,'Step 3'),
-                        (4,'Step 4'),
-                        (5,'Step 5'),
-                        (6,'Step 6'),
-                        (7,'Step 7'),
-                        (8,'Step 8'),
-                        (9,'Step 9'),
-                        (10,'Step 10')
-                    ],'Current SCI Step'),
+#         'insentive_type' : fields.selection([('epbb','EPBB'),('pbi','PBI')],'Insentive Type'),
+        'insentive_type' : fields.many2one('incentive.type', 'Incentive Type'),
+        'sci_step' : fields.many2one('incentive.steps','Current SCI Step'),
+#         'sci_step' : fields.selection([
+#                        (1,'Step 1'),
+#                        (2,'Step 2'),
+#                        (3,'Step 3'),
+#                        (4,'Step 4'),
+#                        (5,'Step 5'),
+#                        (6,'Step 6'),
+#                        (7,'Step 7'),
+#                        (8,'Step 8'),
+#                        (9,'Step 9'),
+#                        (10,'Step 10')
+#                    ],'Current SCI Step'),
          'spouse': fields.many2one('res.partner', string='Secondary Customer', help="Secondary Customer (spouse) in case he/she exist."),
          'utility_company_id': fields.many2one('res.partner', 'Utility Company', domain=[('is_utility_company','=',True)]),
          'doc_req_ids' : fields.one2many('document.required', 'crm_lead_id', 'Required Documents'),
@@ -1098,7 +1138,8 @@ class crm_lead(osv.Model):
         'array_output' : fields.function(_get_output, string='Solar Array Output', type='float'),
         'peak_kw_stc' : fields.function(_get_stc_dc_rating, string='Yearly output per KW', type='float'),
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
-        'pbi_epbb_incentive' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
+        'pbi_epbb_incentive' : fields.float("PBI-EPBBB Incentive"),
+#        'pbi_epbb_incentive' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
         'cost' : fields.function(_get_cost_rebate, string="Cost",type="float",multi="cost_all"),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",store=True,type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
@@ -1212,10 +1253,10 @@ class crm_lead(osv.Model):
             annual_production = data.annual_solar_prod_display
             annual_usage =  data.annual_ele_usage
             for yr in range(data.number_of_years):
-                if data.insentive_type == 'pbi':
-                    incentive = prev_pv_energy * 1000 * data.pbi_epbb_incentive
-                else:
-                    incentive = (prev_pv_energy * data.pbi_epbb_incentive)/1000
+#                if data.insentive_type == 'pbi':
+                incentive = prev_pv_energy * 1000 * data.pbi_epbb_incentive
+#                else:
+#                    incentive = (prev_pv_energy * data.pbi_epbb_incentive)/1000
                 
                 prev_new_bill = self._get_new_bill(cr, uid, ids, prev_old_bill, annual_usage, annual_production, context=context)
                 year = yr + 1

@@ -117,6 +117,149 @@
 		<record model="type.of.sale" id="tos7">
             <field name="name">Others</field>
          </record>
+         
+		<record model="incentive.type" id="incentive_type1">
+            <field name="name">EPBB</field>
+         </record>
+         <record model="incentive.type" id="incentive_type2">
+            <field name="name">PBI</field>
+         </record>
+         
+         <record model="incentive.steps" id="incentive_steps1">
+            <field name="name">Step 1</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps2">
+            <field name="name">Step 2</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps3">
+            <field name="name">Step 3</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps4">
+            <field name="name">Step 4</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps4">
+            <field name="name">Step 4</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps5">
+            <field name="name">Step 5</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps6">
+            <field name="name">Step 6</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps7">
+            <field name="name">Step 7</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps8">
+            <field name="name">Step 8</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps9">
+            <field name="name">Step 9</field>
+         </record>
+         <record model="incentive.steps" id="incentive_steps10">
+            <field name="name">Step 10</field>
+         </record>
+         
+		<record model="incentive.incentive" id="incentive_incentive1">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps1"/>
+            <field name="inscentive_digits">0.0</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive2">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps2"/>
+            <field name="inscentive_digits">2.50</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive3">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps3"/>
+            <field name="inscentive_digits">2.20</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive4">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps4"/>
+            <field name="inscentive_digits">1.90</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive5">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps5"/>
+            <field name="inscentive_digits">1.55</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive6">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps6"/>
+            <field name="inscentive_digits">1.10</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive7">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps7"/>
+            <field name="inscentive_digits">0.65</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive8">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps8"/>
+            <field name="inscentive_digits">0.35</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive9">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps9"/>
+            <field name="inscentive_digits">0.25</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive10">
+            <field name="incentive_type" ref="incentive_type1"/>
+            <field name="incentive_steps" ref="incentive_steps10"/>
+            <field name="inscentive_digits">0.20</field>
+         </record>
+         
+		<record model="incentive.incentive" id="incentive_incentive11">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps1"/>
+            <field name="inscentive_digits">0.0</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive12">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps2"/>
+            <field name="inscentive_digits">0.39</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive13">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps3"/>
+            <field name="inscentive_digits">0.34</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive14">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps4"/>
+            <field name="inscentive_digits">0.26</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive15">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps5"/>
+            <field name="inscentive_digits">0.22</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive16">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps6"/>
+            <field name="inscentive_digits">0.15</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive17">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps7"/>
+            <field name="inscentive_digits">0.09</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive18">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps8"/>
+            <field name="inscentive_digits">0.05</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive19">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps9"/>
+            <field name="inscentive_digits">0.03</field>
+         </record>
+         <record model="incentive.incentive" id="incentive_incentive20">
+            <field name="incentive_type" ref="incentive_type2"/>
+            <field name="incentive_steps" ref="incentive_steps10"/>
+            <field name="inscentive_digits">0.03</field>
+         </record>
 		
     </data>
 </openerp>

@@ -288,6 +288,7 @@
             <field name="stage_id" ref="crm.stage_lead3"/>
             <field eval="1" name="active"/>
         </record>
+        
 
   </data>
 </openerp>
