@@ -795,7 +795,8 @@
 	                            </group>
 	                            <group string="Loan" col="2" colspan="2">
 	                                  <field name="loan_period" />
-	                                  <field name="loan_interest_rate"/>
+	                                  <field name="loan_interest_rate" invisible="1"/>
+	                                  <field name="loan_interest_rate_dummy" />
 	                                  <field name="loan_amt" readonly="1" />
 	                                  <field name="down_payment" />
 	                                  <field name="down_payment_amt" readonly="1" />
@@ -814,7 +815,8 @@
                                   <field name="property" />
 							      <field name="insentive_type" on_change="onchange_insentive_type(insentive_type, sci_step)"/>
 								  <field name="sci_step" on_change="onchange_insentive_type(insentive_type, sci_step)"/>
-                                  <field name="pbi_epbb_incentive"/>
+                                  <field name="pbi_epbb_incentive" invisible="1"/>
+                                  <field name="pbi_epbb_incentive_dummy" />
                                   <field name="rebate" />
 							      <field name="rebate_amt" readonly="1" />
 							      <field name="srec" />

@@ -38,7 +38,8 @@ class proposal_report(report_sxw.rml_parse):
     incentive_total = 0
     lead_cost_rebate_lines = []
     file_name = "/tmp/bar1.png"
-    file_name_pie = "/tmp/pie.png"    
+    file_name_pie = "/tmp/pie.png"
+    objects_id = []
     customer_id = 0
     estimated_shading = 0
     number_of_years = 0
@@ -92,7 +93,9 @@ class proposal_report(report_sxw.rml_parse):
             'format_new_bill_value' : self.format_new_bill_value,
             'format_bill_saving_value': self.format_bill_saving_value,
             'format_srecs_value': self.format_srecs_value,
-            'format_payout_value': self.format_payout_value
+            'format_payout_value': self.format_payout_value,
+            '_get_pie':  self._get_pie,
+            '_get_bar':  self._get_bar,
         })
         
     def get_count(self):
@@ -185,8 +188,8 @@ class proposal_report(report_sxw.rml_parse):
         theme.use_color = True
         theme.default_font_size = 14
         theme.reinitialize()
-        
-        fd = file(self.file_name, "w")
+        FN = "/tmp/bar"+str(id)+".png"
+        fd = file(FN, "w")
         can = canvas.init(fd, "png")
         data = [("Jan", use_data.jan), ("Feb", use_data.feb),
             ("Mar", use_data.mar), ("Apr", use_data.apr),
@@ -217,12 +220,19 @@ class proposal_report(report_sxw.rml_parse):
         ar.draw(can)
         can.close()
         return True
-        
-    def _make_pie_chart(self):
+
+    def _get_bar(self, id):
+        return open("/tmp/bar"+str(id)+".png", 'rb').read().encode('base64')
+    
+    def _get_pie(self, id):
+        return open("/tmp/pie"+str(id)+".png", 'rb').read().encode('base64')
+
+    def _make_pie_chart(self, id):
         theme.use_color = True
         theme.default_font_size = 20
         theme.reinitialize()
-        fd = file(self.file_name_pie, "w")
+        FN = "/tmp/pie"+str(id)+".png"
+        fd = file(FN, "w")
         can = canvas.init(fd, "png")
         tot = self.old_bill_total + self.new_bill_total
         old_per = new_per = 0
@@ -239,7 +249,7 @@ class proposal_report(report_sxw.rml_parse):
             ar.add_plot(plot)
             ar.draw(can)
             can.close()
-            return True
+        return True
     
     def format_old_bill_value(self, old_bill):
         return int(old_bill)

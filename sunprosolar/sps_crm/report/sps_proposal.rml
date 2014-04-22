@@ -111,10 +111,10 @@
     <blockTable colWidths="540.0" style="Table2">
         <tr>
             <td>
-                <para style="P3" alignment="CENTER">[[lead_make_bar_chart(o.id) or removeParentNode('blockTable') ]]</para>
+                <para style="P3" alignment="CENTER">[[lead_make_bar_chart(o.id) and ' ' or removeParentNode('blockTable') ]]</para>
                 <para style="P3" alignment="CENTER"><font color="#006699">Estimated Electric Usage and Solar Production</font></para>
                 <illustration height="380.0" width="0.0">
-                    <image x="10" y="60" file="/tmp/bar1.png" height="300.0" width="600.0"/>
+                    <image x="10" y="60" height="300.0" width="600.0">[[ _get_bar(o.id)]]</image>
                 </illustration>
             </td>
         </tr>
@@ -140,9 +140,9 @@
                <blockTable colWidths="250.0,0.0" style="Table1">
 			    	<tr>
 			            <td>
-			               <para style="P3" alignment="CENTER">[[ lead_make_pie_chart() or removeParentNode('blockTable') ]]</para>
+			               <para style="P3" alignment="CENTER">[[ lead_make_pie_chart(o.id) and ' ' or removeParentNode('blockTable') ]]</para>
 			                <illustration height="300.0" width="0.0">
-			                    <image x="0" y="40" file="/tmp/pie.png" height="250.0" width="250.0"/>
+			                    <image x="0" y="40" height="250.0" width="250.0">[[ _get_pie(o.id)]]</image>
 			                </illustration>
 			            </td>
 			            <td>
@@ -268,7 +268,7 @@
         <tr>
             <td>
                 <para style="P3" alignment="LEFT"> </para> 
-                <para style="P5" alignment="LEFT">DISCLAIMER: This information is provided as an illustration of potential financial benefits stemming from ownership of a solar elecm'c system. This is not a production guarantee. A professional accountant or tax advisor should confirm these estimates. Neither Sunpro Solar not OnGrid Solar warrants the applicability of these estimates for particular business eases, and both disclaim all liability.</para>            
+                <para style="P4" alignment="LEFT">DISCLAIMER: This information is provided as an illustration of potential financial benefits stemming from ownership of a solar electric system. This is not a production guarantee. A professional accountant or tax advisor should confirm these estimates. Sunpro Solar does not warrants the applicability of these estimates for particular business eases, and disclaim all liability.</para>            
             </td>
         </tr>
     </blockTable>
@@ -281,7 +281,7 @@
         </tr>
     </blockTable>
     
-    <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" style="Table3">
+    <blockTable colWidths="60.0,92.0,95.0,95.0,100.0,97.0" style="Table3">
         <tr>
             <td>
                 <para style="P4_bold" alignment="CENTER">Year</para>
@@ -298,9 +298,7 @@
             <td>
                 <para style="P4_bold" alignment="CENTER">Incentives</para>
             </td>
-            <td>
-                <para style="P4_bold" alignment="CENTER">Rebates,PBI's, after tax, Tax credits and Depriciation</para>
-            </td>
+            
             <td>
                 <para style="P4_bold" alignment="CENTER">Cost / Payback (Cumulative cash Position)</para>
             </td>
@@ -308,7 +306,7 @@
     </blockTable>
     <section>
     <para style="P4_bold" alignment="CENTER">[[repeatIn(lead_get_cost_rebate(),'cost_rebate')]]</para>
-    <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" >
+    <blockTable colWidths="60.0,92.0,95.0,95.0,100.0,97.0" >
             <tr>
                 <td>
                     <para style="P4" alignment="CENTER">[[ cost_rebate.year ]]</para>
@@ -325,9 +323,7 @@
                 <td>
                     <para style="P4" alignment="CENTER">[[ formatLang(format_srecs_value(cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
                 </td>
-                <td>
-                    <para style="P4" alignment="CENTER">[[ not get_count() and formatLang(get_rebate_amt(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) or '' ]]</para>
-                </td>
+            
                 <td>
                     <para style="P4" alignment="CENTER">[[ formatLang(format_payout_value(cost_rebate.yearly_payout), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
                 </td>
@@ -361,11 +357,13 @@
         </tr>
     </blockTable>
     
-    <blockTable colWidths="40.0,70.0,75.0,75.0,95.0,95.0,88.0" style="Table3">
+    <blockTable colWidths="60.0,92.0,95.0,95.0,100.0,97.0" style="Table3">
         <tr>
+            
             <td>
                 <para style="P4_bold" alignment="CENTER">TOTAL</para>
             </td>
+            
             <td>
                 <para style="P4" alignment="CENTER">[[ formatLang(lead_get_old_bill_total(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
@@ -379,11 +377,10 @@
                 <para style="P4" alignment="CENTER">[[ formatLang(get_total_savings(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
             </td>
             <td>
-                <para style="P4" alignment="CENTER">[[ formatLang(get_rebate_amt(), digits=get_digits(dp='Account'), currency_obj=o.pricelist_id.currency_id) ]]</para>
+                <para style="P4" alignment="CENTER"> <font color="#FFFFFF">1</font>
+                </para>
             </td>
-            <td>
-                <para style="P4" alignment="CENTER"></para>
-            </td>
+            
         </tr>
     </blockTable>
     

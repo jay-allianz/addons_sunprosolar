@@ -7,7 +7,7 @@
 			<field name="model">calendar.event</field>
 			<field name="inherit_id" ref="base_calendar.event_form_view" />
 			<field name="arch" type="xml">
-				<field name="recurrency" position="after">.
+				<field name="recurrency" position="after">
 					<newline/>
 					<field name="status"/>
 				</field>
@@ -19,11 +19,6 @@
 			<field name="model">crm.lead</field>
 			<field name="inherit_id" ref="sps_crm.view_sun_crm_opp_form" />
 			<field name="arch" type="xml">
-				<!--
-				<xpath expr="//field[@name='loan_interest_rate']" position="attributes">
-				    <attribute name="readonly">1</attribute>
-				</xpath>
-				-->
 				<field name="loan_period" position="before">
 					<field name="finance_type" on_change="onchange_financing_type_opp(finance_type)"/>
 				</field>
