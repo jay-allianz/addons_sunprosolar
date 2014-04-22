@@ -863,27 +863,23 @@ class crm_lead(osv.Model):
             }
         return result
     
-#    def _get_pbi_epbb_incentive(self, cr, uid, ids, name, args, context=None):
-#        result = {}
-#        epbb_resi = {1:0.0,2:2.50,3:2.20,4:1.90,5:1.55,6:1.10,7:0.65,8:0.35,9:0.25,10:0.20}
-#        epbb_comm = {1:0.0,2:2.50,3:2.20,4:1.90,5:1.55,6:1.10,7:0.65,8:0.35,9:0.25,10:0.20}
-#        epbb_non_pro = {1:0.0,2:3.25,3:2.95,4:2.65,5:2.30,6:1.85,7:1.40,8:1.10,9:0.90,10:0.70}
-#        epbb = {'residential':epbb_resi,'commercial':epbb_comm,'non_profit':epbb_non_pro}
-#        pbi_resi = {1:0.0,2:0.39,3:0.34,4:0.26,5:0.22,6:0.15,7:0.09,8:0.05,9:0.03,10:0.03}
-#        pbi_comm = {1:0.0,2:0.39,3:0.34,4:0.26,5:0.22,6:0.15,7:0.09,8:0.05,9:0.03,10:0.03}
-#        pbi_non_pro = {1:0.0,2:0.50,3:0.46,4:0.37,5:0.32,6:0.26,7:0.19,8:0.15,9:0.12,10:0.09}
-#        pbi = {'residential':pbi_resi,'commercial':pbi_comm,'non_profit':pbi_non_pro}
-#        insentive_data = {'epbb':epbb,'pbi':pbi}
-#        pbi_epbb_incentive = 0.0
-#        for data in self.browse(cr, uid, ids, context):
-#            if data.insentive_type:
-#                epbb_or_pbi = insentive_data.get(data.insentive_type,{})
-#                if data.property:
-#                    res_com_pro = epbb_or_pbi.get(data.property,{})
-#                    if data.sci_step:
-#                        pbi_epbb_incentive = res_com_pro.get(data.sci_step,0.0)
-#            result[data.id] = pbi_epbb_incentive
-#        return result
+    def _get_pbi_epbb_incentive(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        pbi_epbb_incentive_dummy = 0.0
+        for data in self.browse(cr, uid, ids, context):
+            if data.pbi_epbb_incentive:
+                pbi_epbb_incentive_dummy = data.pbi_epbb_incentive
+            result[data.id] = pbi_epbb_incentive_dummy
+        return result
+    
+    def _get_loan_interest_rate(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        loan_interest_rate_dummy = 0.0
+        for data in self.browse(cr, uid, ids, context):
+            if data.loan_interest_rate:
+                loan_interest_rate_dummy = data.loan_interest_rate
+            result[data.id] = loan_interest_rate_dummy
+        return result
 #    
     def run_lead_days(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
         lead_ids = self.search(cr, uid, [('type','=','lead')], context=context)
@@ -1125,6 +1121,7 @@ class crm_lead(osv.Model):
         'loan_period' :fields.float("Loan Period(Years)"),
         'down_payment' :fields.float("Down Payment (%)"),
         'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
+        'loan_interest_rate_dummy' : fields.function(_get_loan_interest_rate, string="Loan Interest Rate (%)", type="float"),
         'cost_peack_kw' : fields.function(_get_cost_rebate, string="Cost / Peack KW",type="float",multi="cost_all"),
         'pv_kw_decline':fields.float('PV KW Decline (%)'),
         'grid_energy_rate':fields.function(_get_company_tier_amount, type='float', method=True, string="Electricity Grid energy intial Rate Per KWh/$"),
@@ -1139,7 +1136,7 @@ class crm_lead(osv.Model):
         'peak_kw_stc' : fields.function(_get_stc_dc_rating, string='Yearly output per KW', type='float'),
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
         'pbi_epbb_incentive' : fields.float("PBI-EPBBB Incentive"),
-#        'pbi_epbb_incentive' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
+        'pbi_epbb_incentive_dummy' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
         'cost' : fields.function(_get_cost_rebate, string="Cost",type="float",multi="cost_all"),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",store=True,type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),

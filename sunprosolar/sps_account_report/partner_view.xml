@@ -121,8 +121,6 @@
           </field>
         </record>
 		
-
-
   		<!--Inherited Customers Tree View-->
         <record model="ir.ui.view" id="view_partner_tree_inherit">
             <field name="name">view.partner.tree.inherit</field>

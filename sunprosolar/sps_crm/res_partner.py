@@ -331,8 +331,9 @@ class res_user(osv.Model):
                 if doc_data.visible_user == True:
                     documents.append({
                                  'file_name' : doc_data.name or '',
-                                 'doc_file' : doc_data.db_datas or ''
+                                 'doc_file' : doc_data.datas or ''
                     })
+        
         return documents
     
     def get_event(self, cr, uid, user_id, context=None):
@@ -379,27 +380,30 @@ class res_user(osv.Model):
     def upload_document(self, cr, uid, user_id, doc_name, doc_file, context=None):
         if not context:
             context = {}
+        
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
         attachement_obj = self.pool.get('ir.attachment')
-        new_document_id = False
+        new_attachment_id = False
         attachment_existing_ids = []
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
-        for data in crm_data:
-            for attach_id in data.attachment_ids:
-                attachment_existing_ids.append(attach_id.id)
-            vals_attachment = {
-                        'name': doc_name,
-                        'db_datas':doc_file
+        if crm_ids:
+            data = crm_obj.browse(cr, uid, crm_ids, context=context)[0]
+    
+        for attach_id in data.attachment_ids:
+            attachment_existing_ids.append(attach_id.id)
+        vals_attachment = {
+                    'name': doc_name,
+                    'datas':doc_file,
+                    'visible_user':True
             }
-            new_attachment_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
-            attachment_existing_ids.append(new_attachment_id)
+        new_attachment_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
+        attachment_existing_ids.append(new_attachment_id)
         crm_obj.write(cr, uid, crm_ids, {'attachment_ids':[(6, 0, attachment_existing_ids)]})
-        if new_document_id:
-            return new_document_id
+        if new_attachment_id:
+            return new_attachment_id
         else:
             False
     

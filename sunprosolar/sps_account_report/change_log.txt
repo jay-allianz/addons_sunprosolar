@@ -1,9 +1,9 @@
 ===============================================================================
- Version Change Log (ats_account)
+ Version Change Log (sps_account_report)
 ===============================================================================
-1.1 ---> Jan 13,2014 : Vacha
-        * Improved the view of invoice report.
+1.1 ---> Feb 21,2014 : Anu
+        * Added the SPS Invoice Detailed report.
 
-1.0 ---> Jan 06,2014 : Bipin
+1.0 ---> Feb 20,2014 : Anu
         * Added a module.
-        * Added a ATS formated Invoice report.
+        * Added a SPS formated Invoice report.

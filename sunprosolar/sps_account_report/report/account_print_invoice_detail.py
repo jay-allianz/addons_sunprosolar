@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+from openerp.osv import osv
 import time
 from openerp.report import report_sxw
 import datetime
@@ -39,14 +39,14 @@ class sps_account_invoice_detail(report_sxw.rml_parse):
         })
 
     def _sale_order_line(self,origin):
-        if not origin:
-            return False
-        sale_order_obj = self.pool.get('sale.order')
-        sale_order_ids = sale_order_obj.search(self.cr, self.uid, [('name','=',origin)])
-        if sale_order_ids:
-            order_line = sale_order_obj.browse(self.cr, self.uid, sale_order_ids[0]).order_line
-            return order_line
-        return False
+        order_line=[]
+        if origin:
+            sale_order_obj = self.pool.get('sale.order')
+            sale_order_ids = sale_order_obj.search(self.cr, self.uid, [('name','=',origin)])
+            if sale_order_ids:
+                order_line = sale_order_obj.browse(self.cr, self.uid, sale_order_ids[0]).order_line
+                return order_line
+        return order_line
 
     def shipped_qty(self,invoice_id,invoice_line):
         sale_order_obj = self.pool.get('sale.order')

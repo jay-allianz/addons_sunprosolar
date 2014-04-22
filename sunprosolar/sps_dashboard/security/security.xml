@@ -2,7 +2,7 @@
 <openerp>
 
     <data noupdate="0">
-        
+<!--        
         <record id="crm_rule_personal_lead_portal" model="ir.rule">
 	        <field name="name">Portal Leads</field>
 	        <field ref="crm.model_crm_lead" name="model_id"/>
@@ -29,7 +29,7 @@
             <field name="domain_force">['|',('partner_id','=',user.partner_id.id), ('message_follower_ids','in',[user.partner_id.id])]</field>
             <field eval="0" name="perm_write"/>
         </record>
-        
+-->        
     </data>
 
 </openerp>
