@@ -93,33 +93,72 @@ class import_utility_company(osv.osv_memory):
                     if data and data[0] and data[1]:
                         summer_data = data[0]
                         winter_data = data[1]
-                    pricelist_id = product_pricelist_obj.create(cr, uid, {
-                                                        'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
+                    prc_name = tools.ustr(sheet.row_values(rownum)[company_name_index]) + ' ' + tools.ustr(sheet.row_values(rownum)[features_index])
+                    prc_ids = product_pricelist_obj.search(cr, uid, [('name','=',prc_name)])
+                    if not prc_ids:
+                        pricelist_id = product_pricelist_obj.create(cr, uid, {
+                                                        'name': prc_name,
                                                         'type': 'sale'
                                                 })
+                    else:
+                        pricelist_id = prc_ids[0]
                     price_version_ids = []
-                    price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
-                                                                'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
+                    ppv_idsv1 = product_pricelist_version_obj.search(cr, uid, [('name','=',prc_name),('date_start','=',year_start_date),('date_end','=',date_from),('pricelist_id','=',pricelist_id)])
+                    if not ppv_idsv1:
+                        price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
+                                                                'name': prc_name,
                                                                 'date_start': year_start_date or False,
                                                                 'date_end': date_from or False,
                                                                 'pricelist_id': pricelist_id
                                                         }))
+                    else:
+                        product_pricelist_version_obj.write(cr, uid, ppv_idsv1[0], {
+                                                                'name': prc_name,
+                                                                'date_start': year_start_date or False,
+                                                                'date_end': date_from or False,
+                                                                'pricelist_id': pricelist_id
+                                                        })
+                        price_version_ids.append(ppv_idsv1[0])
+                    
                     date_from = (datetime.datetime.strptime(date_from , DEFAULT_SERVER_DATE_FORMAT) + relativedelta(days=1)).strftime(DEFAULT_SERVER_DATE_FORMAT)
-                    price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
-                                                                'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
+                    ppv_idsv2 = product_pricelist_version_obj.search(cr, uid, [('name','=',prc_name),('date_start','=',date_from),('date_end','=',date_to),('pricelist_id','=',pricelist_id)])
+                    if not ppv_idsv2:                    
+                        price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
+                                                                'name': prc_name,
                                                                 'date_start': date_from or False,
                                                                 'date_end': date_to or False,
                                                                 'pricelist_id': pricelist_id
                                                         }))
+                    else:
+                        product_pricelist_version_obj.write(cr, uid, ppv_idsv2[0],{
+                                                                'name': prc_name,
+                                                                'date_start': date_from or False,
+                                                                'date_end': date_to or False,
+                                                                'pricelist_id': pricelist_id
+                                                        })   
+                        price_version_ids.append(ppv_idsv2[0])
+                                      
                     date_to = (datetime.datetime.strptime(date_to , DEFAULT_SERVER_DATE_FORMAT) + relativedelta(days=1)).strftime(DEFAULT_SERVER_DATE_FORMAT)
-                    price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
-                                                                'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[season_name_index]),
+                    ppv_idsv3 = product_pricelist_version_obj.search(cr, uid, [('name','=',prc_name),('date_start','=',date_to),('date_end','=',year_end_date),('pricelist_id','=',pricelist_id)])
+                    if not ppv_idsv3:                    
+                        price_version_ids.append(product_pricelist_version_obj.create(cr, uid, {
+                                                                'name': prc_name,
                                                                 'date_start': date_to or False,
                                                                 'date_end': year_end_date or False,
                                                                 'pricelist_id': pricelist_id
                                                         }))
+                    else:
+                        product_pricelist_version_obj.write(cr, uid, ppv_idsv3[0],{
+                                                                'name': prc_name,
+                                                                'date_start': date_to or False,
+                                                                'date_end': year_end_date or False,
+                                                                'pricelist_id': pricelist_id
+                                                        })   
+                        price_version_ids.append(ppv_idsv3[0])
                     for price_version in price_version_ids:
-                        price_list_id = product_pricelist_item_obj.create(cr, uid, {
+                        ppitem_ids = product_pricelist_item_obj.search(cr, uid, [('price_version_id','=',price_version)])
+                        if not ppitem_ids:
+                            price_list_id = product_pricelist_item_obj.create(cr, uid, {
                                                                 'daily_minimum_charges': sheet.row_values(rownum)[daily_minimum_charges_index] or 0.00,
                                                                 'monthly_minimum_charges': sheet.row_values(rownum)[monthly_minimum_charges_index] or 0.00,
                                                                 'daily_meter_charges': sheet.row_values(rownum)[daily_meter_charges_index] or 0.00,
@@ -139,8 +178,42 @@ class import_utility_company(osv.osv_memory):
                                                                 'name': sheet.row_values(rownum)[season_name_index] or '',
                                                                 'price_version_id': price_version
                                                         })
-                    partner_obj.create(cr, uid, {
-                                            'name': str(sheet.row_values(rownum)[company_name_index]) + ' ' + str(sheet.row_values(rownum)[features_index]),
+                        else:
+                            price_list_id = ppitem_ids[0]
+                            product_pricelist_item_obj.write(cr, uid, ppitem_ids[0],{
+                                                                'daily_minimum_charges': sheet.row_values(rownum)[daily_minimum_charges_index] or 0.00,
+                                                                'monthly_minimum_charges': sheet.row_values(rownum)[monthly_minimum_charges_index] or 0.00,
+                                                                'daily_meter_charges': sheet.row_values(rownum)[daily_meter_charges_index] or 0.00,
+                                                                'monthly_meter_charges': sheet.row_values(rownum)[monthly_minimum_charges_index] or 0.00,
+                                                                'tier1': sheet.row_values(rownum)[tier1_index] or 0.00,
+                                                                'off_peak_tier2': sheet.row_values(rownum)[off_peaktier2_index] or 0.00,
+                                                                'part_peak_tier3': sheet.row_values(rownum)[part_peak_tier3_index] or 0.00,
+                                                                'peak_tier4': sheet.row_values(rownum)[peak_tier4_index] or 0.00,
+                                                                'stage_changes': sheet.row_values(rownum)[state_chages_index] or 0.00,
+                                                                'rate_stablization': sheet.row_values(rownum)[rate_stablization_index] or 0.00,
+                                                                'surcharge_3': sheet.row_values(rownum)[surcharge3_index] or 0.00,
+                                                                'surcharge_4': sheet.row_values(rownum)[surcharge4_index] or 0.00,
+                                                                'surcharge_5': sheet.row_values(rownum)[surcharge5_index] or 0.00,
+                                                                'surcharge_6': sheet.row_values(rownum)[surcharge6_index] or 0.00,
+                                                                'summer_qty': summer_data or 0.00,
+                                                                'winter_qty': winter_data or 0.00,
+                                                                'name': sheet.row_values(rownum)[season_name_index] or '',
+                                                                'price_version_id': price_version
+                                                        })
+                            
+                    partner_name = tools.ustr(sheet.row_values(rownum)[company_name_index]) + ' ' + tools.ustr(sheet.row_values(rownum)[features_index])
+                    partner_ids = partner_obj.search(cr, uid, [('name','=',partner_name)])
+                    if not partner_ids:      
+                        partner_obj.create(cr, uid, {
+                                            'name': partner_name,
+                                            'is_utility_company': True,
+                                            'is_company': True,
+                                            'property_product_pricelist': pricelist_id,
+                                            'customer': False
+                                    })
+                    else:
+                        partner_obj.write(cr, uid,partner_ids[0],{
+                                            'name': partner_name,
                                             'is_utility_company': True,
                                             'is_company': True,
                                             'property_product_pricelist': pricelist_id,
