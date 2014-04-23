@@ -256,17 +256,27 @@ class res_user(osv.Model):
                     solar_info_list.append(solar_info)
                 for cost_rebate in data.cost_rebate_ids:
                     bill_saving += cost_rebate.elec_bill_savings
-                project_ids = project_obj.search(cr, uid, [('name','=',data.partner_id.name)], context=context)
+                project_ids = project_obj.search(cr, uid, [('partner_id','=',data.partner_id.id)])
                 if project_ids:
                     project_data = project_obj.browse(cr, uid, project_ids, context=context)
-                    project_status = project_data[0].tasks and project_data[0].tasks[0].stage_id.name or 'draft'
+                    project_status = project_data[0].tasks and project_data[0].tasks[0].stage_id.name
                 else:
-                    sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',data.partner_id.id)],context=context)
-                    if sale_order_ids:
-                        sale_data = sale_order_obj.browse(cr, uid, sale_order_ids, context=context)
-                        project_status = sale_data[0].state
-                    else:
-                        project_status = data.stage_id and data.stage_id.name or 'draft'
+                    project_status = 'Waiting Goods'
+                sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',data.partner_id.id)],context=context)
+                if sale_order_ids:
+                    sale_data = sale_order_obj.browse(cr, uid, sale_order_ids, context=context)
+                    if project_status == 'Waiting Goods':
+                        if sale_data[0].shipped:
+                            project_status = 'delivered'
+                        elif sale_data[0].procurement_ids:
+                            for procurements in sale_data[0].procurement_ids:
+                                if procurements.state == 'confirmed':
+                                    project_status = 'material_ordered'
+                                    break
+                        else:
+                            project_status = sale_data[0].state
+                else:
+                    project_status = data.stage_id and data.stage_id.name or 'draft'
                 new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,
                         'year': data.number_of_years,
                         'cars_off_roads':data.cars_off_roads*data.number_of_years,

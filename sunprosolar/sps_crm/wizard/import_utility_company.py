@@ -45,10 +45,10 @@ class import_utility_company(osv.osv_memory):
         temp_path = tempfile.gettempdir()
         wiz_rec = self.browse(cr, uid, ids[0], context=context)
         csv_data = base64.decodestring(wiz_rec.file)
-        fp = open(temp_path + '/utility_company.xls', 'wb+')
+        fp = open( '/tmp/utility_company.xlsx', 'wb+')
         fp.write(csv_data)
         fp.close()
-        wb = xlrd.open_workbook(temp_path + '/utility_company.xls')
+        wb = xlrd.open_workbook('/tmp/utility_company.xlsx')
         current_year = datetime.date.today().year
         year_start_date = '01/01/%s' % current_year
         year_end_date = '%s-12-31' % current_year

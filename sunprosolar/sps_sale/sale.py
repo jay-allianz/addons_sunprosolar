@@ -277,7 +277,7 @@ class sale_order(osv.Model):
             'project_id':project_id,
             'color': 4,
         }
-        project_obj.write(cr, uid, project_id, {'color':4}, context=context)
+        project_obj.write(cr, uid, project_id, {'color':4, 'privacy_visibility':'portal'}, context=context)
         task_obj.create(cr, uid, task_vals, context=context)
         self.write(cr, uid, ids, {'state': 'contract_generated','project_id': proj_acc_analy_id})
         return True
