@@ -197,7 +197,7 @@ class electricity_usage(osv.Model):
         'oct' : 0,
         'nov' : 0,
         'dec' : 0,
-        'type' : 'yearly',
+        'type' : 'monthly',
     }
     
 class cost_rebate(osv.Model):

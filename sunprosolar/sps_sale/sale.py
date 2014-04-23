@@ -133,12 +133,24 @@ class sale_order(osv.Model):
          'attachment_ids': fields.many2many('ir.attachment', 'sale_attachment_sps_rel', 'sale_order', 'attachmenr_id', 'Attachments'),
          'procurement_ids': fields.one2many('procurement.order','sale_order_id','Procurements Created'),
          'ahj': fields.selection([('structural', 'Structural'), ('electrical', 'Electrical')], 'AHJ', help="Authority Having Jurisdiction"),
-         'event_ids' : fields.one2many('calendar.event','sale_order_id','Events')
+         'event_ids' : fields.one2many('calendar.event','sale_order_id','Events'),
+         'sale_confirm' : fields.boolean('Sale Confirm'),
     }
     
     _defaults = {
             'engineering': 'yes',
+            'sale_confirm' : False
     }
+    
+    def action_button_confirm(self, cr, uid, ids, context=None):
+#        sale_data = self.browse(cr, uid, ids, context=context)
+        temp_dict = {'sale_confirm': True}
+#        for data in sale_data:
+#            if data.state != "permit_pack":
+#                temp_dict.update({'state': data.state,})
+        res = super(sale_order, self).action_button_confirm(cr, uid, ids, context=context)
+        self.write(cr, uid, ids, temp_dict,context=context)
+        return res
     
     def _create_pickings_and_procurements(self, cr, uid, order, order_lines, picking_id=False, context=None):
         """Create the required procurements to supply sales order lines, also connecting
@@ -452,7 +464,7 @@ class sale_order(osv.Model):
                 subtype='html',
                 subtype_alternative=None,
                 headers=None)
-        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+                self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
         self.write(cr, uid, ids, {'state': 'project_management_notified'})
         return True
     
