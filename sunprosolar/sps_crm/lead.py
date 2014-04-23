@@ -101,8 +101,8 @@ class crm_lead(osv.Model):
                 station_data = station_obj.browse(cr, uid, station_ids, context=context)
                 for s_data in station_data:
                     values = {'loc_station_id' : s_data.id or False}
-            if not station_ids:
-                raise osv.except_osv(_('Warning'), _('Station is not defined!'))
+#            if not station_ids:
+#                raise osv.except_osv(_('Warning'), _('Station is not defined!'))
             if not utility_ids:
                 utility_ids = utility_company_obj.search(cr, uid, [], context=context)
                 utility_data = utility_company_obj.browse(cr, uid, utility_ids, context=context)

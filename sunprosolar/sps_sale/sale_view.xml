@@ -131,10 +131,12 @@
 					<attribute name="states">draft,sent,contract_generated,contract_signed,project_management_notified,financing_type,assign_financing_incharge,site_inspection,permit</attribute>
 					<attribute name="groups">sps_sale.procurement_manager_sps</attribute>
 					<attribute name="class">oe_highlight</attribute>
+					<attribute name="attrs">{'invisible':[('sale_confirm','==',True)]}</attribute>
 				</button>
 				<button name="action_button_confirm" states="sent" position="attributes">
-					<attribute name="states">city,permit_pack,drawing,progress,manual"</attribute>
+					<attribute name="states">permit_pack,progress,manual</attribute>
 					<attribute name="class">oe_highlight</attribute>
+					<attribute name="attrs">{'invisible':[('sale_confirm','==',True)]}</attribute>
 				</button>
 				<button name="print_quotation" string="Print" type="object" position="attributes">
 					<attribute name="states">contract_generated,follow_up,contract_signed,permit,city,permit_pack,drawing,project_management_notified,financing_type,site_inspection,assign_financing_incharge,progress
@@ -242,7 +244,7 @@
 	                            colspan="2" type="object" icon="gtk-yes" /> 
 	                    </group>
 					</page>
-					<page string="Procuremets" attrs="{'invisible':[('state','!=','manual')]}">
+					<page string="Procuremets" attrs="{'invisible':[('sale_confirm','!=', True)]}">
 						<group cols="1" colspan="4">
 	                        <separator string="Procurements"/>
 					        <field name="procurement_ids" colspan="4" nolabel="1" readonly="1"/>
