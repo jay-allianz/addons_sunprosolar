@@ -42,6 +42,7 @@ class project_project(osv.Model):
     _columns = {
                 'project_task_stage': fields.related('tasks', 'stage_id', type='many2one', store=True,relation='project.task.type', string='Project Task Stage'),
                  }
+    
 project_project()
 
 class product_task_type(osv.Model):
