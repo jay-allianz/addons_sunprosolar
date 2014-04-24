@@ -143,11 +143,11 @@ class sale_order(osv.Model):
     }
     
     def action_button_confirm(self, cr, uid, ids, context=None):
-#        sale_data = self.browse(cr, uid, ids, context=context)
+        sale_data = self.browse(cr, uid, ids, context=context)
         temp_dict = {'sale_confirm': True}
 #        for data in sale_data:
 #            if data.state != "permit_pack":
-#                temp_dict.update({'state': data.state,})
+#                temp_dict.update({'state': data.state})
         res = super(sale_order, self).action_button_confirm(cr, uid, ids, context=context)
         self.write(cr, uid, ids, temp_dict,context=context)
         return res
