@@ -91,6 +91,7 @@ class crm_lead(osv.Model):
     
     def on_change_station_and_utility(self, cr, uid, ids, city_id, context=None):
         values ={'utility_company_id': False, 'loc_station_id': False}
+        station_data = []
         if city_id:
             station_obj = self.pool.get('insolation.incident.yearly')
             utility_company_obj = self.pool.get('res.partner')
@@ -98,25 +99,17 @@ class crm_lead(osv.Model):
             utility_ids = utility_company_obj.search(cr, uid, [('is_utility_company','=',1),('from_zip','<=',int(city.zip)),('to_zip','>=',int(city.zip))], context=context)
             station_ids = station_obj.search(cr, uid, [('from_zip','<=',int(city.zip)),('to_zip','>=',int(city.zip))], context=context)
             if station_ids:
-                station_data = station_obj.browse(cr, uid, station_ids, context=context)
-                for s_data in station_data:
-                    values = {'loc_station_id' : s_data.id or False}
-#            if not station_ids:
-#                raise osv.except_osv(_('Warning'), _('Station is not defined!'))
-            if not utility_ids:
-                utility_ids = utility_company_obj.search(cr, uid, [], context=context)
-                utility_data = utility_company_obj.browse(cr, uid, utility_ids, context=context)
-                for u_data in utility_data:
-                    if u_data.zip_ids:
-                        for zip_id in u_data.zip_ids:
-                            if city_id == zip_id.id:
-                                for data in station_data:
-                                    values.update({'utility_company_id' : u_data.id or False})
+                values.update({'loc_station_id' : station_ids[0]})
             else:
-                utility_company_data = utility_company_obj.browse(cr, uid, utility_ids, context=context)
-                for u_data in utility_company_data:
-                    for data in station_data:
-                        values.update({'utility_company_id' : u_data.id or False})
+                station_ids = station_obj.search(cr, uid, [('zip_ids','in',[city_id])], context=context)
+                if station_ids:
+                    values.update({'loc_station_id' : station_ids[0]})
+            if utility_ids:
+                values.update({'utility_company_id' : utility_ids[0]})
+            else:
+                utility_ids = utility_company_obj.search(cr, uid, [('is_utility_company','=',1),('zip_ids','in',[city_id])], context=context)
+                if utility_ids:
+                    values.update({'utility_company_id' : utility_ids[0]})                
         return {'value' : values}
 
     def on_change_partner(self, cr, uid, ids, partner_id, context=None):
@@ -413,6 +406,7 @@ class crm_lead(osv.Model):
                         summer_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         context.update({'get_field':'winter_qty'})
                         winter_qty = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
+                        
                         if not summer_qty:
                             summer_qty = 0
                         if count in [1,2,3,4,5,10,11,12]:
@@ -422,13 +416,13 @@ class crm_lead(osv.Model):
                         count += 1
                         over_basline1 = basline * 0.3
                         over_basline2 = basline * 0.7
+                        over_basline3 = basline
                         context.update({'get_field':'daily_meter_charges'})
                         
                         daily_meter_charge = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not daily_meter_charge:
                             daily_meter_charge = 0
                         basic_charge = daily_meter_charge * days
-                        
                         context.update({'get_field':'tier1'})
                         tier1 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not tier1:
@@ -453,7 +447,6 @@ class crm_lead(osv.Model):
                             else:
                                 over_base_line1_1 = round(over_basline1 * peak_tier2,2)
 #                        over_base_line1_1 = over_basline1 * peak_tier2
-                        
                         context.update({'get_field':'part_peak_tier3'})
                         peak_tier3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not peak_tier3:
@@ -467,7 +460,6 @@ class crm_lead(osv.Model):
                             else:
                                 over_base_line1_2 = round(over_basline2 * peak_tier3,2)
 #                        over_base_line1_2 = over_basline2 * peak_tier3
-                        
                         context.update({'get_field':'peak_tier4'})
                         peak_tier4 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not peak_tier4:
@@ -477,7 +469,6 @@ class crm_lead(osv.Model):
                             over_base_line1_3 = 0.0
                         else:
                             over_base_line1_3 = round((usage - basline - over_basline1 - over_basline2 )*peak_tier4,2)
-                        
                         context.update({'get_field':'surcharge_3'})
                         surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not surcharge3:
@@ -503,7 +494,6 @@ class crm_lead(osv.Model):
                         if not rate_stablization:
                             rate_stablization = 0
                         delivery_subtotal = basic_charge + base_line_summer + over_base_line1_1 + over_base_line1_2 + over_base_line1_3 + surcharge3 + surcharge4 + surcharge5 + surcharge6 + rate_stablization
-                        
                         context.update({'get_field':'stage_changes'})
                         stage_change = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not stage_change:
@@ -1371,11 +1361,14 @@ class crm_lead(osv.Model):
         return True
 
     def on_change_utility_company(self, cr, uid, ids, utility_company_id, context=None):
+        if context == None:
+            context = {}
         values = {}
         document_list = []
         if utility_company_id:
             utility_company = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
             for document in utility_company.document_ids:
+                if document.finace_type == False:
                     document_list.append({'doc_id':document.id})
             values = {'doc_req_ids' : document_list or False}
         return {'value' : values}

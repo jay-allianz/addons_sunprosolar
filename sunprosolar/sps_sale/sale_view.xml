@@ -131,10 +131,9 @@
 					<attribute name="states">draft,sent,contract_generated,contract_signed,project_management_notified,financing_type,assign_financing_incharge,site_inspection,permit</attribute>
 					<attribute name="groups">sps_sale.procurement_manager_sps</attribute>
 					<attribute name="class">oe_highlight</attribute>
-					<attribute name="attrs">{'invisible':[('sale_confirm','==',True)]}</attribute>
 				</button>
 				<button name="action_button_confirm" states="sent" position="attributes">
-					<attribute name="states">permit_pack,progress,manual</attribute>
+					<attribute name="states">permit_pack,manual"</attribute>
 					<attribute name="class">oe_highlight</attribute>
 					<attribute name="attrs">{'invisible':[('sale_confirm','==',True)]}</attribute>
 				</button>
@@ -179,6 +178,7 @@
                         <button name="done_inspection" icon="gtk-yes" type="object" string="Done Site Inspection" />
                     </group>
                     <newline/>
+                    <field name="sale_confirm" invisible="1"/>
                     <group>
                         <group>
                             <field name="contract_signing_date"/>

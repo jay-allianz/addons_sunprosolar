@@ -124,20 +124,20 @@ class documents_all(osv.Model):
             'finace_type': fields.boolean("Is Finance Type?")
      }
     
-class crm_lead(osv.Model):
-    
-    _inherit = "crm.lead"
-    
-    def on_change_utility_company(self, cr, uid, ids, utility_company_id, context=None):
-        values = {}
-        document_list = []
-        if utility_company_id:
-            utility_company = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
-            for document in utility_company.document_ids:
-                if document.finace_type == False:
-                    document_list.append({'doc_id':document.id})
-            values = {'doc_req_ids' : document_list or False}
-        return {'value' : values}
+#class crm_lead(osv.Model):
+#    
+#    _inherit = "crm.lead"
+#    
+#    def on_change_utility_company(self, cr, uid, ids, utility_company_id, context=None):
+#        values = {}
+#        document_list = []
+#        if utility_company_id:
+#            utility_company = self.pool.get('res.partner').browse(cr, uid, utility_company_id, context=context)
+#            for document in utility_company.document_ids:
+#                if document.finace_type == False:
+#                    document_list.append({'doc_id':document.id})
+#            values = {'doc_req_ids' : document_list or False}
+#        return {'value' : values}
     
 class sale_order(osv.Model):
     
