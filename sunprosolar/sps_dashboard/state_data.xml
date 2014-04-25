@@ -53,8 +53,6 @@
             <field eval="7" name="sequence"/>
         </record>
         
-
-        
         <record id="sps_dashboard.sps_state8" model="sps.state">
             <field name="code">contract_signed</field>
             <field name="name">Contract Signed</field>
@@ -123,9 +121,22 @@
             <field name="name">Contract Review</field>
             <field eval="18" name="sequence"/>
         </record>
+        
+        <record id="sps_dashboard.sps_state181" model="sps.state">
+            <field name="code">Waiting Goods</field>
+            <field name="name">Waiting Goods</field>
+            <field eval="18" name="sequence"/>
+        </record>
+        
 		<record id="sps_dashboard.sps_state19" model="sps.state">
             <field name="code">Installation</field>
             <field name="name">Installation</field>
+            <field eval="19" name="sequence"/>
+        </record>
+        
+        <record id="sps_dashboard.sps_state191" model="sps.state">
+            <field name="code">Installation Complete</field>
+            <field name="name">Installation Complete</field>
             <field eval="19" name="sequence"/>
         </record>
         

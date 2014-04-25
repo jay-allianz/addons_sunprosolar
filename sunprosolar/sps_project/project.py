@@ -39,8 +39,28 @@ class project_project(osv.Model):
     
     _inherit = "project.project"
     
+    def _get_state(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        stage_obj = self.pool.get('project.task')
+        for data in self.browse(cr, uid, ids):
+            if not data.tasks:
+                res[data.id] = False
+            else:
+                res[data.id] = [x.stage_id.id for x in data.tasks][0]
+        return res
+    
+    def _get_task_stage(self, cr, uid, ids, context=None):
+        result = {}
+        for line in self.pool.get('project.task').browse(cr, uid, ids, context=context):
+            result[line.project_id.id] = True
+        return result.keys()
+
     _columns = {
-                'project_task_stage': fields.related('tasks', 'stage_id', type='many2one', store=True,relation='project.task.type', string='Project Task Stage'),
+#                'project_task_stage': fields.related('tasks', 'stage_id', type='many2one', store=True,relation='project.task.type', string='Project Task Stage'),
+                'project_task_stage': fields.function(_get_state, type='many2one', store={
+                    'project.project': (lambda self, cr, uid, ids, c={}: ids, ['tasks'], 20),
+                    'project.task': (_get_task_stage, ['stage_id'], 20),
+                    },relation='project.task.type', string='Project Task Stage'),
                  }
     
 project_project()
