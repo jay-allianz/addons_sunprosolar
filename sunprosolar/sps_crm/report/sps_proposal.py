@@ -180,7 +180,7 @@ class proposal_report(report_sxw.rml_parse):
             return
         use_data = None
         for usage in usage_data:
-            if usage.name == datetime.datetime.now().year and usage.type == "monthly":
+            if usage.name == datetime.datetime.now().year:
                 use_data = usage
         
         if not use_data:
@@ -191,12 +191,21 @@ class proposal_report(report_sxw.rml_parse):
         FN = "/tmp/bar"+str(id)+".png"
         fd = file(FN, "w")
         can = canvas.init(fd, "png")
-        data = [("Jan", use_data.jan), ("Feb", use_data.feb),
-            ("Mar", use_data.mar), ("Apr", use_data.apr),
-            ("May", use_data.may), ("Jun", use_data.jun),
-            ("Jul", use_data.jul), ("Aug", use_data.aug),
-            ("Sep", use_data.sep), ("Oct", use_data.oct),
-            ("Nov", use_data.nov), ("Dec", use_data.dec)]
+        if use_data.type == "yearly":
+            mnthly_usage = use_data.usage_kwh/12
+            data = [("Jan", mnthly_usage), ("Feb", mnthly_usage),
+                ("Mar", mnthly_usage), ("Apr", mnthly_usage),
+                ("May", mnthly_usage), ("Jun", mnthly_usage),
+                ("Jul", mnthly_usage), ("Aug", mnthly_usage),
+                ("Sep", mnthly_usage), ("Oct", mnthly_usage),
+                ("Nov", mnthly_usage), ("Dec", mnthly_usage)]
+        else:
+            data = [("Jan", use_data.jan), ("Feb", use_data.feb),
+                ("Mar", use_data.mar), ("Apr", use_data.apr),
+                ("May", use_data.may), ("Jun", use_data.jun),
+                ("Jul", use_data.jul), ("Aug", use_data.aug),
+                ("Sep", use_data.sep), ("Oct", use_data.oct),
+                ("Nov", use_data.nov), ("Dec", use_data.dec)]
         
         if lead_id:
             production_data = lead_obj.browse(self.cr, self.uid, lead_id)[0]
@@ -279,22 +288,22 @@ class proposal_report(report_sxw.rml_parse):
         return self.lead_cost_rebate_lines
     
     def _get_estimated_offset(self):
-        return format(int(round(self.pv_energy_total*(self.estimated_shading or 1)/100,0)),',d')
+        return format(int(round(self.pv_energy_total*(self.estimated_shading or 1)/100,0)),'d')
     
     def _get_co2_emission(self):
-        return format(int(round(self.co2_emission,0)),',d')
+        return format(int(round(self.co2_emission,0)),'d')
     
     def _get_gasoline_equi(self):
-        return format(int(round(self.gas_equi,0)),',d')
+        return format(int(round(self.gas_equi,0)),'d')
     
     def _get_avg_home_powered(self):
-        return format(int(round(self.avg_home_powered,0)),',d')
+        return format(int(round(self.avg_home_powered,0)),'d')
     
     def _get_avg_light_bulb_powered(self):
-        return format(int(round(self.avg_light_bulb_powered,0)),',d')
+        return format(int(round(self.avg_light_bulb_powered,0)),'d')
     
     def _get_miles_driven(self):
-        return format(int(round(self.miles_driven,0)),',d')
+        return format(int(round(self.miles_driven,0)),'d')
     
     def _get_gross_system_price(self):
         return self.grand_total

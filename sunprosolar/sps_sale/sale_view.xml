@@ -14,6 +14,20 @@
 			</field>
 		</record>
 		
+		<record model="ir.ui.view" id="event_tree_view_sps_inherit">
+            <field name="name">Event Tree</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="base_calendar.event_tree_view" />
+            <field name="arch" type="xml">
+                <field name="class" string="Privacy" position="after">
+					<field name="status"/>
+                </field>
+                <field name="location" position="replace"/>
+                <field name="show_as" position="replace"/>
+                <field name="class" string="Privacy" position="replace"/>
+            </field>
+        </record>
+		
 		<record model="ir.ui.view" id="view_inherited_view_sun_crm_opp_form">
 			<field name="name">inherited.res.partner.view.buttons</field>
 			<field name="model">crm.lead</field>
@@ -133,9 +147,8 @@
 					<attribute name="class">oe_highlight</attribute>
 				</button>
 				<button name="action_button_confirm" states="sent" position="attributes">
-					<attribute name="states">permit_pack,manual"</attribute>
+					<attribute name="states">permit_pack</attribute>
 					<attribute name="class">oe_highlight</attribute>
-					<attribute name="attrs">{'invisible':[('sale_confirm','==',True)]}</attribute>
 				</button>
 				<button name="print_quotation" string="Print" type="object" position="attributes">
 					<attribute name="states">contract_generated,follow_up,contract_signed,permit,city,permit_pack,drawing,project_management_notified,financing_type,site_inspection,assign_financing_incharge,progress

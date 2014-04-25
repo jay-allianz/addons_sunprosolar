@@ -1,0 +1,6 @@
+==================================================================================
+ Version ChangeLog (sps_purchase)
+==================================================================================
+
+0.1 --> 25 Apr 2014 : Serpent Consulting Services
+        * Added sale order reference field in purchase order.
