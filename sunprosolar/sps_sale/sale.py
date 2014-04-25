@@ -52,6 +52,19 @@ class calendar_event(osv.Model):
         if context.get('active_ids'):
             sale_order_obj.write(cr, uid, context.get('active_ids'), {'event_ids': [(4,res)]})
         return res
+    
+    def do_confirm(self, cr, uid, ids, context=None, *args):
+        """ Makes event invitation as Tentative
+        @param self: The object pointer
+        @param cr: the current row, from the database cursor,
+        @param uid: the current user's ID for security checks,
+        @param ids: List of Event IDs
+        @param *args: Get Tupple value
+        @param context: A standard dictionary for contextual values
+        """
+        res = super(calendar_event, self).do_confirm(cr, uid, ids, context=context)
+        self.write(cr, uid, ids, {'status': 'working_hours'}, context)
+        return res
 
 class sale_order(osv.Model):
 
@@ -412,7 +425,9 @@ class sale_order(osv.Model):
             if lead_id:
                 lead_data = lead_obj.browse(cr, uid, lead_id,context=context)[0]
                 if lead_data:
-                    self.write(cr, uid, ids, {'financing_type_id': lead_data.finance_type.id or False})
+                    if lead_data.finance_type and lead_data.finance_type.id or False:
+                        documents_finance_type = self.onchange_financing_type(cr, uid, ids, lead_data.finance_type.id, context=context)
+                        self.write(cr, uid, ids, {'financing_type_id': lead_data.finance_type.id, })
                 for lead_data in lead_obj.browse(cr, uid, lead_id,context=context):
                     for solar_data in lead_data.solar_ids:
                         station_temp = solar_data.loc_station_id and solar_data.loc_station_id.name

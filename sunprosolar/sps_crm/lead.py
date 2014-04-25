@@ -80,6 +80,7 @@ class crm_lead(osv.Model):
             'street2': lead.street2,
             'zip': lead.zip,
             'city': lead.city,
+            'city_id': lead.city_id and lead.city_id.id or False,
             'country_id': lead.country_id and lead.country_id.id or False,
             'state_id': lead.state_id and lead.state_id.id or False,
             'is_company': True,
