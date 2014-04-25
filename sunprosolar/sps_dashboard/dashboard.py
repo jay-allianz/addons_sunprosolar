@@ -45,7 +45,9 @@ AVAILABLE_STATES = [
     ('drawing','Eng. Create/Modify Following Drawings'),
     ('permit_pack','Permit Pack'),
     ('cancel', 'Cancelled'),
+    ('Waiting Goods', 'Waiting Goods'),
     ('Installation', 'Installation'),
+    ('Installation Complete', 'Installation Complete'),
     ('Final Inspection', 'Final Inspection'),
     ('Monitoring', 'Monitoring'),
     ('Invoicing', 'Invoicing'),
@@ -87,7 +89,7 @@ class sps_dashboard(osv.Model):
         'name' : fields.char('Name', size='128'),
         'partner_id' : fields.many2one('res.partner', 'Customer'),
         'state': fields.selection(AVAILABLE_STATES, 'Order Status', readonly=True),
-        'state_id': fields.function(_get_state, type='many2one', relation='sps.state', string='State', store=True),
+        'state_id': fields.many2one('sps.state', string='State'),
         'nbr': fields.integer('Number of Records', readonly=True),
         }
     
@@ -101,27 +103,28 @@ class sps_dashboard(osv.Model):
         tools.drop_view_if_exists(cr, 'sps_dashboard')
         cr.execute("""
             create or replace view sps_dashboard as (
-            Select 1 as nbr, 1 as state_id, p.id+l.id+cs.id as id, l.name as name, p.id as partner_id, cs.name as state from crm_lead l 
-inner join crm_case_stage cs on l.stage_id = cs.id 
-inner join res_partner p on l.partner_id = p.id 
-where l.state not in ('cancel','done')
-
-union
-
-Select 1 as nbr, 1 as state_id, p.id+s.id as id, s.name as name, p.id as partner_id, s.state as state from sale_order s 
-inner join res_partner p on s.partner_id = p.id where state not in ('confirmed','done')
-
-union
-
-Select 1 as nbr, 1 as state_id, p.id+aa.id+tt.id as id, aa.name as name, p.id as partner_id, tt.name as state from account_analytic_account aa 
+            
+Select 1 as nbr, (select id from sps_state where code = tt.name) as state_id, p.id as id, aa.name as name, p.id as partner_id, tt.name as state from account_analytic_account aa 
 inner join res_partner p on aa.partner_id = p.id 
 inner join project_project pr ON aa.id = pr.analytic_account_id
 inner join project_task_type tt on pr.project_task_stage = tt.id
 
 union
 
-Select 1 as nbr, 1 as state_id, p.id+i.id as id, i.name as name, p.id as partner_id, i.state as state from account_invoice i 
-inner join res_partner p on i.partner_id = p.id where state not in ('proforma','proforma2','paid','cancel')
+Select 1 as nbr, (select id from sps_state where code = s.state) as state_id, p.id as id, s.name as name, p.id as partner_id, s.state as state from sale_order s 
+inner join res_partner p on s.partner_id = p.id where state not in ('confirmed','done','progress','manual','follow_up','cancel')
+
+union
+
+Select 1 as nbr, (select id from sps_state where code = cs.name) as state_id, p.id as id, l.name as name, p.id as partner_id, cs.name as state from crm_lead l 
+inner join crm_case_stage cs on l.stage_id = cs.id 
+inner join res_partner p on l.partner_id = p.id 
+where l.state not in ('cancel','done')
+
 )""")
-        
+
+#union
+#
+#Select 1 as nbr, (select id from sps_state where code = i.state) as state_id, p.id as id, i.name as name, p.id as partner_id, i.state as state from account_invoice i 
+#inner join res_partner p on i.partner_id = p.id where state not in ('proforma','proforma2','paid','cancel')        
 sps_dashboard()
