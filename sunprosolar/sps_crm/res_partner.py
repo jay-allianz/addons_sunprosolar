@@ -88,10 +88,10 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
-        sale_data = sale_order_obj.browse(cr, uid, sale_order_ids, context=context)
+        sale_data = sale_order_obj.browse(cr, uid, [max[sale_order_ids]], context=context)
         for data in sale_data:
             if data.state == 'permit':
-                sale_order_obj.write(cr, uid, sale_order_ids, {'state': 'city'},context=context)
+                sale_order_obj.write(cr, uid, [max[sale_order_ids]], {'state': 'city'},context=context)
                 
                 template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'customer_accept_plan', context=context)
                 template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
@@ -113,7 +113,7 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+        crm_data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)
         for data in crm_data:
             for solar_data in data.solar_ids:
                 if solar_data.module_product_id:
@@ -207,7 +207,7 @@ class res_user(osv.Model):
                             }
             crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
             if crm_ids:
-                data = crm_obj.browse(cr, uid, crm_ids, context=context)[0]
+                data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
                 bill_saving = 0
                 if data.intial_photo:
                     intial_photo = data.intial_photo
@@ -256,15 +256,20 @@ class res_user(osv.Model):
                     solar_info_list.append(solar_info)
                 for cost_rebate in data.cost_rebate_ids:
                     bill_saving += cost_rebate.elec_bill_savings
-                project_ids = project_obj.search(cr, uid, [('partner_id','=',data.partner_id.id)])
-                if project_ids:
-                    project_data = project_obj.browse(cr, uid, project_ids, context=context)
-                    project_status = project_data[0].tasks and project_data[0].tasks[0].stage_id.name
-                else:
-                    project_status = 'Waiting Goods'
-                sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',data.partner_id.id)],context=context)
-                if sale_order_ids:
-                    sale_data = sale_order_obj.browse(cr, uid, sale_order_ids, context=context)
+
+                
+                if data.ref:
+                    sale_order_info.append(data.ref.id)
+                    analytic_account = data.ref.project_id and data.ref.project_id.id
+                    if analytic_account:
+                        project_ids = project_obj.search(cr, uid, [('analytic_account_id','=',analytic_account)])
+                        if project_ids:
+                            project_data = project_obj.browse(cr, uid, project_ids, context=context)
+                            project_status = project_data[0].tasks and project_data[0].tasks[0].stage_id.name
+                    else:        
+                        project_status = 'Waiting Goods'
+
+                    sale_data = data.ref
                     if project_status == 'Waiting Goods':
                         if sale_data[0].shipped:
                             project_status = 'delivered'
@@ -291,10 +296,6 @@ class res_user(osv.Model):
                         'zip':res_users_data.partner_id.city_id and res_users_data.partner_id.city_id.zip or '',
                         'monitoring_links':monitoring_links_list
                         }
-            sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-            sale_order_data = sale_order_obj.browse(cr, uid, sale_order_ids, context= context)
-            for sale_data in sale_order_data:
-                sale_order_info.append(sale_data.id)
             result = {'partner_info': partner_info,
                       'lead_info': crm_lead_info and crm_lead_info[0] or False,
                       'initial_photo': intial_photo,
@@ -314,7 +315,7 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+        crm_data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)
         
         if res_users_data.partner_id:
             partner_obj.write(cr, uid, partner_id, {'name': name, 'middle_name': middle_name, 'last_name': last_name, 'street': street, 'street2':street2, 'city_id': city_id, 'email':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
@@ -336,12 +337,18 @@ class res_user(osv.Model):
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
-            data = crm_obj.browse(cr, uid, crm_ids, context=context)[0]
+            data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
             for doc_data in data.attachment_ids:
                 if doc_data.visible_user == True:
                     documents.append({
                                  'file_name' : doc_data.name or '',
                                  'doc_file' : doc_data.datas or ''
+                    })
+            if data.ref:
+                for attachment in data.ref.attachment_ids:
+                    documents.append({
+                                 'file_name' : attachment.name or '',
+                                 'doc_file' : attachment.datas or ''
                     })
         
         return documents
@@ -352,34 +359,47 @@ class res_user(osv.Model):
         event_dict = {}
         event_list=[]
         sale_order_obj = self.pool.get('sale.order')
+        crm_obj = self.pool.get('crm.lead')
+        
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
-        sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
-        sale_data = sale_order_obj.browse(cr, uid, sale_order_ids, context=context)
-        for data in sale_data:
-            for event in data.event_ids:
-                event_dict = {'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.status}
-                event_list.append(event_dict)
-        return event_list
-    
+        
+        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+        if crm_ids:
+            data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
+            if data.ref:
+                sale_data = data.ref
+                for event in sale_data.event_ids:
+                    event_dict = {'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.status}
+                    event_list.append(event_dict)
+                return event_list
+        else:
+            return event_list
+        
     def add_event(self, cr, uid, user_id, event_name, start_date, end_date, status, context=None):
         if not context:
             context = {}
         sale_order_obj = self.pool.get('sale.order')
         calender_obj = self.pool.get('calendar.event')
+        crm_obj = self.pool.get('crm.lead')
+        
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
-        sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
-        if sale_order_ids:
-            vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'sale_order_id': sale_order_ids[0]}
-            new_calender_id = calender_obj.create(cr, uid, vals, context=context)
-            if new_calender_id:
-                return new_calender_id
-            else:
-                return False
+        
+        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+        if crm_ids:
+            data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
+            if data.ref:
+                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'sale_order_id': data.ref.id}
+                new_calender_id = calender_obj.create(cr, uid, vals, context=context)
+                if new_calender_id:
+                    return new_calender_id
+                else:
+                    return False
         else:
             return False
         
+
     def get_care_maintenance(self, cr, uid, user_id, context=None):
         if not context:
             context = {}
@@ -400,22 +420,24 @@ class res_user(osv.Model):
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
-            data = crm_obj.browse(cr, uid, crm_ids, context=context)[0]
+            data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
     
-        for attach_id in data.attachment_ids:
-            attachment_existing_ids.append(attach_id.id)
-        vals_attachment = {
-                    'name': doc_name,
-                    'datas':doc_file,
-                    'visible_user':True
-            }
-        new_attachment_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
-        attachment_existing_ids.append(new_attachment_id)
-        crm_obj.write(cr, uid, crm_ids, {'attachment_ids':[(6, 0, attachment_existing_ids)]})
-        if new_attachment_id:
-            return new_attachment_id
+            for attach_id in data.attachment_ids:
+                attachment_existing_ids.append(attach_id.id)
+            vals_attachment = {
+                        'name': doc_name,
+                        'datas':doc_file,
+                        'visible_user':True
+                }
+            new_attachment_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
+            attachment_existing_ids.append(new_attachment_id)
+            crm_obj.write(cr, uid, crm_ids, {'attachment_ids':[(6, 0, attachment_existing_ids)]})
+            if new_attachment_id:
+                return new_attachment_id
+            else:
+                return False
         else:
-            False
+            return False
     
     def get_project_photo(self, cr, uid, user_id, context = None):
         if not context:
@@ -426,7 +448,7 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
-        crm_data = crm_obj.browse(cr, uid, crm_ids, context=context)
+        crm_data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)
         for data in crm_data:
             for project_photos_data in data.project_photo_ids:
                 project_photos.append({
@@ -450,7 +472,7 @@ class res_user(osv.Model):
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
             vals = {
-                    'crm_lead_id' : crm_ids[0],
+                    'crm_lead_id' : max(crm_ids),
                     'name' : project_photo_name,
                     'tag_line': project_photo_tagline,
                     'photo' : project_photo_file,
@@ -476,7 +498,7 @@ class res_user(osv.Model):
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
             vals = {
-                    'crm_lead_id' : crm_ids[0],
+                    'crm_lead_id' : max(crm_ids),
                     'name' : review
             }
             new_review_id= review_obj.create(cr, uid, vals, context= context)
@@ -503,7 +525,7 @@ class res_user(osv.Model):
                    'lname' : lname,
                    'phone' : phone,
                    'email' : email,
-                   'crm_lead_id' : crm_ids[0]
+                   'crm_lead_id' : max(crm_ids)
             }
             new_ref_id= ref_obj.create(cr, uid, vals, context= context)
             
@@ -535,7 +557,7 @@ class res_user(osv.Model):
         if crm_ids:
             vals = {
                    'name' : question,
-                   'crm_lead_id' : crm_ids[0]
+                   'crm_lead_id' : max(crm_ids)
             }
             new_ref_id= ref_obj.create(cr, uid, vals, context= context)
 #        crm_obj.write(cr, uid, crm_ids, {'submit_que_ids': [(6,0,[new_ref_id])]})
