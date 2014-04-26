@@ -101,27 +101,54 @@ class sps_dashboard(osv.Model):
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, 'sps_dashboard')
+        
         cr.execute("""
             create or replace view sps_dashboard as (
-            
-Select 1 as nbr, (select id from sps_state where code = tt.name) as state_id, p.id as id, aa.name as name, p.id as partner_id, tt.name as state from account_analytic_account aa 
+       
+       with S1 as (
+Select 1 as nbr,pr.id as Xid, (select id from sps_state where code = tt.name) as state_id, p.id as id, aa.name as name, p.id as partner_id, tt.name as state from account_analytic_account aa 
 inner join res_partner p on aa.partner_id = p.id 
 inner join project_project pr ON aa.id = pr.analytic_account_id
-inner join project_task_type tt on pr.project_task_stage = tt.id
-
-union
-
-Select 1 as nbr, (select id from sps_state where code = s.state) as state_id, p.id as id, s.name as name, p.id as partner_id, s.state as state from sale_order s 
+inner join project_task_type tt on pr.project_task_stage = tt.id and tt.name not in ('Waiting Goods')
+),
+S2 as (
+Select 1 as nbr, s.id as Xid,(select id from sps_state where code = s.state) as state_id, p.id as id, s.name as name, p.id as partner_id, s.state as state from sale_order s 
 inner join res_partner p on s.partner_id = p.id where state not in ('confirmed','done','progress','manual','follow_up','cancel')
-
-union
-
-Select 1 as nbr, (select id from sps_state where code = cs.name) as state_id, p.id as id, l.name as name, p.id as partner_id, cs.name as state from crm_lead l 
+),
+S3 as (
+select 1 as nbr, l.id as Xid,(select id from sps_state where code = cs.name) as state_id, p.id as id, l.name as name, p.id as partner_id, cs.name as state from crm_lead l 
 inner join crm_case_stage cs on l.stage_id = cs.id 
 inner join res_partner p on l.partner_id = p.id 
 where l.state not in ('cancel','done')
-
-)""")
+)
+select 1 as nbr, state_id, 1000*id + 200*Xid as id, name, partner_id from S1 
+union
+select 1 as nbr, state_id, 20000*id + 305*Xid as id, name, partner_id from S2 where S2.id not in (select id from S1)
+union
+select 1 as nbr, state_id, 300000*id + 101*Xid as id, name, partner_id from S3
+where S3.id not in (select partner_id from S1))""")        
+        
+#        cr.execute("""
+#            create or replace view sps_dashboard as (
+#            
+#Select 1 as nbr, (select id from sps_state where code = tt.name) as state_id, p.id as id, aa.name as name, p.id as partner_id, tt.name as state from account_analytic_account aa 
+#inner join res_partner p on aa.partner_id = p.id 
+#inner join project_project pr ON aa.id = pr.analytic_account_id
+#inner join project_task_type tt on pr.project_task_stage = tt.id
+#
+#union
+#
+#Select 1 as nbr, (select id from sps_state where code = s.state) as state_id, p.id as id, s.name as name, p.id as partner_id, s.state as state from sale_order s 
+#inner join res_partner p on s.partner_id = p.id where state not in ('confirmed','done','progress','manual','follow_up','cancel')
+#
+#union
+#
+#Select 1 as nbr, (select id from sps_state where code = cs.name) as state_id, p.id as id, l.name as name, p.id as partner_id, cs.name as state from crm_lead l 
+#inner join crm_case_stage cs on l.stage_id = cs.id 
+#inner join res_partner p on l.partner_id = p.id 
+#where l.state not in ('cancel','done')
+#
+#)""")
 
 #union
 #

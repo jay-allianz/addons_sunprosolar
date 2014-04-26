@@ -120,7 +120,7 @@ class project_task(osv.Model):
                                         raise osv.except_osv(_('Stage Restriction'), _('You can not goto Installation stage without before run the procurements!'))
             project_task_data = self.browse(cr, uid, ids,context=context)
             if not vals.get('stage_id', None):
-                return super(project_project, self).write(cr, uid, ids, vals, context=context)
+                return super(project_task, self).write(cr, uid, ids, vals, context=context)
             task_type = stage_pool.search(cr, uid, [('name','=','Invoicing')],context=context)
             if vals.get('stage_id', False) and vals['stage_id'] in task_type:
                 invoice_obj = self.pool.get('account.invoice.line')
