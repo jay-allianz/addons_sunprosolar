@@ -271,15 +271,15 @@ class res_user(osv.Model):
 
                     sale_data = data.ref
                     if project_status == 'Waiting Goods':
-                        if sale_data[0].shipped:
+                        if sale_data.shipped:
                             project_status = 'delivered'
-                        elif sale_data[0].procurement_ids:
-                            for procurements in sale_data[0].procurement_ids:
+                        elif sale_data.procurement_ids:
+                            for procurements in sale_data.procurement_ids:
                                 if procurements.state == 'confirmed':
                                     project_status = 'material_ordered'
                                     break
                         else:
-                            project_status = sale_data[0].state
+                            project_status = sale_data.state
                 else:
                     project_status = data.stage_id and data.stage_id.name or 'draft'
                 new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,
