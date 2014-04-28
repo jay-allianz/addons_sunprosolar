@@ -58,7 +58,7 @@ class calendar_event(osv.Model):
             ('working_hours', 'Working Hours'),
             ], 'Status'),
          'sale_order_id' : fields.many2one('sale.order','sale order'),
-         'event_time' : fields.char('Event Time', size=10),
+         'event_time' : fields.char('Event Time', size=30),
     }
     
 #    _defaults = {
@@ -100,7 +100,6 @@ class sps_state_so(osv.Model):
     
     _defaults = {
         'sequence': 1,
-        'state': 'open',
         'fold': False,
     }
     _order = 'sequence'
@@ -187,7 +186,6 @@ class sale_order(osv.Model):
     def _read_group_stage_ids(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
         stage_obj = self.pool.get('sps.state.so')
         stage_ids = stage_obj.search(cr, uid, [], context=context)
-        stages = stage_obj.read(cr, uid, stage_ids, context=context)
         result = stage_obj.name_get(cr, uid, stage_ids, context=context)
         fold = {}
         return result, fold

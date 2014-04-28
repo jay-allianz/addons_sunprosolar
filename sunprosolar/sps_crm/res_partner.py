@@ -419,23 +419,21 @@ class res_user(osv.Model):
         crm_obj = self.pool.get('crm.lead')
         attachement_obj = self.pool.get('ir.attachment')
         new_attachment_id = False
-        attachment_existing_ids = []
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
     
-            for attach_id in data.attachment_ids:
-                attachment_existing_ids.append(attach_id.id)
             vals_attachment = {
                         'name': doc_name,
                         'datas':doc_file,
+                        'res_model':'crm.lead',
+                        'res_id':data.id,
                         'visible_user':True
                 }
             new_attachment_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
-            attachment_existing_ids.append(new_attachment_id)
-            crm_obj.write(cr, uid, crm_ids, {'attachment_ids':[(6, 0, attachment_existing_ids)]})
+            crm_obj.write(cr, uid, data.id, {'attachment_ids':[(0, 0, new_attachment_id)]})
             if new_attachment_id:
                 return new_attachment_id
             else:
