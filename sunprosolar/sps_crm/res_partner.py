@@ -84,23 +84,27 @@ class res_user(osv.Model):
         sale_order_obj = self.pool.get('sale.order')
         mail_mail = self.pool.get('mail.mail')
         email_template_obj = self.pool.get('email.template')
-        
+        crm_obj = self.pool.get('crm.lead')
         res_users_data = self.browse(cr, uid, user_id, context=context)
-        partner_id = res_users_data.partner_id.id
-        sale_order_ids = sale_order_obj.search(cr, uid, [('partner_id','=',partner_id)],context=context)
-        sale_data = sale_order_obj.browse(cr, uid, [max[sale_order_ids]], context=context)
-        for data in sale_data:
-            if data.state == 'permit':
-                sale_order_obj.write(cr, uid, [max[sale_order_ids]], {'state': 'city'},context=context)
-                
-                template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'customer_accept_plan', context=context)
-                template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
-                email_to_list = [res_users_data.company_id and res_users_data.company_id.engineering_email_id or 'engineering@sunpro-solar.com',res_users_data.company_id and res_users_data.company_id.admin_email_id or 'administration@sunpro-solar.com']
-                for email_to in email_to_list:
-                    template_values.update({'email_to': email_to})
-                    msg_id = mail_mail.create(cr, uid, template_values, context=context)
-                    mail_mail.send(cr, uid, [msg_id], context=context)
-        return True
+        partner_id = res_users_data.partner_id.id        
+        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+        if crm_ids:
+            crm_object = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)
+            if crm_object[0].ref:
+
+                data = crm_object[0].ref
+                if data.state == 'permit':
+                    sale_order_obj.write(cr, uid, crm_object[0].ref.id, {'state': 'city'},context=context)
+                    
+                    template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'customer_accept_plan', context=context)
+                    template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
+                    email_to_list = [res_users_data.company_id and res_users_data.company_id.engineering_email_id or 'engineering@sunpro-solar.com',res_users_data.company_id and res_users_data.company_id.admin_email_id or 'administration@sunpro-solar.com']
+                    for email_to in email_to_list:
+                        template_values.update({'email_to': email_to})
+                        msg_id = mail_mail.create(cr, uid, template_values, context=context)
+                        mail_mail.send(cr, uid, [msg_id], context=context)
+                return True
+        return False
     
     def get_user_manual(self, cr, uid, user_id, context=None):
         if not context:
