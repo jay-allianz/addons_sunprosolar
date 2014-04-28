@@ -109,6 +109,14 @@ class sale_order(osv.Model):
 
     _inherit = "sale.order"
     
+    def _get_stage(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        stage_obj = self.pool.get('sps.state.so')
+        for data in self.browse(cr, uid, ids):
+            stage_id = stage_obj.search(cr, uid, [('code','=',data.state)])
+            res[data.id] = stage_id and stage_id[0]
+        return res
+    
     def onchange_financing_type(self, cr, uid, ids, financing_type_id, context=None):
         doc_req_obj = self.pool.get('doc.required')
         values = {}
@@ -155,9 +163,11 @@ class sale_order(osv.Model):
           'color': fields.integer('Color Index'),
           'company_currency': fields.related('company_id', 'currency_id', type='many2one', string='Currency', readonly=True, relation="res.currency"),
           'planned_revenue': fields.float('Expected Revenue', track_visibility='always'),
-          'stage_id': fields.many2one('sps.state.so', 'Stage', track_visibility='onchange'),
-          'state': fields.related('stage_id', 'state', type="selection", store=True,
-                selection=_SO_STATE, string="Status", readonly=True,
+          'stage_id': fields.function(_get_stage, type='many2one' ,relation='sps.state.so', string='Stage', store=
+                              {
+                               'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['state'], 20),
+                               }),
+          'state': fields.selection(_SO_STATE, 'Status', readonly=True,
                 help="Gives the status of the quotation or sales order. \nThe exception status is automatically set when a cancel operation occurs in the processing of a document linked to the sales order. \nThe 'Waiting Schedule' status is set when the invoice is confirmed but waiting for the scheduler to run on the order date.", select=True),
          'engineering': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Engineering May be structural or Electrical'),
          'confirm_original': fields.selection([('no_changes', 'No changes'), ('change', 'Changes Made')], 'Confirmation of original Design'),
