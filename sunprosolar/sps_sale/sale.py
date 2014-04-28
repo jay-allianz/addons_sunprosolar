@@ -40,6 +40,7 @@ class calendar_event(osv.Model):
             ('working_hours', 'Working Hours'),
             ], 'Status'),
          'sale_order_id' : fields.many2one('sale.order','sale order'),
+         'event_time' : fields.char('Event Time', size=10),
     }
     
 #    _defaults = {

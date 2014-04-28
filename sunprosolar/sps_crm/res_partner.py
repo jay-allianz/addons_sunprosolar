@@ -376,7 +376,7 @@ class res_user(osv.Model):
         else:
             return event_list
         
-    def add_event(self, cr, uid, user_id, event_name, start_date, end_date, status, context=None):
+    def add_event(self, cr, uid, user_id, event_name, start_date, end_date, status, event_time, context=None):
         if not context:
             context = {}
         sale_order_obj = self.pool.get('sale.order')
@@ -390,7 +390,7 @@ class res_user(osv.Model):
         if crm_ids:
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
             if data.ref:
-                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'sale_order_id': data.ref.id}
+                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
                 new_calender_id = calender_obj.create(cr, uid, vals, context=context)
                 if new_calender_id:
                     return new_calender_id
