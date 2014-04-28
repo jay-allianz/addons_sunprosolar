@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate='0'>
+
+	    <record id="sps_sale.sps_state_so_draft" model="sps.state.so">
+            <field name="code">draft</field>
+            <field name="state">draft</field>
+            <field name="name">Quotation</field>
+            <field eval="5" name="sequence"/>
+        </record>
+        
+        <record id="sps_sale.sps_state_so_sent" model="sps.state.so">
+            <field name="code">sent</field>
+            <field name="state">sent</field>
+            <field name="name">Quotation Sent</field>
+            <field eval="5" name="sequence"/>
+        </record>
+        
+        <record id="sps_sale.sps_state_so_con_gen" model="sps.state.so">
+            <field name="code">contract_generated</field>
+            <field name="state">contract_generated</field>
+            <field name="name">Contract Generated</field>
+            <field eval="6" name="sequence"/>
+        </record>
+
+		<record id="sps_sale.sps_state_so_followup" model="sps.state.so">
+            <field name="code">follow_up</field>
+            <field name="state">follow_up</field>
+            <field name="name">Follow Up</field>
+            <field eval="7" name="sequence"/>
+        </record>
+        
+        <record id="sps_sale.sps_state_so_con_signed" model="sps.state.so">
+            <field name="code">contract_signed</field>
+            <field name="state">contract_signed</field>
+            <field name="name">Contract Signed</field>
+            <field eval="8" name="sequence"/>
+        </record>
+        
+        <record id="sps_sale.sps_state_so_pro_mgmt" model="sps.state.so">
+            <field name="code">project_management_notified</field>
+            <field name="state">project_management_notified</field>
+            <field name="name">Project Management Notified</field>
+            <field eval="9" name="sequence"/>
+        </record>
+        
+        <record id="sps_sale.sps_state_so_financing_type" model="sps.state.so">
+            <field name="code">financing_type</field>
+            <field name="state">financing_type</field>
+            <field name="name">Financing Type</field>
+            <field eval="10" name="sequence"/>
+        </record>
+
+		<record id="sps_sale.sps_state_so_fin_incharge" model="sps.state.so">
+            <field name="code">assign_financing_incharge</field>
+            <field name="state">assign_financing_incharge</field>
+            <field name="name">Assign Financing Incharge</field>
+            <field eval="11" name="sequence"/>
+        </record>
+        
+        <record id="sps_sale.sps_state_so_site_inspection" model="sps.state.so">
+            <field name="code">site_inspection</field>
+            <field name="state">site_inspection</field>
+            <field name="name">Site Inspection</field>
+            <field eval="12" name="sequence"/>
+        </record>
+        <record id="sps_sale.sps_state_so_permit" model="sps.state.so">
+            <field name="code">permit</field>
+            <field name="state">permit</field>
+            <field name="name">Permit</field>
+            <field eval="13" name="sequence"/>
+        </record>
+        <record id="sps_sale.sps_state_so_city" model="sps.state.so">
+            <field name="code">city</field>
+            <field name="state">city</field>
+            <field name="name">City Submission</field>
+            <field eval="14" name="sequence"/>
+        </record>
+
+		<record id="sps_sale.sps_state_so_drawing" model="sps.state.so">
+            <field name="code">drawing</field>
+            <field name="state">drawing</field>
+            <field name="name">Eng. Create/Modify Following Drawings</field>
+            <field eval="15" name="sequence"/>
+        </record>
+        
+        <record id="sps_sale.sps_state_so_permitpack" model="sps.state.so">
+            <field name="code">permit_pack</field>
+            <field name="state">permit_pack</field>
+            <field name="name">Permit Pack</field>
+            <field eval="16" name="sequence"/>
+        </record>
+        <record id="sps_sale.sps_state_so_manual" model="sps.state.so">
+            <field name="code">manual</field>
+            <field name="state">manual</field>
+            <field name="name">Procurement Created</field>
+            <field eval="17" name="sequence"/>
+        </record>
+
+		<record id="sps_sale.sps_state_so_progress" model="sps.state.so">
+            <field name="code">progress</field>
+            <field name="state">progress</field>
+            <field name="name">Sales Order</field>
+            <field eval="17" name="sequence"/>
+        </record>
+
+	</data>
+</openerp>

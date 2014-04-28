@@ -29,6 +29,24 @@ import datetime
 from openerp import tools
 from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
+
+_SO_STATE = [('draft', 'Proposal'),
+                ('sent', 'Proposal Sent'),
+                ('contract_generated', 'Contract Generated'),
+                ('contract_signed', 'Contract Signed'),
+                ('project_management_notified','Project Management Notified'),
+                ('financing_type','Financing Type'),
+                ('assign_financing_incharge','Assign Financing In-Charge'),
+                ('site_inspection', 'Site Inspection'),
+                ('permit','Permit'),
+                ('city','City Submission'),
+                ('drawing','Eng. Create/Modify Following Drawings'),
+                ('permit_pack','Permit Pack'),
+                ('progress', 'Sales Order'),
+                ('manual', 'Sale to Invoice'),
+                ('follow_up','Follow Up'),
+                ('cancel', 'Cancelled')]
+
 class calendar_event(osv.Model):
     
     _inherit = "calendar.event"
@@ -40,7 +58,7 @@ class calendar_event(osv.Model):
             ('working_hours', 'Working Hours'),
             ], 'Status'),
          'sale_order_id' : fields.many2one('sale.order','sale order'),
-         'event_time' : fields.char('Event Time', size=10),
+         'event_time' : fields.char('Event Time', size=30),
     }
     
 #    _defaults = {
@@ -67,9 +85,36 @@ class calendar_event(osv.Model):
         self.write(cr, uid, ids, {'status': 'working_hours'}, context)
         return res
 
+class sps_state_so(osv.Model):
+    _name = 'sps.state.so'
+    _columns = {
+        'name' : fields.char('State', size=64),
+        'code' : fields.char('Code', size=64),
+        'sequence' : fields.integer('Sequence'),
+        'state': fields.selection(_SO_STATE, 'Related Status', required=True,
+                        help="The status of your document is automatically changed regarding the selected stage. " \
+                            "For example, if a stage is related to the status 'Close', when your document reaches this stage, it is automatically closed."),
+        'fold': fields.boolean('Folded by Default',
+                        help="This stage is not visible, for example in status bar or kanban view, when there are no records in that stage to display."),
+        }
+    
+    _defaults = {
+        'sequence': 1,
+        'fold': False,
+    }
+    _order = 'sequence'
+
 class sale_order(osv.Model):
 
     _inherit = "sale.order"
+    
+    def _get_stage(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        stage_obj = self.pool.get('sps.state.so')
+        for data in self.browse(cr, uid, ids):
+            stage_id = stage_obj.search(cr, uid, [('code','=',data.state)])
+            res[data.id] = stage_id and stage_id[0]
+        return res
     
     def onchange_financing_type(self, cr, uid, ids, financing_type_id, context=None):
         doc_req_obj = self.pool.get('doc.required')
@@ -117,24 +162,11 @@ class sale_order(osv.Model):
           'color': fields.integer('Color Index'),
           'company_currency': fields.related('company_id', 'currency_id', type='many2one', string='Currency', readonly=True, relation="res.currency"),
           'planned_revenue': fields.float('Expected Revenue', track_visibility='always'),
-          'state': fields.selection([
-                ('draft', 'Proposal'),
-                ('sent', 'Proposal Sent'),
-                ('contract_generated', 'Contract Generated'),
-                ('contract_signed', 'Contract Signed'),
-                ('project_management_notified','Project Management Notified'),
-                ('financing_type','Financing Type'),
-                ('assign_financing_incharge','Assign Financing In-Charge'),
-                ('site_inspection', 'Site Inspection'),
-                ('permit','Permit'),
-                ('city','City Submission'),
-                ('drawing','Eng. Create/Modify Following Drawings'),
-                ('permit_pack','Permit Pack'),
-                ('progress', 'Sales Order'),
-                ('manual', 'Sale to Invoice'),
-                ('follow_up','Follow Up'),
-                ('cancel', 'Cancelled'),
-                ], 'Status', readonly=True,
+          'stage_id': fields.function(_get_stage, type='many2one' ,relation='sps.state.so', string='Stage', store=
+                              {
+                               'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['state'], 20),
+                               }),
+          'state': fields.selection(_SO_STATE, 'Status', readonly=True,
                 help="Gives the status of the quotation or sales order. \nThe exception status is automatically set when a cancel operation occurs in the processing of a document linked to the sales order. \nThe 'Waiting Schedule' status is set when the invoice is confirmed but waiting for the scheduler to run on the order date.", select=True),
          'engineering': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Engineering May be structural or Electrical'),
          'confirm_original': fields.selection([('no_changes', 'No changes'), ('change', 'Changes Made')], 'Confirmation of original Design'),
@@ -149,6 +181,17 @@ class sale_order(osv.Model):
          'ahj': fields.selection([('structural', 'Structural'), ('electrical', 'Electrical')], 'AHJ', help="Authority Having Jurisdiction"),
          'event_ids' : fields.one2many('calendar.event','sale_order_id','Events'),
          'sale_confirm' : fields.boolean('Sale Confirm'),
+    }
+    
+    def _read_group_stage_ids(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
+        stage_obj = self.pool.get('sps.state.so')
+        stage_ids = stage_obj.search(cr, uid, [], context=context)
+        result = stage_obj.name_get(cr, uid, stage_ids, context=context)
+        fold = {}
+        return result, fold
+
+    _group_by_full={
+        'stage_id': _read_group_stage_ids,
     }
     
     _defaults = {

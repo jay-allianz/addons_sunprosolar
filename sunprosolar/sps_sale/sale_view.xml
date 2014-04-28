@@ -46,7 +46,7 @@
 			<field name="name">Sale Order Kanban</field>
 			<field name="model">sale.order</field>
 			<field name="arch" type="xml">
-				<kanban default_group_by="state">
+				<kanban default_group_by="stage_id">
 					<field name="state" />
 					<field name="name" />
 					<field name="color" />
