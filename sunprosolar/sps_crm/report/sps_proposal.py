@@ -396,7 +396,8 @@ class proposal_report(report_sxw.rml_parse):
         lead_id = lead_obj.search(self.cr, self.uid, [('ref', '=', reference)])
         lead_annual_solar_pro_data = False
         if lead_id:
-            lead_annual_solar_pro_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].annual_solar_prod
+            lead_annual_solar_pro_data = lead_obj.browse(self.cr, self.uid, lead_id)[0].annual_solar_prod#annual_solar_prod_display
+            lead_annual_solar_pro_data = round(lead_annual_solar_pro_data,3)
         return lead_annual_solar_pro_data
     
     def _lead_annual_usage_get(self, id):

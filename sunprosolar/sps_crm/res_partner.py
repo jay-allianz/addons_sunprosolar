@@ -433,7 +433,7 @@ class res_user(osv.Model):
                         'visible_user':True
                 }
             new_attachment_id = attachement_obj.create(cr, uid, vals_attachment, context=context)
-            crm_obj.write(cr, uid, data.id, {'attachment_ids':[(0, 0, new_attachment_id)]})
+            crm_obj.write(cr, uid, data.id, {'attachment_ids':[(4, new_attachment_id)]})
             if new_attachment_id:
                 return new_attachment_id
             else:

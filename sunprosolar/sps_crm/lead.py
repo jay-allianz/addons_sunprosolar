@@ -512,6 +512,8 @@ class crm_lead(osv.Model):
     
     def _get_new_bill(self, cr, uid, ids, old_bill, annual_usage, annual_production, context=None):
         res = {}
+        if not annual_usage:
+            annual_usage=1
         for data in self.browse(cr, uid, ids, context):
             yearly_ele_usage = (annual_usage - annual_production)
             new_bill = (yearly_ele_usage/annual_usage)*old_bill

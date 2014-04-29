@@ -104,5 +104,12 @@
             <field eval="17" name="sequence"/>
         </record>
 
+		<record id="sps_sale.sps_state_so_cancel" model="sps.state.so">
+            <field name="code">cancel</field>
+            <field name="state">cancel</field>
+            <field name="name">Cancelled</field>
+            <field eval="18" name="sequence"/>
+        </record>
+
 	</data>
 </openerp>
