@@ -168,11 +168,11 @@
                             colspan="2" type="object" icon="gtk-yes" class="oe_highlight"
                             attrs="{'invisible':[('state','!=','sent')]}" />
                     </group>
-                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','contract_generated')]}" >
+                    <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','contract_generated'),('state','!=','follow_up')]}" >
                         <button name="contract_sign" string="Contract Sign"
                             colspan="2" type="object" icon="gtk-yes" class="oe_highlight"/>
                         <button name="contract_rejected" string="Contract Rejected"
-                            colspan="2" type="object" icon="gtk-no"/>
+                            colspan="2" type="object" icon="gtk-no" attrs="{'invisible':[('state','!=','contract_generated')]}"/>
                     </group>
 					<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','follow_up')]}">
                         <button name="contract_disqualified" string="Disqualify"
@@ -319,6 +319,8 @@
 						<group col="4" colspan="4">
 							<field name="contract_id" />
 							<field name="contract_date" />
+							<field name="installation_start_date" />
+							<field name="operational_date" />
 							<field name="amount" />
 							<field name="deposit" />
 							<field name="csi"/>

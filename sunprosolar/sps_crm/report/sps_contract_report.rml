@@ -2159,7 +2159,7 @@
                         <td><para style="P1">TYPE OF INSTALL</para>
                         	<para style="P1">□ PV  □ POOL  □ HOT WATER  □ OTHER: <u>[[ s.project_id and s.project_id.type_install or '' ]]</u></para>
                         </td>
-                        <td><para style="P1">EST. INSTALL DATE : [[ s.contract_signing_date ]]</para></td>
+                        <td><para style="P1">EST. INSTALL DATE : [[ s.project_id and s.project_id.installation_start_date or '' ]]</para></td>
                     </tr>
                 </blockTable>
                 <blockTable colWidths="25.0,135.0,45.0,45.0,20.0,270.0" style="Table4">
@@ -2242,7 +2242,7 @@
                         <td><para style="P1">TOTAL DUE</para></td>
                         <td><para style="P1">[[ (s.project_id and s.project_id.amount or 0) - (s.project_id and s.project_id.deposit or 0) ]]</para></td>
                         <td><para style="P1"></para></td>
-                        <td><para style="P1">ESTIMATED START DATE: [[ s.project_id.date_start or '' ]]</para></td>
+                        <td><para style="P1">ESTIMATED START DATE: [[ s.project_id and s.project_id.operational_date or '' ]]</para></td>
                     </tr>
                 </blockTable>
                 

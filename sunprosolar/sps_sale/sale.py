@@ -169,7 +169,7 @@ class sale_order(osv.Model):
           'planned_revenue': fields.float('Expected Revenue', track_visibility='always'),
           'stage_id': fields.function(_get_stage, type='many2one' ,relation='sps.state.so', string='Stage', store=
                               {
-                               'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['state'], 20),
+                               'sale.order': (lambda self, cr, uid, ids, c={}: ids, [], 20),
                                }),
           'state': fields.selection(_SO_STATE, 'Status', readonly=True,
                 help="Gives the status of the quotation or sales order. \nThe exception status is automatically set when a cancel operation occurs in the processing of a document linked to the sales order. \nThe 'Waiting Schedule' status is set when the invoice is confirmed but waiting for the scheduler to run on the order date.", select=True),
@@ -392,9 +392,7 @@ class sale_order(osv.Model):
         for data in self.browse(cr, uid, ids, context=context):
             reference = 'sale.order,' + tools.ustr(data.id)
             lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
-            print "lead_id::::::",lead_id
             for lead_data in lead_obj.browse(cr, uid, lead_id,context=context):
-                print "lead_data::::",lead_data
                 if lead_data.referred_by:
                     partner_data = partner_obj.browse(cr, uid, lead_data.referred_by.id, context=context)
                     vals={'name': 'Cash Bonus for contract signed from your referance!', 'cash': 500, 'res_partner_id':lead_data.referred_by.id}
@@ -655,6 +653,8 @@ class account_analytic_account(osv.Model):
             'contract_id':fields.char('Contract ID'),
             'sale_id': fields.many2one('sale.order', 'Sale Order'),
             'contract_date': fields.date('Contract Date'),
+            'installation_start_date': fields.date('Est. Installation Start Date'),
+            'operational_date': fields.date('Est. Operational Date'),
 
             'roof_vents_moved':fields.char("# of Roof Vents To Be Moved"),
             'dormers_moved':fields.char('# of Dormers To Be Moved'),
@@ -675,6 +675,7 @@ class account_analytic_account(osv.Model):
             'hoa': fields.boolean("HOA"),
             'csi': fields.boolean("CSI"),
             'type_install': fields.selection([('PV','PV'),('Pool','POOL'),('Hot Water','HOT WATER'),('Other','OTHER')],"Type of Install"),
+            
         }
     
 class sale_order_line(osv.Model):

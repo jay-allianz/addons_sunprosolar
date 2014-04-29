@@ -116,12 +116,12 @@
             <field eval="17" name="sequence"/>
         </record>
 
-		<record id="sps_dashboard.sps_state18" model="sps.state">
+<!--		<record id="sps_dashboard.sps_state18" model="sps.state">
             <field name="code">Contract Review</field>
             <field name="name">Contract Review</field>
             <field eval="18" name="sequence"/>
         </record>
-        
+-->        
         <record id="sps_dashboard.sps_state181" model="sps.state">
             <field name="code">Waiting Goods</field>
             <field name="name">Waiting Goods</field>
