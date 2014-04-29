@@ -174,6 +174,10 @@
                         <button name="contract_rejected" string="Contract Rejected"
                             colspan="2" type="object" icon="gtk-no"/>
                     </group>
+					<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','follow_up')]}">
+                        <button name="contract_disqualified" string="Disqualify"
+                            colspan="2" type="object" icon="gtk-no" /> 
+                    </group>
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','assign_financing_incharge')]}">
                         <button name="site_inspection_mail" string="New Site Inspection"
                             colspan="2" type="object" icon="gtk-yes" /> 
@@ -226,7 +230,7 @@
 							</div>
 						</group>
 					</page>
-					<page string="Financing Type" attrs="{'invisible':[('state','!=','financing_type'),('state','!=','project_management_notified')]}">
+					<page string="Financing Type" attrs="{'invisible':[('state','!=','assign_financing_incharge'),('state','!=','financing_type'),('state','!=','project_management_notified')]}">
 						<group cols="4" colspan="4" attrs="{'invisible':[('state','!=','financing_type')]}">
 							<label for="incharge_user_id"/>
 							<div>
@@ -234,7 +238,7 @@
 								<button name="assign_professional" type="object" string="Assigned Financing Professional" class="oe_highlight" icon="gtk-yes"/>
 							</div>
 						</group>
-						<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','project_management_notified')]}">
+						<group cols="1" colspan="4" attrs="{'invisible':[('state','!=','assign_financing_incharge'),('state','!=','project_management_notified')]}">
 							<field name="financing_type_id" on_change="onchange_financing_type(financing_type_id)"/>
 	                        <separator string="Required Documents"/>
 					        <field name="doc_req_ids" colspan="4" nolabel="1">
@@ -250,7 +254,7 @@
 					        </field>
 					        <field name="required_document" readonly="1"/>
 	                        <button name="document_collected" string="Next Stage"
-	                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" /> 
+	                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" attrs="{'invisible':[('state','!=','project_management_notified')]}"/> 
 	                    </group>
 					</page>
 					<page string="Customer Approval" attrs="{'invisible':[('state','!=','permit')]}">

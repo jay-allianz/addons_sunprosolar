@@ -121,7 +121,8 @@ class sale_order(osv.Model):
         values = {}
         if not ids:
             return {'value': {}}
-        old_rec_len = len(self.browse(cr, uid,ids[0],context=context).doc_req_ids)
+        so_obj = self.browse(cr, uid,ids,context=context)[0]
+        old_rec_len = len(so_obj.doc_req_ids)
         if old_rec_len:
             doc_req_ids = doc_req_obj.search(cr, uid, [('doc_sale_id','=',ids[0])],context=context)
             doc_req_obj.unlink(cr, uid, doc_req_ids)
@@ -137,6 +138,10 @@ class sale_order(osv.Model):
                         'doc_sale_id' : ids[0],
                         'cowndown':document.days_to_collect,
                     }
+                    if document.inform_customer:
+                        vals.update({'notify_customer':so_obj.partner_id.id})
+                    if document.inform_users:
+                        vals.update({'notify_users':[(6,0,[x.id for x in document.inform_users])]})
                     doc_ids.append(doc_req_obj.create(cr, uid, vals, context=context))
                 values = {'doc_req_ids' : doc_ids or False}
         return {'value' : values}
@@ -355,6 +360,10 @@ class sale_order(osv.Model):
         self.write(cr, uid, ids, {'state': 'follow_up'})
         return True
     
+    def contract_disqualified(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {'state': 'cancel'})
+        return True
+    
     def drwaing(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'drawing'})
         return True
@@ -400,9 +409,9 @@ class sale_order(osv.Model):
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
         if not cur_rec.financing_type_id :
             raise osv.except_osv(_('Warning !'),_("Please select the \'Financing Type\' for Document collection."))
-        elif cur_rec.required_document == False:
-            if cur_rec.doc_req_ids:
-                raise osv.except_osv(_('Warning !'),_("Please select collect Required Documents."))
+#        elif cur_rec.required_document == False:
+#            if cur_rec.doc_req_ids:
+#                raise osv.except_osv(_('Warning !'),_("Please select collect Required Documents."))
         self.write(cr, uid, ids, {'state': 'financing_type'})
         return True
     
@@ -541,6 +550,12 @@ class sale_order(osv.Model):
         product_inverter = []
         no_of_inverter = []
         solar_info = ''
+        
+        cur_rec = self.browse(cr, uid, ids, context=context)[0]
+        if cur_rec.required_document == False:
+            if cur_rec.doc_req_ids:
+                raise osv.except_osv(_('Warning !'),_("Please select collect Required Documents."))
+        
         mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
         if not mail_server_ids:
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))

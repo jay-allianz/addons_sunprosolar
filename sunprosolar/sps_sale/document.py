@@ -148,14 +148,17 @@ class sale_order(osv.Model):
         for data in self.browse(cr, uid, ids, context=context):
             if not data.doc_req_ids:
                 res[data.id] = False
-            for doc in data.doc_req_ids:
-                if doc.document_id:
-                    if doc.document_id.datas == False:
-                        res[data.id] = False
+            else:
+                for doc in data.doc_req_ids:
+                    if doc.document_id:
+                        if doc.document_id.datas == False:
+                            res[data.id] = False
+                            break
+                        else:
+                            res[data.id] = True
                     else:
-                        res[data.id] = True
-                else:
-                    res[data.id] = False
+                        res[data.id] = False
+                        break
         return res
     
     _columns={
