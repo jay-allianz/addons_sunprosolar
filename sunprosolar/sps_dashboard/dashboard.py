@@ -71,6 +71,7 @@ class sps_dashboard(osv.Model):
     def _read_group_stage_ids(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
         stage_obj = self.pool.get('sps.state')
         stage_ids = stage_obj.search(cr, uid, [], context=context)
+        stages = stage_obj.read(cr, uid, stage_ids, context=context)
         result = stage_obj.name_get(cr, uid, stage_ids, context=context)
         fold = {}
         return result, fold
