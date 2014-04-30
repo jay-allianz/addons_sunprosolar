@@ -31,7 +31,7 @@
               'project_view.xml',
               'data/project_task_type_data.xml',
     ],
-    'depends': ['project'],
+    'depends': ['project', 'sps_sale'],
     'installable': True,
     'application': True,
     'auto_install': False,
