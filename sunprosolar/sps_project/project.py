@@ -94,38 +94,39 @@ class project_task(osv.Model):
         procurement_obj = self.pool.get('procurement.order')
         if context is None:
             context = {}
-        if vals.get('stage_id', False):
-                for task_rec in self.browse(cr, uid, ids, context=context):
-                    rec = stage_pool.browse(cr, uid, vals.get('stage_id'), context=context)
-                    if rec.color:
-                        vals.update({'color' : rec.color})
-                        project_obj.write(cr, uid, [task_rec.project_id.id], {'color':rec.color}, context=context)
+        if not vals.get('stage_id', None):
+            return super(project_task, self).write(cr, uid, ids, vals, context=context)
+            
+        
         if context.get('default_project_id'):
             project_id = context.get('default_project_id')
             project_data = project_obj.browse(cr, uid, project_id, context=context)
-            task_stage_type = stage_pool.search(cr, uid, [('name','=','Installation')],context=context)
+            task_stage_type = stage_pool.search(cr, uid, [('name','in',['Installation','Installation Complete','Final Inspection','Monitoring','Invoicing','Wrap Up'])],context=context)
             if vals.get('stage_id', False) and vals['stage_id'] in task_stage_type:
                 if project_data:
                     if project_data.analytic_account_id:
                         if project_data.analytic_account_id.sale_id:
                             sale_order_data = project_data.analytic_account_id.sale_id
-                            procurement_ids = procurement_obj.search(cr, uid, [('origin','=', sale_order_data.name)])
-                            procurement_data = procurement_obj.browse(cr, uid, procurement_ids, context=context)
-                            for procurement in procurement_data:
-                                if procurement.procure_method == "make_to_order":
-                                    if procurement.purchase_id:
-                                        if procurement.purchase_id.shipped == False:
-                                            raise osv.except_osv(_('Stage Restriction'), _('You can not goto Installation stage without before received the products!'))
-                                    else:
-                                        raise osv.except_osv(_('Stage Restriction'), _('You can not goto Installation stage without before run the procurements!'))
-            project_task_data = self.browse(cr, uid, ids,context=context)
-            if not vals.get('stage_id', None):
-                return super(project_task, self).write(cr, uid, ids, vals, context=context)
-            task_type = stage_pool.search(cr, uid, [('name','=','Invoicing')],context=context)
-            if vals.get('stage_id', False) and vals['stage_id'] in task_type:
-                invoice_obj = self.pool.get('account.invoice.line')
-                invoice_ids = invoice_obj.search(cr, uid, [('account_analytic_id', '=', project_task_data[0].project_id.analytic_account_id.id)], context=context)
-                if not invoice_ids:
-                    raise osv.except_osv(_('Stage Restriction'), _('You can not goto invoicing stage without creating invoice!'))
+                            if not sale_order_data.shipped:
+                                raise osv.except_osv(_('Stage Restriction'), _('You can not goto Installation stage without delivering the products!'))
+            
+            
+            task_stage_type = stage_pool.search(cr, uid, [('name','in',['Invoicing','Wrap Up'])],context=context)
+            if vals.get('stage_id', False) and vals['stage_id'] in task_stage_type:
+                if project_data:
+                    if project_data.analytic_account_id:
+                        if project_data.analytic_account_id.sale_id:
+                            sale_order_data = project_data.analytic_account_id.sale_id
+                            if not sale_order_data.invoice_ids:
+                                raise osv.except_osv(_('Stage Restriction'), _('You can not goto invoicing stage without creating invoice!'))
+            
+
+        if vals.get('stage_id', False):
+            for task_rec in self.browse(cr, uid, ids, context=context):
+                rec = stage_pool.browse(cr, uid, vals.get('stage_id'), context=context)
+                if rec.color:
+                    vals.update({'color' : rec.color})
+                    project_obj.write(cr, uid, [task_rec.project_id.id], {'color':rec.color}, context=context)
+        
         return super(project_task, self).write(cr, uid, ids, vals, context=context)
 
