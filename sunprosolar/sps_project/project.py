@@ -21,19 +21,7 @@
 ##############################################################################
 
 from osv import fields, osv
-import time
-import netsvc
-import datetime
 from tools.translate import _
-import tools
-from datetime import date, timedelta, datetime
-from dateutil import parser, rrule
-import addons
-from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
-import logging
-import base64
-import netsvc
-WEB_LINK_URL = "db=%s&uid=%s&pwd=%s&id=%s&state=%s&action_id=%s"
 
 class project_project(osv.Model):
     
@@ -97,29 +85,27 @@ class project_task(osv.Model):
         if not vals.get('stage_id', None):
             return super(project_task, self).write(cr, uid, ids, vals, context=context)
             
-        
-        if context.get('default_project_id'):
-            project_id = context.get('default_project_id')
-            project_data = project_obj.browse(cr, uid, project_id, context=context)
-            task_stage_type = stage_pool.search(cr, uid, [('name','in',['Installation','Installation Complete','Final Inspection','Monitoring','Invoicing','Wrap Up'])],context=context)
-            if vals.get('stage_id', False) and vals['stage_id'] in task_stage_type:
-                if project_data:
-                    if project_data.analytic_account_id:
-                        if project_data.analytic_account_id.sale_id:
-                            sale_order_data = project_data.analytic_account_id.sale_id
+        task_stage_type = stage_pool.search(cr, uid, [('name','in',['Installation','Installation Complete','Final Inspection','Monitoring','Invoicing','Wrap Up'])],context=context)
+        if vals.get('stage_id', False) and vals['stage_id'] in task_stage_type:
+            for task in self.browse(cr, uid, ids, context=context):
+                if task.project_id:
+                    if task.project_id.analytic_account_id:
+                        if task.project_id.analytic_account_id.sale_id:
+                            sale_order_data = task.project_id.analytic_account_id.sale_id
                             if not sale_order_data.shipped:
                                 raise osv.except_osv(_('Stage Restriction'), _('You can not goto Installation stage without delivering the products!'))
             
-            
-            task_stage_type = stage_pool.search(cr, uid, [('name','in',['Invoicing','Wrap Up'])],context=context)
-            if vals.get('stage_id', False) and vals['stage_id'] in task_stage_type:
-                if project_data:
-                    if project_data.analytic_account_id:
-                        if project_data.analytic_account_id.sale_id:
-                            sale_order_data = project_data.analytic_account_id.sale_id
+        
+        task_stage_type = stage_pool.search(cr, uid, [('name','in',['Invoicing','Wrap Up'])],context=context)
+        if vals.get('stage_id', False) and vals['stage_id'] in task_stage_type:
+            for task in self.browse(cr, uid, ids, context=context):
+                if task.project_id:
+                    if task.project_id.analytic_account_id:
+                        if task.project_id.analytic_account_id.sale_id:
+                            sale_order_data = task.project_id.analytic_account_id.sale_id
                             if not sale_order_data.invoice_ids:
                                 raise osv.except_osv(_('Stage Restriction'), _('You can not goto invoicing stage without creating invoice!'))
-            
+        
 
         if vals.get('stage_id', False):
             for task_rec in self.browse(cr, uid, ids, context=context):
