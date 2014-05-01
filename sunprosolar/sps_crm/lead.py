@@ -433,6 +433,7 @@ class crm_lead(osv.Model):
                             base_line_summer = round(usage * tier1,2)
                         else:
                             base_line_summer = round(basline * tier1,2)
+                            
 #                       base_line_summer = days * 13.5 * tier1
                         
                         context.update({'get_field':'off_peak_tier2'})
@@ -470,6 +471,7 @@ class crm_lead(osv.Model):
                             over_base_line1_3 = 0.0
                         else:
                             over_base_line1_3 = round((usage - basline - over_basline1 - over_basline2 )*peak_tier4,2)
+                        
                         context.update({'get_field':'surcharge_3'})
                         surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not surcharge3:
@@ -503,11 +505,11 @@ class crm_lead(osv.Model):
                             stage_changes = round(stage_change * usage)
                         else:
                             stage_changes = stage_change * usage
-                        
 #                        stage_changes = stage_change * usage
                         
                         total_old_bill = delivery_subtotal + stage_changes
                         old_bill = old_bill + total_old_bill
+                        
         return old_bill
     
     def _get_new_bill(self, cr, uid, ids, old_bill, annual_usage, annual_production, context=None):

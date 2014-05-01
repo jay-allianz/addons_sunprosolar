@@ -33,6 +33,7 @@ from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 _SO_STATE = [('draft', 'Proposal'),
                 ('sent', 'Proposal Sent'),
                 ('contract_generated', 'Contract Generated'),
+                ('follow_up','Follow Up'),
                 ('contract_signed', 'Contract Signed'),
                 ('project_management_notified','Project Management Notified'),
                 ('financing_type','Financing Type'),
@@ -44,7 +45,6 @@ _SO_STATE = [('draft', 'Proposal'),
                 ('permit_pack','Permit Pack'),
                 ('progress', 'Sales Order'),
                 ('manual', 'Sale to Invoice'),
-                ('follow_up','Follow Up'),
                 ('cancel', 'Cancelled')]
 
 class calendar_event(osv.Model):
@@ -358,6 +358,11 @@ class sale_order(osv.Model):
     
     def contract_rejected(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'follow_up'})
+        
+        proj_id = self.browse(cr, uid, ids, context=context)[0].project_id.id
+        ana_acc_obj = self.pool.get('account.analytic.account')
+        ana_acc_obj.write(cr, uid, [proj_id], {'state': 'cancelled'})
+        
         return True
     
     def contract_disqualified(self, cr, uid, ids, context=None):
@@ -387,7 +392,7 @@ class sale_order(osv.Model):
         self.write(cr, uid, ids, {'state': 'contract_signed', 'contract_signing_date':cur_time})
         proj_id = self.browse(cr, uid, ids, context=context)[0].project_id.id
         ana_acc_obj = self.pool.get('account.analytic.account')
-        ana_acc_obj.write(cr, uid, [proj_id], {'contract_date' : cur_time})
+        ana_acc_obj.write(cr, uid, [proj_id], {'contract_date' : cur_time, 'state': 'open'})
         
         for data in self.browse(cr, uid, ids, context=context):
             reference = 'sale.order,' + tools.ustr(data.id)
@@ -677,6 +682,24 @@ class account_analytic_account(osv.Model):
             'type_install': fields.selection([('PV','PV'),('Pool','POOL'),('Hot Water','HOT WATER'),('Other','OTHER')],"Type of Install"),
             
         }
+    
+    def set_cancel(self, cr, uid, ids, context=None):
+        sale_obj = self.pool.get('sale.order')
+        for data in self.browse(cr, uid, ids):
+            if data.sale_id and data.sale_id.state == 'contract_generated':
+                sale_obj.write(cr, uid, data.sale_id.id, {'state': 'follow_up'})
+                return super(account_analytic_account,self).set_cancel(cr, uid, ids, context=context)
+            else:
+                raise osv.except_osv(_('Warning'), _('Can not cancel signed Contract!'))
+
+    def set_open(self, cr, uid, ids, context=None):
+        sale_obj = self.pool.get('sale.order')
+        for data in self.browse(cr, uid, ids):
+            if data.sale_id and data.sale_id.state == 'follow_up':
+                sale_obj.write(cr, uid, data.sale_id.id, {'state': 'contract_generated'})
+                return super(account_analytic_account,self).set_open(cr, uid, ids, context=context)
+            else:
+                raise osv.except_osv(_('Warning'), _('Can not open signed Contract!'))
     
 class sale_order_line(osv.Model):
     _inherit = 'sale.order.line'

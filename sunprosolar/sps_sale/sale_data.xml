@@ -27,7 +27,7 @@
             <field name="code">follow_up</field>
             <field name="state">follow_up</field>
             <field name="name">Follow Up</field>
-            <field eval="18" name="sequence"/>
+            <field eval="7" name="sequence"/>
         </record>
         
         <record id="sps_sale.sps_state_so_con_signed" model="sps.state.so">
