@@ -418,12 +418,15 @@ class crm_lead(osv.Model):
                         over_basline1 = basline * 0.3
                         over_basline2 = basline * 0.7
                         over_basline3 = basline
+                        
+                        
                         context.update({'get_field':'daily_meter_charges'})
                         
                         daily_meter_charge = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not daily_meter_charge:
                             daily_meter_charge = 0
                         basic_charge = daily_meter_charge * days
+                        
                         context.update({'get_field':'tier1'})
                         tier1 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not tier1:
@@ -433,7 +436,7 @@ class crm_lead(osv.Model):
                             base_line_summer = round(usage * tier1,2)
                         else:
                             base_line_summer = round(basline * tier1,2)
-                            
+                        
 #                       base_line_summer = days * 13.5 * tier1
                         
                         context.update({'get_field':'off_peak_tier2'})
@@ -471,7 +474,6 @@ class crm_lead(osv.Model):
                             over_base_line1_3 = 0.0
                         else:
                             over_base_line1_3 = round((usage - basline - over_basline1 - over_basline2 )*peak_tier4,2)
-                        
                         context.update({'get_field':'surcharge_3'})
                         surcharge3 = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not surcharge3:
@@ -501,10 +503,8 @@ class crm_lead(osv.Model):
                         stage_change = pricelist_obj.price_get(cr, uid, [data.utility_company_id.property_product_pricelist.id], pro_id, data.annual_ele_usage, context=context)[data.utility_company_id.property_product_pricelist.id]
                         if not stage_change:
                             stage_change = 0
-                        if count in [1,2,3,4,5,10,11,12]:
-                            stage_changes = round(stage_change * usage)
-                        else:
-                            stage_changes = stage_change * usage
+                        
+                        stage_changes = stage_change * usage
 #                        stage_changes = stage_change * usage
                         
                         total_old_bill = delivery_subtotal + stage_changes
