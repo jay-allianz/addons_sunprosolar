@@ -279,11 +279,14 @@ class res_user(osv.Model):
                             project_status = 'delivered'
                         elif sale_data.procurement_ids:
                             for procurements in sale_data.procurement_ids:
-                                if procurements.state == 'confirmed':
+                                if procurements.state in ['confirmed','running','done']:
                                     project_status = 'material_ordered'
                                     break
                         else:
                             project_status = sale_data.state
+                        
+                        if project_status == 'progress':
+                            project_status = 'permit_pack'
                 else:
                     project_status = data.stage_id and data.stage_id.name or 'draft'
                 new_info = {'miles_not_driven':res_users_data.company_id.avg_yearly_miles*data.number_of_years,

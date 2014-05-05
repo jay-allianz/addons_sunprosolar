@@ -93,7 +93,7 @@ class project_task(osv.Model):
                         if task.project_id.analytic_account_id.sale_id:
                             sale_order_data = task.project_id.analytic_account_id.sale_id
                             if not sale_order_data.shipped:
-                                raise osv.except_osv(_('Stage Restriction'), _('You can not goto Installation stage without delivering the products!'))
+                                raise osv.except_osv(_(''), _('You can not goto Installation stage without delivering the products!'))
             
         
         task_stage_type = stage_pool.search(cr, uid, [('name','in',['Invoicing','Wrap Up'])],context=context)
@@ -104,7 +104,7 @@ class project_task(osv.Model):
                         if task.project_id.analytic_account_id.sale_id:
                             sale_order_data = task.project_id.analytic_account_id.sale_id
                             if not sale_order_data.invoice_ids:
-                                raise osv.except_osv(_('Stage Restriction'), _('You can not goto invoicing stage without creating invoice!'))
+                                raise osv.except_osv(_(''), _('You can not goto invoicing stage without creating invoice!'))
         
 
         if vals.get('stage_id', False):
