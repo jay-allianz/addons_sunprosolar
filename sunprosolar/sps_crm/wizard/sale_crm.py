@@ -81,9 +81,10 @@ class crm_make_sale(osv.osv_memory):
                 'type' : solar_line.inverter_product_id.procure_method,
                 'order_id' : order_id
             }
-            lead_obj.write(cr, uid, [lead.id], {'ref': 'sale.order,%s' % order_id})
+            
             sale_order_line_obj.create(cr, uid, module_line, context=context)
             sale_order_line_obj.create(cr, uid, inv_line, context=context)
+        lead_obj.write(cr, uid, [lead.id], {'ref': 'sale.order,%s' % order_id})
         return {
             'domain': str([('id', 'in', [order_id])]),
             'view_type': 'form',
