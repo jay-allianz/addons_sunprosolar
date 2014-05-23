@@ -450,6 +450,7 @@ class account_balance_inherit(account_balance):
         else:
             self.to_currency_id = form['currency_id'] and type(form['currency_id']) in (list, tuple) and form['currency_id'][0] or form['currency_id']
         selected_accounts = []
+        account_ids = []
         if form.has_key('account_list') and form['account_list']:
             selected_accounts = form['account_list']
             account_ids = form['account_list']
@@ -1553,6 +1554,7 @@ class account_balance_inherit(account_balance):
         else:
             self.to_currency_id = form['currency_id'] and type(form['currency_id']) in (list, tuple) and form['currency_id'][0] or form['currency_id']
         selected_accounts = []
+        account_ids = []
         if form.has_key('account_list') and form['account_list']:
             selected_accounts = form['account_list']
             account_ids = form['account_list']
