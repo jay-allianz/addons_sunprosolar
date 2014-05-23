@@ -844,7 +844,10 @@ class crm_lead(osv.Model):
                     cost_peack_kw += (((array_id.stc_dc_rating * 1000 * array_id.module_product_id.cost_per_stc_watt)+(array_id.stc_dc_rating * 1000 * array_id.module_product_id.labor_per_stc_watt)+(array_id.stc_dc_rating * 1000 * array_id.module_product_id.materials_per_stc)) * (1 + (array_id.module_product_id.markup / 100)))
                     inverter_cost += ((array_id.inverter_product_id.power_rating * array_id.inverter_product_id.cost_per_ac_capacity_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.labor_per_ac_watt)+(array_id.inverter_product_id.power_rating * array_id.inverter_product_id.materials_per_ac_watt))
             if cost and data.down_payment:
-                down_payment_amt = cost * data.down_payment
+                if data.down_payment_type == 'per':
+                    down_payment_amt = cost * data.down_payment
+                elif data.down_payment_type == 'fix':
+                    down_payment_amt = data.down_payment
             if cost and data.rebate:
                 rebate_amt = cost * data.rebate
             loan_amt = cost - down_payment_amt - rebate_amt
@@ -1011,7 +1014,11 @@ class crm_lead(osv.Model):
                         
         return res
     
-    
+    def _inverter_cost_search(self, cr, uid, id, name, value, arg, context=None):
+        if context is None:
+            context = {}
+        self.write(cr, uid, id, {'invertor_cost_handler': value}, context=context)
+        return True
         
     _columns = {
          'last_name': fields.char('Last Name', size=32),
@@ -1114,7 +1121,8 @@ class crm_lead(osv.Model):
         'responsible_user': fields.function(_reponsible_user, type='char', method=True, string="Responsible User for Appointment", help="Responsible User for Appointment setup"),
         'solar_ids' : fields.one2many("solar.solar", "crm_lead_id", "Solar Information"),
         'loan_period' :fields.float("Loan Period(Years)"),
-        'down_payment' :fields.float("Down Payment (%)"),
+        'down_payment_type' :fields.selection([('per','Percentage'),('fix','Fixed')],"Down Payment Type"),
+        'down_payment' :fields.float("Down Payment"),
         'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
         'loan_interest_rate_dummy' : fields.function(_get_loan_interest_rate, string="Loan Interest Rate (%)", type="float"),
         'cost_peack_kw' : fields.function(_get_cost_rebate, string="Cost / Peack KW",type="float",multi="cost_all"),
@@ -1126,7 +1134,8 @@ class crm_lead(osv.Model):
         'number_of_years':fields.integer('Number Of Years'),
         'replace_inverter_every':fields.integer('Replace Inverter Every(Years)'),
         'replace_inverter_over_loan_period' : fields.integer("Replace Inverter Over Loan Period"),
-        'inverter_cost' : fields.function(_get_cost_rebate, string="Inverter Cost",type="float",multi="cost_all"),
+        'inverter_cost' : fields.function(_get_cost_rebate,string="Inverter Cost",fnct_inv=_inverter_cost_search,type="float",multi="cost_all",store=True),
+        'invertor_cost_handler': fields.float('Invertor Cost'),
         'array_output' : fields.function(_get_output, string='Solar Array Output', type='float'),
         'peak_kw_stc' : fields.function(_get_stc_dc_rating, string='Yearly output per KW', type='float'),
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
@@ -2192,6 +2201,8 @@ class crm_meeting(osv.Model):
             'meeting_type': fields.selection([('appointment', 'Appointment'), ('assistance', 'Assistance'), ('general_meeting', 'General Meeting')], 'Meeting Type'),
             'schedule_appointment': fields.datetime('Schedule Date'),
             'appointment_outcome': fields.text('Outcome of the Appointment'),
+            'appointment_outcome_addition': fields.selection([('sold', 'SOLD'), ('2_leg', '2 leg- All qualified parties'), ('1_leg', '1 leg- Missing a qualified party'), ('nq', 'NQ- Not Qualified'), ('rs', 'RS- Reset'),\
+                                               ('ns', 'NS- No Show'), ('cxl', 'CXL- appt canceled'),('dq', 'DQ Sale-SOLD but credit declined'), ('xcl_sale', 'XCL SALE- sold but canceled')], ' Appointment Outcome'),
             'crm_id':fields.many2one('crm.lead', 'CRM'),
             'reason': fields.text('Reason'),
     }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report auto="False" id="report_invoice_report" model="account.invoice" name="invoice.report"
+                rml="sps_account_invoice/report/invoice_report.rml" string="Invoices" 
+                usage="default"/>
+
+    </data>
+</openerp>
