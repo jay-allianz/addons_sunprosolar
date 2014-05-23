@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="invoices_report_wizard" model="ir.ui.view">
+            <field name="name">invoices.report.wizard</field>
+            <field name="model">invoices.report</field>
+            <field name="arch" type="xml">
+                <form string="Invices Report" version="7.0">
+                    <separator string="Fully Paid and Partially paid invoices"/>
+                    <footer>
+                    <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or 
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_invoices_report_wizard" model="ir.actions.act_window">
+            <field name="name">Invoices</field>
+            <field name="res_model">invoices.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+       </record>
+
+    </data>
+</openerp>

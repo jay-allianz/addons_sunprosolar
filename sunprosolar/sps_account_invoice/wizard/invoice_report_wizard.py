@@ -19,25 +19,34 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
-{
-    "name" : "SPS - Sale",
-    "version" : "4.0",
-    "author" : "Allianz Technology",
-    "category" : "Tools",
-    "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to generate Quotation and Sale Order. 
-    """,
-    'depends': ['base','sps_crm','sale_stock'],
-    'data': [
-        'security/security.xml',
-        'sale_view.xml',
-        'sale_email_template_data.xml',
-#        'sale_data.xml',
-        'document_view.xml',
-    ],
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-}
+
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import tools
+import re
+
+class invoices_report(osv.osv_memory):
+
+    _name = 'invoices.report'
+
+    _columns = {
+        'msg': fields.char('Note : ', size=64),
+        }
+    
+    def check_report(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        data = self.read(cr, uid, ids)[0]
+        datas = {
+             'ids': ids,
+             'model': 'account.invoice',
+             'form': data
+                 }
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'invoice.report',
+            'datas': datas,
+            }
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

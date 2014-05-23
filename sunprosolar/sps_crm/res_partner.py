@@ -414,7 +414,7 @@ class res_user(osv.Model):
         res_users_data = self.browse(cr, uid, user_id, context=context)
         return {'file_name': res_users_data.company_id.care_maintance_fname,'care_maintance': res_users_data.company_id.care_maintance or False} 
     
-    def upload_document(self, cr, uid, user_id, doc_name, doc_file, context=None):
+    def upload_document(self, cr, uid, user_id, doc_name, doc_file, file_name='test.pdf', context=None):
         if not context:
             context = {}
         
@@ -429,7 +429,8 @@ class res_user(osv.Model):
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
     
             vals_attachment = {
-                        'name': doc_name,
+                        'name': file_name,
+                        'description':doc_name,
                         'datas':doc_file,
                         'res_model':'crm.lead',
                         'res_id':data.id,

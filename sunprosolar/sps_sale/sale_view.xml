@@ -17,7 +17,7 @@
 		</record>
 		
 		<record model="ir.ui.view" id="event_tree_view_sps_inherit">
-            <field name="name">Event Tree</field>
+		    <field name="name">Event Tree</field>
             <field name="model">calendar.event</field>
             <field name="inherit_id" ref="base_calendar.event_tree_view" />
             <field name="arch" type="xml">
@@ -145,6 +145,11 @@
                         <button name="%(base_calendar.action_view_event)d" string="Events" type="action" class="oe_highlight"/>
                     </div>
 				</field>
+				<xpath expr="/form/header/field[@name='state']" position="before">
+				
+				<button name="document_collected" string="Next Stage"
+	                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" attrs="{'invisible':[('state','!=','project_management_notified')]}"/>
+				</xpath>
 				<button name="action_button_confirm" states="draft" position="attributes">
 					<attribute name="states">draft,sent,contract_generated,contract_signed,project_management_notified,financing_type,assign_financing_incharge,site_inspection,permit</attribute>
 					<attribute name="groups">sps_sale.procurement_manager_sps</attribute>
@@ -162,7 +167,11 @@
 					<field name="no_module"/>
 					<field name="no_inverter"/>
 				</xpath>
-			
+
+				<xpath expr="/form/sheet/group/group/field[@name='project_id']" position="attributes">
+					<attribute name="string">Add project team members</attribute>
+				</xpath>			
+
 				<xpath expr="/form/sheet/group" position="after">
 					<group cols="1" colspan="4">
                         <button name="contract_generate" string="Generate Contract"
@@ -254,8 +263,6 @@
 						        </tree>
 					        </field>
 					        <field name="required_document" readonly="1"/>
-	                        <button name="document_collected" string="Next Stage"
-	                            colspan="2" type="object" icon="gtk-yes" class="oe_highlight" attrs="{'invisible':[('state','!=','project_management_notified')]}"/> 
 	                    </group>
 					</page>
 					<page string="Customer Approval" attrs="{'invisible':[('state','!=','permit')]}">
