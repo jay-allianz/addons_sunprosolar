@@ -32,7 +32,7 @@
         'security/security.xml',
         'sale_view.xml',
         'sale_email_template_data.xml',
-#        'sale_data.xml',
+        'sale_data.xml',
         'document_view.xml',
     ],
     'installable': True,

@@ -857,7 +857,7 @@ class crm_lead(osv.Model):
                 'rebate_amt' : rebate_amt, 
                 'loan_amt' : loan_amt,
                 'cost_peack_kw' : cost_peack_kw,
-                'inverter_cost' : inverter_cost,
+                'inverter_cost' : data.invertor_cost_handler or inverter_cost,
             }
         return result
     
