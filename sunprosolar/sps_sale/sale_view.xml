@@ -38,7 +38,17 @@
 			<field name="arch" type="xml">
 				<field name="loan_period" position="before">
 					<field name="finance_type" on_change="onchange_financing_type_opp(finance_type)"/>
+					<field name="finance_loan" invisible="1"/>
 				</field>
+				<field name="loan_period" position="attributes">
+				    <attribute name="attrs">{'invisible':[('finance_loan','=',True)]}</attribute>
+				</field>
+				<field name="loan_interest_rate_dummy" position="attributes">
+                    <attribute name="attrs">{'invisible':[('finance_loan','=',True)]}</attribute>
+                </field>
+                <field name="loan_amt" position="attributes">
+                    <attribute name="attrs">{'invisible':[('finance_loan','=',True)]}</attribute>
+                </field>
 			</field>
 		</record>
 
@@ -164,8 +174,8 @@
 					</attribute>
 				</button>
 				<xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="after">
-					<field name="no_module"/>
-					<field name="no_inverter"/>
+					<field name="no_module" invisible="1"/>
+					<field name="no_inverter" invisible="1"/>
 				</xpath>
 
 				<xpath expr="/form/sheet/group/group/field[@name='project_id']" position="attributes">
@@ -382,6 +392,7 @@
 					<group>
 						<field name="name" string="Name" required="1" />
 						<field name="interest_rate"/>
+						<field name="no_loan"/>
 						<separator string="Financing Documents"/>
 						<field name="document_ids" nolabel="1" colspan="4" domain="[('finace_type','=','False')]"/>
 						<separator string="Description"/>
@@ -399,6 +410,7 @@
 				<tree string="Financing Type">
 					<field name="name" />
 					<field name="interest_rate" />
+					<field name="no_loan"/>
 					<field name="description" />
 				</tree>
 			</field>

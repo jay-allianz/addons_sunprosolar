@@ -22,5 +22,5 @@
 
 import account_print_invoice
 import account_print_invoice_detail
-
+import account_partner_ledger_sunpro
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

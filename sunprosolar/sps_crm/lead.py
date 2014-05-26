@@ -802,6 +802,32 @@ class crm_lead(osv.Model):
 #            final_new_bill = bill_new / flag
 #        return final_new_bill
 
+    def redirect_opportunity_view(self, cr, uid, opportunity_id, context=None):
+        models_data = self.pool.get('ir.model.data')
+
+        # Get opportunity views
+        dummy, form_view = models_data.get_object_reference(cr, uid, 'crm', 'crm_case_form_view_oppor')
+        dummy, tree_view = models_data.get_object_reference(cr, uid, 'crm', 'crm_case_tree_view_oppor')
+        
+        if opportunity_id:
+            stage_id = self.pool.get('crm.case.stage').search(cr, uid, [('name', '=', 'Initial Contact')])[0]
+            context.update({'default_stage_id': stage_id})
+            self.write(cr, uid, opportunity_id, {'stage_id':stage_id},context=context)
+        return {
+            'name': _('Opportunity'),
+            'view_type': 'form',
+            'view_mode': 'tree, form',
+            'res_model': 'crm.lead',
+            'domain': [('type', '=', 'opportunity')],
+            'res_id': int(opportunity_id),
+            'view_id': False,
+            'views': [(form_view or False, 'form'),
+                    (tree_view or False, 'tree'),
+                    (False, 'calendar'), (False, 'graph')],
+            'type': 'ir.actions.act_window',
+            'context' : context
+        }
+
     def _get_company_tier_amount(self, cr, uid, ids, name, args, context=None):
         res = {}
         pricelist_obj = self.pool.get('product.pricelist')
@@ -1195,7 +1221,6 @@ class crm_lead(osv.Model):
             'reg_no': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'crm.lead'),
     }
     
-    
     def calculate_table(self, cr, uid, ids, context=None):
         result = {}
         cost_rebate_obj = self.pool.get('cost.rebate')
@@ -1297,82 +1322,82 @@ class crm_lead(osv.Model):
             result[data.id] = res#
         return True
     
-    def on_change_notifiy_customer(self, cr, uid, ids, notify_customer, context=None):
-        if notify_customer == True:
-            for data in self.browse(cr, uid, ids, context=context):
-                for doc in data.document_ids:
-                    if doc.doc == False:
-                        return False
-                    else:
-                        obj_mail_server = self.pool.get('ir.mail_server')
-                        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-                        if not mail_server_ids:
-                            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-                        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-                        email_from = mail_server_record.smtp_user
-                        if not email_from:
-                            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-                        if not data.email_from:
-                            raise osv.except_osv(_('Warning'), _('%s User have no email defined !' % data.contact_name))
-                        else:
-                            subject_line = 'Notification For uploded Document.'
-                            message_body = 'Hello,' + tools.ustr(data.contact_name) + ' ' + tools.ustr(data.last_name) + '<br/><br/>The Documents: <br/>' + tools.ustr(doc.name) + '<br/>is successfully Uploded.<br/><br/> Thank You.'
-                            message_user = obj_mail_server.build_email(
-                                email_from=email_from,
-                                email_to=[data.email_from],
-                                subject=subject_line,
-                                body=message_body,
-                                body_alternative=message_body,
-                                email_cc=None,
-                                email_bcc=None,
-                                attachments=None,
-                                references=None,
-                                object_id=None,
-                                subtype='html',
-                                subtype_alternative=None,
-                                headers=None)
-                            self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
-        return True
-    
-    def on_change_notifiy_user(self, cr, uid, ids, notify_user, context=None):
-        if notify_user == True:
-            for data in self.browse(cr, uid, ids, context=context):
-                for doc in data.document_ids:
-                    if doc.doc == False:
-                        return False
-                    else:
-                        obj_mail_server = self.pool.get('ir.mail_server')
-                        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-                        if not mail_server_ids:
-                            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-                        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-                        email_from = mail_server_record.smtp_user
-                        if not email_from:
-                            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-                        email_to = []
-                        for user in data.user_notification_id:
-                            if not user.email:
-                                raise osv.except_osv(_('Warning'), _('%s User have no email defined !' % user.name))
-                            else:
-                                email_to.append(user.email)
-                                subject_line = 'Notification For uploded Document.'
-                                message_body = 'Hello,' + tools.ustr(user.name) + '<br/><br/>The Document <br/>' + tools.ustr(doc.name) + '<br/>is successfully Uploded.<br/><br/> Thank You.'
-                                message_user = obj_mail_server.build_email(
-                                    email_from=email_from,
-                                    email_to=email_to,
-                                    subject=subject_line,
-                                    body=message_body,
-                                    body_alternative=message_body,
-                                    email_cc=None,
-                                    email_bcc=None,
-                                    attachments=None,
-                                    references=None,
-                                    object_id=None,
-                                    subtype='html',
-                                    subtype_alternative=None,
-                                    headers=None)
-                                self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
-        return True
+#    def on_change_notifiy_customer(self, cr, uid, ids, notify_customer, context=None):
+#        if notify_customer == True:
+#            for data in self.browse(cr, uid, ids, context=context):
+#                for doc in data.document_ids:
+#                    if doc.doc == False:
+#                        return False
+#                    else:
+#                        obj_mail_server = self.pool.get('ir.mail_server')
+#                        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+#                        if not mail_server_ids:
+#                            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+#                        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+#                        email_from = mail_server_record.smtp_user
+#                        if not email_from:
+#                            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+#                        if not data.email_from:
+#                            raise osv.except_osv(_('Warning'), _('%s User have no email defined !' % data.contact_name))
+#                        else:
+#                            subject_line = 'Notification For uploded Document.'
+#                            message_body = 'Hello,' + tools.ustr(data.contact_name) + ' ' + tools.ustr(data.last_name) + '<br/><br/>The Documents: <br/>' + tools.ustr(doc.name) + '<br/>is successfully Uploded.<br/><br/> Thank You.'
+#                            message_user = obj_mail_server.build_email(
+#                                email_from=email_from,
+#                                email_to=[data.email_from],
+#                                subject=subject_line,
+#                                body=message_body,
+#                                body_alternative=message_body,
+#                                email_cc=None,
+#                                email_bcc=None,
+#                                attachments=None,
+#                                references=None,
+#                                object_id=None,
+#                                subtype='html',
+#                                subtype_alternative=None,
+#                                headers=None)
+#                            self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
+#        return True
+#    
+#    def on_change_notifiy_user(self, cr, uid, ids, notify_user, context=None):
+#        if notify_user == True:
+#            for data in self.browse(cr, uid, ids, context=context):
+#                for doc in data.document_ids:
+#                    if doc.doc == False:
+#                        return False
+#                    else:
+#                        obj_mail_server = self.pool.get('ir.mail_server')
+#                        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
+#                        if not mail_server_ids:
+#                            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
+#                        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+#                        email_from = mail_server_record.smtp_user
+#                        if not email_from:
+#                            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
+#                        email_to = []
+#                        for user in data.user_notification_id:
+#                            if not user.email:
+#                                raise osv.except_osv(_('Warning'), _('%s User have no email defined !' % user.name))
+#                            else:
+#                                email_to.append(user.email)
+#                                subject_line = 'Notification For uploded Document.'
+#                                message_body = 'Hello,' + tools.ustr(user.name) + '<br/><br/>The Document <br/>' + tools.ustr(doc.name) + '<br/>is successfully Uploded.<br/><br/> Thank You.'
+#                                message_user = obj_mail_server.build_email(
+#                                    email_from=email_from,
+#                                    email_to=email_to,
+#                                    subject=subject_line,
+#                                    body=message_body,
+#                                    body_alternative=message_body,
+#                                    email_cc=None,
+#                                    email_bcc=None,
+#                                    attachments=None,
+#                                    references=None,
+#                                    object_id=None,
+#                                    subtype='html',
+#                                    subtype_alternative=None,
+#                                    headers=None)
+#                                self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
+#        return True
 
     def on_change_utility_company(self, cr, uid, ids, utility_company_id, context=None):
         if context == None:
@@ -2200,7 +2225,7 @@ class crm_meeting(osv.Model):
     _columns = {
             'meeting_type': fields.selection([('appointment', 'Appointment'), ('assistance', 'Assistance'), ('general_meeting', 'General Meeting')], 'Meeting Type'),
             'schedule_appointment': fields.datetime('Schedule Date'),
-            'appointment_outcome': fields.text('Outcome of the Appointment'),
+            'appointment_outcome': fields.text('Appointment Notes'),
             'appointment_outcome_addition': fields.selection([('sold', 'SOLD'), ('2_leg', '2 leg- All qualified parties'), ('1_leg', '1 leg- Missing a qualified party'), ('nq', 'NQ- Not Qualified'), ('rs', 'RS- Reset'),\
                                                ('ns', 'NS- No Show'), ('cxl', 'CXL- appt canceled'),('dq', 'DQ Sale-SOLD but credit declined'), ('xcl_sale', 'XCL SALE- sold but canceled')], ' Appointment Outcome'),
             'crm_id':fields.many2one('crm.lead', 'CRM'),

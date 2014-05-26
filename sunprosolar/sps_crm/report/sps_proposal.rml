@@ -87,15 +87,10 @@
     </blockTable>
     <section>
         <para style="P4" alignment="LEFT">[[ repeatIn(get_solar_info(o.id),'solar')]]</para>
-        <blockTable colWidths="270.0,270.0" style="Table1">
+        <blockTable colWidths="540.0" style="Table1">
             <tr>
                 <td>
-                    <para style="P4" alignment="LEFT">[[solar.get('arr_name')]]</para>
-                </td>
-                <td>
-                    <para style="P4" alignment="LEFT">[[solar.get('module_info')]]</para>
-                    <para style="P4" alignment="LEFT">[[solar.get('inverter_info')]]</para>
-                    <para style="P4" alignment="LEFT">[[solar.get('orientation_info')]]</para>
+                    <para style="P4" alignment="LEFT">[[solar.get('arr_name')]], [[solar.get('module_info')]], [[solar.get('inverter_info')]], [[solar.get('orientation_info')]]</para>
                 </td>
             </tr>
         </blockTable>
@@ -120,7 +115,7 @@
         </tr>
      </blockTable>
      
-    <condPageBreak height="12in"/>
+    <condPageBreak height="5in"/>
     <blockTable colWidths="250.0,290.0" style="Table1">
         <tr>
             <td>

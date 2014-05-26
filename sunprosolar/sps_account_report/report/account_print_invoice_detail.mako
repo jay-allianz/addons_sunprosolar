@@ -205,7 +205,7 @@
                 </td>
             </tr>
             </table>
-            <table class="basic_table" style="table-layout:fixed; margin-top:0; margin-left:0; text-align:left;" width="100%" height=560px>
+            <table class="basic_table" style="table-layout:fixed; margin-top:0; margin-left:0; text-align:left;" width="100%" height=500px>
                 <tr>
                     <td style="vertical-align: top;">
                     <table class="basic_table"  style="table-layout:fixed; margin-top:0; margin-left:0; text-align:left;" width="100%">
@@ -274,6 +274,18 @@
                                         </td>
                                   </tr>
                         </table>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%">
+                <tr>
+                    <td width="100%" style="font-size:12;">
+                        <b>${_('Additional Information:')}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" style="font-size:12;">
+                        ${o.comment}
                     </td>
                 </tr>
             </table>
