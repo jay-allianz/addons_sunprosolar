@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+		<record id="inherited_partner_ledger_sunpro_report" model="ir.ui.view">
+		    <field name="name">inherited.partner.ledger.sunpro.report</field>
+		    <field name="model">account.partner.ledger</field>
+		    <field name="inherit_id" ref="account.account_partner_ledger_view"/>
+		    <field name="arch" type="xml">
+		        <notebook position='inside'>
+		            <page string="Partners">
+		                <field name="partner_ids" domain="[('customer', '=', True)]" colspan="4" nolabel="1"/>
+		            </page>
+		        </notebook>
+		    </field>
+		</record>
+		
+    </data>
+</openerp>

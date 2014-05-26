@@ -782,7 +782,8 @@ class financing_type(osv.Model):
         'name' : fields.char('Name'),
         'description': fields.text('Description'),
         'document_ids' : fields.many2many('documents.all','document_financing_type_rel','fin_type_id','doc_id','Documents'),
-        'interest_rate': fields.float('Interest Rate')
+        'interest_rate': fields.float('Interest Rate'),
+        'no_loan' : fields.boolean('No Loan', help="Checked if No loan required.")
     }
     
     _defaults ={
@@ -894,11 +895,12 @@ class crm_lead(osv.Model):
         ftype_obj = self.pool.get('financing.type')
         
         if finance_type:
-            interest_rate = ftype_obj.browse(cr, uid, finance_type).interest_rate
-            values = {'loan_interest_rate' : interest_rate}
+            interest_rate_data = ftype_obj.browse(cr, uid, finance_type)
+            values = {'loan_interest_rate' : interest_rate_data.interest_rate, 'finance_loan':interest_rate_data.no_loan}
             
         return {'value' : values}
      
     _columns = {
             'finance_type': fields.many2one('financing.type', 'Finacing Type'),
+            'finance_loan': fields.boolean('Finance loan')
     }

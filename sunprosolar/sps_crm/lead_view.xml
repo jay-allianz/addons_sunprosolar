@@ -117,7 +117,7 @@
 			<field eval="'run_lead_days'" name="function" />
 			<field eval="'(False,)'" name="args" />
 		</record>
-
+		
 		<record id="view_sun_crm_lead_form" model="ir.ui.view">
 			<field name="name">crm.lead.form</field>
 			<field name="model">crm.lead</field>

@@ -40,6 +40,7 @@
         'station_view.xml',
         'sequence.xml',
         'email_template_data.xml',
+#        'lead_email_template.xml',
         'wizard/crm_lead_to_opportunity_view.xml',
         'wizard/import_utility_company_view.xml'
     ],

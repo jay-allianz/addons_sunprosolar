@@ -28,7 +28,10 @@
     'description': 'Print Invoice Report.', 
     'website' : 'http://www.allianztechnology.com',
     'depends': ['base', 'account', 'report_webkit','sale'],
-    'data': ['account_invoice_report_view.xml','partner_view.xml'],
+    'data': ['account_invoice_report_view.xml',
+             'partner_view.xml',
+             'partner_ledger_report_view.xml',
+             'wizard/account_common_report_view.xml'],
     'installable': True,
     'auto_install': False,
 }

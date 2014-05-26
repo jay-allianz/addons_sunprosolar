@@ -19,24 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "SPS - Account",
-    "version" : "6.3",
-    "author" : "Allianz Technology",
-    "category" : "Tools",
-    "website" : "'http://www.allianztechnology.com",
-    "description": """This module provides the functionality to generate Invoice for customer. 
-    """,
-    'data' : [
-#        'report_invoice_view.xml',
-#        'wizard/invoice_report_wizard_view.xml',
-#        'account_invoice_view.xml',
-#        'data/financing_type_data.xml',
-    ],
-    'depends': ['account'],
-    'installable': True,
-    'application': True,
-    'auto_install': False,
-}
 
+import account_commonn_report
+import account_partner_ledger
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
