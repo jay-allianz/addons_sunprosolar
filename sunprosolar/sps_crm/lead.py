@@ -906,45 +906,23 @@ class crm_lead(osv.Model):
         return result
 #    
     def run_lead_days(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         lead_ids = self.search(cr, uid, [('type','=','lead')], context=context)
         if lead_ids:
             for lead_brw in self.browse(cr, uid, lead_ids, context=context):
                 flag = True
                 for doc in lead_brw.doc_req_ids:
                     if doc.collected == False:
-                        flag = False
+                        K = False
                 if lead_brw and lead_brw.lead_date:
                     date_today = datetime.datetime.strptime(str(lead_brw.lead_date), "%Y-%m-%d")
                     deadline = date_today + datetime.timedelta(days=lead_brw and lead_brw.lead_days or 0)
                     if datetime.datetime.today() > deadline and flag == False:
-                        obj_mail_server = self.pool.get('ir.mail_server')
-                        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-                        if not mail_server_ids:
-                            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-                        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-                        email_from = mail_server_record.smtp_user
-                        if not email_from:
-                            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-                        if not lead_brw.email_from:
-                            raise osv.except_osv(_('Warning'), _('%s User have no email defined !'))
-                        else:
-                            subject_line = 'Notification For Upload documents.'
-                            message_body = 'Hello,' + tools.ustr(lead_brw.contact_name) + ' ' + tools.ustr(lead_brw.last_name) + '<br/><br/>Please upload your required documents ! <br/><br/><br/> Thank You.'
-                            message_user = obj_mail_server.build_email(
-                                email_from=email_from,
-                                email_to=[lead_brw.email_from],
-                                subject=subject_line,
-                                body=message_body,
-                                body_alternative=message_body,
-                                email_cc=None,
-                                email_bcc=None,
-                                attachments=None,
-                                references=None,
-                                object_id=None,
-                                subtype='html',
-                                subtype_alternative=None,
-                                headers=None)
-                            self.send_email(cr, uid, message_user, mail_server_id=mail_server_ids[0], context=context)
+                        template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'notify_to_uplaod_doc_mail', context=context)
+                        template_values = email_template_obj.generate_email(cr, uid, template_id, lead_brw.id, context=context)
+                        msg_id = mail_mail.create(cr, uid, template_values, context=context)
+                        mail_mail.send(cr, uid, [msg_id], context=context)
         return True
     
     def onchange_attachment_ids(self, cr, uid, ids, attachment_ids, context=None):
@@ -1044,6 +1022,12 @@ class crm_lead(osv.Model):
         if context is None:
             context = {}
         self.write(cr, uid, id, {'invertor_cost_handler': value}, context=context)
+        return True
+    
+    def _module_cost_search(self, cr, uid, id, name, value, arg, context=None):
+        if context is None:
+            context = {}
+        self.write(cr, uid, id, {'cost_handler': value}, context=context)
         return True
         
     _columns = {
@@ -1167,7 +1151,8 @@ class crm_lead(osv.Model):
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
         'pbi_epbb_incentive' : fields.float("PBI-EPBBB Incentive"),
         'pbi_epbb_incentive_dummy' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
-        'cost' : fields.function(_get_cost_rebate, string="Cost",type="float",multi="cost_all"),
+        'cost' : fields.function(_get_cost_rebate, fnct_inv=_module_cost_search,string="Cost",type="float",multi="cost_all"),
+        'cost_handler': fields.float('Cost Handler'),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",store=True,type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
         'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
@@ -1262,9 +1247,13 @@ class crm_lead(osv.Model):
             n = data.loan_period
             PV = data.loan_amt
             loan_installment = 0
+            if i < 0:
+                raise osv.except_osv(_('Warning'), _('Loan Interest Rate must have positive value!'))
             if i != 0:
-                loan_installment = PV / ((1- (1 / pow((1 + i),n) )) / i) 
-            
+                p=(1 / pow((1 + i),n))
+                if p == 1:
+                    p = 0
+                loan_installment = PV / ((1- p) / i) 
             if data.loan_period != 0.0:
                 depriciation = data.cost/data.loan_period
             else:
@@ -1276,6 +1265,8 @@ class crm_lead(osv.Model):
             else:
                 annual_ele_usage_temp = data.annual_ele_usage
             replace_inverter_every_year = data.replace_inverter_every
+            if replace_inverter_every_year < 0:
+                raise osv.except_osv(_('Warning'), _('Replace Inverter Every(Years) must have positive value!'))
             annual_production = data.annual_solar_prod_display
             annual_usage =  data.annual_ele_usage
             for yr in range(data.number_of_years):
@@ -1856,9 +1847,9 @@ class solar_solar(osv.Model):
                 'num_of_invertor':fields.integer('Number of Inverters'),
                 'num_of_arrays':fields.char('Array Number',size = 32, readonly=True,
                                             help="This Number of Arrays is automatically created by OpenERP."),
-                'stc_dc_rating': fields.function(_get_system_rating_data, string='STC-DC Rating', type='float', multi='rating_all',digits=(12,3)),
+                'stc_dc_rating': fields.function(_get_system_rating_data, store=True,string='STC-DC Rating', type='float', multi='rating_all',digits=(12,3)),
                 'ptc_dc_rating': fields.function(_get_system_rating_data, string='PTC-DC Rating', type='float', multi='rating_all',digits=(12,3)),
-                'cec_ac_rating': fields.function(_get_system_rating_data, string='CEC-AC Rating', type='float', multi='rating_all',digits=(12,3)),
+                'cec_ac_rating': fields.function(_get_system_rating_data, store=True,string='CEC-AC Rating', type='float', multi='rating_all',digits=(12,3)),
                 'ptc_stc_ratio': fields.function(_get_system_rating_data, string='PTC STC Ratio', type='float', multi='rating_all',digits=(12,3)),
                 
                 'array_size' : fields.function(_get_system_rating_data, string='Solar Array Size', type='integer', multi='green_all', help="Solar Array Size"),
@@ -2106,7 +2097,7 @@ class ir_attachment(osv.Model):
         return {'value' : values}
     
     _columns = {
-        'visible_user' : fields.boolean('Visible to User')
+        'visible_user' : fields.boolean('Visible to Customer')
     }
     
 class document_required(osv.Model):
@@ -2279,53 +2270,28 @@ class crm_meeting(osv.Model):
     def salesteam_send_email(self, cr, uid, ids, context=None):
         if not context:
             context = {}
-        crm_meeting_data = self.browse(cr, uid, ids[0], context=context)
+        mail_mail = self.pool.get('mail.mail')
         crm_obj = self.pool.get('crm.lead')
-        crm_data = crm_obj.browse(cr, uid, crm_meeting_data.crm_id, context= context)
+        crm_case_stage_obj = self.pool.get('crm.case.stage')
+        email_template_obj = self.pool.get('email.template')
+        cur_rec= self.browse(cr, uid, ids, context)[0]
+        crm_meeting_data = self.browse(cr, uid, ids[0], context=context)
         if crm_meeting_data.crm_id:
-            crm_obj = self.pool.get('crm.lead')
             crm_id = crm_obj.search(cr, uid, [('id','=',crm_meeting_data.crm_id.id)])
-            crm_data = crm_obj.browse(cr, uid, crm_id, context=context)
-            obj_mail_server = self.pool.get('ir.mail_server')
-            crm_case_stage_obj = self.pool.get('crm.case.stage')
-            mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-            if not mail_server_ids:
-                raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-            mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-            email_from = mail_server_record.smtp_user
-            if not email_from:
-                raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-            email_to = []
-            for data in self.browse(cr, uid, ids, context):
-                if not data.user_id:
-                    raise osv.except_osv(_('Warning'), _('There is no Responsible Person define for meeting  !'))
-                else:
-                    if not data.user_id.email:
-                        raise osv.except_osv(_('Warning'), _('%s Responsible user have no email defined !' % data.user_id.name))
-                    else:
-                        email_to.append(data.user_id.email)
-                for crm_data1 in crm_data:
-                    subject_line = 'New Customer ' + tools.ustr(crm_data1.partner_id and crm_data1.partner_id.name or '') + ' ' + tools.ustr(crm_data1.last_name) + ' Comes.'
-                    message_body = 'Hello,<br/><br/>There is a new customer comes.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(crm_data1.contact_name) + '<br/><br/>Last Name : ' + tools.ustr(crm_data1.last_name) + '<br/><br/>Address : ' + tools.ustr(crm_data1.street) + ', ' + tools.ustr(crm_data1.street2) + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.state_id and crm_data1.city_id.state_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.country_id and crm_data1.city_id.country_id.name or '') + ', ' + tools.ustr(crm_data1.city_id and crm_data1.city_id.zip or '') + '<br/><br/>Email : ' + tools.ustr(crm_data1.email_from) + '<br/><br/>Phone : ' + tools.ustr(crm_data1.phone) + '<br/><br/> Thank You.'
-                    message_hrmanager = obj_mail_server.build_email(
-                    email_from=email_from,
-                    email_to=email_to,
-                    subject=subject_line,
-                    body=message_body,
-                    body_alternative=message_body,
-                    email_cc=None,
-                    email_bcc=None,
-                    attachments=None,
-                    references=None,
-                    object_id=None,
-                    subtype='html',
-                    subtype_alternative=None,
-                    headers=None)
-            self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        for data in self.browse(cr, uid, ids, context):
+            if not data.user_id:
+                raise osv.except_osv(_('Warning'), _('There is no Responsible Person define for meeting  !'))
+            else:
+                if not data.user_id.email:
+                    raise osv.except_osv(_('Warning'), _('%s Responsible user have no email defined !' % data.user_id.name))
+            template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'meeting_mail', context=context)
+            template_values = email_template_obj.generate_email(cr, uid, template_id, cur_rec.id, context=context)
+            msg_id = mail_mail.create(cr, uid, template_values, context=context)
+            mail_mail.send(cr, uid, [msg_id], context=context)
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Sales Assignment')])
             crm_obj.write(cr, uid, crm_id, {'stage_id': stage_id[0]}, context=context)
             return True
-
+        
 class project_photos(osv.Model):
     
     _name = "project.photos"
@@ -2340,14 +2306,16 @@ class project_photos(osv.Model):
     def use_project_photo(self, cr ,uid, ids, context=None):
         if not context:
             context = {}
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         partner_obj = self.pool.get('res.partner')
         cash_bonus_obj = self.pool.get('cash.bonus')
         user_obj = self.pool.get('res.users')
         user_rec = user_obj.browse(cr, uid, uid, context=context)
         project_photo_data = self.browse(cr, uid, ids, context=context)[0]
-        partner_data = partner_obj.browse(cr, uid, project_photo_data.crm_lead_id.partner_id.id, context=context)
+        partner_data = partner_obj.browse(cr, uid, project_photo_data.crm_lead_id and project_photo_data.crm_lead_id.partner_id and project_photo_data.crm_lead_id.partner_id.id, context=context)
         vals={'name': 'Cash Bonus for picture used in marketing or for SunPro Solar website!', 'cash': 5, 'res_partner_id':partner_data.id}
-        cash_bonus_create_id = cash_bonus_obj.create(cr, uid, vals, context= context)
+        cash_bonus_obj.create(cr, uid, vals, context= context)
         self.write(cr, uid, ids, {'use_photo': True}, context=context)
         
         obj_mail_server = self.pool.get('ir.mail_server')
@@ -2355,27 +2323,14 @@ class project_photos(osv.Model):
         if not mail_server_ids:
             raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
         mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
+        
         email_from = mail_server_record.smtp_user
         email_to = [user_rec.company_id and user_rec.company_id.info_email_id or 'info@sunpro-solar.com']
-        if not email_from:
-            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
-        subject_line = 'Customer ' + tools.ustr(partner_data.name or '') + ' you get Cash Bonus of $5 for project picture.'
-        message_body = 'Hello,<br/><br/>Photo '+ project_photo_data.name +' is used for picture used in marketing or for SunPro Solar website!.<br/><br/>Customer Information<br/><br/>First Name : ' + tools.ustr(partner_data.name) + '<br/><br/>Last Name : ' + tools.ustr(partner_data.last_name) + '<br/><br/>Address : '+ tools.ustr(partner_data.street) + ', ' + tools.ustr(partner_data.street2) + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.name or '') + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.state_id and partner_data.city_id.state_id.name or '') + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.country_id and partner_data.city_id.country_id.name or '') + ', '+ tools.ustr(partner_data.city_id and partner_data.city_id.zip or '') + '<br/><br/>Email : '+ tools.ustr(partner_data.email) + '<br/><br/>Mobile : ' + tools.ustr(partner_data.mobile) + '<br/><br/>Photo Information : <br/><br/>Photo Name:'+ project_photo_data.name +'<br/><br/> Photo Tag line:'+ project_photo_data.tag_line +'<br/><br/> Thank You.'
-        message_hrmanager = obj_mail_server.build_email(
-        email_from=email_from,
-        email_to=email_to,
-        subject=subject_line,
-        body=message_body,
-        body_alternative=message_body,
-        email_cc=None,
-        email_bcc=None,
-        attachments=None,
-        references=None,
-        object_id=None,
-        subtype='html',
-        subtype_alternative=None,
-        headers=None)
-        self.send_email(cr, uid, message_hrmanager, mail_server_id=mail_server_ids[0], context=context)
+        template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'notify_for_project_picture_mail', context=context)
+        template_values = email_template_obj.generate_email(cr, uid, template_id, project_photo_data.id, context=context)
+        template_values.update({'email_to': email_to[0],'email_from':email_from,})
+        msg_id = mail_mail.create(cr, uid, template_values, context=context)
+        mail_mail.send(cr, uid, [msg_id], context=context)
         return True
     
     def onchange_photo_fname(self, cr, uid, ids, photo_fname, context=None):

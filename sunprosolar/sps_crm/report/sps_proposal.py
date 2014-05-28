@@ -451,6 +451,7 @@ class proposal_report(report_sxw.rml_parse):
             info_dict['module_info'] = str(solar.num_of_module)+" "+solar.module_product_id.name+" Modules"
             info_dict['inverter_info'] = str(solar.num_of_invertor)+" "+solar.inverter_product_id.name+" Modules"
             info_dict['orientation_info'] = solar.faceing.tilt+" degrees "+ tilt_degree_dict.get(solar.tilt_degree,"") + " Orientation"
+            info_dict['rating'] = "Price per STC watt: " + str(solar.stc_dc_rating) + ', Price per AC watt: ' + str(solar.cec_ac_rating)
             solar_info.append(info_dict)
             i += 1
         return solar_info

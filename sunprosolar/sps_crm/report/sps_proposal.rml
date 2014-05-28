@@ -90,7 +90,7 @@
         <blockTable colWidths="540.0" style="Table1">
             <tr>
                 <td>
-                    <para style="P4" alignment="LEFT">[[solar.get('arr_name')]], [[solar.get('module_info')]], [[solar.get('inverter_info')]], [[solar.get('orientation_info')]]</para>
+                    <para style="P4" alignment="LEFT">[[solar.get('arr_name')]] [[solar.get('module_info')]], [[solar.get('inverter_info')]], [[solar.get('orientation_info')]], [[solar.get('rating')]]</para>
                 </td>
             </tr>
         </blockTable>

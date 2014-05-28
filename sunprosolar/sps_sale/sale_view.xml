@@ -214,6 +214,7 @@
                         <button name="permit_pack" string="Permit Pack"
                             colspan="2" type="object" icon="gtk-yes"  />
                     </group>
+                    
                     <group cols="1" colspan="4" attrs="{'invisible':[('state','!=','site_inspection')]}">
                         <button name="done_inspection" icon="gtk-yes" type="object" string="Done Site Inspection" />
                     </group>
@@ -227,6 +228,17 @@
                         <group>
                             <field name="insp_after_72_hour" readonly="1" />
 							<field name="delay_days"/>
+                        </group>
+                    </group>
+                    <group cols="1" attrs="{'invisible':[('state','!=','permit_pack')]}">
+                        <group>
+                            <field name="date_submitted"/>
+                            <field name="date_peicked_up"/>
+                            <field name="date_submitted_eng"/>
+                        </group>
+                        <group>
+                            <field name="permit_number"/>
+                            <field name="plaque_number_date"/>
                         </group>
                     </group>
                 </xpath>
