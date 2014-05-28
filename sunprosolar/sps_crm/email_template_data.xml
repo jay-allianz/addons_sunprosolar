@@ -2,6 +2,33 @@
 <openerp>
 
     <data>
+    
+    <!-- Customer inforation email template -->
+       <record id="customer_information" model="email.template">
+            <field name="name">Customer Information Email Template</field>
+            <field name="email_from">${object.user_id.email or object.company_id.email or 'noreply@localhost'}</field>
+            <field name="subject">Information is successfully uploaded.</field>
+            <field name="model_id" ref="sps_crm.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name"> </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Hello,</p>
+    <p>The New Information of Customer <strong> ${object.partner_id.name} </strong> is successfully uploaded.</p>
+    
+    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+       &nbsp;&nbsp;<strong>Customer Information</strong><br/>
+       &nbsp;&nbsp;First Name : <strong>${object.partner_id.name}</strong><br />
+       &nbsp;&nbsp;Last Name: <strong>${object.partner_id.last_name}</strong><br />
+       &nbsp;&nbsp;Address: <strong> ${object.partner_id.street}, ${object.partner_id.street2}, ${object.partner_id.city_id.name or ''}, ${object.partner_id.city_id.state_id.name or ''}, ${object.partner_id.city_id.country_id.name or ''}, ${object.partner_id.city_id.zip or ''}</strong><br />
+       &nbsp;&nbsp;Email: <strong>${object.partner_id.email}</strong><br />
+       &nbsp;&nbsp;Phone: <strong>${object.partner_id.phone}</strong><br />
+       &nbsp;&nbsp;<strong>Thank you.</strong><br />
+    </p>  
+</div>
+            ]]></field>
+        </record>
         
        <!-- request_detailed email template -->
        <record id="request_detailed" model="email.template">
@@ -104,7 +131,7 @@
        &nbsp;&nbsp;Last Name: <strong>${object.partner_id.last_name}</strong><br />
        &nbsp;&nbsp;Address: <strong> ${object.partner_id.street}, ${object.partner_id.street2}, ${object.partner_id.city_id.name or ''}, ${object.partner_id.city_id.state_id.name or ''}, ${object.partner_id.city_id.country_id.name or ''}, ${object.partner_id.city_id.zip or ''}</strong><br />
        &nbsp;&nbsp;Email: <strong>${object.partner_id.email}</strong><br />
-       &nbsp;&nbsp;Mobile: <strong>${object.partner_id.mobile}</strong><br /> 
+       &nbsp;&nbsp;Phone: <strong>${object.partner_id.phone}</strong><br /> 
        &nbsp;&nbsp;<strong>Thank you.</strong><br />
     </p>  
 </div>

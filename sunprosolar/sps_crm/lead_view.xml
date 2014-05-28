@@ -809,7 +809,8 @@
 							<separator colspan="4" string="Economics Details" />
 							<group col="4" colspan="4">
 		                        <group string="System" col="2" colspan="2">
-									<field name="cost" readonly="1" />
+									<field name="cost"/>
+									<field name="cost_handler" invisible="1"/>
 								</group><newline/>
 	                            <group string="PV" col="2" colspan="2">
 	                                  <field name="peak_kw_stc" readonly="1" />

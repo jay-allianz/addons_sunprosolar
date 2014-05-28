@@ -61,9 +61,7 @@ class res_user(osv.Model):
             partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
             address = str(res_users_data.partner_id.street) + ', ' + str(res_users_data.partner_id.street2) + ', '+ str(res_users_data.partner_id.city_id and res_users_data.partner_id.city_id.name or '') + ', '+str(res_users_data.partner_id.city_id and res_users_data.partner_id.city_id.state_id and res_users_data.partner_id.city_id.state_id.name or '') + ', '+str(res_users_data.partner_id.city_id and res_users_data.partner_id.city_id.country_id and res_users_data.partner_id.city_id.country_id.name or '') + ', '+str(res_users_data.partner_id.city_id and res_users_data.partner_id.city_id.zip or '')
             partner_info = {'partner_id' : res_users_data.partner_id.id,
-                            'name': res_users_data.partner_id.name or '', 
-                            'middle_name': res_users_data.partner_id.middle_name or '',
-                            'last_name': res_users_data.partner_id.last_name or '',
+                            'name': str(res_users_data.partner_id.name or '') + ' ' + str(res_users_data.partner_id.middle_name or '') + ' ' + str(res_users_data.partner_id.last_name or ''), 
                             'company': res_users_data.partner_id.parent_id.name or '',
                             'street': res_users_data.partner_id.street or '',
                             'street2': res_users_data.partner_id.street2 or '',
@@ -317,6 +315,8 @@ class res_user(osv.Model):
     def update_customer_information(self, cr, uid, user_id, name, middle_name, last_name, street, street2, city_id, email, mobile, phone, fax, context = None):
         if not context:
             context = {}
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
         res_users_data = self.browse(cr, uid, user_id, context=context)
@@ -331,6 +331,14 @@ class res_user(osv.Model):
                 crm_obj.write(cr, uid, crm_ids, {'contact_name': name, 'last_name': last_name, 'street': street, 'street2':street2, 'city_id': city_id, 'email':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
             if data.type == 'opportunity':
                 crm_obj.write(cr, uid, crm_ids, { 'contact_name': name,'street': street, 'street2':street2, 'city_id': city_id, 'email_from':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
+                
+        template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'customer_information', context=context)
+        template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
+        template_values.update({'email_to': res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com'})
+        msg_id = mail_mail.create(cr, uid, template_values, context=context)
+        mail_mail.send(cr, uid, [msg_id], context=context)
+        
+        
         return True
     
     def get_all_document(self, cr, uid, user_id, context = None):
