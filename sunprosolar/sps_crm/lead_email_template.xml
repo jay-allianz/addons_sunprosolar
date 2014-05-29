@@ -2,7 +2,73 @@
 <openerp>
 
     <data>
+        <!--Documents required User email template -->
+        <record id="document_required_user_lead_mail" model="email.template">
+            <field name="name">Document Required User lead Email Template</field>
+            <field name="email_from">${user.email or 'noreply@localhost'}</field>
+            <field name="subject">Notification for Document Upload.</field>
+            <field name="model_id" ref="model_document_required"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name"> </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Hello,</p>
+    
+    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+                 &nbsp;&nbsp;<strong>${user.name}</strong> uploaded a Document named<strong> ${object.doc_id.name} </strong>.<br/>
+                &nbsp;&nbsp;The document is successfully Uploaded.<br/><br/>
+                &nbsp;&nbsp;<strong>Thank You.</strong><br/>
+    </p>  
+</div>
+            ]]></field>
+        </record>
         
+        <!--Documents required Customer email template -->
+        <record id="document_required_customer_lead_mail" model="email.template">
+            <field name="name">Document Required Customer lead Email Template</field>
+            <field name="email_to">${object.crm_lead_id.user_id.email or object.crm_lead_id.email_from}</field>
+            <field name="email_from">${user.email or 'noreply@localhost'}</field>
+            <field name="subject">Notification for Document Upload.</field>
+            <field name="model_id" ref="model_document_required"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name"> </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Hello ${object.crm_lead_id.user_id.name},</p>
+    
+    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+                 &nbsp;&nbsp;<strong>${user.name}</strong> uploaded your Document named<strong> ${object.doc_id.name} </strong>.<br/>
+                &nbsp;&nbsp;The document is successfully Uploaded.<br/><br/>
+                &nbsp;&nbsp;<strong>Thank You.</strong><br/>
+    </p>  
+</div>
+            ]]></field>
+        </record>
+        
+        <!--Documents required Admin email template -->
+        <record id="document_required_admin_lead_mail" model="email.template">
+            <field name="name">Document Required Customer lead Email Template</field>
+            <field name="email_from">${user.email or 'noreply@localhost'}</field>
+            <field name="subject">Notification for Document Upload.</field>
+            <field name="model_id" ref="model_document_required"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name"> </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Hello Admin,</p>
+    
+    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+                 &nbsp;&nbsp;<strong>${user.name}</strong> uploaded a Document named<strong> ${object.doc_id.name} </strong>.<br/>
+                &nbsp;&nbsp;The document is successfully Uploaded.<br/><br/>
+                &nbsp;&nbsp;<strong>Thank You.</strong><br/>
+    </p>  
+</div>
+            ]]></field>
+        </record>
+    
        <!--  email template -->
        <record id="meeting_mail" model="email.template">
             <field name="name">Meeting Email Template</field>
@@ -55,6 +121,7 @@
        <!-- Notification for upload project pictures email template -->
        <record id="notify_for_project_picture_mail" model="email.template">
             <field name="name">Notification for upload project pictures Email Template</field>
+            <field name="email_from">${user.email or 'noreply@localhost'}</field>
             <field name="subject">Customer ${object.crm_lead_id.partner_id.name} you get Cash Bonus of $5 for project picture.</field>
             <field name="model_id" ref="model_project_photos"/>
             <field name="auto_delete" eval="True"/>
@@ -63,7 +130,7 @@
             <field name="body_html"><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
     <p>Hello,</p>
-    <p>Photo ${object.name} is used for picture used in marketing or for SunPro Solar website!</p>
+    <p>Photo ${object.name} picture is used in marketing or for SunPro Solar website!</p>
     
     <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
        &nbsp;&nbsp;<strong>Customer Information</strong><br/><br/>

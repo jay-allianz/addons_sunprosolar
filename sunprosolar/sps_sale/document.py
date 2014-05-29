@@ -79,6 +79,8 @@ class doc_required(osv.Model):
     }
     
     def write(self, cr, uid, ids, vals, context=None):
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         res_partner_obj = self.pool.get('res.partner')
         res_users_obj = self.pool.get('res.users')
         if not vals.get('document_id', None):
@@ -92,27 +94,21 @@ class doc_required(osv.Model):
                 customer = res_partner_obj.browse(cr, uid, notify_cust, context=context)
         users = cur_rec.notify_users
         send_mail_obj = self.pool.get('send.send.mail')
-        obj_mail_server = self.pool.get('ir.mail_server')
-        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-        if not mail_server_ids:
-            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-        email_from = mail_server_record.smtp_user
-        if not email_from:
-            raise osv.except_osv(_('Mail Error'), _('No mail found for smtp user!'))
         if customer:
             if customer.email:
-                NO_REC_MSG = ''
-                SUB_LINE = 'Notification for Document Upload.'
-                MSG_BODY = 'Hello ' + customer.name + ',<br/><br/>' + ' Your Document named ' + cur_rec.doc_id.name + '.<br/><br/> Have been successfully Uploaded.<br/><br/> Thank You.'
-                send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, customer.email, context=context)
+                template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_sale', 'upload_required_document_cutomer', context=context)
+                template_values = email_template_obj.generate_email(cr, uid, template_id, cur_rec.id, context=context)
+                template_values.update({'email_to': customer.email})
+                msg_id = mail_mail.create(cr, uid, template_values, context=context)
+                mail_mail.send(cr, uid, [msg_id], context=context)
         if users:
             for user in users:
                 if user.email:
-                    NO_REC_MSG1 = ''
-                    SUB_LINE1 = 'Notification for Document Upload.'
-                    MSG_BODY1 = 'Hello ' + user.name +',<br/>' +  ' The Document named ' + cur_rec.doc_id.name + '.<br/><br/> Have been successfully Uploaded.<br/><br/> Thank You.'
-                    send_mail_obj.send(cr, uid, NO_REC_MSG1, SUB_LINE1, MSG_BODY1, user.email, context=context)
+                    template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_sale', 'upload_required_document_user', context=context)
+                    template_values = email_template_obj.generate_email(cr, uid, template_id, cur_rec.id, context=context)
+                    template_values.update({'email_to': user.email})
+                    msg_id = mail_mail.create(cr, uid, template_values, context=context)
+                    mail_mail.send(cr, uid, [msg_id], context=context)
         return super(doc_required, self).write(cr, uid, ids, vals, context=context)
 
 class documents_all(osv.Model):
