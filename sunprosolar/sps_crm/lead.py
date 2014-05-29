@@ -1135,7 +1135,8 @@ class crm_lead(osv.Model):
         'down_payment' :fields.float("Down Payment"),
         'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
         'loan_interest_rate_dummy' : fields.function(_get_loan_interest_rate, string="Loan Interest Rate (%)", type="float"),
-        'cost_peack_kw' : fields.function(_get_cost_rebate, string="Cost / Peack KW",type="float",multi="cost_all"),
+        'cost_peack_kw' : fields.function(_get_cost_rebate, fnct_inv=_module_cost_search, string="Cost / Peack KW",type="float",multi="cost_all"),
+        'cost_handler': fields.float('Cost Handler'),
         'pv_kw_decline':fields.float('PV KW Decline (%)'),
         'grid_energy_rate':fields.function(_get_company_tier_amount, type='float', method=True, string="Electricity Grid energy intial Rate Per KWh/$"),
         'grid_rate_increase_by':fields.float('Grid Rate Increase By'),
@@ -1151,8 +1152,7 @@ class crm_lead(osv.Model):
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
         'pbi_epbb_incentive' : fields.float("PBI-EPBBB Incentive"),
         'pbi_epbb_incentive_dummy' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
-        'cost' : fields.function(_get_cost_rebate, fnct_inv=_module_cost_search,string="Cost",type="float",multi="cost_all"),
-        'cost_handler': fields.float('Cost Handler'),
+        'cost' : fields.function(_get_cost_rebate,string="Cost",type="float",multi="cost_all"),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",store=True,type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
         'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
@@ -2113,6 +2113,8 @@ class document_required(osv.Model):
     }
     
     def write(self, cr, uid, ids, vals, context=None):
+        mail_mail = self.pool.get('mail.mail')
+        email_template_obj = self.pool.get('email.template')
         if not vals.get('document_id', None):
             return super(document_required, self).write(cr, uid, ids, vals, context=context)
         vals.update({'collected' : True})
@@ -2121,23 +2123,30 @@ class document_required(osv.Model):
         
         user_obj = self.pool.get('res.users')
         user_rec = user_obj.browse(cr, uid, uid, context=context)
+        admin_email_id = user_rec.company_id.admin_email_id
         
-        send_mail_obj = self.pool.get('send.send.mail')
-        NO_REC_MSG = ''
-        SUB_LINE = 'Notification for Document Upload.'
-        MSG_BODY = 'Hello Admin,<br/>' + user_rec.name + ' uploaded a Document named ' + cur_rec.doc_id.name + '.<br/><br/>The Document is successfully Uploaded.<br/><br/> Thank You.'
-        send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, 'admin@sunpro-solar.com', context=context)
+        template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'document_required_admin_lead_mail', context=context)
+        template_values = email_template_obj.generate_email(cr, uid, template_id, cur_rec.id, context=context)
+        template_values.update({'email_to': admin_email_id})
+        msg_id = mail_mail.create(cr, uid, template_values, context=context)
+        mail_mail.send(cr, uid, [msg_id], context=context)
         
-        if cur_rec.doc_id.inform_customer:
-            for user in cur_rec.doc_id.inform_users:
-                if user.email:
-                    MSG_BODY = 'Hello ' + user.name + ',<br/>' + user_rec.name + ' uploaded a Document named ' + cur_rec.doc_id.name + '.<br/><br/>The Document is successfully Uploaded.<br/><br/> Thank You.'
-                    send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, user.email, context=context)
+        if cur_rec.doc_id and cur_rec.doc_id.inform_customer:
+            if cur_rec.crm_lead_id.user_id or cur_rec.crm_lead_id.email_from:
+                template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'document_required_customer_lead_mail', context=context)
+                template_values = email_template_obj.generate_email(cr, uid, template_id, cur_rec.id, context=context)
+                msg_id = mail_mail.create(cr, uid, template_values, context=context)
+                mail_mail.send(cr, uid, [msg_id], context=context)
+                
+        if cur_rec.doc_id and cur_rec.doc_id.inform_users:
+            for inform_user in cur_rec.doc_id.inform_users:
+                if inform_user.email:
+                    template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'document_required_user_lead_mail', context=context)
+                    template_values = email_template_obj.generate_email(cr, uid, template_id, cur_rec.id, context=context)
+                    template_values.update({'email_to': inform_user.email})
+                    msg_id = mail_mail.create(cr, uid, template_values, context=context)
+                    mail_mail.send(cr, uid, [msg_id], context=context)
         
-        if cur_rec.crm_lead_id.user_id:
-            MSG_BODY = 'Hello ' + cur_rec.crm_lead_id.user_id.name + ',<br/>' + user_rec.name + ' uploaded a Document named ' + cur_rec.doc_id.name + '.<br/><br/>The Document is successfully Uploaded.<br/><br/> Thank You.'
-            send_mail_obj.send(cr, uid, NO_REC_MSG, SUB_LINE, MSG_BODY, cur_rec.crm_lead_id.user_id.email, context=context)
-            
         return res
 
 class documents_all(osv.Model):
@@ -2318,17 +2327,10 @@ class project_photos(osv.Model):
         cash_bonus_obj.create(cr, uid, vals, context= context)
         self.write(cr, uid, ids, {'use_photo': True}, context=context)
         
-        obj_mail_server = self.pool.get('ir.mail_server')
-        mail_server_ids = obj_mail_server.search(cr, uid, [], context=context)
-        if not mail_server_ids:
-            raise osv.except_osv(_('Mail Error'), _('No mail server found!'))
-        mail_server_record = obj_mail_server.browse(cr, uid, mail_server_ids)[0]
-        
-        email_from = mail_server_record.smtp_user
         email_to = [user_rec.company_id and user_rec.company_id.info_email_id or 'info@sunpro-solar.com']
         template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'notify_for_project_picture_mail', context=context)
         template_values = email_template_obj.generate_email(cr, uid, template_id, project_photo_data.id, context=context)
-        template_values.update({'email_to': email_to[0],'email_from':email_from,})
+        template_values.update({'email_to': email_to[0]})
         msg_id = mail_mail.create(cr, uid, template_values, context=context)
         mail_mail.send(cr, uid, [msg_id], context=context)
         return True
