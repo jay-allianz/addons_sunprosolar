@@ -802,6 +802,33 @@ class crm_lead(osv.Model):
 #            final_new_bill = bill_new / flag
 #        return final_new_bill
 
+    def _lead_create_contact(self, cr, uid, lead, name, is_company, parent_id=False, context=None):
+        partner = self.pool.get('res.partner')
+        vals = {'name': name,
+                'last_name': lead.last_name,
+            'user_id': lead.user_id.id,
+            'comment': lead.description,
+            'section_id': lead.section_id.id or False,
+            'parent_id': parent_id,
+            'phone': lead.phone,
+            'mobile': lead.mobile,
+            'email': tools.email_split(lead.email_from) and tools.email_split(lead.email_from)[0] or False,
+            'fax': lead.fax,
+            'title': lead.title and lead.title.id or False,
+            'function': lead.function,
+            'street': lead.street,
+            'street2': lead.street2,
+            'city_id' : lead.city_id.id or False,
+            'zip': lead.zip,
+            'city': lead.city,
+            'country_id': lead.country_id and lead.country_id.id or False,
+            'state_id': lead.state_id and lead.state_id.id or False,
+            'is_company': is_company ,
+            'type': 'contact'
+        }
+        partner = partner.create(cr, uid, vals, context=context)
+        return partner
+
     def redirect_opportunity_view(self, cr, uid, opportunity_id, context=None):
         models_data = self.pool.get('ir.model.data')
 
@@ -878,11 +905,12 @@ class crm_lead(osv.Model):
                 rebate_amt = cost * data.rebate
             loan_amt = cost - down_payment_amt - rebate_amt
             result[data.id] = {
-                'cost' : cost,
+#                'cost' : cost,
+                'cost' : ((data.cost_peack_kw_handler or cost_peack_kw) + (data.invertor_cost_handler or inverter_cost)),
                 'down_payment_amt' : down_payment_amt,
                 'rebate_amt' : rebate_amt, 
                 'loan_amt' : loan_amt,
-                'cost_peack_kw' : cost_peack_kw,
+                'cost_peack_kw' : data.cost_peack_kw_handler or cost_peack_kw,
                 'inverter_cost' : data.invertor_cost_handler or inverter_cost,
             }
         return result
@@ -1018,18 +1046,18 @@ class crm_lead(osv.Model):
                         
         return res
     
+    def _cost_module_search(self, cr, uid, id, name, value, arg, context=None):
+        if context is None:
+            context = {}
+        self.write(cr, uid, id, {'cost_peack_kw_handler': value}, context=context)
+        return True
+    
     def _inverter_cost_search(self, cr, uid, id, name, value, arg, context=None):
         if context is None:
             context = {}
         self.write(cr, uid, id, {'invertor_cost_handler': value}, context=context)
         return True
     
-    def _module_cost_search(self, cr, uid, id, name, value, arg, context=None):
-        if context is None:
-            context = {}
-        self.write(cr, uid, id, {'cost_handler': value}, context=context)
-        return True
-        
     _columns = {
          'last_name': fields.char('Last Name', size=32),
          'middle_name':fields.char("Middle Name", size=32),
@@ -1135,8 +1163,8 @@ class crm_lead(osv.Model):
         'down_payment' :fields.float("Down Payment"),
         'loan_interest_rate' :fields.float("Loan Interest Rate (%)"),
         'loan_interest_rate_dummy' : fields.function(_get_loan_interest_rate, string="Loan Interest Rate (%)", type="float"),
-        'cost_peack_kw' : fields.function(_get_cost_rebate, fnct_inv=_module_cost_search, string="Cost / Peack KW",type="float",multi="cost_all"),
-        'cost_handler': fields.float('Cost Handler'),
+        'cost_peack_kw' : fields.function(_get_cost_rebate, string="Cost / Peack KW",fnct_inv=_cost_module_search,type="float",multi="cost_all",store=True),
+        'cost_peack_kw_handler': fields.float('Cost Handler'),
         'pv_kw_decline':fields.float('PV KW Decline (%)'),
         'grid_energy_rate':fields.function(_get_company_tier_amount, type='float', method=True, string="Electricity Grid energy intial Rate Per KWh/$"),
         'grid_rate_increase_by':fields.float('Grid Rate Increase By'),
@@ -1757,7 +1785,6 @@ class solar_solar(osv.Model):
                         res[data.id]['ave_home_powered'] = ave_home_powered
                         ave_light_bulb_powered = output / avg_light_bulb
                         res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
-                        
         return res
     
     def _get_monthly_production_solar(self, cr, uid, ids, name, args, context=None):
