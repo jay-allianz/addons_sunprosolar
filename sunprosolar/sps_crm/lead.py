@@ -994,10 +994,8 @@ class crm_lead(osv.Model):
         oct_production = 0.0
         nov_production = 0.0
         dec_production = 0.0
-        line_no = 0
         
         for data in self.browse(cr, uid, ids, context):
-            
             res[data.id] = {
                 'jan_production': 0.0,
                 'feb_production': 0.0,
@@ -1026,23 +1024,19 @@ class crm_lead(osv.Model):
                     oct_production += line.oct_production
                     nov_production += line.nov_production
                     dec_production += line.dec_production
-                    line_no += 1
-            else:
-                line_no = 1
                 
-            if line_no:
-                res[data.id]['jan_production'] = jan_production/line_no
-                res[data.id]['feb_production'] = feb_production/line_no
-                res[data.id]['mar_production'] = mar_production/line_no
-                res[data.id]['apr_production'] = apr_production/line_no
-                res[data.id]['may_production'] = may_production/line_no
-                res[data.id]['jun_production'] = jun_production/line_no
-                res[data.id]['jul_production'] = jul_production/line_no
-                res[data.id]['aug_production'] = aug_production/line_no
-                res[data.id]['sep_production'] = sep_production/line_no
-                res[data.id]['oct_production'] = oct_production/line_no
-                res[data.id]['nov_production'] = nov_production/line_no
-                res[data.id]['dec_production'] = dec_production/line_no
+            res[data.id]['jan_production'] = jan_production
+            res[data.id]['feb_production'] = feb_production
+            res[data.id]['mar_production'] = mar_production
+            res[data.id]['apr_production'] = apr_production
+            res[data.id]['may_production'] = may_production
+            res[data.id]['jun_production'] = jun_production
+            res[data.id]['jul_production'] = jul_production
+            res[data.id]['aug_production'] = aug_production
+            res[data.id]['sep_production'] = sep_production
+            res[data.id]['oct_production'] = oct_production
+            res[data.id]['nov_production'] = nov_production
+            res[data.id]['dec_production'] = dec_production
                         
         return res
     
