@@ -382,10 +382,10 @@ class sale_order(osv.Model):
                     partner_data = partner_obj.browse(cr, uid, lead_data.referred_by.id, context=context)
                     vals={'name': 'Cash Bonus for contract signed from your referance!', 'cash': 500, 'res_partner_id':lead_data.referred_by.id}
                     cash_bonus_obj.create(cr, uid, vals, context= context)
-                if data.partner_id:
-                    partner_data = partner_obj.browse(cr, uid, data.partner_id.id, context=context)
-                    vals={'name': 'Cash Bonus for your contract signed!', 'cash': 100, 'res_partner_id':data.partner_id.id}
-                    cash_bonus_obj.create(cr, uid, vals, context= context)
+                    if data.partner_id:
+                        partner_data = partner_obj.browse(cr, uid, data.partner_id.id, context=context)
+                        vals={'name': 'Cash Bonus for your contract signed!', 'cash': 100, 'res_partner_id':data.partner_id.id}
+                        cash_bonus_obj.create(cr, uid, vals, context= context)
         return True
     
     def document_collected(self, cr, uid, ids, context=None):

@@ -1174,7 +1174,7 @@ class crm_lead(osv.Model):
         'sun_hour_per_day' : fields.function(_get_site_avg_sun_hour, string='Sun Hours Per Day', type='float',digits=(12,3)),
         'pbi_epbb_incentive' : fields.float("PBI-EPBBB Incentive"),
         'pbi_epbb_incentive_dummy' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
-        'cost' : fields.function(_get_cost_rebate,string="Cost",type="float",multi="cost_all"),
+        'cost' : fields.function(_get_cost_rebate,string="Cost",type="float",multi="cost_all",store=True),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",store=True,type="float",multi="cost_all"),
         'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
         'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
@@ -1912,7 +1912,10 @@ class solar_solar(osv.Model):
             crm_rec = crm_obj.browse(cr, uid, vals['crm_lead_id'], context=context)
             LenArray = len([x.id for x in crm_rec.solar_ids])
             vals.update({'num_of_arrays' : LenArray + 1})
-        return super(solar_solar, self).create(cr, uid, vals, context=context)
+        res = super(solar_solar, self).create(cr, uid, vals, context=context)
+        self.write(cr, uid, [res], {}, context=context)
+        return res
+    
     
     def unlink(self, cr, uid, ids, context=None):
         line_no=0
@@ -2280,10 +2283,10 @@ class crm_meeting(osv.Model):
                 partner_data = partner_obj.browse(cr, uid, crm_data.referred_by.id, context=context)
                 vals={'name': 'Cash Bonus for appointment from your referance!', 'cash': 50, 'res_partner_id':crm_data.referred_by.id}
                 cash_bonus_obj.create(cr, uid, vals, context= context)
-            if crm_data.partner_id:
-                partner_customer_data = partner_obj.browse(cr, uid, crm_data.partner_id.id, context=context)
-                vals={'name': 'Cash Bonus for your appointment!', 'cash': 50, 'res_partner_id':crm_data.partner_id.id}
-                cash_bonus_obj.create(cr, uid, vals, context= context)
+                if crm_data.partner_id:
+                    partner_customer_data = partner_obj.browse(cr, uid, crm_data.partner_id.id, context=context)
+                    vals={'name': 'Cash Bonus for your appointment!', 'cash': 50, 'res_partner_id':crm_data.partner_id.id}
+                    cash_bonus_obj.create(cr, uid, vals, context= context)
         if context.get('default_opportunity_id'):
             crm_case_stage_obj = self.pool.get('crm.case.stage')
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Appointment Setup')])

@@ -203,7 +203,7 @@ class account_move(osv.osv):
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
     _columns = {
-        'comment': fields.text('Additional Information', required=True, readonly=True, states={'draft':[('readonly',False)]}),
+        'comment': fields.text('Additional Information', readonly=True, states={'draft':[('readonly',False)]}),
     }
 
 #     def action_move_create(self, cr, uid, ids, context=None):

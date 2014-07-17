@@ -8,7 +8,7 @@
                 <fill color="black"/>
                 <!--page bottom-->
                 <lines>1.2cm 1.20cm 19.9cm 1.20cm</lines>
-                <drawCentredString x="4.8cm" y="0.8cm">SUNPRO SOLAR, INC. AGREEMENT - AM</drawCentredString>
+                <drawCentredString x="4.8cm" y="0.8cm">SUNPRO SOLAR, INC. AGREEMENT - PM</drawCentredString>
                 <drawCentredString x="17.0cm" y="0.8cm">Page  <pageNumber/> of</drawCentredString>
                 <drawCentredString x="17.8cm" y="0.8cm"> <pageCount/></drawCentredString>
             </pageGraphics>
@@ -332,10 +332,11 @@
                 <para style="P3">Your installed SunPro Solar System includes a 10-year warranty that includes no-cost repair or replacement of the</para>
                 <para style="P3">system components, including any associated labor as specified in the California Solar Initiative Handbook</para>
                 <para style="P3">applicable on the date of this Agreement. Additional manufacturer’s warranty may be available and information</para>
-                <para style="P3">regarding such warranty may be provided to you by SunPro Solar, Inc. upon request. SunPro Solar, Inc. warranties</para>
-                <para style="P3">an area of 4” surrounding each roof attachment point. Any roof failures outside of this area are not covered by</para>
-                <para style="P3">this warranty. All aspects of this warranty are void if any other person enters or performs work on these areas or</para>
-                <para style="P3">materials other than a representative of SunPro Solar, Inc.</para>
+                <para style="P3">regarding such warranty will be provided to you by SunPro Solar, Inc. SunPro Solar, Inc. warranties the roof directly</para>
+                <para style="P3">under the array and an area extending 3’ beyond the array, or to the next change in roof plane, whichever is</para>
+                <para style="P3">closer, to be free from roof leaks for a period of 10 years from date of final inspection. All aspects of this warranty</para>
+                <para style="P3">are void if any other person enters or performs work on these areas or materials other than a representative of</para>
+                <para style="P3">SunPro Solar, Inc.</para>
             </td>
         </tr>
         <tr>
@@ -469,6 +470,7 @@
             <td>
                 <para style="P3"><b>12. Entire Agreement.</b></para>
                 <para style="P3">This Agreement contains the entire agreement of the parties. No other agreement, statement,or promise made on or before the effective date of this Agreement will be binding on the parties.</para>
+                <para style="P3">By executing the signature below, you are acknowledging that you have received the Exhibit C page and you understand the additional description of the work to be performed.</para>
             </td>
         </tr>
         <tr>
@@ -2184,6 +2186,7 @@
                                 </tr>
                             </blockTable>
                         </td>
+                        
                     </tr>
                 </blockTable>
             </td>

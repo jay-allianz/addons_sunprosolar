@@ -330,6 +330,7 @@
 	                                  <field name="loan_period" />
 	                                  <field name="loan_interest_rate" />
 	                                  <field name="loan_amt" readonly="1" />
+									  <field name="down_payment_type" />
 	                                  <field name="down_payment" />
 	                                  <field name="down_payment_amt" readonly="1" />
 	                            </group>
