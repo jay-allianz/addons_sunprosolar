@@ -72,7 +72,7 @@
        <!--  email template -->
        <record id="meeting_mail" model="email.template">
             <field name="name">Meeting Email Template</field>
-            <field name="email_to">${object.user_id.email}</field>
+            <field name="email_to">${user.company_id.engineering_email_id}</field>
             <field name="email_from">${object.user_id.email or object.company_id.email or 'noreply@localhost'}</field>
             <field name="subject">New Customer ${object.crm_id.partner_id.name or ''} ${object.crm_id.partner_id.last_name or ''}</field>
             <field name="model_id" ref="model_crm_meeting"/>
@@ -89,7 +89,40 @@
                 &nbsp;&nbsp;<strong>Name :</strong> ${object.crm_id.partner_id.name}<br/>
                 &nbsp;&nbsp;<strong>Address :</strong>  ${object.crm_id.partner_id.street or ''}, ${object.crm_id.partner_id.street2 or ''}, ${object.crm_id.partner_id.street2 or ''}, ${object.crm_id.partner_id.city_id and object.crm_id.partner_id.city_id.name or ''}, ${object.crm_id.partner_id.city_id and object.crm_id.partner_id.city_id.state_id and object.crm_id.partner_id.city_id.state_id.name or ''}, ${object.crm_id.partner_id.city_id and object.crm_id.partner_id.city_id.state_id and object.crm_id.partner_id.city_id.country_id.name or ''} ${object.crm_id.partner_id.city_id and object.crm_id.partner_id.city_id.zip or ''}<br/>
                 &nbsp;&nbsp;<strong>Email : </strong> ${object.crm_id.email_from}<br/>
-                &nbsp;&nbsp;<strong>Phone : </strong> ${object.crm_id.phone}<br/>
+                &nbsp;&nbsp;<strong>Phone : </strong> ${object.crm_id.phone}<br/><br/>
+                
+                &nbsp;&nbsp;<strong>Meeting Information</strong><br/>
+                &nbsp;&nbsp;<strong>Schedule Date :</strong> ${object.schedule_appointment}<br/>
+                &nbsp;&nbsp;<strong>Actual Appointment Date :</strong> ${object.date}<br/>
+                &nbsp;&nbsp;<strong>Duration :</strong> ${object.duration}<br/>
+                %if object.appointment_outcome_addition != False:
+	                &nbsp;&nbsp;<strong>Appointment Outcome : </strong>
+	                %if object.appointment_outcome_addition == 'sold':
+	                    SOLD <br/>
+	                %elif object.appointment_outcome_addition == '2_leg':
+	                    2 leg- All qualified parties<br/>
+	                %elif object.appointment_outcome_addition == '1_leg':
+	                    1 leg- Missing a qualified party<br/>
+	                %elif object.appointment_outcome_addition == 'nq':
+	                    NQ- Not Qualified<br/>
+	                %elif object.appointment_outcome_addition == 'rs':
+	                    RS- Reset<br/>
+	                %elif object.appointment_outcome_addition == 'ns':
+	                    NS- No Show<br/>
+	                %elif object.appointment_outcome_addition == 'cxl':
+	                    CXL- appt canceled<br/>
+	                %elif object.appointment_outcome_addition == 'dq':
+	                    DQ Sale-SOLD but credit declined<br/>
+	                %elif object.appointment_outcome_addition == 'xcl_sale':
+	                    XCL SALE- sold but canceled<br/>
+	                %endif
+	            %endif
+	            %if object.appointment_outcome:
+	               &nbsp;&nbsp;<strong>Appointment Notes :</strong> ${object.appointment_outcome}<br/>
+	            %endif
+	            %if object.reason:
+                   &nbsp;&nbsp;<strong>Reason :</strong> ${object.reason}<br/>
+                %endif
                 &nbsp;&nbsp;<strong>Thank You.</strong><br/>
     </p>  
 </div>

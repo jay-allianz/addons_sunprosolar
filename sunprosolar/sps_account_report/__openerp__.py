@@ -31,6 +31,7 @@
     'data': ['account_invoice_report_view.xml',
              'partner_view.xml',
              'partner_ledger_report_view.xml',
+             'sunpro_account_view.xml',
              'wizard/account_common_report_view.xml'],
     'installable': True,
     'auto_install': False,

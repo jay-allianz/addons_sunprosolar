@@ -34,7 +34,7 @@
                                                                         ${company.partner_id.email or ''|entity}</br>
                                                                     %endif
                                                             </td>
-                <td style="text-align:center;color:#003366;font-weight:900; font-size:35px; font-family:UnGungseo;" width="45%">
+                <td style="text-align:center;color:#003366;font-weight:bold; font-size:14px; font-family:UnGungseo;" width="45%">
                         <b>${'Invoice'}</b>
                     <table class="basic_table" style="color:#003366;background-color:#1791d9; " align="right" width="100%">
                                 <tr>
@@ -144,7 +144,7 @@
                 </tr>
             </table>
             <br/><br/><br/><br/><br/><br/>
-            <table class="basic_table" style=" border:1px solid #003366; margin-left:0;color:#003366;background-color:#1791d9;" width="100%" height=80px>
+            <table class="basic_table" style=" border:1px solid #003366; font-size:14px; margin-left:0;color:#003366;background-color:#1791d9;" width="100%" height=80px>
                 <tr>
                     <td width="60%" style="border-style:none;text-align:left;padding-left:30px; ">
                         %if o.type == 'out_invoice':

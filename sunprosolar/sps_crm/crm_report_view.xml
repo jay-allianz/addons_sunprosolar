@@ -3,7 +3,11 @@
     <data>
 
         <report auto="False" id="report_sale_contract" model="sale.order" name="crm.contract"
-                rml="sps_crm/report/sps_contract_report.rml" string="Contract / SPS"
+                rml="sps_crm/report/sps_contract_report.rml" string="Contract / SPS - AM"
+                usage="default"/>
+                
+        <report auto="False" id="report_sale_contract_pm" model="sale.order" name="crm.contract.pm"
+                rml="sps_crm/report/sps_contract_report_pm.rml" string="Contract / SPS - PM"
                 usage="default"/>
         
         <report auto="False" id="report_proposal" model="sale.order" name="proposal.report"

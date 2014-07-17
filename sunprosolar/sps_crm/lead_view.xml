@@ -481,6 +481,30 @@
         </record>
        -->
        
+       <!-- Opportunities Tree View -->
+        <record id="view_sun_crm_opp_tree" model="ir.ui.view">
+            <field name="name">crm.opp.tree</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor" />
+            <field name="arch" type="xml">
+                <field name="planned_revenue" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+           </field>
+        </record>
+        
+        <!-- CRM Lead Graph View -->
+        <record model="ir.ui.view" id="crm.crm_case_graph_view_leads">
+            <field name="name">Opportunities</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <graph string="Opportunities" type="bar">
+                    <field name="stage_id"/>
+                    <field name="cost" operator="+"/>
+                </graph>
+            </field>
+        </record>
+       
 		<!-- Opportunities Form View -->
 		<record id="view_sun_crm_opp_form" model="ir.ui.view">
 			<field name="name">crm.opp.form</field>
