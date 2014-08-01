@@ -385,7 +385,7 @@ class res_user(osv.Model):
             if data.ref:
                 sale_data = data.ref
                 for event in sale_data.event_ids:
-                    event_dict = {'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.status}
+                    event_dict = {'id': event.id,'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.status}
                     event_list.append(event_dict)
                 return event_list
         else:
@@ -413,6 +413,20 @@ class res_user(osv.Model):
                     return False
         else:
             return False
+    
+    def deleteevent(self, cr, uid, user_id, event_id, context=None):
+        if not context:
+            context = {}
+        calender_obj = self.pool.get('calendar.event')
+        if event_id:
+            calender_obj.unlink(cr, uid, event_id, context=context)
+        
+    def editevent(self, cr, uid, user_id, event_id, event_name, start_date, end_date, status, event_time, context=None):
+        if not context:
+            context = {}
+        calender_obj = self.pool.get('calendar.event')
+        if event_id:
+            calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : start_date, 'date_deadline': end_date, 'status': status, 'event_time': event_time}, context=context)
         
 
     def get_care_maintenance(self, cr, uid, user_id, context=None):
