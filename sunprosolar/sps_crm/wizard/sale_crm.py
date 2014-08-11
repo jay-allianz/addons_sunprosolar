@@ -27,7 +27,10 @@ class crm_make_sale(osv.osv_memory):
     _inherit = 'crm.make.sale'
     
     def makeOrder(self, cr, uid, ids, context=None):
-        
+        module_price = 0.0
+        inv_price = 0.0
+        real_total = 0.0
+        price_diff = 0.0
         if context is None:
             context = {}
         
@@ -82,9 +85,36 @@ class crm_make_sale(osv.osv_memory):
                 'order_id' : order_id
             }
             
+            module_price += ((((solar_line.stc_dc_rating * 1000 * solar_line.module_product_id.cost_per_stc_watt)+(solar_line.stc_dc_rating * 1000 * solar_line.module_product_id.labor_per_stc_watt)+(solar_line.stc_dc_rating * 1000 * solar_line.module_product_id.materials_per_stc)) * (1 + (solar_line.module_product_id.markup / 100)))/solar_line.num_of_module) * solar_line.num_of_module
+            inv_price += (((solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.cost_per_ac_capacity_watt)+(solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.labor_per_ac_watt)+(solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.materials_per_ac_watt))/solar_line.num_of_invertor) * solar_line.num_of_invertor
             sale_order_line_obj.create(cr, uid, module_line, context=context)
             sale_order_line_obj.create(cr, uid, inv_line, context=context)
         lead_obj.write(cr, uid, [lead.id], {'ref': 'sale.order,%s' % order_id})
+        real_total = module_price + inv_price
+        if lead.cost < real_total:
+            price_diff = real_total - lead.cost
+            
+            new_line_vals = {
+                'name' : 'Adjustment',
+                'product_uom_qty' : 1,
+                'price_unit' : -price_diff,
+                #((solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.cost_per_ac_capacity_watt ) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.labor_per_ac_watt) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.materials_per_stc)),
+                'type' : 'make_to_order',
+                'order_id' : order_id
+            }
+            sale_order_line_obj.create(cr, uid, new_line_vals, context=context)
+        if lead.cost > real_total:
+            price_diff = lead.cost - real_total
+            
+            new_line_vals = {
+                'name' : 'Adjustment',
+                'product_uom_qty' : 1,
+                'price_unit' : price_diff,
+                #((solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.cost_per_ac_capacity_watt ) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.labor_per_ac_watt) + (solar_line.inverter_product_id.power_rating * solar_line.inverter_product_id.materials_per_stc)),
+                'type' : 'make_to_order',
+                'order_id' : order_id
+            }
+            sale_order_line_obj.create(cr, uid, new_line_vals, context=context)
         return {
             'domain': str([('id', 'in', [order_id])]),
             'view_type': 'form',

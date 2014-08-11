@@ -385,7 +385,7 @@ class res_user(osv.Model):
             if data.ref:
                 sale_data = data.ref
                 for event in sale_data.event_ids:
-                    event_dict = {'id': event.id,'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.status}
+                    event_dict = {'id': event.id,'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.state, 'event_time': event.event_time}
                     event_list.append(event_dict)
                 return event_list
         else:
@@ -405,7 +405,7 @@ class res_user(osv.Model):
         if crm_ids:
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
             if data.ref:
-                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
+                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'state': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
                 new_calender_id = calender_obj.create(cr, uid, vals, context=context)
                 if new_calender_id:
                     return new_calender_id
@@ -420,19 +420,20 @@ class res_user(osv.Model):
         calender_obj = self.pool.get('calendar.event')
         if event_id:
             calender_obj.unlink(cr, uid, event_id, context=context)
-        
-    def editevent(self, cr, uid, user_id, event_id, event_name, start_date, end_date, status, event_time, context=None):
+        return True
+
+    def editevent(self, cr, uid, user_id, event_id, event_name, start_date, end_date, state, event_time, context=None):
         if not context:
             context = {}
         calender_obj = self.pool.get('calendar.event')
         if event_id:
-            calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : start_date, 'date_deadline': end_date, 'status': status, 'event_time': event_time}, context=context)
+            calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : start_date, 'date_deadline': end_date, 'event_time': event_time,'state' : state }, context=context)
+        return True
         
 
     def get_care_maintenance(self, cr, uid, user_id, context=None):
         if not context:
             context = {}
-            
         res_users_data = self.browse(cr, uid, user_id, context=context)
         return {'file_name': res_users_data.company_id.care_maintance_fname,'care_maintance': res_users_data.company_id.care_maintance or False} 
     
