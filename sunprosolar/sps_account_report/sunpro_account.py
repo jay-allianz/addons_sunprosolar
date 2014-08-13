@@ -384,7 +384,9 @@ class account_voucher(osv.osv):
     _columns = {
         'narration':fields.text('Notes', readonly=True, required=True, states={'draft':[('readonly',False)]}),
     }
-    
+    _defaults = {
+         'narration':'/'
+         }
     
     def action_move_line_create(self, cr, uid, ids, context=None):
         

@@ -33,6 +33,10 @@ class invoices_report(osv.osv_memory):
         'msg': fields.char('Note : ', size=64),
         }
     
+    _defaults = {
+            'msg' : '/'
+        }
+    
     def check_report(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
