@@ -385,8 +385,9 @@ class res_user(osv.Model):
             if data.ref:
                 sale_data = data.ref
                 for event in sale_data.event_ids:
-                    event_dict = {'id': event.id,'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.state, 'event_time': event.event_time}
+                    event_dict = {'id': event.id,'name': event.name, 'start_date': event.date, 'end_date':event.date_deadline, 'status': event.status, 'event_time': event.event_time}
                     event_list.append(event_dict)
+		#print event_list
                 return event_list
         else:
             return event_list
@@ -400,12 +401,14 @@ class res_user(osv.Model):
         
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
-        
+        #print partner_id, res_users_data.partner_id.name
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
-            if data.ref:
-                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'state': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
+            #print data.name, data.id
+	    if data.ref:
+		#print data.ref.name
+                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
                 new_calender_id = calender_obj.create(cr, uid, vals, context=context)
                 if new_calender_id:
                     return new_calender_id
@@ -427,7 +430,7 @@ class res_user(osv.Model):
             context = {}
         calender_obj = self.pool.get('calendar.event')
         if event_id:
-            calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : start_date, 'date_deadline': end_date, 'event_time': event_time,'state' : state }, context=context)
+            calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : start_date, 'date_deadline': end_date, 'event_time': event_time,'status' : state }, context=context)
         return True
         
 
