@@ -45,7 +45,10 @@ _SO_STATE = [('draft', 'Proposal'),
                 ('permit_pack','Permit Pack'),
                 ('progress', 'Sales Order'),
                 ('manual', 'Sale to Invoice'),
-                ('cancel', 'Cancelled')]
+                ('cancel', 'Cancelled'),
+                ('done', 'Done'),
+                ('waiting_date', 'Waiting Schedule'),
+                ('invoice_except', 'Invoice Exception'),]
 
 class calendar_event(osv.Model):
     

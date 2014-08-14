@@ -111,5 +111,26 @@
             <field eval="18" name="sequence"/>
         </record>
 
+		<record id="sps_sale.sps_state_so_done" model="sps.state.so">
+            <field name="code">done</field>
+            <field name="state">done</field>
+            <field name="name">Done</field>
+            <field eval="19" name="sequence"/>
+        </record>
+
+		<record id="sps_sale.sps_state_so_waiting_date" model="sps.state.so">
+            <field name="code">waiting_date</field>
+            <field name="state">waiting_date</field>
+            <field name="name">Waiting Schedule</field>
+            <field eval="20" name="sequence"/>
+        </record>
+
+		<record id="sps_sale.sps_state_so_invoice_except" model="sps.state.so">
+            <field name="code">invoice_exceptl</field>
+            <field name="state">invoice_except</field>
+            <field name="name">Invoice Exception</field>
+            <field eval="21" name="sequence"/>
+        </record>
+
 	</data>
 </openerp>
