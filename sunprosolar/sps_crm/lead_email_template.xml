@@ -78,7 +78,7 @@
             <field name="model_id" ref="model_crm_meeting"/>
             <field name="auto_delete" eval="True"/>
             <field name="report_name"> </field>
-            <field name="lang">${object.partner_id.lang}</field>
+            <field name="lang">${object.crm_id.partner_id.lang}</field>
             <field name="body_html"><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
     <p>Hello,</p>
@@ -92,8 +92,8 @@
                 &nbsp;&nbsp;<strong>Phone : </strong> ${object.crm_id.phone}<br/><br/>
                 
                 &nbsp;&nbsp;<strong>Meeting Information</strong><br/>
-                &nbsp;&nbsp;<strong>Schedule Date :</strong> ${object.schedule_appointment}<br/>
-                &nbsp;&nbsp;<strong>Actual Appointment Date :</strong> ${object.date}<br/>
+                &nbsp;&nbsp;<strong>Schedule Date :</strong> ${object.schedule_appointment_temp or ''}<br/>
+                &nbsp;&nbsp;<strong>Actual Appointment Date :</strong> ${object.date_temp or ''}<br/>
                 &nbsp;&nbsp;<strong>Duration :</strong> ${object.duration}<br/>
                 %if object.appointment_outcome_addition != False:
 	                &nbsp;&nbsp;<strong>Appointment Outcome : </strong>

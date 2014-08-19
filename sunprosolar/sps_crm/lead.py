@@ -26,6 +26,8 @@ import math
 import time
 import tools
 from openerp import SUPERUSER_ID
+import pytz
+from dateutil import tz
 
 class insentive_type(osv.Model):
     _name = 'incentive.type'
@@ -1775,7 +1777,7 @@ class solar_solar(osv.Model):
                         res[data.id]['tree_equi'] = tree_equi
                         tree_planting_equi = output / years_40_offset_tree
                         res[data.id]['tree_planting_equi'] = tree_planting_equi
-                        ave_home_powered = output / 8900
+                        ave_home_powered = output / annual_home_ele
                         res[data.id]['ave_home_powered'] = ave_home_powered
                         ave_light_bulb_powered = output / avg_light_bulb
                         res[data.id]['ave_light_bulb_powered'] = ave_light_bulb_powered
@@ -2246,10 +2248,44 @@ class crm_meeting(osv.Model):
     """ Model for CRM meetings """
     _inherit = 'crm.meeting'
     
+    def _get_schedule_date(self, cr, uid, ids, field_name, arg, context=None):
+        reads = self.browse(cr, uid, ids, context)   
+        result = {}
+        schedule_date =''
+        res = ''
+        for obj in reads: 
+            utc = datetime.datetime.strptime(obj.schedule_appointment, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+            if 'tz' in context:
+                to_zone = tz.gettz(context['tz'])
+                schedule_date = utc.astimezone(to_zone)
+                list_temp = datetime.datetime.strftime(schedule_date, '%Y-%m-%d %H:%M:%S')
+                res = datetime.datetime.strptime(list_temp, '%Y-%m-%d %H:%M:%S')
+                res = datetime.datetime.strftime(res, '%m/%d/%Y %H:%M:%S')
+            result[obj.id] = "%s" % res
+        return result
+    
+    def _get_date(self, cr, uid, ids, field_name, arg, context=None):
+        reads = self.browse(cr, uid, ids, context)   
+        result1 = {}
+        date_temp =''
+        res1 = ''
+        for obj in reads: 
+            utc = datetime.datetime.strptime(obj.date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+            if 'tz' in context:
+                to_zone1 = tz.gettz(context['tz'])
+                date_temp = utc.astimezone(to_zone1)
+                list_temp1 = datetime.datetime.strftime(date_temp, '%Y-%m-%d %H:%M:%S')
+                res1 = datetime.datetime.strptime(list_temp1, '%Y-%m-%d %H:%M:%S')
+                res1 = datetime.datetime.strftime(res1, '%m/%d/%Y %H:%M:%S')
+            result1[obj.id] = "%s" % res1
+        return result1
+        
     _columns = {
             'meeting_type': fields.selection([('appointment', 'Appointment'), ('assistance', 'Assistance'), ('general_meeting', 'General Meeting')], 'Meeting Type'),
             'schedule_appointment': fields.datetime('Schedule Date'),
+            'schedule_appointment_temp' : fields.function(_get_schedule_date, type="char",  store=True, method=True, string="Schedule appointment"),
             'appointment_outcome': fields.text('Appointment Notes'),
+            'date_temp' : fields.function(_get_date, type="char", method=True, store=True, string="Date"),
             'appointment_outcome_addition': fields.selection([('sold', 'SOLD'), ('2_leg', '2 leg- All qualified parties'), ('1_leg', '1 leg- Missing a qualified party'), ('nq', 'NQ- Not Qualified'), ('rs', 'RS- Reset'),\
                                                ('ns', 'NS- No Show'), ('cxl', 'CXL- appt canceled'),('dq', 'DQ Sale-SOLD but credit declined'), ('xcl_sale', 'XCL SALE- sold but canceled')], ' Appointment Outcome'),
             'crm_id':fields.many2one('crm.lead', 'CRM'),
@@ -2268,6 +2304,7 @@ class crm_meeting(osv.Model):
         return res    
     
     def create(self, cr, uid, vals, context=None):
+        crm_data = None
         res = super(crm_meeting, self).create(cr, uid, vals, context=context)
         partner_obj = self.pool.get('res.partner')
         cash_bonus_obj = self.pool.get('cash.bonus')
@@ -2307,10 +2344,6 @@ class crm_meeting(osv.Model):
         crm_obj = self.pool.get('crm.lead')
         crm_case_stage_obj = self.pool.get('crm.case.stage')
         email_template_obj = self.pool.get('email.template')
-        cur_rec= self.browse(cr, uid, ids, context)[0]
-        crm_meeting_data = self.browse(cr, uid, ids[0], context=context)
-        if crm_meeting_data.crm_id:
-            crm_id = crm_obj.search(cr, uid, [('id','=',crm_meeting_data.crm_id.id)])
         for data in self.browse(cr, uid, ids, context):
             if not data.user_id:
                 raise osv.except_osv(_('Warning'), _('There is no Responsible Person define for meeting  !'))
@@ -2318,11 +2351,14 @@ class crm_meeting(osv.Model):
                 if not data.user_id.email:
                     raise osv.except_osv(_('Warning'), _('%s Responsible user have no email defined !' % data.user_id.name))
             template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'meeting_mail', context=context)
-            template_values = email_template_obj.generate_email(cr, uid, template_id, cur_rec.id, context=context)
+            template_values = email_template_obj.generate_email(cr, uid, template_id, data.id, context=context)
             msg_id = mail_mail.create(cr, uid, template_values, context=context)
             mail_mail.send(cr, uid, [msg_id], context=context)
             stage_id = crm_case_stage_obj.search(cr, uid, [('name', '=', 'Sales Assignment')])
-            crm_obj.write(cr, uid, crm_id, {'stage_id': stage_id[0]}, context=context)
+            if data.crm_id:
+                crm_id = crm_obj.search(cr, uid, [('id','=',data.crm_id.id)])
+                if crm_id:
+                    crm_obj.write(cr, uid, crm_id, {'stage_id': stage_id[0]}, context=context)
             return True
         
 class project_photos(osv.Model):

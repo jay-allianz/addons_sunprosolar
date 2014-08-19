@@ -24,6 +24,9 @@ from osv import fields, osv
 from tools.translate import _
 import tools
 import base64
+import pytz
+from dateutil import tz
+import datetime
 
 class res_user(osv.Model):
     
@@ -397,15 +400,40 @@ class res_user(osv.Model):
         sale_order_obj = self.pool.get('sale.order')
         calender_obj = self.pool.get('calendar.event')
         crm_obj = self.pool.get('crm.lead')
-        
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
-        
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
+            utc = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+            utc1 = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+            if res_users_data.tz:
+                to_zone = tz.gettz(res_users_data.tz)
+                s_date = utc.astimezone(to_zone)
+                e_date = utc1.astimezone(to_zone)
+                if str(s_date).find('+') != -1:
+                    s_date_temp = str(s_date).rsplit('+')
+                    h_m = str(s_date_temp[1]).rsplit(':')
+                    final_start_date = datetime.datetime.strptime(s_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m[0])*2)-datetime.timedelta(minutes=int(h_m[1])*2)
+                    
+                    e_date_temp = str(e_date).rsplit('+')
+                    h_m1 = str(e_date_temp[1]).rsplit(':')
+                    final_end_date = datetime.datetime.strptime(e_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m1[0])*2)-datetime.timedelta(minutes=int(h_m1[1])*2)
+                else:
+                    date_s = datetime.datetime.strftime(s_date, '%Y-%m-%d %H:%M:%S')
+                    s_date_temp = str(s_date).rsplit('-')
+                    temp_tz = s_date_temp[3]
+                    h_m = str(temp_tz).rsplit(':')
+                    final_start_date = datetime.datetime.strptime(date_s, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m[0]))+datetime.timedelta(minutes=int(h_m[1]))
+                    
+                    date_e = datetime.datetime.strftime(e_date, '%Y-%m-%d %H:%M:%S')
+                    e_date_temp = str(e_date).rsplit('-')
+                    temp_tz_e_date = e_date_temp[3]
+                    h_m1 = str(temp_tz_e_date).rsplit(':')
+                    final_end_date = datetime.datetime.strptime(date_e, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m1[0]))+datetime.timedelta(minutes=int(h_m1[1]))
+            
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
             if data.ref:
-                vals = {'name': event_name, 'date': start_date,'date_deadline': end_date, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
+                vals = {'name': event_name, 'date': final_start_date,'date_deadline': final_end_date, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
                 new_calender_id = calender_obj.create(cr, uid, vals, context=context)
                 if new_calender_id:
                     return new_calender_id
@@ -426,8 +454,35 @@ class res_user(osv.Model):
         if not context:
             context = {}
         calender_obj = self.pool.get('calendar.event')
+        res_users_data = self.browse(cr, uid, user_id, context=context)
         if event_id:
-            calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : start_date, 'date_deadline': end_date, 'event_time': event_time,'status' : state }, context=context)
+            utc = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+            utc1 = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+            if res_users_data.tz:
+                to_zone = tz.gettz(res_users_data.tz)
+                s_date = utc.astimezone(to_zone)
+                e_date = utc1.astimezone(to_zone)
+                if str(s_date).find('+') != -1:
+                    s_date_temp = str(s_date).rsplit('+')
+                    h_m = str(s_date_temp[1]).rsplit(':')
+                    final_start_date = datetime.datetime.strptime(s_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m[0])*2)-datetime.timedelta(minutes=int(h_m[1])*2)
+                    
+                    e_date_temp = str(e_date).rsplit('+')
+                    h_m1 = str(e_date_temp[1]).rsplit(':')
+                    final_end_date = datetime.datetime.strptime(e_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m1[0])*2)-datetime.timedelta(minutes=int(h_m1[1])*2)
+                else:
+                    date_s = datetime.datetime.strftime(s_date, '%Y-%m-%d %H:%M:%S')
+                    s_date_temp = str(s_date).rsplit('-')
+                    temp_tz = s_date_temp[3]
+                    h_m = str(temp_tz).rsplit(':')
+                    final_start_date = datetime.datetime.strptime(date_s, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m[0]))+datetime.timedelta(minutes=int(h_m[1]))
+                    
+                    date_e = datetime.datetime.strftime(e_date, '%Y-%m-%d %H:%M:%S')
+                    e_date_temp = str(e_date).rsplit('-')
+                    temp_tz_e_date = e_date_temp[3]
+                    h_m1 = str(temp_tz_e_date).rsplit(':')
+                    final_end_date = datetime.datetime.strptime(date_e, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m1[0]))+datetime.timedelta(minutes=int(h_m1[1]))
+            calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : final_start_date, 'date_deadline': final_end_date, 'event_time': event_time,'status' : state }, context=context)
         return True
         
 

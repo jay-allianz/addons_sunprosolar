@@ -1664,6 +1664,8 @@
 				</field>
 				<xpath expr="//field[@name='date']" position="before">
 					<field name="schedule_appointment" />
+					<field name="schedule_appointment_temp" invisible="1"/>
+					<field name="date_temp" invisible="1"/>
 				</xpath>
 				<xpath expr="//field[@name='date']" position="attributes">
 					<attribute name="string">Actual Appointment Date</attribute>
