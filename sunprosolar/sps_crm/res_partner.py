@@ -432,12 +432,22 @@ class res_user(osv.Model):
             if data.ref:
                 sale_data = data.ref
                 for event in sale_data.event_ids:
-                    if res_users_data.tz:
-                        to_zone = res_users_data.tz
-                    else:
-                        to_zone = 'UTC'
-                    final_start_date = _offset_format_timestamp1(event.date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
-                    final_end_date = _offset_format_timestamp1(event.date_deadline, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+                        
+                    utc_start = datetime.datetime.strptime(event.date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+                    utc_end = datetime.datetime.strptime(event.date_deadline, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+                    
+                    to_zone1 = tz.gettz(res_users_data.tz)
+                    final_start_date = utc_start.astimezone(to_zone1)
+                    final_end_date = utc_end.astimezone(to_zone1)
+                    
+                    list_start1 = datetime.datetime.strftime(final_start_date, '%Y-%m-%d %H:%M:%S')
+                    list_end1 = datetime.datetime.strftime(final_end_date, '%Y-%m-%d %H:%M:%S')
+                    
+                    res1 = datetime.datetime.strptime(list_start1, '%Y-%m-%d %H:%M:%S')
+                    res2 = datetime.datetime.strptime(list_end1, '%Y-%m-%d %H:%M:%S')
+                    
+                    final_start_date = datetime.datetime.strftime(res1, '%m/%d/%Y %H:%M:%S')                        
+                    final_end_date = datetime.datetime.strftime(res2, '%m/%d/%Y %H:%M:%S')
                     
                     event_dict = {'id': event.id,'name': event.name, 'start_date': final_start_date, 'end_date':final_end_date, 'status': event.status, 'event_time': event.event_time}
                     event_list.append(event_dict)
