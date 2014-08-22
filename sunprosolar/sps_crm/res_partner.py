@@ -28,6 +28,50 @@ import pytz
 from dateutil import tz
 import datetime
 
+from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+
+
+def _offset_format_timestamp1(src_tstamp_str, src_format, dst_format, ignore_unparsable_time=True, context=None):
+    """
+    Convert a source timestamp string into a destination timestamp string, attempting to apply the
+    correct offset if both the server and local timezone are recognized, or no
+    offset at all if they aren't or if tz_offset is false (i.e. assuming they are both in the same TZ).
+
+    @param src_tstamp_str: the str value containing the timestamp.
+    @param src_format: the format to use when parsing the local timestamp.
+    @param dst_format: the format to use when formatting the resulting timestamp.
+    @param server_to_client: specify timezone offset direction (server=src and client=dest if True, or client=src and server=dest if False)
+    @param ignore_unparsable_time: if True, return False if src_tstamp_str cannot be parsed
+                                   using src_format or formatted using dst_format.
+
+    @return: destination formatted timestamp, expressed in the destination timezone if possible
+            and if tz_offset is true, or src_tstamp_str if timezone offset could not be determined.
+    """
+    if not src_tstamp_str:
+        return False
+
+    res = src_tstamp_str
+    if src_format and dst_format:
+        try:
+            # dt_value needs to be a datetime.datetime object (so no time.struct_time or mx.DateTime.DateTime here!)
+            dt_value = datetime.datetime.strptime(src_tstamp_str,src_format)
+            if context.get('tz',False):
+                try:
+                    import pytz
+                    src_tz = pytz.timezone(context['tz'])
+                    dst_tz = pytz.timezone('UTC')
+                    src_dt = src_tz.localize(dt_value, is_dst=True)
+                    dt_value = src_dt.astimezone(dst_tz)
+                except Exception,e:
+                    pass
+            res = dt_value.strftime(dst_format)
+        except Exception,e:
+            # Normal ways to end up here are if strptime or strftime failed
+            if not ignore_unparsable_time:
+                return False
+            pass
+    return res
+
 class res_user(osv.Model):
     
     _inherit = "res.users"
@@ -404,32 +448,36 @@ class res_user(osv.Model):
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
-            utc = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
-            utc1 = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
             if res_users_data.tz:
                 to_zone = tz.gettz(res_users_data.tz)
-                s_date = utc.astimezone(to_zone)
-                e_date = utc1.astimezone(to_zone)
-                if str(s_date).find('+') != -1:
-                    s_date_temp = str(s_date).rsplit('+')
-                    h_m = str(s_date_temp[1]).rsplit(':')
-                    final_start_date = datetime.datetime.strptime(s_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m[0])*2)-datetime.timedelta(minutes=int(h_m[1])*2)
-                    
-                    e_date_temp = str(e_date).rsplit('+')
-                    h_m1 = str(e_date_temp[1]).rsplit(':')
-                    final_end_date = datetime.datetime.strptime(e_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m1[0])*2)-datetime.timedelta(minutes=int(h_m1[1])*2)
-                else:
-                    date_s = datetime.datetime.strftime(s_date, '%Y-%m-%d %H:%M:%S')
-                    s_date_temp = str(s_date).rsplit('-')
-                    temp_tz = s_date_temp[3]
-                    h_m = str(temp_tz).rsplit(':')
-                    final_start_date = datetime.datetime.strptime(date_s, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m[0]))+datetime.timedelta(minutes=int(h_m[1]))
-                    
-                    date_e = datetime.datetime.strftime(e_date, '%Y-%m-%d %H:%M:%S')
-                    e_date_temp = str(e_date).rsplit('-')
-                    temp_tz_e_date = e_date_temp[3]
-                    h_m1 = str(temp_tz_e_date).rsplit(':')
-                    final_end_date = datetime.datetime.strptime(date_e, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m1[0]))+datetime.timedelta(minutes=int(h_m1[1]))
+            else:
+                to_zone = tz.gettz('UTC')
+            print "to_zone>>>>",to_zone
+            final_start_date = _offset_format_timestamp1(start_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone}):
+            final_end_date = _offset_format_timestamp1(start_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone}):    
+#            utc = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M').replace(tzinfo=pytz.timezone(to_zone))
+#            utc1 = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M').replace(tzinfo=pytz.timezone(to_zone))
+#            
+#                s_date = utc.astimezone('UTC')
+#                e_date = utc1.astimezone('UTC')
+#                
+#                    final_start_date = datetime.datetime.strptime(s_date_temp[0], '%Y-%m-%d %H:%M')-datetime.timedelta(hours=int(h_m[0])*2)-datetime.timedelta(minutes=int(h_m[1])*2)
+#                    
+#                    e_date_temp = str(e_date).rsplit('+')
+#                    h_m1 = str(e_date_temp[1]).rsplit(':')
+#                    final_end_date = datetime.datetime.strptime(e_date_temp[0], '%Y-%m-%d %H:%M')-datetime.timedelta(hours=int(h_m1[0])*2)-datetime.timedelta(minutes=int(h_m1[1])*2)
+#                else:
+#                    date_s = datetime.datetime.strftime(s_date, '%Y-%m-%d %H:%M')
+#                    s_date_temp = str(s_date).rsplit('-')
+#                    temp_tz = s_date_temp[3]
+#                    h_m = str(temp_tz).rsplit(':')
+#                    final_start_date = datetime.datetime.strptime(date_s, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(h_m[0]))+datetime.timedelta(minutes=int(h_m[1]))
+#                    
+#                    date_e = datetime.datetime.strftime(e_date, '%Y-%m-%d %H:%M')
+#                    e_date_temp = str(e_date).rsplit('-')
+#                    temp_tz_e_date = e_date_temp[3]
+#                    h_m1 = str(temp_tz_e_date).rsplit(':')
+#                    final_end_date = datetime.datetime.strptime(date_e, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(h_m1[0]))+datetime.timedelta(minutes=int(h_m1[1]))
             
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
             if data.ref:
@@ -456,8 +504,8 @@ class res_user(osv.Model):
         calender_obj = self.pool.get('calendar.event')
         res_users_data = self.browse(cr, uid, user_id, context=context)
         if event_id:
-            utc = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
-            utc1 = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
+            utc = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M').replace(tzinfo=pytz.timezone('UTC'))
+            utc1 = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M').replace(tzinfo=pytz.timezone('UTC'))
             if res_users_data.tz:
                 to_zone = tz.gettz(res_users_data.tz)
                 s_date = utc.astimezone(to_zone)
@@ -465,23 +513,23 @@ class res_user(osv.Model):
                 if str(s_date).find('+') != -1:
                     s_date_temp = str(s_date).rsplit('+')
                     h_m = str(s_date_temp[1]).rsplit(':')
-                    final_start_date = datetime.datetime.strptime(s_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m[0])*2)-datetime.timedelta(minutes=int(h_m[1])*2)
+                    final_start_date = datetime.datetime.strptime(s_date_temp[0], '%Y-%m-%d %H:%M')-datetime.timedelta(hours=int(h_m[0])*2)-datetime.timedelta(minutes=int(h_m[1])*2)
                     
                     e_date_temp = str(e_date).rsplit('+')
                     h_m1 = str(e_date_temp[1]).rsplit(':')
-                    final_end_date = datetime.datetime.strptime(e_date_temp[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(hours=int(h_m1[0])*2)-datetime.timedelta(minutes=int(h_m1[1])*2)
+                    final_end_date = datetime.datetime.strptime(e_date_temp[0], '%Y-%m-%d %H:%M')-datetime.timedelta(hours=int(h_m1[0])*2)-datetime.timedelta(minutes=int(h_m1[1])*2)
                 else:
-                    date_s = datetime.datetime.strftime(s_date, '%Y-%m-%d %H:%M:%S')
+                    date_s = datetime.datetime.strftime(s_date, '%Y-%m-%d %H:%M')
                     s_date_temp = str(s_date).rsplit('-')
                     temp_tz = s_date_temp[3]
                     h_m = str(temp_tz).rsplit(':')
-                    final_start_date = datetime.datetime.strptime(date_s, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m[0]))+datetime.timedelta(minutes=int(h_m[1]))
+                    final_start_date = datetime.datetime.strptime(date_s, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(h_m[0]))+datetime.timedelta(minutes=int(h_m[1]))
                     
-                    date_e = datetime.datetime.strftime(e_date, '%Y-%m-%d %H:%M:%S')
+                    date_e = datetime.datetime.strftime(e_date, '%Y-%m-%d %H:%M')
                     e_date_temp = str(e_date).rsplit('-')
                     temp_tz_e_date = e_date_temp[3]
                     h_m1 = str(temp_tz_e_date).rsplit(':')
-                    final_end_date = datetime.datetime.strptime(date_e, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(h_m1[0]))+datetime.timedelta(minutes=int(h_m1[1]))
+                    final_end_date = datetime.datetime.strptime(date_e, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(h_m1[0]))+datetime.timedelta(minutes=int(h_m1[1]))
             calender_obj.write(cr, uid, event_id, {'name' : event_name, 'date' : final_start_date, 'date_deadline': final_end_date, 'event_time': event_time,'status' : state }, context=context)
         return True
         
