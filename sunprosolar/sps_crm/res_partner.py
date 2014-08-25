@@ -366,10 +366,14 @@ class res_user(osv.Model):
         email_template_obj = self.pool.get('email.template')
         partner_obj = self.pool.get('res.partner')
         crm_obj = self.pool.get('crm.lead')
+        city_obj = self.pool.get('city.city')
         res_users_data = self.browse(cr, uid, user_id, context=context)
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         crm_data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)
+        city_name = ''
+        if city_id:
+            city_name = city_obj.name_get(cr, uid, [city_id], context=context)[city_id]
         
 #        if res_users_data.partner_id:
 #            partner_obj.write(cr, uid, partner_id, {'name': name, 'middle_name': middle_name, 'last_name': last_name, 'street': street, 'street2':street2, 'city_id': city_id, 'email':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
@@ -379,9 +383,28 @@ class res_user(osv.Model):
 #            if data.type == 'opportunity':
 #                crm_obj.write(cr, uid, crm_ids, { 'contact_name': name,'street': street, 'street2':street2, 'city_id': city_id, 'email_from':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
                 
+        mail_body = """<![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Hello,</p>
+    <p>The New Information of Customer <strong>"""+name +""" </strong> is successfully uploaded.</p>
+    
+    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+       &nbsp;&nbsp;<strong>Customer Information</strong><br/>
+       &nbsp;&nbsp;First Name : <strong>"""+ name +"""</strong><br />
+       &nbsp;&nbsp;Middle Name : <strong>"""+ middle_name +"""</strong><br />
+       &nbsp;&nbsp;Last Name: <strong>"""+ last_name +"""</strong><br />
+       &nbsp;&nbsp;Address: <strong> """+ street +','+ street2 +','+city_name +"""</strong><br />
+       &nbsp;&nbsp;Email: <strong>"""+ email +"""</strong><br />
+       &nbsp;&nbsp;Phone: <strong>"""+ phone +"""</strong><br />
+       &nbsp;&nbsp;Mobile: <strong>"""+ mobile +"""</strong><br />
+       &nbsp;&nbsp;Fax: <strong>"""+ fax +"""</strong><br />
+       &nbsp;&nbsp;<strong>Thank you.</strong><br />
+    </p>  
+</div>"}"""
+        
         template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'customer_information', context=context)
         template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
-        template_values.update({'email_to': res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com'})
+        template_values.update({'email_to': res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com', 'body_html':mail_body})
         msg_id = mail_mail.create(cr, uid, template_values, context=context)
         mail_mail.send(cr, uid, [msg_id], context=context)
         

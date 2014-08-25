@@ -8,8 +8,8 @@
 			<field name="inherit_id" ref="base_calendar.event_form_view" />
 			<field name="arch" type="xml">
 				<field name="recurrency" position="after">
-					<newline/>
-					<field name="event_time"/>	
+					<!--<newline/>
+					<field name="event_time"/>-->	
 					<newline/>				
 					<field name="status"/>
 				</field>
@@ -22,7 +22,7 @@
             <field name="inherit_id" ref="base_calendar.event_tree_view" />
             <field name="arch" type="xml">
                 <field name="class" string="Privacy" position="after">
-                	<field name="event_time"/>
+                	<!--<field name="event_time"/>-->
 					<field name="status"/>
                 </field>
                 <field name="location" position="replace"/>
