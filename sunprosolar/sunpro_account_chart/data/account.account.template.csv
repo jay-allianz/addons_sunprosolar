@@ -1,0 +1,284 @@
+id,code,name,parent_id/id,type,user_type
+sps_account_account_1,1001,SunPro Solar,,View,Root/View
+sps_account_account_2,1010,Assets,sps_account_account_1,View,Asset
+sps_account_account_3,100,Current Assets,sps_account_account_2,View,Current Assets
+sps_account_account_4,1000,Checking/Savings,sps_account_account_3,View,Cash or Cash Equivalents
+sps_account_account_70,10000,Chase General Checking,sps_account_account_4,Liquidity,Cash or Cash Equivalents
+sps_account_account_71,10100,Chase Payroll Checking,sps_account_account_4,Liquidity,Cash or Cash Equivalents
+sps_account_account_72,10200,Chase DBA checking -9244,sps_account_account_4,Liquidity,Cash or Cash Equivalents
+sps_account_account_73,10300,Chase Savings (MMA),sps_account_account_4,Liquidity,Cash or Cash Equivalents
+sps_account_account_74,10400,US Bank checking -8003,sps_account_account_4,Liquidity,Cash or Cash Equivalents
+sps_account_account_75,10500,Petty Cash,sps_account_account_4,Liquidity,Cash or Cash Equivalents
+sps_account_account_5,1100,Receivable,sps_account_account_3,View,Current Assets
+sps_account_account_6,11000,Account Receivable,sps_account_account_5,View,Accounts Receivable
+sps_account_account_76,11500,CPF - Advances,sps_account_account_6,Receivable,Accounts Receivable
+sps_account_account_77,11100,Accounts Receivable - Other,sps_account_account_6,Receivable,Accounts Receivable
+sps_account_account_78,1200,Other Current Assets,sps_account_account_3,View,Other Current Assets
+sps_account_account_79,12000,Undeposited Funds,sps_account_account_78,Receivable,Other Current Assets
+sps_account_account_80,12100,Inventory Asset,sps_account_account_78,Regular,Other Current Assets
+sps_account_account_95,1300,Employee Advances,sps_account_account_78,View,Other Current Assets
+sps_account_account_81,13000,Employee Advances,sps_account_account_95,Regular,Other Current Assets
+sps_account_account_82,13001,Employee Advances – Other,sps_account_account_95,Regular,Other Current Assets
+sps_account_account_83,14000,Rebates Receivable,sps_account_account_78,Regular,Other Current Assets
+sps_account_account_84,14700,Loan Receivable-Rock Fitness,sps_account_account_78,Regular,Other Current Assets
+sps_account_account_85,14800,Refundable State Corp Income Ta,sps_account_account_78,Regular,Other Current Assets
+sps_account_account_86,14900,Loan Receivable-SPS Mgmt.,sps_account_account_78,Regular,Other Current Assets
+sps_account_account_7,150,Fixed Assets,sps_account_account_2,View,Fixed Assets
+sps_account_account_96,15001,Auto's / Trucks,sps_account_account_7,View,Fixed Assets
+sps_account_account_97,15002,2007 Chevy Silverado,sps_account_account_96,View,Fixed Assets
+sps_account_account_113,15002-1,2007 Chevy Silverado,sps_account_account_97,Regular,Fixed Assets
+sps_account_account_114,15002-5,Accum. Depreciation,sps_account_account_97,Regular,Fixed Assets
+sps_account_account_98,15003,2005 Ford F250,sps_account_account_96,View,Fixed Assets
+sps_account_account_115,15003-1,2005 Ford F250,sps_account_account_98,Regular,Fixed Assets
+sps_account_account_116,15003-5,Accum. Depreciation,sps_account_account_98,Regular,Fixed Assets
+sps_account_account_99,15004,2011 Chevy Silverado 3500,sps_account_account_96,View,Fixed Assets
+sps_account_account_117,15004-1,2011 Chevy Silverado 3500,sps_account_account_99,Regular,Fixed Assets
+sps_account_account_118,15004-5,Accum. Depreciation,sps_account_account_99,Regular,Fixed Assets
+sps_account_account_100,15007,2011 Interstate Trailer,sps_account_account_96,View,Fixed Assets
+sps_account_account_119,15007-1,2011 Interstate Trailer,sps_account_account_100,Regular,Fixed Assets
+sps_account_account_120,15007-5,Accum. Depreciation,sps_account_account_100,Regular,Fixed Assets
+sps_account_account_101,15008,2011 Chevy Silverado 1500,sps_account_account_96,View,Fixed Assets
+sps_account_account_121,15008-1,2011 Chevy Silverado 1500,sps_account_account_101,Regular,Fixed Assets
+sps_account_account_122,15008-5,Accum. Depreciation,sps_account_account_101,Regular,Fixed Assets
+sps_account_account_102,15009,2008 Chevy Van _Electr,sps_account_account_96,view,Fixed Assets
+sps_account_account_123,15009-1,2008 Chevy Van _Electr,sps_account_account_102,Regular,Fixed Assets
+sps_account_account_124,15009-5,Accum. Depreciation,sps_account_account_102,Regular,Fixed Assets
+sps_account_account_103,15010,2008 Chevy Silverado 2500,sps_account_account_96,view,Fixed Assets
+sps_account_account_125,15010-1,2008 Chevy Silverado 2500,sps_account_account_103,Regular,Fixed Assets
+sps_account_account_126,15010-5,Accum. Depreciation,sps_account_account_103,Regular,Fixed Assets
+sps_account_account_104,15011,2007 Chevy Colorado,sps_account_account_96,view,Fixed Assets
+sps_account_account_127,15011-1,2007 Chevy Colorado,sps_account_account_104,Regular,Fixed Assets
+sps_account_account_128,15011-5,Accum. Depreciation,sps_account_account_104,Regular,Fixed Assets
+sps_account_account_105,15012,2004 Ford Van - 15 passngr,sps_account_account_96,view,Fixed Assets
+sps_account_account_129,15012-1,2004 Ford Van - 15 passngr,sps_account_account_105,Regular,Fixed Assets
+sps_account_account_130,15012-5,Accum. Depreciation,sps_account_account_105,Regular,Fixed Assets
+sps_account_account_106,15013,2003 Chevy Silverado 2500,sps_account_account_96,view,Fixed Assets
+sps_account_account_131,15013-1,2003 Chevy Silverado 2500,sps_account_account_106,Regular,Fixed Assets
+sps_account_account_132,15013-5,Accum. Depreciation,sps_account_account_106,Regular,Fixed Assets
+sps_account_account_107,15014,05 GMC Truck,sps_account_account_96,view,Fixed Assets
+sps_account_account_133,15014-1,05 GMC Truck,sps_account_account_107,Regular,Fixed Assets
+sps_account_account_134,15014-5,Accum. Depreciation,sps_account_account_107,Regular,Fixed Assets
+sps_account_account_108,15015,2012 Ford Focus,sps_account_account_96,view,Fixed Assets
+sps_account_account_135,15015-1,2012 Ford Focus,sps_account_account_108,Regular,Fixed Assets
+sps_account_account_136,15015-5,Accum. Depreciation,sps_account_account_108,Regular,Fixed Assets
+sps_account_account_109,15016,2007 Ford F350,sps_account_account_96,view,Fixed Assets
+sps_account_account_137,15016-1,2007 Ford F350,sps_account_account_109,Regular,Fixed Assets
+sps_account_account_138,15016-5,Accum. Depreciation,sps_account_account_109,Regular,Fixed Assets
+sps_account_account_110,15017,2006 Ford F350XL,sps_account_account_96,view,Fixed Assets
+sps_account_account_139,15017-1,2006 Ford F350XL,sps_account_account_110,Regular,Fixed Assets
+sps_account_account_140,15017-5,Accum. Depreciation,sps_account_account_110,Regular,Fixed Assets
+sps_account_account_111,15018,2012 Dodge Ram,sps_account_account_96,view,Fixed Assets
+sps_account_account_141,15018-1,2012 Dodge Ram,sps_account_account_111,Regular,Fixed Assets
+sps_account_account_142,15018-5,Accum. Depreciation,sps_account_account_111,Regular,Fixed Assets
+sps_account_account_112,15019,2013 Ford 31P,sps_account_account_96,view,Fixed Assets
+sps_account_account_143,15019-1,2013 Ford 31P,sps_account_account_112,Regular,Fixed Assets
+sps_account_account_144,15019-5,Accum. Depreciation,sps_account_account_112,Regular,Fixed Assets
+sps_account_account_145,15100,Furniture and Equipment,sps_account_account_7,view,Fixed Assets
+sps_account_account_151,15100-2,Furniture&Equipment-Marketing,sps_account_account_145,Regular,Fixed Assets
+sps_account_account_152,15100-3,Furniture and Equipment – Other,sps_account_account_145,Regular,Fixed Assets
+sps_account_account_146,15200,Computer Equipment,sps_account_account_7,Regular,Fixed Assets
+sps_account_account_147,15300,Construction Equipment,sps_account_account_7,Regular,Fixed Assets
+sps_account_account_148,15400,Office bldg Improvements,sps_account_account_7,view,Fixed Assets
+sps_account_account_153,15400-1,Original Cost,sps_account_account_148,Regular,Fixed Assets
+sps_account_account_154,15400-2,Office bldg Improvements – Other,sps_account_account_148,Regular,Fixed Assets
+sps_account_account_149,15999,Accumulated Depreciation,sps_account_account_7,Regular,Fixed Assets
+sps_account_account_150,16000,Sunpro Owned Solar PV Systems,sps_account_account_7,View,Fixed Assets
+sps_account_account_155,16100,Prepaid Solar PV Leases,sps_account_account_150,Regular,Fixed Assets
+sps_account_account_156,16200,PPA's (10 yr) Agrmnts - mo pmts,sps_account_account_150,Regular,Fixed Assets
+sps_account_account_157,16300,Sunpro Office PV System,sps_account_account_150,Regular,Fixed Assets
+sps_account_account_10,2001,Liabilities and Equity,sps_account_account_1,View,Liability
+sps_account_account_11,2002,Liabilities,sps_account_account_10,View,Liability
+sps_account_account_12,200,Current Liabilities,sps_account_account_11,View,Liability
+sps_account_account_13,2000,Payable,sps_account_account_12,view,Accounts Payable
+sps_account_account_14,20001,Account Payable,sps_account_account_13,Payable,Accounts Payable
+sps_account_account_219,21000,Credit Cards,sps_account_account_12,view,Accounts Payable
+sps_account_account_225,21100,Chase Ink,sps_account_account_219,Regular,Accounts Payable
+sps_account_account_226,21200,Discover - 4908-Sams,sps_account_account_219,Regular,Accounts Payable
+sps_account_account_227,21210,AT&T (CitiCard)-3069,sps_account_account_219,Regular,Accounts Payable
+sps_account_account_228,21230,Amex - Costco,sps_account_account_219,Regular,Accounts Payable
+sps_account_account_229,21240,Lowe's - 2980,sps_account_account_219,Regular,Accounts Payable
+sps_account_account_230,21250,Credit Cards – Other,sps_account_account_219,Regular,Accounts Payable
+sps_account_account_15,240,Other Current Liabilities,sps_account_account_11,View,Liability
+sps_account_account_231,21110,Direct Deposit Liabilities,sps_account_account_15,Payable,Accounts Payable
+sps_account_account_276,23100,Chase Line of Credit - 4002,sps_account_account_15,Payable,Accounts Payable
+sps_account_account_232,24000,Payroll Liabilities,sps_account_account_15,view,Accounts Payable
+sps_account_account_237,24100,Payroll Taxes Payable,sps_account_account_232,Regular,Accounts Payable
+sps_account_account_238,24200,Payroll Garnishments Payable,sps_account_account_232,Regular,Accounts Payable
+sps_account_account_239,24300,Colonial Life & Accident,sps_account_account_232,Regular,Accounts Payable
+sps_account_account_240,24400,Payroll Liabilities – Other,sps_account_account_232,Regular,Accounts Payable
+sps_account_account_233,24600,Customer Deposits Received,sps_account_account_15,Regular,Other Current Liability
+sps_account_account_234,25000,Loans From Shareholders,sps_account_account_15,view,Other Current Liability
+sps_account_account_241,25100,Adam Evans,sps_account_account_234,Regular,Accounts Payable
+sps_account_account_242,25200,Jesse Green,sps_account_account_234,Regular,Accounts Payable
+sps_account_account_235,25001,Accrued Payroll,sps_account_account_15,Regular,current liability
+sps_account_account_224,270,Long Term Liabilities,sps_account_account_11,View,Long Term Liability
+sps_account_account_277,27000,Truck Loans,sps_account_account_224,view,Long Term Liability
+sps_account_account_278,27100,Ally Fncl - '11 Chev 1500,sps_account_account_277,Regular,Long Term Liability
+sps_account_account_279,27200,Ally Fncl - '11 Chev 3500,sps_account_account_277,Regular,Long Term Liability
+sps_account_account_280,27300,Ally Fincl - '08 Chev Van,sps_account_account_277,Regular,Long Term Liability
+sps_account_account_281,27320,Ally Fincl-'12 Ford Focus,sps_account_account_277,Regular,Long Term Liability
+sps_account_account_282,27500,BofA - '12 Dodge Ram 1500,sps_account_account_277,Regular,Long Term Liability
+sps_account_account_19,30,Equity,sps_account_account_10,view,Equity
+sps_account_account_22,30000,Opening Balance Equity,sps_account_account_19,Regular,Equity
+sps_account_account_20,30001,Common Stock,sps_account_account_19,Regular,Equity
+sps_account_account_23,39999,Retained Earnings,sps_account_account_19,Regular,Equity
+sps_account_account_426,34,Net Ordinary Income,sps_account_account_1,view,Income
+sps_account_account_325,35,Gross Profit,sps_account_account_426,view,Income
+sps_account_account_55,40,Income,sps_account_account_325,view,Income
+sps_account_account_283,40100,Solar Photovoltaic Sales Income,sps_account_account_55,view,Income
+sps_account_account_292,40110,Consumption Monitoring,sps_account_account_283,Regular,Income
+sps_account_account_293,40120,Other Installations,sps_account_account_283,Regular,Income
+sps_account_account_294,40130,Solar Photovoltaic Sales Income – Other,sps_account_account_283,Regular,Income
+sps_account_account_284,40200,Solar Thermal Sales Income,sps_account_account_55,Regular,Income
+sps_account_account_285,40300,Pool Service Income,sps_account_account_55,Regular,Income
+sps_account_account_286,40350,Income – Other,sps_account_account_55,Regular,Income
+sps_account_account_287,40400,Misc Repair work,sps_account_account_55,Regular,Income
+sps_account_account_288,40450,Merchandise Sales,sps_account_account_55,Regular,Income
+sps_account_account_289,40500,Discounts Earned,sps_account_account_55,View,Income
+sps_account_account_295,40510,Warranty work / Guaranty reimb.,sps_account_account_289,Regular,Income
+sps_account_account_296,40520,Discounts Earned – Other,sps_account_account_289,Regular,Income
+sps_account_account_290,40600,Rebates & Incentives,sps_account_account_55,Regular,Income
+sps_account_account_291,40700,SPS Leasing Program,sps_account_account_55,Regular,Income
+sps_account_account_69,50,Cost Of Goods Sold,sps_account_account_325,View,Cost of Goods Sold
+sps_account_account_298,50110,Job Materials Purchased,sps_account_account_69,View,Cost of Goods Sold
+sps_account_account_308,50112,Panels,sps_account_account_298,Regular,Cost of Goods Sold
+sps_account_account_309,50113,Inverters,sps_account_account_298,Regular,Cost of Goods Sold
+sps_account_account_310,50114,BoS,sps_account_account_298,Regular,Cost of Goods Sold
+sps_account_account_311,50116,Warehouse Stock / Tools,sps_account_account_298,Regular,Cost of Goods Sold
+sps_account_account_312,50119,SunPower Packaged Systems,sps_account_account_298,Regular,Cost of Goods Sold
+sps_account_account_632,50124,Job Materials Purchased - Other,sps_account_account_298,Regular,Cost of Goods Sold
+sps_account_account_299,50115,Job Related Licenses & Permits,sps_account_account_69,View,Cost of Goods Sold
+sps_account_account_314,50118,Business License Renewal,sps_account_account_299,Regular,Cost of Goods Sold
+sps_account_account_633,50125,Job Related Licenses & Permits - Other,sps_account_account_299,Regular,Cost of Goods Sold
+sps_account_account_300,50117,Engineering,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_301,50120,Other Job Related Costs,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_302,50123,A/P Discounts & Credits,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_303,50130,Subcontractors Expense,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_304,50140,Tools and Small Equipment,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_305,50150,Direct Labor - Employees,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_306,51800,Merchant Account Fees,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_307,52000,Pool Service Costs,sps_account_account_69,Regular,Cost of Goods Sold
+sps_account_account_24,60,Expenses,sps_account_account_426,View,Expense
+sps_account_account_428,50111,Suspense,sps_account_account_24,Regular,Expense
+sps_account_account_429,50121,Use tax expense,sps_account_account_24,Regular,Expense
+sps_account_account_408,54000,Service Department,sps_account_account_24,View,Expense
+sps_account_account_430,54100,Svc dept - Labor,sps_account_account_408,Regular,Expense
+sps_account_account_431,54200,Svc Dept - Supplies,sps_account_account_408,Regular,Expense
+sps_account_account_432,54300,Service Department – Other,sps_account_account_408,Regular,Expense
+sps_account_account_409,60000,Advertising & Marketing,sps_account_account_24,View,Expense
+sps_account_account_433,60050,Marketing Contractor,sps_account_account_409,Regular,Expense
+sps_account_account_434,60100,Sales Commissions,sps_account_account_409,Regular,Expense
+sps_account_account_435,60110,Consultating Fees,sps_account_account_409,Regular,Expense
+sps_account_account_436,60200,Canvassers Fees,sps_account_account_409,Regular,Expense
+sps_account_account_437,60300,Canvassers Commissions,sps_account_account_409,Regular,Expense
+sps_account_account_438,60310,Expenses/Canvassers,sps_account_account_409,Regular,Expense
+sps_account_account_439,60400,Print Advertising,sps_account_account_409,Regular,Expense
+sps_account_account_440,60410,Photography/Marketing,sps_account_account_409,Regular,Expense
+sps_account_account_441,60500,Internet Advertising,sps_account_account_409,Regular,Expense
+sps_account_account_442,60600,Show Booth/Home Show's,sps_account_account_409,Regular,Expense
+sps_account_account_443,60700,Referral Fees Paid,sps_account_account_409,Regular,Expense
+sps_account_account_444,60800,Marketing gas allowance,sps_account_account_409,Regular,Expense
+sps_account_account_445,60801,Mileage Reimb-Mktg-Sales,sps_account_account_409,Regular,Expense
+sps_account_account_446,60850,Promotional expenses,sps_account_account_409,Regular,Expense
+sps_account_account_410,60900,Misc/Other Marketing & Adv,sps_account_account_409,View,Expense
+sps_account_account_447,60901,Sales licenses & permits,sps_account_account_410,Regular,Expense
+sps_account_account_448,60902,Misc/Other Marketing & Adv – Other,sps_account_account_410,Regular,Expense
+sps_account_account_449,60950,Truck Wrapping,sps_account_account_409,Regular,Expense
+sps_account_account_450,61006,Fuel Marketing,sps_account_account_409,Regular,Expense
+sps_account_account_452,61050,Advertising & Marketing -  Other,sps_account_account_409,Regular,Expense
+sps_account_account_451,66501,Postage Marketing,sps_account_account_409,Regular,Expense
+sps_account_account_453,60860,Sales Office Expenses,sps_account_account_24,Regular,Expense
+sps_account_account_411,61000,Auto and Truck Expenses,sps_account_account_24,View,Expense
+sps_account_account_455,61005,Fuel,sps_account_account_411,Regular,Expense
+sps_account_account_456,61010,Repairs and Maintenance,sps_account_account_411,Regular,Expense
+sps_account_account_457,61012,Parking & Tolls,sps_account_account_411,Regular,Expense
+sps_account_account_458,61014,Sales Tax.,sps_account_account_411,Regular,Expense
+sps_account_account_459,61015,Auto registration & insurance,sps_account_account_411,Regular,Expense
+sps_account_account_460,61016,Auto and Truck Expenses – Other,sps_account_account_411,Regular,Expense
+sps_account_account_454,61020,Mileage Reimbursment,sps_account_account_411,Regular,Expense
+sps_account_account_461,61100,Bank Service Charges,sps_account_account_24,Regular,Expense
+sps_account_account_412,61400,Charitable Contributions,sps_account_account_24,View,Expense
+sps_account_account_462,61410,Charitable Contributions-Mktg,sps_account_account_412,Regular,Expense
+sps_account_account_463,61420,Charitable Contributions -  Other,sps_account_account_412,Regular,Expense
+sps_account_account_413,61700,Computer and Internet Expenses,sps_account_account_24,View,Expense
+sps_account_account_465,61705,Computer and Internet Expenses- MKTG,sps_account_account_413,Regular,Expense
+sps_account_account_464,61710,Computer/Internet Repairs,sps_account_account_413,Regular,Expense
+sps_account_account_466,61715,Computer and Internet Expenses – Other,sps_account_account_413,Regular,Expense
+sps_account_account_467,62000,Business Licenses and Permits,sps_account_account_24,Regular,Expense
+sps_account_account_468,62400,Depreciation Expense,sps_account_account_24,Regular,Expense
+sps_account_account_469,62500,Dues and Subscriptions,sps_account_account_24,Regular,Expense
+sps_account_account_414,63300,Insurance Expense,sps_account_account_24,View,Expense
+sps_account_account_470,33320,Workers Comp,sps_account_account_414,Regular,Expense
+sps_account_account_471,33330,Health Insurance,sps_account_account_414,Regular,Expense
+sps_account_account_472,33340,Dental Insurance,sps_account_account_414,Regular,Expense
+sps_account_account_473,63305,Auto Insurance,sps_account_account_414,Regular,Expense
+sps_account_account_474,63310,General Liability Insurance,sps_account_account_414,Regular,Expense
+sps_account_account_475,63315,Commercial Property,sps_account_account_414,Regular,Expense
+sps_account_account_476,63350,Insurance Expense – Other,sps_account_account_414,Regular,Expense
+sps_account_account_477,63400,Interest Expense,sps_account_account_24,Regular,Expense
+sps_account_account_415,63500,Janitorial Expense,sps_account_account_24,View,Expense
+sps_account_account_478,63510,Janitorial Expense - marketing,sps_account_account_415,Regular,Expense
+sps_account_account_479,63520,Janitorial Expense – Other,sps_account_account_415,Regular,Expense
+sps_account_account_416,64300,Meals and Entertainment,sps_account_account_24,View,Expense
+sps_account_account_480,64310,Meals and Ent.-Mktg-/Sales,sps_account_account_416,Regular,Expense
+sps_account_account_481,64400,Meals - employee,sps_account_account_416,Regular,Expense
+sps_account_account_482,64500,Meals and Entertainment – Other,sps_account_account_416,Regular,Expense
+sps_account_account_417,64900,Office Expenses,sps_account_account_24,View,Expense
+sps_account_account_483,64901,Office Expense-Marketing/Sales,sps_account_account_417,Regular,Expense
+sps_account_account_484,64910,Office Supplies,sps_account_account_417,Regular,Expense
+sps_account_account_485,64920,Office Equip <$500ea,sps_account_account_417,Regular,Expense
+sps_account_account_486,64930,Office Expenses – Other,sps_account_account_417,Regular,Expense
+sps_account_account_487,65000,Office Security Monitoring,sps_account_account_24,Regular,Expense
+sps_account_account_418,66000,Payroll Expenses,sps_account_account_24,View,Expense
+sps_account_account_488,66050,Gross Wages - Non Job,sps_account_account_418,Regular,Expense
+sps_account_account_489,66100,Gross Wages - Admin,sps_account_account_418,Regular,Expense
+sps_account_account_490,66105,Gross Wages - Sales/Marketing,sps_account_account_418,Regular,Expense
+sps_account_account_491,66110,Officer's Salary - Adam Evans,sps_account_account_418,Regular,Expense
+sps_account_account_492,66120,Officer's Salary - Jesse Green,sps_account_account_418,Regular,Expense
+sps_account_account_493,66125,Employee Benefits,sps_account_account_418,Regular,Expense
+sps_account_account_494,66130,Payroll Taxes,sps_account_account_418,Regular,Expense
+sps_account_account_495,66140,Payroll Processing Fees,sps_account_account_418,Regular,Expense
+sps_account_account_496,66150,Workman's Comp Ins.,sps_account_account_418,Regular,Expense
+sps_account_account_497,66200,Employee Training/Classes,sps_account_account_418,Regular,Expense
+sps_account_account_498,66220,Employee-Drug Screen,sps_account_account_418,Regular,Expense
+sps_account_account_499,66300,Payroll Expenses – Other,sps_account_account_418,Regular,Expense
+sps_account_account_419,66500,Postage and Delivery,sps_account_account_24,View,Expense
+sps_account_account_500,66510,P.O. Box Rental,sps_account_account_419,Regular,Expense
+sps_account_account_501,66520,Postage Marketing – Other,sps_account_account_419,Regular,Expense
+sps_account_account_502,66600,Printing and Reproduction,sps_account_account_24,Regular,Expense
+sps_account_account_420,66700,Professional Fees,sps_account_account_24,View,Expense
+sps_account_account_503,66705,Accounting,sps_account_account_420,Regular,Expense
+sps_account_account_504,66710,Legal Fees,sps_account_account_420,Regular,Expense
+sps_account_account_505,66720,Drug Testing Expense,sps_account_account_420,Regular,Expense
+sps_account_account_506,66730,Professional Fees – Other,sps_account_account_420,Regular,Expense
+sps_account_account_507,66900,Reconciliation Discrepancies,sps_account_account_24,Regular,Expense
+sps_account_account_421,67100,Rent Expense,sps_account_account_24,View,Expense
+sps_account_account_508,67110,Fredrick Suite 101,sps_account_account_421,Regular,Expense
+sps_account_account_509,67120,Warehouse rent,sps_account_account_421,Regular,Expense
+sps_account_account_510,67130,Peggy Lane - parking,sps_account_account_421,Regular,Expense
+sps_account_account_511,67140,Call Center - MonteVista,sps_account_account_421,Regular,Expense
+sps_account_account_512,67150,Rent Expense – Other,sps_account_account_421,Regular,Expense
+sps_account_account_422,67200,Repairs and Maintenance,sps_account_account_24,View,Expense
+sps_account_account_513,67210,Waste mgmnt - trash bin,sps_account_account_422,Regular,Expense
+sps_account_account_514,67220,Repairs and Maint.-Sales & Mktg,sps_account_account_422,Regular,Expense
+sps_account_account_515,67240,Tenant Improvemants,sps_account_account_422,Regular,Expense
+sps_account_account_516,67250,Repairs and Maintenance – Other,sps_account_account_422,Regular,Expense
+sps_account_account_517,68000,Taxes - Property,sps_account_account_24,Regular,Expense
+sps_account_account_518,68010,Taxes - Corp Business,sps_account_account_24,Regular,Expense
+sps_account_account_423,68100,Telephone Expense Office,sps_account_account_24,View,Expense
+sps_account_account_519,68110,Telephone Expense - Marketing,sps_account_account_423,Regular,Expense
+sps_account_account_520,68120,Telephone Expense Office – Other,sps_account_account_423,Regular,Expense
+sps_account_account_424,68400,Travel Expense,sps_account_account_24,View,Expense
+sps_account_account_521,68410,Job Related Travel,sps_account_account_424,Regular,Expense
+sps_account_account_522,68420,Training Travel,sps_account_account_424,Regular,Expense
+sps_account_account_523,68440,Travel Expense-Sales/Mktg,sps_account_account_424,Regular,Expense
+sps_account_account_524,68460,Travel Expense – Other,sps_account_account_424,Regular,Expense
+sps_account_account_525,68500,Uniforms,sps_account_account_24,Regular,Expense
+sps_account_account_526,68600,Utilities,sps_account_account_24,Regular,Expense
+sps_account_account_427,69,Other Income/Expense,sps_account_account_1,view,Other Income/Expense
+sps_account_account_56,70,Other Income,sps_account_account_427,view,Other Income/Expense
+sps_account_account_428_1,70200,Interest Income,sps_account_account_56,Regular,Other Income
+sps_account_account_429_1,70300,Misc Other Income,sps_account_account_56,Regular,Other Income
+sps_account_account_425,80,Other Expense,sps_account_account_427,view,Other Income/Expense
+sps_account_account_430_1,50210,Freight,sps_account_account_425,Regular,Other Expense
+sps_account_account_431_1,80100,Gain on Sale of Asset,sps_account_account_425,Regular,Other Expense

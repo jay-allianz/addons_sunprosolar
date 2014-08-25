@@ -1,0 +1,14 @@
+id,name,code,close_method,report_type
+account_typ1_1,Current Assets,Current Assets,none,/
+account_typ1_2,Fixed Assets,Fixed Assets,none,/
+account_typ1_3,Other Current Liability,Current Liability,none,/
+account_typ1_4,Long Term Liability,Long Term Liability,none,/
+account_typ1_5,Cost of Goods Sold,Cost of Goods Sold,none,/
+account_typ1_7,Other Income,Other Income,none,/
+account_typ1_8,Other Income/Expense,Other Income/Expense,none,/
+account_typ1_9,Cash or Cash Equivalents,Cash Equivalents,none,/
+account_typ1_10,Accounts Receivable,Receivable,Unreconciled,/
+account_typ1_11,Other Current Assets,Other Current Assets,Unreconciled,/
+account_typ1_13,Accounts Payable,Payable,Unreconciled,/
+account_typ1_14,current liability,current liability,none,/
+account_typ1_15,Other Expense,Other Expense,none,/

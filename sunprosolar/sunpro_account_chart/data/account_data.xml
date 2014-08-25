@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+    	
+    	<record id="sunpro_account_template_chart_template" model="account.chart.template">
+			<field name="name">Sunprosolar Account Chart Template</field>
+			<field name="account_root_id" ref="sps_account_account_1" />
+			<field name="bank_account_view_id" ref="sps_account_account_75"/>
+			<field name="property_account_receivable" ref="sps_account_account_6"/>
+			<field name="property_account_payable" ref="sps_account_account_14" />
+			<field name="property_account_expense_categ" ref="sps_account_account_438" />
+			<field name="property_account_income_categ" ref="sps_account_account_286" />
+		</record>
+		
+    </data>
+</openerp>
