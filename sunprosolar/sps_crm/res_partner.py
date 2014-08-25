@@ -373,7 +373,7 @@ class res_user(osv.Model):
         crm_data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)
         city_name = ''
         if city_id:
-            city_name = city_obj.name_get(cr, uid, [city_id], context=context)[city_id]
+            city_name = city_obj.name_get(cr, uid, [city_id], context=context)[0][1]
         
 #        if res_users_data.partner_id:
 #            partner_obj.write(cr, uid, partner_id, {'name': name, 'middle_name': middle_name, 'last_name': last_name, 'street': street, 'street2':street2, 'city_id': city_id, 'email':email, 'mobile': mobile, 'phone': phone, 'fax':fax},context=context)
@@ -400,7 +400,7 @@ class res_user(osv.Model):
        &nbsp;&nbsp;Fax: <strong>"""+ fax +"""</strong><br />
        &nbsp;&nbsp;<strong>Thank you.</strong><br />
     </p>  
-</div>"}"""
+</div>"""
         
         template_id = self.pool.get('ir.model.data').get_object(cr, uid, 'sps_crm', 'customer_information', context=context)
         template_values = email_template_obj.generate_email(cr, uid, template_id, user_id, context=context)
