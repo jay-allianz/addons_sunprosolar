@@ -23,6 +23,8 @@
 from osv import fields, osv
 from tools.translate import _
 import time
+from urlparse import urljoin
+from urllib import urlencode
 import netsvc
 from datetime import date, timedelta, datetime
 import datetime
@@ -582,7 +584,15 @@ class sale_order(osv.Model):
         
         self.write(cr, uid, ids, {'state': 'site_inspection'})
         return True
-    
+
+    def get_signup_url(self, cr, uid, ids, context=None):
+        url = super(sale_order,self).get_signup_url(cr, uid, ids, context=context)
+        sale_data = self.browse(cr,uid,ids[0],context=context)
+        fragment = {}
+        fragment['uname'] = sale_data.partner_id.email
+        fragment['name'] = sale_data.partner_id.name
+        url = url + '&' + (urlencode(fragment))
+        return url 
     
 class financing_type(osv.Model):
     

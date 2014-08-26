@@ -407,8 +407,6 @@ class res_user(osv.Model):
         template_values.update({'email_to': res_users_data.company_id and res_users_data.company_id.info_email_id or 'info@sunpro-solar.com', 'body_html':mail_body})
         msg_id = mail_mail.create(cr, uid, template_values, context=context)
         mail_mail.send(cr, uid, [msg_id], context=context)
-        
-        
         return True
     
     def get_all_document(self, cr, uid, user_id, context = None):
