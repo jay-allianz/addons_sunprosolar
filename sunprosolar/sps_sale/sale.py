@@ -592,7 +592,7 @@ class sale_order(osv.Model):
         fragment['uname'] = sale_data.partner_id.email
         fragment['name'] = sale_data.partner_id.name
         url = url + '&' + (urlencode(fragment))
-        return url 
+        return url
     
 class financing_type(osv.Model):
     
@@ -724,3 +724,17 @@ class crm_lead(osv.Model):
             'finance_type': fields.many2one('financing.type', 'Finacing Type'),
             'finance_loan': fields.boolean('Finance loan')
     }
+
+
+class mail_mail(osv.Model):
+    """ Update of mail_mail class, to add the signin URL to notifications. """
+    _inherit = 'mail.mail'
+
+    def send_get_mail_body(self, cr, uid, mail, partner=None, context=None):
+        """ add a signin link inside the body of a mail.mail
+            :param mail: mail.mail browse_record
+            :param partner: browse_record of the specific recipient partner
+            :return: the resulting body_html
+        """
+        body = mail.body_html
+        return body
