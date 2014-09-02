@@ -528,6 +528,8 @@ class sale_order(osv.Model):
         no_of_inverter = []
         solar_info = ' '
         for data in self.browse(cr, uid, ids):
+            if data.required_document == False:
+                raise osv.except_osv(_('Warning'), _('The Prevented documents are mandatory to be Uploaded!'))
             reference = 'sale.order,' + tools.ustr(data.id)
             lead_id = lead_obj.search(cr, uid, [('ref', '=', reference)],context= context)
             if lead_id:
@@ -738,3 +740,22 @@ class mail_mail(osv.Model):
         """
         body = mail.body_html
         return body
+
+class stock_partial_picking(osv.TransientModel):
+    
+    _inherit="stock.partial.picking"
+    
+    def do_partial(self, cr, uid, ids, context=None):
+        if not context:
+            context = {}
+        res = super(stock_partial_picking, self).do_partial(cr, uid, ids, context=context)
+        delivery_order_obj = self.pool.get("stock.picking.out")
+        sale_obj = self.pool.get('sale.order')
+        
+        data = delivery_order_obj.browse(cr, uid, context.get('active_id'), context=context )
+        sale_data = sale_obj.browse(cr, uid, data.sale_id.id, context=context)
+        for picking in sale_data.picking_ids:
+            if picking.state != 'done':
+                return res
+        sale_obj.write(cr, uid, data.sale_id.id, {'shipped' : True})
+        return res

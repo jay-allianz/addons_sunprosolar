@@ -80,10 +80,14 @@ class doc_required(osv.Model):
     
     def write(self, cr, uid, ids, vals, context=None):
         mail_mail = self.pool.get('mail.mail')
+        attachment_obj = self.pool.get('ir.attachment')
         email_template_obj = self.pool.get('email.template')
         res_partner_obj = self.pool.get('res.partner')
         res_users_obj = self.pool.get('res.users')
         if not vals.get('document_id', None):
+            return super(doc_required, self).write(cr, uid, ids, vals, context=context)
+        if attachment_obj.browse(cr, uid, vals.get('document_id'), context = context).datas == False:
+            vals.update({'collected' : False})
             return super(doc_required, self).write(cr, uid, ids, vals, context=context)
         vals.update({'collected' : True})
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
@@ -141,24 +145,29 @@ class sale_order(osv.Model):
     
     def _get_require_doc(self, cr, uid, ids, name, args, context=None):
         res = {}
+        
         for data in self.browse(cr, uid, ids, context=context):
+            document_obj = self.pool.get('documents.all')
             if not data.doc_req_ids:
-                res[data.id] = False
+                res[data.id] = True
             else:
                 for doc in data.doc_req_ids:
-                    if doc.document_id:
-                        if doc.document_id.datas == False:
+                    if doc.doc_id.prevent == True:
+                        if doc.document_id:
+                            if doc.document_id.datas == False:
+                                res[data.id] = False
+                                break
+                            else:
+                                res[data.id] = True
+                        else:
                             res[data.id] = False
                             break
-                        else:
-                            res[data.id] = True
                     else:
-                        res[data.id] = False
-                        break
+                        res[data.id] = True
         return res
     
     _columns={
         'doc_req_ids' : fields.one2many('doc.required', 'doc_sale_id', 'Required Documents'),
-        'required_document':fields.function(_get_require_doc, method=True, type='boolean', string="Required Document Collected?", help="Checked if Yes."),
+        'required_document':fields.function(_get_require_doc, store= True, method=True, type='boolean', string="Required Document Collected?", help="Checked if Yes."),
     }
     
