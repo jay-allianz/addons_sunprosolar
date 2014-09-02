@@ -310,6 +310,7 @@ class sale_order(osv.Model):
         ana_acc_obj = self.pool.get('account.analytic.account')
         task_obj = self.pool.get('project.task')
         project_obj = self.pool.get('project.project')
+        task_stage_obj = self.pool.get('project.task.type')
         lead_obj = self.pool.get('crm.lead')
         lead_data = False
         cur_rec = self.browse(cr, uid, ids, context=context)[0]
@@ -331,11 +332,15 @@ class sale_order(osv.Model):
         context['creation_from_sps'] = True
         proj_acc_analy_id = ana_acc_obj.create(cr, uid, vals, context=context)
         project_id = project_obj.search(cr, uid, [('analytic_account_id','=',proj_acc_analy_id)], context=context)[0]
+        stage_ids = task_stage_obj.search(cr, uid, ('name','=','Waiting Goods'))
+
         task_vals = {
             'name' : cur_rec.partner_id.name,
             'project_id':project_id,
             'color': 4,
         }
+        if stage_ids:
+            task_vals.update({'stage_id':stage_ids[0]})
         project_obj.write(cr, uid, project_id, {'color':4, 'privacy_visibility':'portal'}, context=context)
         task_obj.create(cr, uid, task_vals, context=context)
         self.write(cr, uid, ids, {'state': 'contract_generated','project_id': proj_acc_analy_id})
