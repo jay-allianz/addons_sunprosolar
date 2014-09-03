@@ -424,23 +424,23 @@ class res_user(osv.Model):
             
             # Documents of 'Attachment' tab in Opportunity
             for doc_data in data.attachment_ids:
-                if doc_data.visible_user:
+                if doc_data.visible_user and doc_data.datas:
                     documents.append({
                                  'file_name' : doc_data.name or '',
                                  'doc_file' : doc_data.datas or ''
                     })
             # Documents related to company in 'Electricity info' tab in Opportunity
             for doc_data in data.doc_req_ids:
-                if doc_data.document_id.visible_user:
+                if doc_data.document_id.visible_user and doc_data.document_id.datas:
                     documents.append({
                                  'file_name' : doc_data.doc_id.name or '',
                                  'doc_file' : doc_data.document_id.datas or ''
                     })
-            
+             
             if data.ref:
                 # Documents of 'Attachment' tab in Sale Order
                 for attachment in data.ref.attachment_ids:
-                    if attachment.visible_user:
+                    if attachment.visible_user and attachment.datas:
                         documents.append({
                                      'file_name' : attachment.name or '',
                                      'doc_file' : attachment.datas or ''
@@ -448,11 +448,11 @@ class res_user(osv.Model):
                 
                 # Documents related to Financing Type in 'Financing Type' tab in Sale Order
                 for docs in data.ref.doc_req_ids:
-                    if docs.document_id.visible_user:
+                    if docs.document_id.visible_user and docs.document_id.datas:
                         documents.append({
                                  'file_name' : docs.doc_id.name or '',
                                  'doc_file' : docs.document_id.datas or ''
-                    })
+                        })
         return documents
     
     
