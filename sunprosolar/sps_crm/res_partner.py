@@ -421,20 +421,40 @@ class res_user(osv.Model):
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
+            
+            # Documents of 'Attachment' tab in Opportunity
             for doc_data in data.attachment_ids:
-                if doc_data.visible_user == True:
+                if doc_data.visible_user:
                     documents.append({
                                  'file_name' : doc_data.name or '',
                                  'doc_file' : doc_data.datas or ''
                     })
-            if data.ref:
-                for attachment in data.ref.attachment_ids:
+            # Documents related to company in 'Electricity info' tab in Opportunity
+            for doc_data in data.doc_req_ids:
+                if doc_data.document_id.visible_user:
                     documents.append({
-                                 'file_name' : attachment.name or '',
-                                 'doc_file' : attachment.datas or ''
+                                 'file_name' : doc_data.doc_id.name or '',
+                                 'doc_file' : doc_data.document_id.datas or ''
                     })
-        
+            
+            if data.ref:
+                # Documents of 'Attachment' tab in Sale Order
+                for attachment in data.ref.attachment_ids:
+                    if attachment.visible_user:
+                        documents.append({
+                                     'file_name' : attachment.name or '',
+                                     'doc_file' : attachment.datas or ''
+                        })
+                
+                # Documents related to Financing Type in 'Financing Type' tab in Sale Order
+                for docs in data.ref.doc_req_ids:
+                    if docs.document_id.visible_user:
+                        documents.append({
+                                 'file_name' : docs.doc_id.name or '',
+                                 'doc_file' : docs.document_id.datas or ''
+                    })
         return documents
+    
     
     def get_event(self, cr, uid, user_id, context=None):
         if not context:
