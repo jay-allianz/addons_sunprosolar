@@ -332,7 +332,7 @@ class sale_order(osv.Model):
         context['creation_from_sps'] = True
         proj_acc_analy_id = ana_acc_obj.create(cr, uid, vals, context=context)
         project_id = project_obj.search(cr, uid, [('analytic_account_id','=',proj_acc_analy_id)], context=context)[0]
-        stage_ids = task_stage_obj.search(cr, uid, ('name','=','Waiting Goods'))
+        stage_ids = task_stage_obj.search(cr, uid, [('name','=','Waiting Goods')])
 
         task_vals = {
             'name' : cur_rec.partner_id.name,
@@ -754,13 +754,14 @@ class stock_partial_picking(osv.TransientModel):
         if not context:
             context = {}
         res = super(stock_partial_picking, self).do_partial(cr, uid, ids, context=context)
-        delivery_order_obj = self.pool.get("stock.picking.out")
-        sale_obj = self.pool.get('sale.order')
-        
-        data = delivery_order_obj.browse(cr, uid, context.get('active_id'), context=context )
-        sale_data = sale_obj.browse(cr, uid, data.sale_id.id, context=context)
-        for picking in sale_data.picking_ids:
-            if picking.state != 'done':
-                return res
-        sale_obj.write(cr, uid, data.sale_id.id, {'shipped' : True})
+        if context.get('active_model') == 'stock.picking.out':
+            delivery_order_obj = self.pool.get("stock.picking.out")
+            sale_obj = self.pool.get('sale.order')
+            
+            data = delivery_order_obj.browse(cr, uid, context.get('active_id'), context=context )
+            sale_data = sale_obj.browse(cr, uid, data.sale_id.id, context=context)
+            for picking in sale_data.picking_ids:
+                if picking.state != 'done':
+                    return res
+            sale_obj.write(cr, uid, data.sale_id.id, {'shipped' : True})
         return res
