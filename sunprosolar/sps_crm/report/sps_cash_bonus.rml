@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<document filename="Cash Bonus SPS.pdf">
+  <template title="Cash Bonus SPS" author="OpenERP S.A.(sales@openerp.com)" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="15.0" y1="42.0" width="539" height="758"/>
+      <pageGraphics>
+            <image x="15.3cm" y="27.7cm" height="35.0" >[[ company.logo or removeParentNode('image') ]]</image>
+            <fill color="black"/>
+            <stroke color="black"/>
+            <!--page bottom-->
+            <!--<drawCentredString x="2.8cm" y="0.8cm">Sunpro Solar</drawCentredString>-->
+            <drawCentredString x="2.8cm" y="0.8cm">Tel : [[company.phone]]</drawCentredString>
+            <drawCentredString x="17.8cm" y="0.8cm">[[company.email]]</drawCentredString>
+            <drawCentredString x="11.0cm" y="0.8cm">©[[company.name]]</drawCentredString> <br/>
+            <!--<drawCentredString x="3.0cm" y="0.4cm">1-951678-7733</drawCentredString>-->
+        </pageGraphics>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="9.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P1_bold" fontName="Helvetica-Bold" fontSize="9.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <images/>
+  </stylesheet>
+  <story>
+     [[ repeatIn(objects,'o') ]]
+    <para style="P1_bold" alignment="LEFT">Customer : [[ o.name or '']] [[ o.last_name or '']]</para>
+    <blockTable colWidths="440,100.0" style="Table3">
+      <tr>
+         <td>
+             <para style="P1_bold" alignment="LEFT">Tag Line</para>
+         </td>
+         <td>
+             <para style="P1_bold" alignment="LEFT">Cash</para>
+         </td>
+      </tr>
+    </blockTable>
+    <section>
+          <blockTable colWidths="440,100.0" style="Table2">
+              <para style="P1">[[repeatIn(o.cash_bonus_ids,'cash_bonus_line')]]</para>
+              <tr>
+                 <td>
+                     <para style="P1" alignment="LEFT"> [[cash_bonus_line.name]] </para>
+                 </td>
+                 <td>
+                     <para style="P1" alignment="RIGHT"> [[cash_bonus_line.cash]] </para>
+                 </td>
+              </tr>
+         </blockTable>
+     </section>
+      <blockTable colWidths="440,100.0" style="Table2">
+              <tr>
+                 <td>
+                     <para style="P1" alignment="RIGHT">Total Bonus : </para>
+                 </td>
+                 <td>
+                     <para style="P1" alignment="RIGHT"> [[formatLang(get_total_bonus(o.cash_bonus_ids))]] </para>
+                 </td>
+              </tr>
+         </blockTable>
+    </story>
+</document>

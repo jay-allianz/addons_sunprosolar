@@ -52,6 +52,14 @@ _SO_STATE = [('draft', 'Proposal'),
                 ('waiting_date', 'Waiting Schedule'),
                 ('invoice_except', 'Invoice Exception'),]
 
+class res_company(osv.Model):
+    
+    _inherit = "res.company"
+    
+    _columns = {
+         'calendar_id' : fields.many2one("resource.calendar", "Working Time"),
+    }     
+
 class calendar_event(osv.Model):
     
     _inherit = "calendar.event"
@@ -168,15 +176,15 @@ class sale_order(osv.Model):
         return res
     
     _columns = {
-          'contract_id' : fields.many2one('account.analytic.account', 'Contract'),
-          'color': fields.integer('Color Index'),
-          'company_currency': fields.related('company_id', 'currency_id', type='many2one', string='Currency', readonly=True, relation="res.currency"),
-          'planned_revenue': fields.float('Expected Revenue', track_visibility='always'),
-          'stage_id': fields.function(_get_stage, type='many2one' ,relation='sps.state.so', string='Stage', store=
+         'contract_id' : fields.many2one('account.analytic.account', 'Contract'),
+         'color': fields.integer('Color Index'),
+         'company_currency': fields.related('company_id', 'currency_id', type='many2one', string='Currency', readonly=True, relation="res.currency"),
+         'planned_revenue': fields.float('Expected Revenue', track_visibility='always'),
+         'stage_id': fields.function(_get_stage, type='many2one' ,relation='sps.state.so', string='Stage', store=
                               {
                                'sale.order': (lambda self, cr, uid, ids, c={}: ids, [], 20),
                                }),
-          'state': fields.selection(_SO_STATE, 'Status', readonly=True,
+         'state': fields.selection(_SO_STATE, 'Status', readonly=True,
                 help="Gives the status of the quotation or sales order. \nThe exception status is automatically set when a cancel operation occurs in the processing of a document linked to the sales order. \nThe 'Waiting Schedule' status is set when the invoice is confirmed but waiting for the scheduler to run on the order date.", select=True),
          'engineering': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Engineering May be structural or Electrical'),
          'confirm_original': fields.selection([('no_changes', 'No changes'), ('change', 'Changes Made')], 'Confirmation of original Design'),
@@ -610,12 +618,12 @@ class financing_type(osv.Model):
         'description': fields.text('Description'),
         'document_ids' : fields.many2many('documents.all','document_financing_type_rel','fin_type_id','doc_id','Documents'),
         'interest_rate': fields.float('Interest Rate'),
+        'loan_fees_rate' : fields.float('Loan Fees Rate'),
         'no_loan' : fields.boolean('No Loan', help="Checked if No loan required.")
     }
     
     _defaults ={
         'interest_rate' : 0.0
-                
         }
     
 class procurement_order(osv.Model):
@@ -723,7 +731,7 @@ class crm_lead(osv.Model):
         
         if finance_type:
             interest_rate_data = ftype_obj.browse(cr, uid, finance_type)
-            values = {'loan_interest_rate' : interest_rate_data.interest_rate, 'finance_loan':interest_rate_data.no_loan}
+            values = {'loan_fees':interest_rate_data.loan_fees_rate,'loan_interest_rate' : interest_rate_data.interest_rate, 'finance_loan':interest_rate_data.no_loan}
             
         return {'value' : values}
      

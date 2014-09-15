@@ -20,9 +20,25 @@
 #
 ##############################################################################
 
-import sps_proposal
-import sps_contract_report
-import sps_customer_barcode
-import sps_cash_bonus
+import time
+
+from openerp.report import report_sxw
+
+class cash_bonus(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context=None):
+        super(cash_bonus, self).__init__(cr, uid, name, context=context)
+        self.localcontext.update({
+            'time': time,
+            'get_total_bonus': self._get_total_bonus 
+        })
+        
+    def _get_total_bonus(self, cash_bonus_lines):
+        result = 0.0
+        if cash_bonus_lines:
+            for line in cash_bonus_lines:
+                result += line.cash
+        return result
+    
+report_sxw.report_sxw('report.cash.bonus', 'res.partner', 'addons/sps_crm/report/sps_cash_bonus.rml', parser=cash_bonus)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

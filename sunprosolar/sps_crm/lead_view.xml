@@ -861,7 +861,10 @@
 	                                  <field name="loan_period" />
 	                                  <field name="loan_interest_rate" invisible="1"/>
 	                                  <field name="loan_interest_rate_dummy" />
-	                                  <field name="loan_amt" readonly="1" />
+	                                  <field name="loan_amt"/>
+	                                  <field name="loan_amt_handler" invisible="1"/>
+	                                  <field name="loan_fees" invisible="1"/>
+	                                  <field name="loan_fees_dummy"/>
 									  <field name="down_payment_type" />
 	                                  <field name="down_payment" />
 	                                  <field name="down_payment_amt" readonly="1" />
@@ -1595,6 +1598,18 @@
 					<field name="competitor"/>
 				</field>
 				<xpath expr="/form/sheet/group" position="after" attrs="{'invisible':[('is_utility_company','=',False)]}">
+				    <group string="Link to Monitor">
+                        <field name="monitoring_links" nolabel="1" colspan="4">
+                            <tree> 
+                                <field name="name"/>
+                                <field name="link" widget="url"/>
+                            </tree>
+                            <form>
+                                <field name="name"/>
+                                <field name="link" widget="url"/>
+                            </form>
+                        </field>
+                    </group>
 				    <separator string="ZIP" />
 					<field name="zip_ids" colspan="4" nolabel="1"/><newline/>
 					<separator string="Required Documents"/>
@@ -1603,11 +1618,15 @@
 				<xpath expr="//page[@string='Accounting']" position='after'>
 					<page string="Cash Bonus">
 						<group col="4" colspan="4">
-							<field name="cash_bonus_ids" nolabel="1" readonly= "1" clospan="4">
+							<field name="cash_bonus_ids" nolabel="1" clospan="4">
 								<tree>
 									<field name="name"/>
 									<field name="cash"/>
 								</tree>
+								<form>
+								    <field name="name"/>
+                                    <field name="cash"/>
+                                </form>
 							</field>
 							<newline/>
 							<group class="oe_subtotal_footer oe_right" colspan="2">
@@ -1745,7 +1764,7 @@
 					<field name="care_maintance_fname" invisible="1"/>
 				</field>
 				<xpath expr="//group[@string='Bank Accounts']" position="before">
-					<group string="Link to Monitor">
+					<group string="Link to Monitor" invisible="1">
 						<field name="monitoring_links" nolabel="1" colspan="4">
 							<tree> 
 								<field name="name"/>

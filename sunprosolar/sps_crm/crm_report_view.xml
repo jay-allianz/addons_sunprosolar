@@ -17,6 +17,10 @@
         <report auto="False" id="report_customer_barcode" model="sale.order" name="customer.sale.barcode"
                 rml="sps_crm/report/sps_customer_barcode.rml" string="Barcode Label for customer" 
                 usage="default"/>
+                
+        <report auto="False" id="report_cash_bonus" model="res.partner" name="cash.bonus"
+                rml="sps_crm/report/sps_cash_bonus.rml" string="Cash Bonus / SPS" 
+                usage="default"/>
 
     </data>
 </openerp>

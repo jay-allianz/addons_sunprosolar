@@ -882,6 +882,7 @@ class crm_lead(osv.Model):
                 'rebate_amt' : 0.0,
                 'cost_peack_kw' : 0.0,
                 'inverter_cost' : 0.0,
+                'loan_fees' : 0.0,
             }
             cost = 0 
             cost_per_array= 0.0
@@ -889,6 +890,7 @@ class crm_lead(osv.Model):
             rebate_amt = 0
             cost_peack_kw = 0.0
             inverter_cost = 0.0
+            loan_fees=0.0
             
             if data.solar_ids:
                 for array_id in data.solar_ids:
@@ -911,7 +913,7 @@ class crm_lead(osv.Model):
                 'cost' : ((data.cost_peack_kw_handler or cost_peack_kw) + (data.invertor_cost_handler or inverter_cost)),
                 'down_payment_amt' : down_payment_amt,
                 'rebate_amt' : rebate_amt, 
-                'loan_amt' : loan_amt,
+                'loan_amt' : data.loan_amt_handler or loan_amt,
                 'cost_peack_kw' : data.cost_peack_kw_handler or cost_peack_kw,
                 'inverter_cost' : data.invertor_cost_handler or inverter_cost,
             }
@@ -934,7 +936,16 @@ class crm_lead(osv.Model):
                 loan_interest_rate_dummy = data.loan_interest_rate
             result[data.id] = loan_interest_rate_dummy
         return result
-#    
+    
+    def _get_loan_fees(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        loan_fees_dummy = 0.0
+        for data in self.browse(cr, uid, ids, context):
+            if data.loan_fees:
+                loan_fees_dummy = (data.loan_fees*data.loan_amt)/100
+            result[data.id] = loan_fees_dummy
+        return result
+    
     def run_lead_days(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
         mail_mail = self.pool.get('mail.mail')
         email_template_obj = self.pool.get('email.template')
@@ -1054,6 +1065,12 @@ class crm_lead(osv.Model):
         self.write(cr, uid, id, {'invertor_cost_handler': value}, context=context)
         return True
     
+    def _loan_amt_search(self, cr, uid, id, name, value, arg, context=None):
+        if context is None:
+            context = {}
+        self.write(cr, uid, id, {'loan_amt_handler': value}, context=context)
+        return True
+    
     _columns = {
          'last_name': fields.char('Last Name', size=32),
          'middle_name':fields.char("Middle Name", size=32),
@@ -1161,9 +1178,9 @@ class crm_lead(osv.Model):
         'loan_interest_rate_dummy' : fields.function(_get_loan_interest_rate, string="Loan Interest Rate (%)", type="float"),
         'cost_peack_kw' : fields.function(_get_cost_rebate, string="Cost / Peack KW",fnct_inv=_cost_module_search,type="float",multi="cost_all",store=True),
         'cost_peack_kw_handler': fields.float('Cost Handler'),
-        'pv_kw_decline':fields.float('PV KW Decline (%)'),
+        'pv_kw_decline':fields.float('PV KW Decline (%)',digits=(12,3)),
         'grid_energy_rate':fields.function(_get_company_tier_amount, type='float', method=True, string="Electricity Grid energy intial Rate Per KWh/$"),
-        'grid_rate_increase_by':fields.float('Grid Rate Increase By'),
+        'grid_rate_increase_by':fields.float('Grid Rate Increase By',digits=(12,3)),
         'rebate':fields.float("Rebate"),
         'srec':fields.float('SREC/kwh'),
         'number_of_years':fields.integer('Number Of Years'),
@@ -1178,7 +1195,12 @@ class crm_lead(osv.Model):
         'pbi_epbb_incentive_dummy' : fields.function(_get_pbi_epbb_incentive, string="PBI-EPBBB Incentive", type="float"),
         'cost' : fields.function(_get_cost_rebate,string="Cost",type="float",multi="cost_all",store=True),
         'down_payment_amt' : fields.function(_get_cost_rebate, string="Down Payment (Amount)",store=True,type="float",multi="cost_all"),
-        'loan_amt' : fields.function(_get_cost_rebate, string='Loan Amount',type="float",multi="cost_all"),
+        'loan_amt' : fields.function(_get_cost_rebate, fnct_inv=_loan_amt_search,string='Loan Amount',type="float",multi="cost_all"),
+        'loan_amt_handler': fields.float('Loan Amount Handler'),
+        
+        'loan_fees' :fields.float("Loan Fees"),
+        'loan_fees_dummy' : fields.function(_get_loan_fees, string="Loan Fees", type="float"),
+
         'rebate_amt' : fields.function(_get_cost_rebate, string="Rebate Amount",type="float",store=True,multi="cost_all"),
         'cost_rebate_ids' : fields.one2many( 'cost.rebate','crm_lead_id',string = 'Cost & Rebate'),
         'auto_zip' : fields.char(string="Auto-Zipcode"),
@@ -1226,6 +1248,8 @@ class crm_lead(osv.Model):
             'home':'own',
             'property': 'residential',
             'number_of_years':25,
+            'pv_kw_decline':  0.004,
+            'grid_rate_increase_by': 0.006,
             'lead_date': fields.date.context_today,
             'reg_no': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'crm.lead'),
     }
@@ -2216,7 +2240,8 @@ class res_partner(osv.Model):
         'cash_bonus_ids' : fields.one2many('cash.bonus','res_partner_id','Cash Bonus'),
         'total_bonus' : fields.function(_get_total_bonus,string="Toatal Bonus", type = "float", method= True),
         'zip_ids' : fields.many2many('city.city','city_res_part_rel',"city_id","res_part_id","Zip"),
-        'competitor':fields.boolean('Competitor')
+        'competitor':fields.boolean('Competitor'),
+        'monitoring_links' : fields.one2many('monitoring.links','res_partner_id',"Monitoring Links")
     }
     
     def openMap(self, cr, uid, ids, context=None):
@@ -2502,7 +2527,8 @@ class monitoring_links(osv.Model):
     _columns = {
                 'name': fields.char("Name"),
                 'link': fields.char("Link"),
-                'res_company_id': fields.many2one('res.company','Company')
+                'res_company_id': fields.many2one('res.company','Company'),
+                'res_partner_id': fields.many2one('res.partner','Partner')
                 }
     
 class SendMail(osv.Model):

@@ -30,7 +30,18 @@
                 <field name="class" string="Privacy" position="replace"/>
             </field>
         </record>
-		
+        
+        <record model="ir.ui.view" id="inherited_view_res_company_event_form">
+            <field name="name">res.company.event.inherited</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="arch" type="xml">
+                <field name='company_registry' position="after">
+                    <field name="calendar_id" required="1"/>
+                </field>
+            </field>
+        </record>
+        
 		<record model="ir.ui.view" id="view_inherited_view_sun_crm_opp_form">
 			<field name="name">inherited.res.partner.view.buttons</field>
 			<field name="model">crm.lead</field>
@@ -47,6 +58,9 @@
                     <attribute name="attrs">{'invisible':[('finance_loan','=',True)]}</attribute>
                 </field>
                 <field name="loan_amt" position="attributes">
+                    <attribute name="attrs">{'invisible':[('finance_loan','=',True)]}</attribute>
+                </field>
+                <field name="loan_fees_dummy" position="attributes">
                     <attribute name="attrs">{'invisible':[('finance_loan','=',True)]}</attribute>
                 </field>
 			</field>
@@ -404,6 +418,7 @@
 					<group>
 						<field name="name" string="Name" required="1" />
 						<field name="interest_rate"/>
+						<field name="loan_fees_rate"/>
 						<field name="no_loan"/>
 						<separator string="Financing Documents"/>
 						<field name="document_ids" nolabel="1" colspan="4" domain="[('finace_type','=','False')]"/>

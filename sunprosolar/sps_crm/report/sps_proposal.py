@@ -224,8 +224,8 @@ class proposal_report(report_sxw.rml_parse):
                     y_axis=axis.Y(label="KWHs"),
                     legend=legend.T(loc=(250,-80)),
                     y_range=(0, None))
-        ar.add_plot(bar_plot.T(label="Usage", data=data,width=30,fill_style = fill_style.aquamarine1), 
-                    line_plot.T(label="Production", data=pro_data, ycol=1))
+        ar.add_plot(bar_plot.T(label="Production", data=pro_data,width=30,fill_style = fill_style.aquamarine1), 
+                    line_plot.T(label="Usage", data=data, ycol=1))
         ar.draw(can)
         can.close()
         return True
@@ -353,13 +353,15 @@ class proposal_report(report_sxw.rml_parse):
                 if flag:
                     self.first_year_saving = cost_rebate.elec_bill_savings
                     flag = False
-                self.old_bill_total += round(cost_rebate.old_bill)
-                self.new_bill_total += round(cost_rebate.new_bill)
+#                self.old_bill_total += round(cost_rebate.old_bill)
+#                self.new_bill_total += round(cost_rebate.new_bill)
                 self.bill_saving_total += round(cost_rebate.elec_bill_savings)
                 self.pv_energy_total += cost_rebate.pv_energy
                 self.total_saving += round(cost_rebate.srecs + cost_rebate.incentives + cost_rebate.depriciation_savings)
                 self.srec_total += cost_rebate.srecs
                 self.incentive_total += cost_rebate.incentives
+        self.old_bill_total = round(lead_data[0].old_bill)
+        self.new_bill_total = round(lead_data[0].new_bill)
         self.net_system_cost = self.grand_total - self.srec_total - self.incentive_total
         self.lead_cost_rebate_lines = lead_data
             

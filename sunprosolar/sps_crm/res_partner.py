@@ -231,9 +231,10 @@ class res_user(osv.Model):
         admin_email_id = res_users_data.company_id and res_users_data.company_id.auto_email_id or ''
         engineering_email_id = res_users_data.company_id and res_users_data.company_id.auto_email_id or ''
         care_maintance = res_users_data.company_id and res_users_data.company_id.care_maintance or ''
-        for links in res_users_data.company_id and res_users_data.company_id.monitoring_links:
+#        for links in res_users_data.company_id and res_users_data.company_id.monitoring_links:
+#            monitoring_links_list.append({'name': links.name, 'link': links.link})
+        for links in res_users_data.partner_id.monitoring_links:
             monitoring_links_list.append({'name': links.name, 'link': links.link})
-        
         partner_id = res_users_data.partner_id.id
         if res_users_data.partner_id:
             partner_data = partner_obj.browse(cr, uid, partner_id, context=context)
