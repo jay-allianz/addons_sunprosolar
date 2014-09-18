@@ -422,6 +422,7 @@ class sale_order(osv.osv):
                         'res_model': 'account.invoice',
                         'type': 'binary',
                         'res_id': res,
+                        'visible_user':True
                     }
                     attachment_ids.append(self.pool.get('ir.attachment').create(cr, uid, attachment_data, context=context))
                 if attachment_ids:
