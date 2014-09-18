@@ -595,41 +595,41 @@ class res_user(osv.Model):
                 final_start_date = _offset_format_timestamp1(start_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
                 final_end_date = _offset_format_timestamp1(end_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
                 
-                event_start_date_temp = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
-                event_end_date_temp = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S')
+                event_start_date_temp = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M')
+                event_end_date_temp = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M')
                 
-                start_date_temp = s_date = datetime.datetime.strftime(event_start_date_temp, '%Y-%m-%d 00:00:00')
-                end_date_temp =datetime.datetime.strftime(event_end_date_temp, '%Y-%m-%d 00:00:00')
+                start_date_temp = s_date = datetime.datetime.strftime(event_start_date_temp, '%Y-%m-%d 00:00')
+                end_date_temp =datetime.datetime.strftime(event_end_date_temp, '%Y-%m-%d 00:00')
                 
                 while end_date_temp != start_date_temp:
-                    week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+                    week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M').weekday()
                     for working_time in res_users_data.company_id.calendar_id.attendance_ids:
                         if int(working_time.dayofweek) == int(week_day):
                             min = working_time.hour_from - int(working_time.hour_from)
                             min_end = working_time.hour_to - int(working_time.hour_to)
-                            event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
-                            event_end_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
-                            start_date1 = datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M:%S')
+                            event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
+                            event_end_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
+                            start_date1 = datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M')
                             start_date1 = _offset_format_timestamp1(start_date1, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
-                            end_date1 = datetime.datetime.strftime(event_end_date, '%Y-%m-%d %H:%M:%S')
+                            end_date1 = datetime.datetime.strftime(event_end_date, '%Y-%m-%d %H:%M')
                             end_date1 = _offset_format_timestamp1(end_date1, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
                             if start_date_temp == s_date:
                                 vals = {'name': event_name, 'date': final_start_date,'date_deadline': end_date1, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
                             else:
                                 vals = {'name': event_name, 'date': start_date1,'date_deadline': end_date1, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
-                            start_date_temp = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(int(1))
-                            start_date_temp = datetime.datetime.strftime(start_date_temp, '%Y-%m-%d 00:00:00')
+                            start_date_temp = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M') + datetime.timedelta(int(1))
+                            start_date_temp = datetime.datetime.strftime(start_date_temp, '%Y-%m-%d 00:00')
                             new_calender_id = calender_obj.create(cr, uid, vals, context=context)
                 if end_date_temp == start_date_temp:
-                    week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
-                    week_day_end = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+                    week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M').weekday()
+                    week_day_end = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M').weekday()
                     for working_time in res_users_data.company_id.calendar_id.attendance_ids:
                         if int(working_time.dayofweek) == int(week_day):
                             min = working_time.hour_from - int(working_time.hour_from)
                             min_end = working_time.hour_to - int(working_time.hour_to)
-                            event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
-                            event_end_date = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
-                            start_date1 = datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M:%S')
+                            event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
+                            event_end_date = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
+                            start_date1 = datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M')
                             start_date1 = _offset_format_timestamp1(start_date1, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
                             vals = {'name': event_name, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id, 'date': start_date1,'date_deadline': final_end_date,}
                             new_calender_id = calender_obj.create(cr, uid, vals, context=context)
