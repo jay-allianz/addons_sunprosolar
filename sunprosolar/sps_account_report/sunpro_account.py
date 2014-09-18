@@ -4,7 +4,7 @@ import time
 from lxml import etree
 import openerp.addons.decimal_precision as dp
 import openerp.exceptions
-
+import base64
 from openerp import netsvc
 from openerp import pooler
 
@@ -398,5 +398,33 @@ class account_voucher(osv.osv):
                     move_line_obj.write(cr, uid, [line.id], {'description': voucher.narration or ''})
         return True        
 
-
+class sale_order(osv.osv):
+    
+    _inherit = "sale.order"
+    
+    def action_invoice_create(self, cr, uid, ids, grouped=False, states=None, date_invoice = False, context=None):
+        res = super(sale_order,self).action_invoice_create(cr, uid, ids, grouped=grouped, states=states, date_invoice = date_invoice, context=context)
+        attachment_ids = []
+        ir_actions_report = self.pool.get('ir.actions.report.xml')
+        matching_reports = ir_actions_report.search(cr, uid, [('report_name', '=', 'account.invoice.webkit')])
+        if matching_reports:
+                report = ir_actions_report.browse(cr, uid, matching_reports[0])
+                report_service = 'report.' + report.report_name
+                service = netsvc.LocalService(report_service)
+                (result, format) = service.create(cr, uid, [res], {'model': 'account.invoice'}, context=context)
+                result = base64.b64encode(result)
+                file_name = 'SPS Invoices' + ".pdf"
+                if result:
+                    attachment_data = {
+                        'name': file_name,
+                        'datas_fname': file_name,
+                        'datas': result,
+                        'res_model': 'account.invoice',
+                        'type': 'binary',
+                        'res_id': res,
+                    }
+                    attachment_ids.append(self.pool.get('ir.attachment').create(cr, uid, attachment_data, context=context))
+                if attachment_ids:
+                    self.write(cr, uid, ids, {'attachment_ids': [(6, 0, attachment_ids)]}, context=context)
+        return res
 

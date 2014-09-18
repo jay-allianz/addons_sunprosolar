@@ -49,10 +49,10 @@ def _offset_format_timestamp1(src_tstamp_str, src_format, dst_format, ignore_unp
     """
     if not src_tstamp_str:
         return False
-
     res = src_tstamp_str
     if src_format and dst_format:
         try:
+            
             # dt_value needs to be a datetime.datetime object (so no time.struct_time or mx.DateTime.DateTime here!)
             dt_value = datetime.datetime.strptime(src_tstamp_str,src_format)
             if context.get('tz',False):
@@ -456,7 +456,67 @@ class res_user(osv.Model):
                         })
         return documents
     
-    
+#    def get_event(self, cr, uid, user_id, context=None):
+#        if not context:
+#            context = {}
+#        event_dict = {}
+#        event_list=[]
+#        sale_order_obj = self.pool.get('sale.order')
+#        crm_obj = self.pool.get('crm.lead')
+#        
+#        res_users_data = self.browse(cr, uid, user_id, context=context)
+#        partner_id = res_users_data.partner_id.id
+#        
+#        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+#        if crm_ids:
+#            data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
+#            if data.ref:
+#                sale_data = data.ref
+#                for event in sale_data.event_ids:
+#                    if res_users_data.tz:
+#                        to_zone = res_users_data.tz
+#                    else:
+#                        to_zone = 'UTC'
+#                    final_start_date = _offset_format_timestamp1(event.date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+#                    final_end_date = _offset_format_timestamp1(event.date_deadline, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+#                    
+#                    event_start_date_temp = datetime.datetime.strptime(event.date, '%Y-%m-%d %H:%M:%S')
+#                    event_end_date_temp = datetime.datetime.strptime(event.date_deadline, '%Y-%m-%d %H:%M:%S')
+#                    
+#                    start_date_temp = s_date = datetime.datetime.strftime(event_start_date_temp, '%Y-%m-%d 00:00:00')
+#                    end_date_temp =datetime.datetime.strftime(event_end_date_temp, '%Y-%m-%d 00:00:00')
+#                
+#                    while end_date_temp != start_date_temp:
+#                        week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+#                        for working_time in res_users_data.company_id.calendar_id.attendance_ids:
+#                            if int(working_time.dayofweek) == int(week_day):
+#                                min = working_time.hour_from - int(working_time.hour_from)
+#                                min_end = working_time.hour_to - int(working_time.hour_to)
+#                                event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
+#                                event_end_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
+#                                
+#                                if start_date_temp == s_date:
+#                                    event_dict = {'id': event.id,'name': event.name, 'start_date': final_start_date, 'end_date':datetime.datetime.strftime(event_end_date, '%Y-%m-%d %H:%M:%S'), 'status': event.status, 'event_time': event.event_time}
+#                                else:
+#                                    event_dict = {'id': event.id,'name': event.name, 'start_date': datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M:%S'), 'end_date':datetime.datetime.strftime(event_end_date, '%Y-%m-%d %H:%M:%S'), 'status': event.status, 'event_time': event.event_time}
+#                                start_date_temp = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+ datetime.timedelta(int(1))
+#                                start_date_temp = datetime.datetime.strftime(start_date_temp, '%Y-%m-%d 00:00:00')
+#                                event_list.append(event_dict)
+#                    if end_date_temp == start_date_temp:
+#                        week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+#                        week_day_end = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+#                        for working_time in res_users_data.company_id.calendar_id.attendance_ids:
+#                            if int(working_time.dayofweek) == int(week_day):
+#                                min = working_time.hour_from - int(working_time.hour_from)
+#                                min_end = working_time.hour_to - int(working_time.hour_to)
+#                                event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
+#                                event_end_date = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
+#                                event_dict = {'id': event.id,'name': event.name, 'start_date': datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M:%S'), 'end_date':final_end_date, 'status': event.status, 'event_time': event.event_time}
+#                                event_list.append(event_dict)
+#                return event_list
+#        else:
+#             return event_list
+
     def get_event(self, cr, uid, user_id, context=None):
         if not context:
             context = {}
@@ -473,29 +533,48 @@ class res_user(osv.Model):
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
             if data.ref:
                 sale_data = data.ref
+                if res_users_data.tz:
+                    to_zone = res_users_data.tz
+                else:
+                    to_zone = 'UTC'
                 for event in sale_data.event_ids:
-                        
-                    utc_start = datetime.datetime.strptime(event.date, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
-                    utc_end = datetime.datetime.strptime(event.date_deadline, '%Y-%m-%d %H:%M:%S').replace(tzinfo=pytz.timezone('UTC'))
                     
-                    to_zone1 = tz.gettz(res_users_data.tz)
-                    final_start_date = utc_start.astimezone(to_zone1)
-                    final_end_date = utc_end.astimezone(to_zone1)
-                    
-                    list_start1 = datetime.datetime.strftime(final_start_date, '%Y-%m-%d %H:%M:%S')
-                    list_end1 = datetime.datetime.strftime(final_end_date, '%Y-%m-%d %H:%M:%S')
-                    
-                    res1 = datetime.datetime.strptime(list_start1, '%Y-%m-%d %H:%M:%S')
-                    res2 = datetime.datetime.strptime(list_end1, '%Y-%m-%d %H:%M:%S')
-                    
-                    final_start_date = datetime.datetime.strftime(res1, '%m/%d/%Y %H:%M:%S')                        
-                    final_end_date = datetime.datetime.strftime(res2, '%m/%d/%Y %H:%M:%S')
+                    final_start_date = _offset_format_timestamp1(event.date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+                    final_end_date = _offset_format_timestamp1(event.date_deadline, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone}) 
                     
                     event_dict = {'id': event.id,'name': event.name, 'start_date': final_start_date, 'end_date':final_end_date, 'status': event.status, 'event_time': event.event_time}
                     event_list.append(event_dict)
                 return event_list
         else:
-            return event_list
+             return event_list
+        
+#    def add_event(self, cr, uid, user_id, event_name, start_date, end_date, status, event_time, context=None):
+#        if not context:
+#            context = {}
+#        sale_order_obj = self.pool.get('sale.order')
+#        calender_obj = self.pool.get('calendar.event')
+#        crm_obj = self.pool.get('crm.lead')
+#        res_users_data = self.browse(cr, uid, user_id, context=context)
+#        partner_id = res_users_data.partner_id.id
+#        crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
+#        if crm_ids:
+#            if res_users_data.tz:
+#                to_zone = res_users_data.tz
+#            else:
+#                to_zone = 'UTC'
+#            final_start_date = _offset_format_timestamp1(start_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+#            final_end_date = _offset_format_timestamp1(end_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+#
+#            data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
+#            if data.ref:
+#                vals = {'name': event_name, 'date': final_start_date,'date_deadline': final_end_date, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
+#                new_calender_id = calender_obj.create(cr, uid, vals, context=context)
+#                if new_calender_id:
+#                    return new_calender_id
+#                else:
+#                    return False
+#        else:
+#            return False
         
     def add_event(self, cr, uid, user_id, event_name, start_date, end_date, status, event_time, context=None):
         if not context:
@@ -507,21 +586,58 @@ class res_user(osv.Model):
         partner_id = res_users_data.partner_id.id
         crm_ids = crm_obj.search(cr, uid, [('partner_id','=', partner_id)],context=context)
         if crm_ids:
-            if res_users_data.tz:
-                to_zone = res_users_data.tz
-            else:
-                to_zone = 'UTC'
-            final_start_date = _offset_format_timestamp1(start_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
-            final_end_date = _offset_format_timestamp1(end_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
-
             data = crm_obj.browse(cr, uid, [max(crm_ids)], context=context)[0]
             if data.ref:
-                vals = {'name': event_name, 'date': final_start_date,'date_deadline': final_end_date, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
-                new_calender_id = calender_obj.create(cr, uid, vals, context=context)
-                if new_calender_id:
-                    return new_calender_id
+                if res_users_data.tz:
+                    to_zone = res_users_data.tz
                 else:
-                    return False
+                    to_zone = 'UTC'
+                final_start_date = _offset_format_timestamp1(start_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+                final_end_date = _offset_format_timestamp1(end_date, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+                
+                event_start_date_temp = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+                event_end_date_temp = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S')
+                
+                start_date_temp = s_date = datetime.datetime.strftime(event_start_date_temp, '%Y-%m-%d 00:00:00')
+                end_date_temp =datetime.datetime.strftime(event_end_date_temp, '%Y-%m-%d 00:00:00')
+                
+                while end_date_temp != start_date_temp:
+                    week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+                    for working_time in res_users_data.company_id.calendar_id.attendance_ids:
+                        if int(working_time.dayofweek) == int(week_day):
+                            min = working_time.hour_from - int(working_time.hour_from)
+                            min_end = working_time.hour_to - int(working_time.hour_to)
+                            event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
+                            event_end_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
+                            start_date1 = datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M:%S')
+                            start_date1 = _offset_format_timestamp1(start_date1, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+                            end_date1 = datetime.datetime.strftime(event_end_date, '%Y-%m-%d %H:%M:%S')
+                            end_date1 = _offset_format_timestamp1(end_date1, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+                            if start_date_temp == s_date:
+                                vals = {'name': event_name, 'date': final_start_date,'date_deadline': end_date1, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
+                            else:
+                                vals = {'name': event_name, 'date': start_date1,'date_deadline': end_date1, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id}
+                            start_date_temp = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(int(1))
+                            start_date_temp = datetime.datetime.strftime(start_date_temp, '%Y-%m-%d 00:00:00')
+                            new_calender_id = calender_obj.create(cr, uid, vals, context=context)
+                if end_date_temp == start_date_temp:
+                    week_day = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+                    week_day_end = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M:%S').weekday()
+                    for working_time in res_users_data.company_id.calendar_id.attendance_ids:
+                        if int(working_time.dayofweek) == int(week_day):
+                            min = working_time.hour_from - int(working_time.hour_from)
+                            min_end = working_time.hour_to - int(working_time.hour_to)
+                            event_start_date = datetime.datetime.strptime(start_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_from))+datetime.timedelta(minutes=int(min))
+                            event_end_date = datetime.datetime.strptime(end_date_temp, '%Y-%m-%d %H:%M:%S')+datetime.timedelta(hours=int(working_time.hour_to))+datetime.timedelta(minutes=int(min_end))
+                            start_date1 = datetime.datetime.strftime(event_start_date, '%Y-%m-%d %H:%M:%S')
+                            start_date1 = _offset_format_timestamp1(start_date1, '%Y-%m-%d %H:%M', '%Y-%m-%d %H:%M', ignore_unparsable_time=True, context={'tz':to_zone})
+                            vals = {'name': event_name, 'status': status, 'event_time': event_time, 'sale_order_id': data.ref.id, 'date': start_date1,'date_deadline': final_end_date,}
+                            new_calender_id = calender_obj.create(cr, uid, vals, context=context)
+                
+                    if new_calender_id:
+                        return new_calender_id
+                    else:
+                        return False
         else:
             return False
     
@@ -679,7 +795,7 @@ class res_user(osv.Model):
             new_ref_id= ref_obj.create(cr, uid, vals, context= context)
             
         crm_vals ={
-            'name': 'Lead for ' + name + ' ' + lname,
+            'name': 'Referred Lead: ' + name + ' ' + lname,
             'contact_name' : name,
             'last_name' : lname,
             'email_from' : email,
