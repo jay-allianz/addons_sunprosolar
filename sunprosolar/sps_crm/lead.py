@@ -1248,7 +1248,7 @@ class crm_lead(osv.Model):
             'home':'own',
             'property': 'residential',
             'number_of_years':25,
-            'pv_kw_decline':  0.04,
+            'pv_kw_decline':  0.004,
             'grid_rate_increase_by': 0.06,
             'lead_date': fields.date.context_today,
             'reg_no': lambda obj, cr, uid, context:obj.pool.get('ir.sequence').get(cr, uid, 'crm.lead'),
